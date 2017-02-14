@@ -1,0 +1,22 @@
+/*
+Responsive Template Name: RS-1200 Prototype 8
+File: Main CSS
+Author: OS Templates
+Author URI: http://www.os-templates.com/
+Licence: <a href="http://www.os-templates.com/template-terms">Website Template Licence</a>
+*/
+
+@import url(bootstrap/css/bootstrap.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css);
+@import url(css/AdminLTE.css);
+@import url(css/kulturkatalogen_main.css);
+@import url(css/skins/skin-black.css);
+
+
+/* If you want to add your own css code, please do it in the custom.css file
+@import url(layout/styles/custom.css); */
+
+/* Remove this before using the template 
+
+@import url(layout/styles/demo-only.css);*/

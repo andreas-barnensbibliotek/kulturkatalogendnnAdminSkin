@@ -1,0 +1,5 @@
+﻿
+skin döps efter 
+1. förkortat kulturkatalogen = kk_
+2. starwars creatures i bokstavsordning som versionskod. ordning finns här http://www.starwars.com/databank
+
