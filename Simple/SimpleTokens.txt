@@ -1,4 +1,4 @@
-<ul id="flexmenu">
+<ul id="sidebar-menu">
 	[*>NODE]
 </ul>
 
@@ -14,7 +14,7 @@
 				[*>NODE]
 				<li class="[?FIRST]first[/?][?LAST] last[/?][?SELECTED] selected[/?]">
 				[?ENABLED]
-					<a href="[=URL]">[=TEXT]</a>
+					 <a href="[=URL]">[=TEXT]</a>
 				[?ELSE]
 					[=TEXT]
 				[/?]
