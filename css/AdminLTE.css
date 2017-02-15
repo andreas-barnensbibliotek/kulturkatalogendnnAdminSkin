@@ -186,13 +186,13 @@ a:focus {
   margin-top: 5px;
 }
 /*
- * Component: Main Header
+ * Component: Main Header 
  * ----------------------
  */
 .main-header {
   position: relative;
   max-height: 100px;
-  z-index: 1030;
+  z-index: 900;
 }
 .main-header .navbar {
   -webkit-transition: margin-left 0.3s ease-in-out;
@@ -202,6 +202,7 @@ a:focus {
   margin-left: 230px;
   border: none;
   min-height: 50px;
+  
   border-radius: 0;
 }
 .layout-top-nav .main-header .navbar {
@@ -703,7 +704,7 @@ a:focus {
  */
 .control-sidebar-bg {
   position: fixed;
-  z-index: 1000;
+  z-index: 896;
   bottom: 0;
 }
 .control-sidebar-bg,
@@ -718,7 +719,7 @@ a:focus {
 .control-sidebar {
   position: absolute;
   padding-top: 50px;
-  z-index: 1010;
+  z-index: 898;
 }
 @media (max-width: 768px) {
   .control-sidebar {

@@ -4,3 +4,7 @@
   display: block;
   margin-left: 0px;
 }
+.dnnModuleManager.dnnSortable {
+min-height:40px !important;
+
+}
