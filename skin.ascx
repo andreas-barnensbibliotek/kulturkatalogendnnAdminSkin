@@ -53,6 +53,15 @@
       <!-- Navbar Right Menu topnavPane -->        
       <div id="topnavPane" class="topnavPane navbar-custom-menu" runat="server">            
       </div>
+      <!-- Navbar Right Menu -->
+      
+        <div class="navbar-custom-menu">
+            
+            <ul id="navPane" class="navPane nav navbar-nav" >                
+                <div id="testPane" class="testPane" runat="server"></div>
+            </ul>
+
+        </div>
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
@@ -61,9 +70,8 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <!-- SidebarPane -->        
     <section id="sidebarPane" class="sidebar sidebarPane" runat="server">
-    </section>
-        
-     <section class="sidebar">  
+    </section>        
+    <section class="sidebar">  
       <!--meny -->
             <dnn:MENU ID="MENU1" MenuStyle="Simple" runat="Server"/>
         <!--meny end -->
