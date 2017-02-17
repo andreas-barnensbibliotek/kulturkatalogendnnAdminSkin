@@ -152,12 +152,8 @@
 
 
 <dnn:JQUERY ID="dnnjQuery" runat="server" />
-
-<%--<fortyfingers:STYLEHELPER ID="CookieJS"  AddJsFile="js/exernal/jquery.cookiesdirective.js" runat="server" />--%>
 <fortyfingers:STYLEHELPER ID="Bootstrap_js" AddJsFile="bootstrap/js/bootstrap.min.js" runat="server" />
-<%--<fortyfingers:STYLEHELPER ID="App_js" AddJsFile="js/app.min.js" runat="server" />--%>
 <fortyfingers:STYLEHELPER ID="handlebars_js" AddJsFile="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js" runat="server" />
-<%--<fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="js/kk_aj_js/kk_aj_MainApp.js" runat="server" />--%>
 <fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="public/js/kk_aj_bundle.js" runat="server" />
 
 

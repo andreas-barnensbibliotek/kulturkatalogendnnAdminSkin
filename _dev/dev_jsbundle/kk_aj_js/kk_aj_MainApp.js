@@ -44,18 +44,46 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var msg = __webpack_require__(1);
-	var $ = __webpack_require__(2);
+	var appsettings = __webpack_require__(1);
+	var msg = __webpack_require__(2);
+	var ServiceHandler = __webpack_require__(3);
+	var templateHandler = __webpack_require__(5);
 
-	$(function(){
-	    $("body").attr('style','background:#fff;')
-	        .append("funkar! Webpack och concat");
-	    msg.testar("ja du det funkar med Webpack och concat");
+	var $ = __webpack_require__(4);
+
+	$(function () {
+
+	    var init = function () {
+	        console.log("1. init k�rs");
+	        ServiceHandler.injecttemplate("test", "0", function (data) {
+	            console.log("4. servicen h�mtar Templaten");
+	            templateHandler.injecthtmltemplate('.kk_aj_profile', 'kk_aj_profile.txt', data);
+	        })
+	    }
+	    init();
+	    //$("body").attr('style','background:#fff;')
+	    //    .append("funkar! Webpack och concat");
+	    //msg.testar("ja du det funkar med Webpack och concat");
 	});
 
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	// object
+	//var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
+	var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
+	var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+
+	module.exports = {  
+	    localOrServerURL: _localOrServerURL,
+	    htmltemplateURL: _htmltemplateURL,
+	    currentUserid: window.currentuserid
+	}
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	
@@ -67,7 +95,39 @@
 
 
 /***/ },
-/* 2 */
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(4);
+	var appsettings = __webpack_require__(1);
+	module.exports = {
+	    testar: function (msg) {
+	        alert(msg);
+	    },
+	    injecttemplate: function (callTyp, usrid, callback) {
+	        console.log("2. servicen hämtar data");
+	        $.ajax({
+	            type: "GET",
+	            url: appsettings.localOrServerURL +"/"+ callTyp + "/devkey/testar",
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("3. servicen har hämtat datan");
+	                callback(data)
+	                
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel!");
+	            }
+	        });
+	       
+	    }
+	}
+
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10290,6 +10350,29 @@
 
 	return jQuery;
 	} );
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(4);
+	var appsettings = __webpack_require__(1);
+	module.exports = {
+	    testar: function (msg) {
+	        alert(msg);
+	    },
+	    injecthtmltemplate: function (targetClass, usetemplateName, currentdata) {
+	        console.log("6. inne i templatehandler");
+	        $.get(appsettings.htmltemplateURL +"/"+ usetemplateName, function (data) {
+	            var temptpl = Handlebars.compile(data);
+	            console.log("7. template klar att levereras");
+	            $(targetClass).append(temptpl(currentdata));
+	            //callback(htmltemplate)
+	        }, 'html');
+	    }
+
+	};
 
 
 /***/ }
