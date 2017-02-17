@@ -57,10 +57,10 @@ gulp.task('webpackjs', function() {
     .pipe(gulp.dest(srcPath.publik +'/'));	
 });
 
-gulp.task('AJtask', function () {
+gulp.task('jsconcatfiles', ['webpackjs'], function () {
     return gulp.src(srcPath.jsbundle + '/**/*.js')
         .pipe(sourcemaps.init())
-      .pipe(concat('andreasjs.js'))
+      .pipe(concat('kk_aj_bundle.js'))
         .pipe(sourcemaps.write())
       .pipe(gulp.dest(srcPath.publik + '/js/'));
 });
@@ -68,7 +68,7 @@ gulp.task('AJtask', function () {
 //Watch task
 gulp.task('default',function() {
     //gulp.watch('_dev/devsass/**/*.scss', ['SassToCssSrc']); 
-	gulp.watch('_dev/devjs/**/*.js', ['webpackjs']);       
+    gulp.watch('_dev/devjs/**/*.js', ['jsconcatfiles']);
    
 });
 

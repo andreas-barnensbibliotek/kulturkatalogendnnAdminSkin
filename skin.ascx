@@ -158,7 +158,7 @@
 <%--<fortyfingers:STYLEHELPER ID="App_js" AddJsFile="js/app.min.js" runat="server" />--%>
 <fortyfingers:STYLEHELPER ID="handlebars_js" AddJsFile="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js" runat="server" />
 <%--<fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="js/kk_aj_js/kk_aj_MainApp.js" runat="server" />--%>
-<fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="public/js/andreasjs.js" runat="server" />
+<fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="public/js/kk_aj_bundle.js" runat="server" />
 
 
 <script type="text/javascript">

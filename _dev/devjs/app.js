@@ -3,6 +3,6 @@ var $ = require("jquery");
 
 $(function(){
     $("body").attr('style','background:#fff;')
-        .append("funkar!");
-    msg.testar("ja du det funkar");
+        .append("funkar! Webpack och concat");
+    msg.testar("ja du det funkar med Webpack och concat");
 });

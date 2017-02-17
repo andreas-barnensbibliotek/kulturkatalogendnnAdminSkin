@@ -13,15 +13,14 @@ Filstruktur gulp js concat och webpack
 
 Kör man gulp default
 cmd: gulp
-då körs endast webpack 
-kk_Admin_Acklay/_dev/devjs/ och /**/*.js
-Bundlefilen landar i 
-kk_Admin_Acklay/_dev/dev_jsbundle/kk_aj_js/kk_aj_MainApp.js
-glulptask watch 
+då körs först webpack js
+1.	kk_Admin_Acklay/_dev/devjs/ och /**/*.js
+	Bundlefilen landar i 
+	kk_Admin_Acklay/_dev/dev_jsbundle/kk_aj_js/kk_aj_MainApp.js
+
+2.	körs gulp jsconcatfiles som slår ihop alla javascript i mappen 
+	dev_jsbundle och levererar en fil kk_aj_bundle.js den landar i
+	public/js/kk_aj_bundle.js
 
 
-cmd gulp jsconcatfiles
-slår ihop alla javascript i mappen dev_jsbundle och levererar en fil kk_aj_bundle.js den landar i
-public/js/kk_aj_bundle.js
-
-detta är produktionsfilen för använding i projektet.
+#Detta är produktionsfilen för använding i projektet.
