@@ -7,6 +7,11 @@ var $ = require("jquery");
 
 $(function () {
 
+    //Jquery div
+    var _userid = $('#kk_aj_CurrentUserid').html();
+    var _rollid = $('#kk_aj_CurrentRollid').html();
+    var _pageType = $('#kk_aj_CurrentPageType').html();
+
     var init = function () {
         console.log("1. init körs");
         ServiceHandler.injecttemplate("test", "0", function (data) {

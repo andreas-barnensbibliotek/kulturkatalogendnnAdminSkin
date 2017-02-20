@@ -147,13 +147,13 @@
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
-    <span id="barnensbiblCurrentUserid"><%= UserController.Instance.GetCurrentUserInfo().UserID%></span>
+    <span id="kk_aj_CurrentUserid"><%= UserController.Instance.GetCurrentUserInfo().UserID%></span>
+    
 </div>
 
 
 <dnn:JQUERY ID="dnnjQuery" runat="server" />
 <fortyfingers:STYLEHELPER ID="Bootstrap_js" AddJsFile="bootstrap/js/bootstrap.min.js" runat="server" />
-<fortyfingers:STYLEHELPER ID="handlebars_js" AddJsFile="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js" runat="server" />
 <fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="public/js/kk_aj_bundle.js" runat="server" />
 
 
