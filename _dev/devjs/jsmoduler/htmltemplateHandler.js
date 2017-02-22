@@ -9,7 +9,7 @@ module.exports = {
         $.get(appsettings.htmltemplateURL +"/"+ usetemplateName, function (data) {
             var temptpl = Handlebars.compile(data);
             console.log("7. template klar att levereras");
-            $(targetClass).append(temptpl(currentdata));
+            $(targetClass).html(temptpl(currentdata));
             //callback(htmltemplate)
         }, 'html');
     }

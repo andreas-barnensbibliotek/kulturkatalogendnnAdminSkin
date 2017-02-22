@@ -46,24 +46,36 @@
 
 	var appsettings = __webpack_require__(1);
 	var msg = __webpack_require__(2);
-	var ServiceHandler = __webpack_require__(3);
-	var templateHandler = __webpack_require__(5);
+	var loadpageHandler = __webpack_require__(3);
+	//var ServiceHandler = require("./jsmoduler/ServiceCallHandler.js");
+	//var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
 
 	var $ = __webpack_require__(4);
 
 	$(function () {
 
 	    //Jquery div
-	    var _userid = $('#kk_aj_CurrentUserid').html();
-	    var _rollid = $('#kk_aj_CurrentRollid').html();
-	    var _pageType = $('#kk_aj_CurrentPageType').html();
+	    var _userid = $('.kk_aj_CurrentUserid').html();
+	    var _rollid = $('.kk_aj_CurrentRollid').html();
+	    var _pageType = $('.kk_aj_CurrentPageType').html();
 
 	    var init = function () {
 	        console.log("1. init k�rs");
-	        ServiceHandler.injecttemplate("test", "0", function (data) {
-	            console.log("4. servicen h�mtar Templaten");
-	            templateHandler.injecthtmltemplate('.kk_aj_profile', 'kk_aj_profile.txt', data);
-	        })
+	        
+	        loadpageHandler.pageloader(_pageType);
+
+
+	        //ServiceHandler.injecttemplate("test", "0", function (data) {
+	        //    console.log("4. servicen h�mtar Templaten");
+	        //    templateHandler.injecthtmltemplate('.kk_aj_profile', 'kk_aj_profile.txt', data);
+	        //})
+
+	        //console.log("1.init debug k�rs");
+	        //ServiceHandler.injecttemplate("test", "0", function (data) {
+	        //    console.log("4. servicen h�mtar debug Templaten");
+	        //    templateHandler.injecthtmltemplate('.kk_aj_topNav_message_menu', 'kk_aj_topNav_message_menu.txt', data);
+	        //})
+
 	    }
 	    init();
 	    //$("body").attr('style','background:#fff;')
@@ -81,10 +93,104 @@
 	var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
 	var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
+	window.kk_aj_startView= [
+	    {
+	        templatename: "startUserprofileTmpl",
+	        templatedata:"kk_aj_userinfojson",
+	        targetdiv: ".kk_aj_profile",
+	        filename: "kk_aj_profile.txt"
+	    },
+	    {
+	        templatename: "startUserAboutMeTmpl",
+	        templatedata: "kk_aj_userinfojson",
+	        targetdiv: ".kk_aj_aboutme",
+	        filename: "kk_aj_aboutMe.txt"
+	    },
+	    {
+	        templatename: "StartSenasteListTmpl",
+	        templatedata: "kk_aj_lasteventjson",
+	        targetdiv: ".kk_aj_startsenastelist",
+	        filename: "kk_aj_startSenasteList.txt"
+	    }
+	];
+	window.kk_aj_nyaansokningarView = [
+	    {
+	        templatename: "nyaAnsokningarTmpl",
+	        templatedata: "kk_aj_nyaansokjson",
+	        targetdiv: "",
+	        filename: "kk_aj_topNav_message_menu.txt"
+	    }
+	];
+	window.kk_aj_approvedansokningarView = [
+	    {
+	        templatename: "approvedansokningarTmpl",
+	        templatedata: "kk_aj_approvedansokjson",
+	        targetdiv: "",
+	        filename: "kk_aj_topNav_message_menu.txt"
+	    }
+	];
+	window.kk_aj_deniedansokningarView = [
+	    {
+	        templatename: "deniedansokningarTmpl",
+	        templatedata: "kk_aj_deniedansokjson",
+	        targetdiv: "",
+	        filename: "kk_aj_topNav_message_menu.txt"
+	    }
+	];
+	window.kk_aj_archiveansokningarView = [
+	    {
+	        templatename: "archiveansokningarTmpl",
+	        templatedata: "kk_aj_archiveansokjson",
+	        targetdiv: "",
+	        filename: "kk_aj_topNav_message_menu.txt"
+	    }
+	];
+	window.kk_aj_DiarieView =[    
+	    {
+	        templatename: "DiareTmpl",
+	        templatedata: "kk_aj_diariejson",
+	        targetdiv: "",
+	        filename: "kk_aj_topNav_message_menu.txt"
+	    }
+	];
+	window.kk_aj_kk_aj_topNavView = [
+	    {
+	        templatename: "TopNavMessageMenuTmpl",
+	        templatedata: "kk_aj_topmessjson",
+	        targetdiv: ".kk_aj_topNav_message_menu",
+	        filename: "kk_aj_topNav_message_menu.txt"
+	    },
+	    {
+	        templatename: "TopNavNotificationMenuTmpl",
+	        templatedata: "kk_aj_topnotejson",
+	        targetdiv: ".kk_aj_topNav_notifications_menu",
+	        filename: "kk_aj_topNav_notifications_menu.txt"
+	    },
+	    {
+	        templatename: "TopNavTaskMenuTmpl",
+	        templatedata: "kk_aj_toptaskjson",
+	        targetdiv: ".kk_aj_topNav_tasks_menu",
+	        filename: "kk_aj_topNav_tasks_menu.txt"
+	    },
+	   {
+	       templatename: "TopNavUserMenuTmpl",
+	       templatedata: "kk_aj_userinfojson",
+	       targetdiv: ".kk_aj_topNav_user_menu",
+	       filename: "kk_aj_topNav_user_menu.txt"
+	   }
+	];
+
 	module.exports = {  
 	    localOrServerURL: _localOrServerURL,
 	    htmltemplateURL: _htmltemplateURL,
-	    currentUserid: window.currentuserid
+	    currentUserid: window.currentuserid,
+	    topnavtemplate: window.kk_aj_kk_aj_topNavView,
+	    starttemplate: window.kk_aj_startView,
+	    nyaansokningartemplate: window.kk_aj_nyaansokningarView,
+	    approvedansokningartemplate: window.kk_aj_approvedansokningarView,
+	    deniedansokningartemplate: window.kk_aj_deniedansokningarView,
+	    archiveansokningartemplate: window.kk_aj_archiveansokningarView,
+	    diarietemplate:window.kk_aj_DiarieView
 	}
 
 /***/ },
@@ -105,30 +211,58 @@
 
 	var $ = __webpack_require__(4);
 	var appsettings = __webpack_require__(1);
+	var ServiceHandler = __webpack_require__(5);
 	module.exports = {
 	    testar: function (msg) {
 	        alert(msg);
 	    },
-	    injecttemplate: function (callTyp, usrid, callback) {
-	        console.log("2. servicen hämtar data");
-	        $.ajax({
-	            type: "GET",
-	            url: appsettings.localOrServerURL +"/"+ callTyp + "/devkey/testar",
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("3. servicen har hämtat datan");
-	                callback(data)
-	                
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel!");
-	            }
-	        });
-	       
+	    pageloader: function (pagetoload) {
+	        switch(pagetoload) {
+	            case "kk_aj_startView":
+	                console.log("2. kk_aj_startView körs");                
+	                loadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.starttemplate);
+	                break;
+	            case "kk_aj_ansokningarView":               
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView ");
+	                loadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.ansokningartemplate);   
+	                break;
+	            case "kk_aj_diarieView":
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
+	                lloadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.diarietemplate);                
+	                break;
+	            default:
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
+	                loadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.starttemplate);
+	                break;
+	        }
 	    }
+
+	};
+
+	var loadtemplateTypes = function (pagetemplate, userid) {    
+	    for (var obj in pagetemplate) {
+	        console.log("4. " + pagetemplate[obj].templatename + " körs");
+	        ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
+	            loadpagetemplates(pagetemplate[obj], data);
+	        });
+	    };
 	}
 
+
+	var loadpagetemplates = function (template, currentdata) {
+	    console.log("5. laddar: " + template.filename);
+	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
+	        var temptpl = Handlebars.compile(data);
+	        console.log("6. "+template.filename +" klar att levereras");
+	        $(template.targetdiv).html(temptpl(currentdata));
+	        //callback(htmltemplate)
+	    }, 'html');
+
+	}
 
 
 /***/ },
@@ -10367,17 +10501,74 @@
 	    testar: function (msg) {
 	        alert(msg);
 	    },
-	    injecthtmltemplate: function (targetClass, usetemplateName, currentdata) {
-	        console.log("6. inne i templatehandler");
-	        $.get(appsettings.htmltemplateURL +"/"+ usetemplateName, function (data) {
-	            var temptpl = Handlebars.compile(data);
-	            console.log("7. template klar att levereras");
-	            $(targetClass).append(temptpl(currentdata));
-	            //callback(htmltemplate)
-	        }, 'html');
-	    }
+	    injecttemplate: function (callTyp, usrid, callback) {
+	        console.log("2. servicen hämtar data");
+	        $.ajax({
+	            type: "GET",
+	            url: appsettings.localOrServerURL +"/"+ callTyp + "/devkey/testar",
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("3. servicen har hämtat datan");
+	                callback(data)
+	                
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel!");
+	            }
+	        });
+	       
+	    },
+	    injecttemplateDebug: function (callTyp, usrid, callback) {
+	        console.log("2. servicen hämtar debug data");
 
-	};
+	        var currurl="";
+	        switch(callTyp) {
+	            case "kk_aj_userinfojson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_userinfojson.aspx";
+	                break;
+	            case "kk_aj_lasteventjson":
+	                currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
+	                break;
+	            case "kk_aj_nyaansokjson":
+	                currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_nyaansokjson.aspx";
+	                break;
+	            case "kk_aj_approvedansokjson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_approvedansokjson.aspx";
+	                break;
+	            case "kk_aj_deniedansokjson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";
+	                break;
+	            case "kk_aj_archiveansokjson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_archiveansokjson.aspx";
+	                break;
+	            case "kk_aj_diariejson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
+	                break;
+	            default:
+	                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar";
+	                break;
+	        }
+
+	        $.ajax({
+	            type: "GET",
+	            //url: appsettings.localOrServerURL + "/" + callTyp + "/devkey/testar",
+	            url: currurl, //"http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_json.aspx",
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("3. servicen har hämtat debugg datan from " + callTyp);
+	                callback(data)
+
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel med debugdatan!");
+	            }
+	        });
+
+	    }
+	}
+
 
 
 /***/ }

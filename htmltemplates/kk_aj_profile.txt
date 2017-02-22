@@ -1,8 +1,8 @@
-﻿<img class="profile-user-img img-responsive img-circle" src="/Portals/_default/Skins/kk_Admin_Acklay/img/alf-aj.jpg" alt="User profile picture">
-                    <h3 class="profile-username text-center">{{namn}}</h3>
-                    <p class="text-muted text-center">Systemutvecklare annan template</p>
-                    <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item"><b>E-post:</b> <a class="pull-right">andreas.josefsson@kulturivast.se</a> </li>
-                        <li class="list-group-item"><b>Tel:</b> <a class="pull-right">0708-183215</a> </li>
-                        <li class="list-group-item"><b>Roll:</b> <a class="pull-right">Admin</a> </li>
-                    </ul>
+﻿<img class="profile-user-img img-responsive img-circle" src="{{kk_aj_admin.userinfo.useravatar}}" alt="User profile picture">
+    <h3 class="profile-username text-center">{{kk_aj_admin.userinfo.username}}</h3>
+    <p class="text-muted text-center">{{kk_aj_admin.userinfo.userinfoheader}}</p>
+    <ul class="list-group list-group-unbordered">
+        <li class="list-group-item"><b>E-post:</b> <a class="pull-right">{{kk_aj_admin.userinfo.userepost}}</a> </li>
+        <li class="list-group-item"><b>Tel:</b> <a class="pull-right">{{kk_aj_admin.userinfo.usertel}}</a> </li>
+        <li class="list-group-item"><b>Roll:</b> <a class="pull-right">{{kk_aj_admin.userinfo.userroll}}</a> </li>
+    </ul>

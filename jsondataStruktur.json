@@ -1,0 +1,456 @@
+//http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar
+
+{"namn":"Andreas ny build","devkey":"testar"}
+
+
+{
+	"kk_aj_admin": {
+		"newannonscount": "2",
+		"newmessages": {
+			"messagecount": "1",
+			"messlist": [{
+				"messtitle": "Nu laddar vi om servern",
+				"messurl": "www.barnensbibliotek.se"
+			},
+			{
+				"messtitle": "Detta funkar ju bra",
+				"messurl": "www.barnensbibliotek.se"
+			}
+			]
+		},
+		"userinfo": {
+			"userid": "105",
+			"username": "Testnisse",
+			"useravatar": "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/img/alf-aj.jpg",
+			"userroll": "1"
+		},
+		"adminview": {
+			"rollist": [{
+				"rollname": "Administrator",
+				"rollurl": "#"
+			},
+			{
+				"rollname": "kk_aj_Superuser",
+				"rollurl": "#"
+			}
+			],
+			"userlist": {
+				"username": "Testnisse",
+				"userurl": "#"
+			}
+		},
+		"status": "Upp and running"
+	}
+}
+
+///////////////////////////////////////////////////////////////////
+///////startsidan json debug //////////////////////////////////////
+// User info kk_aj_userinfojson.aspx
+{
+	"kk_aj_admin": {		
+		"userinfo": {
+			"userid": "105",
+			"username": "Testnisse",
+			"useravatar":"http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/img/alf-aj.jpg",
+			"userepost": "andreas.josefsson@kulturivast.se",
+			"usertel": "0708-183215",
+			"userinfoheader": "Systemutvecklare på Kultur i Väst",
+			"userinfotext": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.",
+			"userroll": "1"
+		},
+		"status": "userinfo is ok"
+	}
+}
+
+// senaste händelserna kk_aj_lasteventjson.aspx
+{
+	"kk_aj_admin": {
+		"latestcount": "2",
+		"latestevents": {
+			"messagecount": "1",
+			"messlist": [{
+				"eventid": "1",
+				"eventdate": "2017-01-15",
+				"eventmaintitle": "Skolbio förskolan: ",
+				"eventsubtitle": "Tigrar och tatueringar",
+				"eventcontent": "Maj, sex år och bor med sin farbror Sonny som är tatuerare, men de pratar ofta om att hitta en riktig familj till Maj.",
+				"eventurl": "www.barnensbibliotek.se",
+				"eventstatus": "Godkänd och publicerad"
+			},
+			{
+				"eventid": "2",
+				"eventdate": "2017-01-15",
+				"eventmaintitle": "Skolbio förskolan:  ",
+				"eventsubtitle": "Mustang",
+				"eventcontent": "Arrangemanget är bla bla bla bla bla bla bla bla bla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam posuere finibus viverra. Nunc pharetra leo ac ante mollis, sit amet gravida neque egestas. Mauris elit eros, maximus at iaculis in, ullamcorper ac massa. Curabitur erat leo, efficitur ac sapien et, fringilla venenatis lorem. Duis dapibus metus erat, non viverra tortor posuere ac. Nam vel elit bibendum, efficitur arcu vitae, cursus augue. Fusce lobortis facilisis tempor. Suspendisse aliquam sed nunc sed bibendum. Vivamus et dictum risus. Mauris et dolor ac velit faucibus aliquam vel et sapien. Cras euismod, dolor sed congue ornare, neque magna pharetra mi, tristique posuere ex sapien id nulla. Donec pellentesque ipsum in posuere laoreet. Donec sed lectus faucibus, placerat ligula a, placerat nisl. Fusce tincidunt pretium est, vel sodales lectus iaculis ut. ",
+				"eventurl": "www.barnensbibliotek.se",
+				"eventstatus": "Godkänd och publicerad"
+			},
+			{
+				"eventid": "3",
+				"eventdate": "2017-01-17",
+				"eventmaintitle": "Skapande i skolan:",
+				"eventsubtitle": "bananskalning",
+				"eventcontent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam posuere finibus viverra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam posuere finibus viverra. ",
+				"eventurl": "www.barnensbibliotek.se",
+				"eventstatus": "Nekad"
+			},
+			]
+		},		
+		"status": "listningen funkar"
+	}
+}
+
+///////////////////////////////////////////////////////////////////
+///////startsidan json debug //////////////////////////////////////
+
+// nya Ansokningar kk_aj_nyaansokjson.aspx
+{
+	"kk_aj_admin": {		
+		"ansokningstyp": "ny",
+		"ansokningarlista": {
+			"ansokningarcount": "1",
+			"ansokningar": [{
+				"ansokningid": "1",
+				"ansokningdate": "2017-01-15",
+				"ansokningtitle": "Skolbio förskolan: ",
+				"ansokningsubtitle": "Tigrar och tatueringar",
+				"ansokningutovare": "Lajvverkstaden",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "ny"
+			},
+			{
+				"ansokningid": "2",
+				"ansokningdate": "2017-01-16",
+				"ansokningtitle": "Skolbio förskolan: ",
+				"ansokningsubtitle": "Mustang",
+				"ansokningutovare": "Lajvverkstaden",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "ny"
+			},
+			{
+				"ansokningid": "2",
+				"ansokningdate": "2017-01-16",
+				"ansokningtitle": "Skapande i skolan:",
+				"ansokningsubtitle": "bananskalning",
+				"ansokningutovare": "Lajvverkstaden",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"nej",
+				"ansokninglast": "ja",
+				"ansokningstatus": "ny"				
+			}
+			]
+		},
+		"ansokningarlistacount": "4",
+		"ansokningarlistacurrentpage": "12",
+		"ansokningarlistatotalpages": "12",
+		"nyaansokningarcount":"12",
+		"approvedansokningarcount":"6",
+		"deniedansokningarcount":"6",
+		"status": "nyansokningar listan funkar"
+	}
+}
+
+// Godkända Ansokningar kk_aj_approvedansokjson.aspx
+{
+	"kk_aj_admin": {		
+		"ansokningstyp": "approved",
+		"ansokningarlista": {
+			"ansokningarcount": "1",
+			"ansokningar": [{
+				"ansokningid": "1",
+				"ansokningdate": "2017-01-15",
+				"ansokningtitle": "Skolbio förskolan: ",
+				"ansokningsubtitle": "Tigrar och tatueringar",
+				"ansokningutovare": "Lajvverkstaden",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "approved"
+			},
+			{
+				"ansokningid": "2",
+				"ansokningdate": "2017-01-16",
+				"ansokningtitle": "Skolbio förskolan: ",
+				"ansokningsubtitle": "Mustang",
+				"ansokningutovare": "L--",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "approved"
+			},
+			{
+				"ansokningid": "2",
+				"ansokningdate": "2017-01-16",
+				"ansokningtitle": "Skapande i skolan:",
+				"ansokningsubtitle": "bananskalning",
+				"ansokningutovare": "Lajvverkstaden",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"nej",
+				"ansokninglast": "ja",
+				"ansokningstatus": "approved"				
+			}
+			]
+		},
+		"ansokningarlistacount": "4",
+		"ansokningarlistacurrentpage": "12",
+		"ansokningarlistatotalpages": "12",
+		"nyaansokningarcount":"12",
+		"approvedansokningarcount":"6",
+		"deniedansokningarcount":"6",
+		"status": "approvedansokningar listan funkar"
+	}
+}
+
+// Nekade Ansokningar kk_aj_deniedansokjson.aspx
+{
+	"kk_aj_admin": {		
+		"ansokningstyp": "denied",
+		"ansokningarlista": {
+			"ansokningarcount": "1",
+			"ansokningar": [{
+				"ansokningid": "1",
+				"ansokningdate": "2017-01-15",
+				"ansokningtitle": "Skolbio förskolan: ",
+				"ansokningsubtitle": "Tigrar och tatueringar",
+				"ansokningutovare": "Nissesbyrå",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "denied"
+			},
+			{
+				"ansokningid": "2",
+				"ansokningdate": "2017-01-16",
+				"ansokningtitle": "Skolbio förskolan: ",
+				"ansokningsubtitle": "Mustang",
+				"ansokningutovare": "Lajvverkstaden",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "denied"
+			},
+			{
+				"ansokningid": "2",
+				"ansokningdate": "2017-01-16",
+				"ansokningtitle": "Skapande i skolan:",
+				"ansokningsubtitle": "bananskalning",
+				"ansokningutovare": "--",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"nej",
+				"ansokninglast": "ja",
+				"ansokningstatus": "denied"				
+			}
+			]
+		},
+		"ansokningarlistacount": "4",
+		"ansokningarlistacurrentpage": "12",
+		"ansokningarlistatotalpages": "12",
+		"nyaansokningarcount":"12",
+		"approvedansokningarcount":"6",
+		"deniedansokningarcount":"6",
+		"status": "deniedansokningar listan funkar"
+	}
+}
+
+// arkiverade Ansokningar kk_aj_archiveansokjson.aspx
+{
+	"kk_aj_admin": {		
+		"ansokningstyp": "archive",
+		"ansokningarlista": {
+			"ansokningarcount": "110",
+			"ansokningar": [{
+				"ansokningid": "1",
+				"ansokningdate": "2016-01-15",
+				"ansokningtitle": "Skolbio förskolan: ",
+				"ansokningsubtitle": "Tigrar och tatueringar",
+				"ansokningutovare": "Nissesbyrå",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "archive"
+			},
+			{
+				"ansokningid": "2",
+				"ansokningdate": "2016-01-16",
+				"ansokningtitle": "Skolbio förskolan: ",
+				"ansokningsubtitle": "Mustang",
+				"ansokningutovare": "--",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "archive"
+			},
+			{
+				"ansokningid": "2",
+				"ansokningdate": "2016-01-17",
+				"ansokningtitle": "Skapande i skolan:",
+				"ansokningsubtitle": "bananskalning",
+				"ansokningutovare": "Lajvverkstaden",
+				"ansokningurl": "www.barnensbibliotek.se",
+				"ansokningbilaga":"nej",
+				"ansokninglast": "ja",
+				"ansokningstatus": "archive"				
+			}
+			]
+		},
+		"ansokningarlistacount": "4",
+		"ansokningarlistacurrentpage": "1",
+		"ansokningarlistatotalpages": "110",
+		"nyaansokningarcount":"12",
+		"approvedansokningarcount":"6",
+		"deniedansokningarcount":"6",
+		"status": "archivedansokningar listan funkar"
+	}
+}
+
+///////////////////////////////////////////////////////////////////
+///////diareie json debug //////////////////////////////////////
+
+// diarielista kk_aj_diariejson.aspx
+{
+	"kk_aj_admin": {				
+		"ansokningarlista": {
+			"loggarcount": "1",
+			"loggar": [{
+				"loggid": "1",
+				"arrid": "1",
+				"loggdate": "2017-01-15",
+				"loggtitle": "Skolbio förskolan: ",
+				"loggsubtitle": "Tigrar och tatueringar",
+				"loggmotivering": "Maj, sex år och bor med sin farbror Sonny som är tatuerare, men de pratar ofta om att hitta en riktig familj till Maj.",
+				"arrurl": "www.barnensbibliotek.se",
+				"logguser":"Andreas Josefsson",				
+				"loggstatus": "Approved"
+			},
+			{
+				"loggid": "2",
+				"arrid": "2",
+				"loggdate": "2017-01-16",
+				"loggtitle": "Skolbio förskolan: ",
+				"loggsubtitle": "Mustang",
+				"loggmotivering": "Maj, sex år och bor med sin farbror Sonny som är tatuerare, men de pratar ofta om att hitta en riktig familj till Maj.",
+				"arrurl": "www.barnensbibliotek.se",
+				"logguser":"Andreas Josefsson",				
+				"loggstatus": "Edit"
+			},
+			{
+				"loggid": "3",				
+				"arrid": "3",
+				"loggdate": "2017-01-16",
+				"loggtitle": "Skapande i skolan:",
+				"loggsubtitle": "bananskalning",
+				"loggmotivering": "Maj, sex år och bor med sin farbror Sonny som är tatuerare, men de pratar ofta om att hitta en riktig familj till Maj.",
+				"arrurl": "www.barnensbibliotek.se",
+				"logguser":"Andreas Josefsson",				
+				"loggstatus": "Approved"		
+			},{
+				"loggid": "4",
+				"arrid": "2",
+				"loggdate": "2017-01-16",
+				"loggtitle": "Skolbio förskolan: ",
+				"loggsubtitle": "Mustang",
+				"loggmotivering": "Maj, sex år och bor med sin farbror Sonny som är tatuerare, men de pratar ofta om att hitta en riktig familj till Maj.",
+				"arrurl": "www.barnensbibliotek.se",
+				"logguser":"Andreas Josefsson",				
+				"loggstatus": "Edit"
+			},
+			{
+				"loggid": "5",
+				"arrid": "3",
+				"loggdate": "2017-01-16",
+				"loggtitle": "Skapande i skolan:",
+				"loggsubtitle": "bananskalning",
+				"loggmotivering": "Maj, sex år och bor med sin farbror Sonny som är tatuerare, men de pratar ofta om att hitta en riktig familj till Maj.",
+				"arrurl": "www.barnensbibliotek.se",
+				"logguser":"Andreas Josefsson",				
+				"loggstatus": "Ny"		
+			}
+			]
+		},
+		"currentpage": "1",
+		"totalpages": "110",
+		"status": "logglistan funkar"
+	}
+}
+
+////////////////////////////////////////////
+//topnav 
+
+//topnav message
+{
+	"kk_aj_admin": {
+		"topmessagescount": "2",
+		"topmessages":[{
+				"title": "Ät gröt",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			},
+			{
+				"title": "kolla det senaste",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			}
+			]
+		},
+		"status": "mess is up and running"
+	}
+}
+
+//topnav message
+{
+	"kk_aj_admin": {
+		"topnotificationcount": "2",
+		"topnotification":[{
+				"title": "Nu laddar vi om servern",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			},
+			{
+				"title": "Detta funkar ju bra",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			}
+			]
+		},
+		"status": "notify is up and running"
+	}
+}
+
+//topnav message
+{
+	"kk_aj_admin": {
+		"toptaskcount": "2",
+		"toptask":[{
+				"title": "Nu laddar vi om servern",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			},
+			{
+				"title": "Detta funkar ju bra",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			}
+			]
+		},
+		"status": "task is up and running"
+	}
+}
+
+
+//topnav message
+{
+	"kk_aj_admin": {
+		"topuserinfo": {
+			"userid": "105",
+			"username": "Testnisse",
+			"useravatar": "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/img/alf-aj.jpg",
+			"userroll": "1"
+		},
+		"status": "User is Up and running"
+	}
+}

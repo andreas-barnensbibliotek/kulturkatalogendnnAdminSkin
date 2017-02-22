@@ -2,7 +2,7 @@
     <h3 class="box-title">Om mej</h3>
 </div>
 <!-- /.box-header -->
-<div class="box-body"><strong><i class="fa fa-file-text-o margin-r-5"></i>Systemutvecklare på Kultur i Väst</strong>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+<div class="box-body"><strong><i class="fa fa-file-text-o margin-r-5"></i>{{kk_aj_admin.userinfo.userinfoheader}}</strong>
+    <p>{{kk_aj_admin.userinfo.userinfotext}}</p>
 </div>
 <!-- /.box-body -->
