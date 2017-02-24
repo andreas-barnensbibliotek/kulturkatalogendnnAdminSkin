@@ -33,22 +33,32 @@ module.exports = {
 };
 
 var loadtemplateTypes = function (pagetemplate, userid) {    
-    for (var obj in pagetemplate) {
-        console.log("4. " + pagetemplate[obj].templatename + " körs");
-        ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
-            loadpagetemplates(pagetemplate[obj], data);
+    var i = 0;
+    //for (var obj in pagetemplate) {
+    $.each(pagetemplate, function( obj, value ) {
+        console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
+        
+        ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
+            loadpagetemplates(value, data, function (data) {
+                if (data == "ja") {
+                    console.log("KLART");
+                }
+            });
         });
-    };
+        //ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
+        //    loadpagetemplates(pagetemplate[obj], data);
+        });
+    //};
 }
 
 
-var loadpagetemplates = function (template, currentdata) {
-    console.log("5. laddar: " + template.filename);
+var loadpagetemplates = function (template, currentdata,callback) {
+    console.log("6. laddar: " + template.filename);   
     $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
         var temptpl = Handlebars.compile(data);
-        console.log("6. "+template.filename +" klar att levereras");
+        console.log("7. "+template.filename +" klar att levereras");
         $(template.targetdiv).html(temptpl(currentdata));
-        //callback(htmltemplate)
+        callback("ja");
     }, 'html');
 
 }

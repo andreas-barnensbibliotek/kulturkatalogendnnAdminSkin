@@ -45,12 +45,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var appsettings = __webpack_require__(1);
-	var msg = __webpack_require__(2);
-	var loadpageHandler = __webpack_require__(3);
+	//var msg = require("./jsmoduler/main.js");
+	var loadpageHandler = __webpack_require__(2);
 	//var ServiceHandler = require("./jsmoduler/ServiceCallHandler.js");
 	//var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
 
-	var $ = __webpack_require__(4);
+	var $ = __webpack_require__(3);
 
 	$(function () {
 
@@ -99,13 +99,7 @@
 	        templatedata:"kk_aj_userinfojson",
 	        targetdiv: ".kk_aj_profile",
 	        filename: "kk_aj_profile.txt"
-	    },
-	    {
-	        templatename: "startUserAboutMeTmpl",
-	        templatedata: "kk_aj_userinfojson",
-	        targetdiv: ".kk_aj_aboutme",
-	        filename: "kk_aj_aboutMe.txt"
-	    },
+	    },    
 	    {
 	        templatename: "StartSenasteListTmpl",
 	        templatedata: "kk_aj_lasteventjson",
@@ -155,29 +149,11 @@
 	];
 	window.kk_aj_kk_aj_topNavView = [
 	    {
-	        templatename: "TopNavMessageMenuTmpl",
-	        templatedata: "kk_aj_topmessjson",
-	        targetdiv: ".kk_aj_topNav_message_menu",
-	        filename: "kk_aj_topNav_message_menu.txt"
-	    },
-	    {
-	        templatename: "TopNavNotificationMenuTmpl",
-	        templatedata: "kk_aj_topnotejson",
-	        targetdiv: ".kk_aj_topNav_notifications_menu",
-	        filename: "kk_aj_topNav_notifications_menu.txt"
-	    },
-	    {
-	        templatename: "TopNavTaskMenuTmpl",
-	        templatedata: "kk_aj_toptaskjson",
-	        targetdiv: ".kk_aj_topNav_tasks_menu",
-	        filename: "kk_aj_topNav_tasks_menu.txt"
-	    },
-	   {
-	       templatename: "TopNavUserMenuTmpl",
-	       templatedata: "kk_aj_userinfojson",
-	       targetdiv: ".kk_aj_topNav_user_menu",
-	       filename: "kk_aj_topNav_user_menu.txt"
-	   }
+	        templatename: "TopNavMenuTmpl",
+	        templatedata: "kk_aj_topnavjson",
+	        targetdiv: ".kk_aj_topNav",
+	        filename: "kk_aj_topNav_menu.txt"
+	    }
 	];
 
 	module.exports = {  
@@ -195,23 +171,11 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
-
-	
-	module.exports = {
-	    testar: function (msg) {
-	        alert(msg);
-	    }
-	}
-
-
-/***/ },
-/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(4);
+	var $ = __webpack_require__(3);
 	var appsettings = __webpack_require__(1);
-	var ServiceHandler = __webpack_require__(5);
+	var ServiceHandler = __webpack_require__(4);
 	module.exports = {
 	    testar: function (msg) {
 	        alert(msg);
@@ -244,29 +208,39 @@
 	};
 
 	var loadtemplateTypes = function (pagetemplate, userid) {    
-	    for (var obj in pagetemplate) {
-	        console.log("4. " + pagetemplate[obj].templatename + " körs");
-	        ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
-	            loadpagetemplates(pagetemplate[obj], data);
+	    var i = 0;
+	    //for (var obj in pagetemplate) {
+	    $.each(pagetemplate, function( obj, value ) {
+	        console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
+	        
+	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
+	            loadpagetemplates(value, data, function (data) {
+	                if (data == "ja") {
+	                    console.log("KLART");
+	                }
+	            });
 	        });
-	    };
+	        //ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
+	        //    loadpagetemplates(pagetemplate[obj], data);
+	        });
+	    //};
 	}
 
 
-	var loadpagetemplates = function (template, currentdata) {
-	    console.log("5. laddar: " + template.filename);
+	var loadpagetemplates = function (template, currentdata,callback) {
+	    console.log("6. laddar: " + template.filename);   
 	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
 	        var temptpl = Handlebars.compile(data);
-	        console.log("6. "+template.filename +" klar att levereras");
+	        console.log("7. "+template.filename +" klar att levereras");
 	        $(template.targetdiv).html(temptpl(currentdata));
-	        //callback(htmltemplate)
+	        callback("ja");
 	    }, 'html');
 
 	}
 
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10492,35 +10466,35 @@
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(4);
+	var $ = __webpack_require__(3);
 	var appsettings = __webpack_require__(1);
 	module.exports = {
 	    testar: function (msg) {
 	        alert(msg);
 	    },
-	    injecttemplate: function (callTyp, usrid, callback) {
-	        console.log("2. servicen hämtar data");
-	        $.ajax({
-	            type: "GET",
-	            url: appsettings.localOrServerURL +"/"+ callTyp + "/devkey/testar",
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("3. servicen har hämtat datan");
-	                callback(data)
+	    //injecttemplate: function (callTyp, usrid, callback) {
+	    //    console.log("2. servicen hämtar data");
+	    //    $.ajax({
+	    //        type: "GET",
+	    //        url: appsettings.localOrServerURL +"/"+ callTyp + "/devkey/testar",
+	    //        dataType: "json",
+	    //        success: function (data) {
+	    //            console.log("3. servicen har hämtat datan");
+	    //            callback(data)
 	                
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel!");
-	            }
-	        });
+	    //        },
+	    //        error: function (xhr, ajaxOptions, thrownError) {
+	    //            console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	    //            alert("Nått blev fel!");
+	    //        }
+	    //    });
 	       
-	    },
+	    //},
 	    injecttemplateDebug: function (callTyp, usrid, callback) {
-	        console.log("2. servicen hämtar debug data");
+	        console.log("4. servicen hämtar debug data");
 
 	        var currurl="";
 	        switch(callTyp) {
@@ -10545,18 +10519,21 @@
 	            case "kk_aj_diariejson":
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
 	                break;
+	            case "kk_aj_topnavjson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
+	                break;
 	            default:
-	                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar";
+	                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar_help";
 	                break;
 	        }
 
 	        $.ajax({
 	            type: "GET",
 	            //url: appsettings.localOrServerURL + "/" + callTyp + "/devkey/testar",
-	            url: currurl, //"http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_json.aspx",
+	            url: currurl, //"kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_json.aspx",
 	            dataType: "json",
 	            success: function (data) {
-	                console.log("3. servicen har hämtat debugg datan from " + callTyp);
+	                console.log("5. servicen har hämtat debugg datan from " + callTyp);
 	                callback(data)
 
 	            },

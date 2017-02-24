@@ -9,13 +9,7 @@ window.kk_aj_startView= [
         templatedata:"kk_aj_userinfojson",
         targetdiv: ".kk_aj_profile",
         filename: "kk_aj_profile.txt"
-    },
-    {
-        templatename: "startUserAboutMeTmpl",
-        templatedata: "kk_aj_userinfojson",
-        targetdiv: ".kk_aj_aboutme",
-        filename: "kk_aj_aboutMe.txt"
-    },
+    },    
     {
         templatename: "StartSenasteListTmpl",
         templatedata: "kk_aj_lasteventjson",
@@ -65,29 +59,11 @@ window.kk_aj_DiarieView =[
 ];
 window.kk_aj_kk_aj_topNavView = [
     {
-        templatename: "TopNavMessageMenuTmpl",
-        templatedata: "kk_aj_topmessjson",
-        targetdiv: ".kk_aj_topNav_message_menu",
-        filename: "kk_aj_topNav_message_menu.txt"
-    },
-    {
-        templatename: "TopNavNotificationMenuTmpl",
-        templatedata: "kk_aj_topnotejson",
-        targetdiv: ".kk_aj_topNav_notifications_menu",
-        filename: "kk_aj_topNav_notifications_menu.txt"
-    },
-    {
-        templatename: "TopNavTaskMenuTmpl",
-        templatedata: "kk_aj_toptaskjson",
-        targetdiv: ".kk_aj_topNav_tasks_menu",
-        filename: "kk_aj_topNav_tasks_menu.txt"
-    },
-   {
-       templatename: "TopNavUserMenuTmpl",
-       templatedata: "kk_aj_userinfojson",
-       targetdiv: ".kk_aj_topNav_user_menu",
-       filename: "kk_aj_topNav_user_menu.txt"
-   }
+        templatename: "TopNavMenuTmpl",
+        templatedata: "kk_aj_topnavjson",
+        targetdiv: ".kk_aj_topNav",
+        filename: "kk_aj_topNav_menu.txt"
+    }
 ];
 
 module.exports = {  

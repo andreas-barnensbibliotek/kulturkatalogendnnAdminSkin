@@ -381,7 +381,60 @@
 ////////////////////////////////////////////
 //topnav 
 
+{
+	"kk_aj_admin": {
+		"topmessagescount": "2",
+		"topmessages":[{
+				"title": "Ät gröt",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			},
+			{
+				"title": "kolla det senaste",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			}
+			]
+		},
+		"topnotificationcount": "2",
+		"topnotification":[{
+				"title": "Nu laddar vi om servern",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			},
+			{
+				"title": "Detta funkar ju bra",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			}
+			]
+		},
+		"toptaskcount": "2",
+		"toptask":[{
+				"title": "Nu laddar vi om servern",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			},
+			{
+				"title": "Detta funkar ju bra",
+				"url": "www.barnensbibliotek.se",
+				"date":"17-02-22"
+			}
+			]
+		},
+		"topuserinfo": {
+			"userid": "105",
+			"username": "Testnisse",
+			"useravatar": "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/img/alf-aj.jpg",
+			"userroll": "1"
+		},
+		"status": "mess is up and running"
+	}
+}
+
+// top nav Uppdelat //////////////////////////////////////////////////////
 //topnav message
+
 {
 	"kk_aj_admin": {
 		"topmessagescount": "2",
@@ -401,7 +454,8 @@
 	}
 }
 
-//topnav message
+
+//topnav notification
 {
 	"kk_aj_admin": {
 		"topnotificationcount": "2",
@@ -421,7 +475,7 @@
 	}
 }
 
-//topnav message
+//topnav task
 {
 	"kk_aj_admin": {
 		"toptaskcount": "2",

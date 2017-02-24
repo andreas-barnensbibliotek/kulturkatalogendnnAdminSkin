@@ -89,11 +89,12 @@
     <!-- /.content-wrapper -->
 
 <!-- ################################################################################################ -->
-
+   
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
+         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
       Utvecklare: Andreas Josefsson
     </div>
     <!-- Default to the left -->

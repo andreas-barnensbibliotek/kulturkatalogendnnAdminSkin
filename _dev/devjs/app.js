@@ -1,5 +1,5 @@
 var appsettings = require("./jsmoduler/appSettings.js");
-var msg = require("./jsmoduler/main.js");
+//var msg = require("./jsmoduler/main.js");
 var loadpageHandler = require("./jsmoduler/pageloadhandler.js");
 //var ServiceHandler = require("./jsmoduler/ServiceCallHandler.js");
 //var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
