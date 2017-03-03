@@ -1,8 +1,25 @@
-﻿<div class="box-header with-border">
-    <h3 class="box-title">Om mej</h3>
-</div>
-<!-- /.box-header -->
-<div class="box-body"><strong><i class="fa fa-file-text-o margin-r-5"></i>{{kk_aj_admin.userinfo.userinfoheader}}</strong>
-    <p>{{kk_aj_admin.userinfo.userinfotext}}</p>
-</div>
-<!-- /.box-body -->
+﻿<tbody>
+    <tr class="tableheader">
+        <td></td>
+        <td></td>
+        <td><a href="#">Utövare <i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+        <td><a href="#">Rubrik<i class="fa fa-caret-up" aria-hidden="true"></i></a></td>                                            
+        <td><a href="#">Datum</a></td>
+        <td></td>
+    </tr>     
+	
+	<!-- item loop START -->
+	 {{#each kk_aj_admin.ansokningarlista.ansokningar}}
+	<tr>
+		<td><input type="checkbox"></td>
+		<td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow" title="Ej läst"></i></a></td>
+		<td class="mailbox-name"><a href="{{ansokningurl}}" rel="{{ansokningid}}">{{ansokningutovare}}</a></td>
+		<td class="mailbox-subject">
+			<a href="{{ansokningurl}}" rel="{{ansokningid}}">{{ansokningtitle}} <b>{{ansokningsubtitle}}</b></a>
+		</td>
+		<td class="mailbox-date">{{ansokningdate}}</td>       
+		<td class="mailbox-attachment"><a href="{{ansokningbilagaUrl}}"><i class="fa fa-paperclip"></i></a></td>        
+	</tr>
+	{{/each}}
+	<!-- item loop STOP -->
+</tbody>

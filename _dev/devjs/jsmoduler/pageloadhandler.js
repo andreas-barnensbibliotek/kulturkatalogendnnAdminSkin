@@ -12,14 +12,29 @@ module.exports = {
                 loadtemplateTypes(appsettings.topnavtemplate);
                 loadtemplateTypes(appsettings.starttemplate);
                 break;
-            case "kk_aj_ansokningarView":               
-                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView ");
-                loadtemplateTypes(appsettings.topnavtemplate);
-                loadtemplateTypes(appsettings.ansokningartemplate);   
+            case "kk_aj_ansokningarView": //nya              
+                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView =nya");
+                loadtemplateTypes(appsettings.topnavtemplate);                
+                loadtemplateTypes(appsettings.nyaansokningartemplate);
                 break;
+            case "kk_aj_approvedansokningarView": //godkända
+                console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
+                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.approvedansokningartemplate);
+                break;
+            case "kk_aj_deniedansokningarView": //nekade
+                console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
+                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.deniedansokningartemplate);
+                break;
+            case "kk_aj_archiveansokningarView": //arkiv
+                console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
+                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.archiveansokningartemplate);
+                break;                
             case "kk_aj_diarieView":
                 console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
-                lloadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate);
                 loadtemplateTypes(appsettings.diarietemplate);                
                 break;
             default:

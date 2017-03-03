@@ -1,7 +1,7 @@
 var appsettings = require("./jsmoduler/appSettings.js");
 //var msg = require("./jsmoduler/main.js");
 var loadpageHandler = require("./jsmoduler/pageloadhandler.js");
-//var ServiceHandler = require("./jsmoduler/ServiceCallHandler.js");
+var registerJqueryEvents = require("./jsmoduler/eventhandler.js");
 //var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
 
 var $ = require("jquery");
@@ -12,6 +12,10 @@ $(function () {
     var _userid = $('.kk_aj_CurrentUserid').html();
     var _rollid = $('.kk_aj_CurrentRollid').html();
     var _pageType = $('.kk_aj_CurrentPageType').html();
+
+    // start eventhandler -----------------------------
+    registerJqueryEvents.jqueryEVENTS(_userid);
+    // end eventhandler
 
     var init = function () {
         console.log("1. init körs");

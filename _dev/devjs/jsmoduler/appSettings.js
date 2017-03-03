@@ -21,32 +21,32 @@ window.kk_aj_nyaansokningarView = [
     {
         templatename: "nyaAnsokningarTmpl",
         templatedata: "kk_aj_nyaansokjson",
-        targetdiv: "",
-        filename: "kk_aj_topNav_message_menu.txt"
+        targetdiv: ".kk_aj_ansokningar",
+        filename: "kk_aj_ansokningarLista.txt"
     }
 ];
 window.kk_aj_approvedansokningarView = [
     {
         templatename: "approvedansokningarTmpl",
         templatedata: "kk_aj_approvedansokjson",
-        targetdiv: "",
-        filename: "kk_aj_topNav_message_menu.txt"
+        targetdiv: ".kk_aj_ansokningar",
+        filename: "kk_aj_ansokningarLista.txt"
     }
 ];
 window.kk_aj_deniedansokningarView = [
     {
         templatename: "deniedansokningarTmpl",
         templatedata: "kk_aj_deniedansokjson",
-        targetdiv: "",
-        filename: "kk_aj_topNav_message_menu.txt"
+        targetdiv: ".kk_aj_ansokningar",
+        filename: "kk_aj_ansokningarLista.txt"
     }
 ];
 window.kk_aj_archiveansokningarView = [
     {
         templatename: "archiveansokningarTmpl",
         templatedata: "kk_aj_archiveansokjson",
-        targetdiv: "",
-        filename: "kk_aj_topNav_message_menu.txt"
+        targetdiv: ".kk_aj_ansokningar",
+        filename: "kk_aj_ansokningarLista.txt"
     }
 ];
 window.kk_aj_DiarieView =[    

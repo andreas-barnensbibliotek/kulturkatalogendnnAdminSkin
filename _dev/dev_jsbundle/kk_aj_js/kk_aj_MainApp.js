@@ -47,7 +47,7 @@
 	var appsettings = __webpack_require__(1);
 	//var msg = require("./jsmoduler/main.js");
 	var loadpageHandler = __webpack_require__(2);
-	//var ServiceHandler = require("./jsmoduler/ServiceCallHandler.js");
+	var registerJqueryEvents = __webpack_require__(5);
 	//var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
 
 	var $ = __webpack_require__(3);
@@ -58,6 +58,10 @@
 	    var _userid = $('.kk_aj_CurrentUserid').html();
 	    var _rollid = $('.kk_aj_CurrentRollid').html();
 	    var _pageType = $('.kk_aj_CurrentPageType').html();
+
+	    // start eventhandler -----------------------------
+	    registerJqueryEvents.jqueryEVENTS(_userid);
+	    // end eventhandler
 
 	    var init = function () {
 	        console.log("1. init k�rs");
@@ -111,32 +115,32 @@
 	    {
 	        templatename: "nyaAnsokningarTmpl",
 	        templatedata: "kk_aj_nyaansokjson",
-	        targetdiv: "",
-	        filename: "kk_aj_topNav_message_menu.txt"
+	        targetdiv: ".kk_aj_ansokningar",
+	        filename: "kk_aj_ansokningarLista.txt"
 	    }
 	];
 	window.kk_aj_approvedansokningarView = [
 	    {
 	        templatename: "approvedansokningarTmpl",
 	        templatedata: "kk_aj_approvedansokjson",
-	        targetdiv: "",
-	        filename: "kk_aj_topNav_message_menu.txt"
+	        targetdiv: ".kk_aj_ansokningar",
+	        filename: "kk_aj_ansokningarLista.txt"
 	    }
 	];
 	window.kk_aj_deniedansokningarView = [
 	    {
 	        templatename: "deniedansokningarTmpl",
 	        templatedata: "kk_aj_deniedansokjson",
-	        targetdiv: "",
-	        filename: "kk_aj_topNav_message_menu.txt"
+	        targetdiv: ".kk_aj_ansokningar",
+	        filename: "kk_aj_ansokningarLista.txt"
 	    }
 	];
 	window.kk_aj_archiveansokningarView = [
 	    {
 	        templatename: "archiveansokningarTmpl",
 	        templatedata: "kk_aj_archiveansokjson",
-	        targetdiv: "",
-	        filename: "kk_aj_topNav_message_menu.txt"
+	        targetdiv: ".kk_aj_ansokningar",
+	        filename: "kk_aj_ansokningarLista.txt"
 	    }
 	];
 	window.kk_aj_DiarieView =[    
@@ -187,14 +191,29 @@
 	                loadtemplateTypes(appsettings.topnavtemplate);
 	                loadtemplateTypes(appsettings.starttemplate);
 	                break;
-	            case "kk_aj_ansokningarView":               
-	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView ");
-	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.ansokningartemplate);   
+	            case "kk_aj_ansokningarView": //nya              
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView =nya");
+	                loadtemplateTypes(appsettings.topnavtemplate);                
+	                loadtemplateTypes(appsettings.nyaansokningartemplate);
 	                break;
+	            case "kk_aj_approvedansokningarView": //godkända
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
+	                loadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.approvedansokningartemplate);
+	                break;
+	            case "kk_aj_deniedansokningarView": //nekade
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
+	                loadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.deniedansokningartemplate);
+	                break;
+	            case "kk_aj_archiveansokningarView": //arkiv
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
+	                loadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.archiveansokningartemplate);
+	                break;                
 	            case "kk_aj_diarieView":
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
-	                lloadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.topnavtemplate);
 	                loadtemplateTypes(appsettings.diarietemplate);                
 	                break;
 	            default:
@@ -10547,6 +10566,56 @@
 	}
 
 
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(3);
+	var appsettings = __webpack_require__(1);
+	var loadpageHandler = __webpack_require__(2);
+
+	module.exports = {
+	    jqueryEVENTS: function (userid) {
+	        
+	        $('body').on('click', '.kk_aj_nyadansokningar', function () {
+	            //console.log('1-1. .kk_aj_nyadansokningar');            
+	            updateansokHeaderjquery("label-primary", "Nya ansökningar");
+	            loadpageHandler.pageloader("kk_aj_ansokningarView");
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_approvedansokningar', function () {
+	            //console.log('1-1. .kk_aj_approvedansokningar');           
+	            updateansokHeaderjquery("label-success", "Godkända");
+	            loadpageHandler.pageloader("kk_aj_approvedansokningarView");
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_deniedansokningar', function () {
+	            //console.log('1-1. .kk_aj_deniedansokningar');
+	            updateansokHeaderjquery("label-danger", "Nekade");
+	            loadpageHandler.pageloader("kk_aj_deniedansokningarView");
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_archiveansokningar', function () {
+	            //console.log('1-1. .kk_aj_archiveansokningar');
+	            updateansokHeaderjquery("", "Arkiv");
+	            loadpageHandler.pageloader("kk_aj_archiveansokningarView");
+	            return false;
+	        });
+	    }
+	}
+
+	var updateansokHeaderjquery = function (classname, headertext) {
+	    $('.kk_aj_ansokningar').html('<tr><td><div class="kk_aj_loader"></div></td></tr>');
+
+	    $('.kk_aj_ansokanboxheader').attr('class', $('.kk_aj_ansokanboxheader').attr('class').replace(/(^|\s)label-\S+/g, '')).addClass(classname);
+	    $('.kk_aj_box-title').html(headertext);
+	    $('.kk_aj_ansoksearchform').attr('placeholder', 'Sök i ' + headertext);
+	    
+	};
 
 /***/ }
 /******/ ]);
