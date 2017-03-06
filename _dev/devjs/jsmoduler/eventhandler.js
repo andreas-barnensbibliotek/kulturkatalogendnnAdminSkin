@@ -35,7 +35,20 @@ module.exports = {
             loadlistView(curpage);            
             return false;
         });
-        
+
+        $('body').on('click', '.kk_aj_markall', function (event) {
+                
+                // Iterate each checkbox
+                $('.kk_aj_chkboxAnnons').each(function () {
+                    if (this.checked) {
+                        this.checked = false;
+                    } else {
+                        this.checked = true;
+                    }
+                  
+                });
+           
+        });
     }
 }
 
@@ -70,9 +83,9 @@ var loadlistView = function (getlistview) {
 }
 
 var updatemainannonscount = function () {
-    var classtocheck = ".kk_aj_archiveansokningar"
-    if (!$(classtocheck + " span").length) {
-        $(classtocheck+ '.label').html('2222');
+    var classtocheck = ".kk_aj_archiveansokningar";
+    if ($(classtocheck + " span").length) {
+        $(classtocheck + ' .label').html('2222');
     } else {
         $(classtocheck).append('</i> Nekade <span class="label label-danger pull-right kk_aj_deniedcount">65</span>');
     };
@@ -85,4 +98,10 @@ var updatemainannonscount = function () {
 
     //}
 
+};
+
+var markeraallaannonser = function () {
+    
+    
+    
 }
