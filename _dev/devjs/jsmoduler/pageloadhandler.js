@@ -44,7 +44,6 @@ module.exports = {
                 break;
         }
     }
-
 };
 
 var loadtemplateTypes = function (pagetemplate, userid) {    

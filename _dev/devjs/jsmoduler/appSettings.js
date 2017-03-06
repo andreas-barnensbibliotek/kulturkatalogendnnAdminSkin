@@ -78,3 +78,19 @@ module.exports = {
     archiveansokningartemplate: window.kk_aj_archiveansokningarView,
     diarietemplate:window.kk_aj_DiarieView
 }
+
+
+
+
+
+//Handlebars.registerHelper('ifLast', function (object) {
+//   // var ret = true;
+//    console.log("inne!");
+//    if (object === "nej") {
+//        return '<i class="fa fa-star text-yellow" title="Ej läst"></i>';
+//    } else {
+//        return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
+//    }
+//    // ret;
+//    //return (object == "nej") ? false : true;
+//});

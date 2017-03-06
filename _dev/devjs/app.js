@@ -1,5 +1,6 @@
 var appsettings = require("./jsmoduler/appSettings.js");
 //var msg = require("./jsmoduler/main.js");
+var handlebarshelpers = require("./jsmoduler/handlebarHelpers.js");
 var loadpageHandler = require("./jsmoduler/pageloadhandler.js");
 var registerJqueryEvents = require("./jsmoduler/eventhandler.js");
 //var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
