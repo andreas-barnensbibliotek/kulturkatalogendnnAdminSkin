@@ -232,6 +232,7 @@
 	        alert(msg);
 	    },
 	    pageloader: function (pagetoload) {
+	        var sortobj = { "tosort": "title", "order": "down" };
 	        switch(pagetoload) {
 	            case "kk_aj_startView":
 	                console.log("2. kk_aj_startView körs");                
@@ -240,28 +241,29 @@
 	                break;
 	            case "kk_aj_ansokningarView": //nya              
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView =nya");
+	                
 	                loadtemplateTypes(appsettings.topnavtemplate);                
-	                loadtemplateTypes(appsettings.nyaansokningartemplate);
+	                loadtemplateTypes(appsettings.nyaansokningartemplate,0, sortobj);
 	                break;
 	            case "kk_aj_approvedansokningarView": //godkända
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.approvedansokningartemplate);
+	                loadtemplateTypes(appsettings.approvedansokningartemplate, 0, sortobj);
 	                break;
 	            case "kk_aj_deniedansokningarView": //nekade
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.deniedansokningartemplate);
+	                loadtemplateTypes(appsettings.deniedansokningartemplate, 0, sortobj);
 	                break;
 	            case "kk_aj_archiveansokningarView": //arkiv
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.archiveansokningartemplate);
+	                loadtemplateTypes(appsettings.archiveansokningartemplate, 0, sortobj);
 	                break;                
 	            case "kk_aj_diarieView":
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.diarietemplate);                
+	                loadtemplateTypes(appsettings.diarietemplate, 0, sortobj);
 	                break;
 	            default:
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
@@ -272,13 +274,51 @@
 	    }
 	};
 
-	var loadtemplateTypes = function (pagetemplate, userid) {    
+	var loadtemplateTypes = function (pagetemplate, userid, sortera) {    
 	    var i = 0;
+	    if (sortera != undefined) {
+	        console.log("3.  userid= " + userid + " sort=" +sortera.tosort);
+	    }
+	    
 	    //for (var obj in pagetemplate) {
 	    $.each(pagetemplate, function( obj, value ) {
-	        console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
+	        //console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
 	        
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
+	            console.log("3.1.  körs");
+	            
+	            if (data.kk_aj_admin.ansokningarlista) {
+	                //var objectToSort;
+	                //switch(sortera.tosort) {
+	                //    case "utovare":
+	                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
+	                //        break;
+	                //    case "title":
+	                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
+	                //        break;
+	                //    default:
+	                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
+	                //        break;
+	                //}  
+	              
+
+	            
+	             //   console.log("3.2.  körs ");
+	                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (b, a) {
+	                    //return a.attributes.OBJECTID - B.attributes.OBJECTID;
+	                    console.log(a[0]);
+	                    if (a.ansokningtitle == b.ansokningtitle)
+	                        return 0;
+	                    if (a.ansokningtitle < b.ansokningtitle)
+	                        return -1;
+	                    if (a.ansokningtitle > b.ansokningtitle)
+	                        return 1;
+	               //     console.log("3.3.  körs ");
+
+	                });
+
+	            }
+
 	            loadpagetemplates(value, data, function (data) {
 	                if (data == "ja") {
 	                    console.log("KLART");
@@ -10655,8 +10695,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_markall', function (event) {
-	                
+	        $('body').on('click', '.kk_aj_markall', function (event) {                
 	                // Iterate each checkbox
 	                $('.kk_aj_chkboxAnnons').each(function () {
 	                    if (this.checked) {
@@ -10671,7 +10710,34 @@
 	    }
 	}
 
-	var updateansokHeaderjquery = function (classname, headertext, currentListView) {
+	var updateansokHeaderjquery = function (currentListView) {
+	    var classname = "";
+	    var headertext = "";
+	    var activeclass = "";
+
+	    switch (currentListView) {
+	        case "kk_aj_ansokningarView":            
+	            classname ="label-primary";
+	            headertext= "Nya ansökningar";
+	            activeclass=".kk_aj_nyansokanmenu";            
+	            break;
+	        case "kk_aj_approvedansokningarView":
+	            classname ="label-success";
+	            headertext= "Godkända";
+	            activeclass=".kk_aj_approvedansokanmenu"; 
+	            break;
+	        case "kk_aj_deniedansokningarView":
+	            classname ="label-danger";
+	            headertext="Nekade";
+	            activeclass=".kk_aj_deniedansokanmenu"; 
+	            break;
+	        case "kk_aj_archiveansokningarView":
+	            classname ="";
+	            headertext= "Arkiv";
+	            activeclass=".kk_aj_archiveansokanmenu";             
+	            break;
+	    };
+	    
 	    $('.kk_aj_ansokningar').html('<tr><td><div class="kk_aj_loader"></div></td></tr>');
 
 	    $('.kk_aj_ansokanboxheader').attr('class', $('.kk_aj_ansokanboxheader').attr('class').replace(/(^|\s)label-\S+/g, '')).addClass(classname);
@@ -10680,24 +10746,13 @@
 
 	    $('.kk_aj_box-title').attr('rel', currentListView);
 
+	    $('.kk_aj_ansokanmenu li.active').removeClass('active');
+	    $(activeclass).addClass('active');
 	};
 
 
 	var loadlistView = function (getlistview) {
-	    switch (getlistview) {
-	        case "kk_aj_ansokningarView":
-	            updateansokHeaderjquery("label-primary", "Nya ansökningar", getlistview);
-	            break;
-	        case "kk_aj_approvedansokningarView":
-	            updateansokHeaderjquery("label-success", "Godkända", getlistview);
-	            break;
-	        case "kk_aj_deniedansokningarView":
-	            updateansokHeaderjquery("label-danger", "Nekade", getlistview);
-	            break;
-	        case "kk_aj_archiveansokningarView":
-	            updateansokHeaderjquery("", "Arkiv", getlistview);
-	            break;                    
-	    };
+	    updateansokHeaderjquery(getlistview);    
 	    loadpageHandler.pageloader(getlistview);
 	}
 

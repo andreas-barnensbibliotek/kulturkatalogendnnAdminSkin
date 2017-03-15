@@ -6,6 +6,7 @@ module.exports = {
         alert(msg);
     },
     pageloader: function (pagetoload) {
+        var sortobj = { "tosort": "title", "order": "down" };
         switch(pagetoload) {
             case "kk_aj_startView":
                 console.log("2. kk_aj_startView körs");                
@@ -14,28 +15,29 @@ module.exports = {
                 break;
             case "kk_aj_ansokningarView": //nya              
                 console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView =nya");
+                
                 loadtemplateTypes(appsettings.topnavtemplate);                
-                loadtemplateTypes(appsettings.nyaansokningartemplate);
+                loadtemplateTypes(appsettings.nyaansokningartemplate,0, sortobj);
                 break;
             case "kk_aj_approvedansokningarView": //godkända
                 console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
                 loadtemplateTypes(appsettings.topnavtemplate);
-                loadtemplateTypes(appsettings.approvedansokningartemplate);
+                loadtemplateTypes(appsettings.approvedansokningartemplate, 0, sortobj);
                 break;
             case "kk_aj_deniedansokningarView": //nekade
                 console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
                 loadtemplateTypes(appsettings.topnavtemplate);
-                loadtemplateTypes(appsettings.deniedansokningartemplate);
+                loadtemplateTypes(appsettings.deniedansokningartemplate, 0, sortobj);
                 break;
             case "kk_aj_archiveansokningarView": //arkiv
                 console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
                 loadtemplateTypes(appsettings.topnavtemplate);
-                loadtemplateTypes(appsettings.archiveansokningartemplate);
+                loadtemplateTypes(appsettings.archiveansokningartemplate, 0, sortobj);
                 break;                
             case "kk_aj_diarieView":
                 console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
                 loadtemplateTypes(appsettings.topnavtemplate);
-                loadtemplateTypes(appsettings.diarietemplate);                
+                loadtemplateTypes(appsettings.diarietemplate, 0, sortobj);
                 break;
             default:
                 console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
@@ -46,13 +48,51 @@ module.exports = {
     }
 };
 
-var loadtemplateTypes = function (pagetemplate, userid) {    
+var loadtemplateTypes = function (pagetemplate, userid, sortera) {    
     var i = 0;
+    if (sortera != undefined) {
+        console.log("3.  userid= " + userid + " sort=" +sortera.tosort);
+    }
+    
     //for (var obj in pagetemplate) {
     $.each(pagetemplate, function( obj, value ) {
-        console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
+        //console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
         
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
+            console.log("3.1.  körs");
+            
+            if (data.kk_aj_admin.ansokningarlista) {
+                //var objectToSort;
+                //switch(sortera.tosort) {
+                //    case "utovare":
+                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
+                //        break;
+                //    case "title":
+                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
+                //        break;
+                //    default:
+                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
+                //        break;
+                //}  
+              
+
+            
+             //   console.log("3.2.  körs ");
+                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (b, a) {
+                    //return a.attributes.OBJECTID - B.attributes.OBJECTID;
+                    console.log(a[0]);
+                    if (a.ansokningtitle == b.ansokningtitle)
+                        return 0;
+                    if (a.ansokningtitle < b.ansokningtitle)
+                        return -1;
+                    if (a.ansokningtitle > b.ansokningtitle)
+                        return 1;
+               //     console.log("3.3.  körs ");
+
+                });
+
+            }
+
             loadpagetemplates(value, data, function (data) {
                 if (data == "ja") {
                     console.log("KLART");

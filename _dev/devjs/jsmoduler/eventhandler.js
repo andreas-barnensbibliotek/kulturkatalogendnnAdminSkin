@@ -36,8 +36,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_markall', function (event) {
-                
+        $('body').on('click', '.kk_aj_markall', function (event) {                
                 // Iterate each checkbox
                 $('.kk_aj_chkboxAnnons').each(function () {
                     if (this.checked) {
@@ -52,7 +51,34 @@ module.exports = {
     }
 }
 
-var updateansokHeaderjquery = function (classname, headertext, currentListView) {
+var updateansokHeaderjquery = function (currentListView) {
+    var classname = "";
+    var headertext = "";
+    var activeclass = "";
+
+    switch (currentListView) {
+        case "kk_aj_ansokningarView":            
+            classname ="label-primary";
+            headertext= "Nya ansökningar";
+            activeclass=".kk_aj_nyansokanmenu";            
+            break;
+        case "kk_aj_approvedansokningarView":
+            classname ="label-success";
+            headertext= "Godkända";
+            activeclass=".kk_aj_approvedansokanmenu"; 
+            break;
+        case "kk_aj_deniedansokningarView":
+            classname ="label-danger";
+            headertext="Nekade";
+            activeclass=".kk_aj_deniedansokanmenu"; 
+            break;
+        case "kk_aj_archiveansokningarView":
+            classname ="";
+            headertext= "Arkiv";
+            activeclass=".kk_aj_archiveansokanmenu";             
+            break;
+    };
+    
     $('.kk_aj_ansokningar').html('<tr><td><div class="kk_aj_loader"></div></td></tr>');
 
     $('.kk_aj_ansokanboxheader').attr('class', $('.kk_aj_ansokanboxheader').attr('class').replace(/(^|\s)label-\S+/g, '')).addClass(classname);
@@ -61,24 +87,13 @@ var updateansokHeaderjquery = function (classname, headertext, currentListView) 
 
     $('.kk_aj_box-title').attr('rel', currentListView);
 
+    $('.kk_aj_ansokanmenu li.active').removeClass('active');
+    $(activeclass).addClass('active');
 };
 
 
 var loadlistView = function (getlistview) {
-    switch (getlistview) {
-        case "kk_aj_ansokningarView":
-            updateansokHeaderjquery("label-primary", "Nya ansökningar", getlistview);
-            break;
-        case "kk_aj_approvedansokningarView":
-            updateansokHeaderjquery("label-success", "Godkända", getlistview);
-            break;
-        case "kk_aj_deniedansokningarView":
-            updateansokHeaderjquery("label-danger", "Nekade", getlistview);
-            break;
-        case "kk_aj_archiveansokningarView":
-            updateansokHeaderjquery("", "Arkiv", getlistview);
-            break;                    
-    };
+    updateansokHeaderjquery(getlistview);    
     loadpageHandler.pageloader(getlistview);
 }
 
