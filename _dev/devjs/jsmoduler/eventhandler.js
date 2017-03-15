@@ -4,10 +4,13 @@ var loadpageHandler = require("./pageloadhandler.js");
 
 module.exports = {
     jqueryEVENTS: function (userid) {
-        
+        var sortobj;
+
         $('body').on('click', '.kk_aj_nyadansokningar', function () {
-            //console.log('1-1. .kk_aj_nyadansokningar');                 
-            loadlistView("kk_aj_ansokningarView");
+            //console.log('1-1. .kk_aj_nyadansokningar'); 
+            sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
+            loadlistView("kk_aj_ansokningarView",sortobj);
+            
             return false;
         });
 
@@ -37,17 +40,46 @@ module.exports = {
         });
 
         $('body').on('click', '.kk_aj_markall', function (event) {                
-                // Iterate each checkbox
-                $('.kk_aj_chkboxAnnons').each(function () {
-                    if (this.checked) {
-                        this.checked = false;
-                    } else {
-                        this.checked = true;
-                    }
-                  
-                });
-           
+            // Iterate each checkbox
+            $('.kk_aj_chkboxAnnons').each(function () {
+                if (this.checked) {
+                    this.checked = false;
+                } else {
+                    this.checked = true;
+                }                  
+            });           
         });
+
+        $('body').on('click', '.kk_aj_sortutovare', function (event) {
+            //console.log('1-1. .kk_aj_nyadansokningar'); 
+            var curpage = $('.kk_aj_CurrentPageType').html();
+
+            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
+                sortobj = { "tosort": "2", "order": "down", "status": "ansokningutovare" };
+                loadlistView(curpage, sortobj);               
+            } else {
+                sortobj = { "tosort": "2", "order": "up", "status": "ansokningutovare" };
+                loadlistView(curpage, sortobj);                
+            };
+            
+            return false;
+        });
+
+        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
+            //console.log('1-1. .kk_aj_nyadansokningar'); 
+            var curpage = $('.kk_aj_CurrentPageType').html();
+
+            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {
+                sortobj = { "tosort": "4", "order": "down", "status": "ansokningutovare" };
+                loadlistView(curpage, sortobj);
+            } else {
+                sortobj = { "tosort": "4", "order": "up", "status": "ansokningutovare" };
+                loadlistView(curpage, sortobj);
+            };
+
+            return false;
+        });
+
     }
 }
 
@@ -92,9 +124,9 @@ var updateansokHeaderjquery = function (currentListView) {
 };
 
 
-var loadlistView = function (getlistview) {
+var loadlistView = function (getlistview, sortobj) {
     updateansokHeaderjquery(getlistview);    
-    loadpageHandler.pageloader(getlistview);
+    loadpageHandler.pageloader(getlistview, sortobj);
 }
 
 var updatemainannonscount = function () {

@@ -231,8 +231,8 @@
 	    testar: function (msg) {
 	        alert(msg);
 	    },
-	    pageloader: function (pagetoload) {
-	        var sortobj = { "tosort": "title", "order": "down" };
+	    pageloader: function (pagetoload, sortobj) {
+	       
 	        switch(pagetoload) {
 	            case "kk_aj_startView":
 	                console.log("2. kk_aj_startView körs");                
@@ -240,13 +240,14 @@
 	                loadtemplateTypes(appsettings.starttemplate);
 	                break;
 	            case "kk_aj_ansokningarView": //nya              
-	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView =nya");
-	                
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView =nya");                
+
 	                loadtemplateTypes(appsettings.topnavtemplate);                
 	                loadtemplateTypes(appsettings.nyaansokningartemplate,0, sortobj);
 	                break;
 	            case "kk_aj_approvedansokningarView": //godkända
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
+
 	                loadtemplateTypes(appsettings.topnavtemplate);
 	                loadtemplateTypes(appsettings.approvedansokningartemplate, 0, sortobj);
 	                break;
@@ -276,45 +277,40 @@
 
 	var loadtemplateTypes = function (pagetemplate, userid, sortera) {    
 	    var i = 0;
-	    if (sortera != undefined) {
-	        console.log("3.  userid= " + userid + " sort=" +sortera.tosort);
-	    }
-	    
+	   
 	    //for (var obj in pagetemplate) {
 	    $.each(pagetemplate, function( obj, value ) {
 	        //console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
 	        
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
-	            console.log("3.1.  körs");
+	           // console.log("3.1.  körs");
 	            
-	            if (data.kk_aj_admin.ansokningarlista) {
-	                //var objectToSort;
-	                //switch(sortera.tosort) {
-	                //    case "utovare":
-	                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
-	                //        break;
-	                //    case "title":
-	                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
-	                //        break;
-	                //    default:
-	                //        objectToSort = data.kk_aj_admin.ansokningarlista.ansokningar;
-	                //        break;
-	                //}  
-	              
+	            if (data.kk_aj_admin.ansokningarlista) {              
+	                var sortorder;
+	                var sortobjIndex;
 
-	            
-	             //   console.log("3.2.  körs ");
-	                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (b, a) {
-	                    //return a.attributes.OBJECTID - B.attributes.OBJECTID;
-	                    console.log(a[0]);
-	                    if (a.ansokningtitle == b.ansokningtitle)
-	                        return 0;
-	                    if (a.ansokningtitle < b.ansokningtitle)
-	                        return -1;
-	                    if (a.ansokningtitle > b.ansokningtitle)
-	                        return 1;
-	               //     console.log("3.3.  körs ");
-
+	                if (sortera != undefined) {
+	                    // 2=ansokningtitle, 4= ansokningutovare                     
+	                    sortorder = sortera.order;
+	                    sortobjIndex = parseInt(sortera.tosort);
+	                }
+	                //"tosort": "title", "order": "down"
+	                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
+	                    if (sortorder == "down") {
+	                        if (Object.values(a)[sortobjIndex] == Object.values(b)[sortobjIndex])
+	                            return 0;
+	                        if (Object.values(a)[sortobjIndex] < Object.values(b)[sortobjIndex])
+	                            return -1;
+	                        if (Object.values(a)[sortobjIndex] > Object.values(b)[sortobjIndex])
+	                            return 1;
+	                    }else {
+	                        if (Object.values(a)[sortobjIndex] == Object.values(b)[sortobjIndex])
+	                            return 0;
+	                        if (Object.values(a)[sortobjIndex] > Object.values(b)[sortobjIndex])
+	                            return -1;
+	                        if (Object.values(a)[sortobjIndex] < Object.values(b)[sortobjIndex])
+	                            return 1;
+	                    }
 	                });
 
 	            }
@@ -322,6 +318,12 @@
 	            loadpagetemplates(value, data, function (data) {
 	                if (data == "ja") {
 	                    console.log("KLART");
+	                    if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {
+	                        $('.kk_aj_ansokningar .kk_aj_sortutovare i').removeClass('fa-caret-down').addClass('fa-caret-up');
+	                    } else {
+	                        $('.kk_aj_sortutovare i').removeClass('fa-caret-up').addClass('fa-caret-down');
+
+	                    };
 	                }
 	            });
 	        });
@@ -10663,10 +10665,13 @@
 
 	module.exports = {
 	    jqueryEVENTS: function (userid) {
-	        
+	        var sortobj;
+
 	        $('body').on('click', '.kk_aj_nyadansokningar', function () {
-	            //console.log('1-1. .kk_aj_nyadansokningar');                 
-	            loadlistView("kk_aj_ansokningarView");
+	            //console.log('1-1. .kk_aj_nyadansokningar'); 
+	            sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
+	            loadlistView("kk_aj_ansokningarView",sortobj);
+	            
 	            return false;
 	        });
 
@@ -10696,17 +10701,46 @@
 	        });
 
 	        $('body').on('click', '.kk_aj_markall', function (event) {                
-	                // Iterate each checkbox
-	                $('.kk_aj_chkboxAnnons').each(function () {
-	                    if (this.checked) {
-	                        this.checked = false;
-	                    } else {
-	                        this.checked = true;
-	                    }
-	                  
-	                });
-	           
+	            // Iterate each checkbox
+	            $('.kk_aj_chkboxAnnons').each(function () {
+	                if (this.checked) {
+	                    this.checked = false;
+	                } else {
+	                    this.checked = true;
+	                }                  
+	            });           
 	        });
+
+	        $('body').on('click', '.kk_aj_sortutovare', function (event) {
+	            //console.log('1-1. .kk_aj_nyadansokningar'); 
+	            var curpage = $('.kk_aj_CurrentPageType').html();
+
+	            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
+	                sortobj = { "tosort": "2", "order": "down", "status": "ansokningutovare" };
+	                loadlistView(curpage, sortobj);               
+	            } else {
+	                sortobj = { "tosort": "2", "order": "up", "status": "ansokningutovare" };
+	                loadlistView(curpage, sortobj);                
+	            };
+	            
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
+	            //console.log('1-1. .kk_aj_nyadansokningar'); 
+	            var curpage = $('.kk_aj_CurrentPageType').html();
+
+	            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {
+	                sortobj = { "tosort": "4", "order": "down", "status": "ansokningutovare" };
+	                loadlistView(curpage, sortobj);
+	            } else {
+	                sortobj = { "tosort": "4", "order": "up", "status": "ansokningutovare" };
+	                loadlistView(curpage, sortobj);
+	            };
+
+	            return false;
+	        });
+
 	    }
 	}
 
@@ -10751,9 +10785,9 @@
 	};
 
 
-	var loadlistView = function (getlistview) {
+	var loadlistView = function (getlistview, sortobj) {
 	    updateansokHeaderjquery(getlistview);    
-	    loadpageHandler.pageloader(getlistview);
+	    loadpageHandler.pageloader(getlistview, sortobj);
 	}
 
 	var updatemainannonscount = function () {

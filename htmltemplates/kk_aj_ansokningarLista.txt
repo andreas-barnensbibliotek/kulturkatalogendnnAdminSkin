@@ -2,9 +2,9 @@
     <tr class="tableheader">
         <td></td>
         <td></td>
-        <td><a href="#">Utövare <i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
-        <td><a href="#">Rubrik<i class="fa fa-caret-up" aria-hidden="true"></i></a></td>                                            
-        <td><a href="#">Datum</a></td>
+        <td><a href="#" class="kk_aj_sortutovare">Utövare <i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+        <td><a href="#" class="kk_aj_sortrubrik">Rubrik<i class="fa fa-caret-up" aria-hidden="true"></i></a></td>                                            
+        <td><a href="#" class="kk_aj_sortdatum">Datum</a></td>
         <td></td>
     </tr>     
 	
