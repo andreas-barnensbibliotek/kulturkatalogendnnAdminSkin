@@ -25,6 +25,7 @@
 <!-- Html Meta header -->
 <fortyfingers:STYLEHELPER ID="headMeta1" AddToHead='<meta http-equiv="X-UA-Compatible" content="IE=edge">' runat="server" />
 <fortyfingers:STYLEHELPER ID="headMeta2" AddToHead='<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' runat="server" />
+<fortyfingers:STYLEHELPER ID="STYLEHELPER2" AddCssFile="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" runat="server" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

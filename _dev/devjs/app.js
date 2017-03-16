@@ -6,6 +6,7 @@ var registerJqueryEvents = require("./jsmoduler/eventhandler.js");
 //var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
 
 var $ = require("jquery");
+require('jquery-ui-dist/jquery-ui.js');
 
 $(function () {
 
@@ -33,8 +34,41 @@ $(function () {
         //    console.log("4. servicen hämtar debug Templaten");
         //    templateHandler.injecthtmltemplate('.kk_aj_topNav_message_menu', 'kk_aj_topNav_message_menu.txt', data);
         //})
+        
 
-       
+        var cache = {};
+        $(".kk_aj_ansoksearchform").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "GET",
+                    url: "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_autocomplete.aspx",
+                    data: {cmdtyp: request.term.toLowerCase()},
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data.label);
+                        response(data.label);
+                    },
+                    error: function (result) {  }
+                });
+            },
+            minLength: 1
+
+            //minLength: 2,
+            //source: function (request, response) {
+            //    var term = request.term;
+            //    if (term in cache) {
+            //        response(cache[term]);
+            //        return;
+            //    }
+
+            //    $.getJSON("http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_autocomplete.aspx", request, function (data, status, xhr) {
+            //        cache[term] = data;
+            //        response(data);
+            //    });
+            //}
+        });
+
+
 
     }
     init();
