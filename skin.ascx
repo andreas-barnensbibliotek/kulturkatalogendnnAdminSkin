@@ -163,3 +163,5 @@
         $('body').addClass('hold-transition skin-black sidebar-mini');
     });
 </script>
+<dnn:SEARCH ID="dnnSearch2" runat="server" ShowSite="false" ShowWeb="false" EnableTheming="true" Submit="Search" CssClass="SearchButton" Visible="false" />
+                   

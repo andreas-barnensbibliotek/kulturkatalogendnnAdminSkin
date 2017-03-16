@@ -105,9 +105,36 @@ var loadpagetemplates = function (template, currentdata,callback) {
     console.log("6. laddar: " + template.filename);   
     $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
         var temptpl = Handlebars.compile(data);
+
+        updatecountmenybox(currentdata);
+
         console.log("7. "+template.filename +" klar att levereras");
         $(template.targetdiv).html(temptpl(currentdata));
         callback("ja");
     }, 'html');
 
 }
+
+var updatecountmenybox = function (data) {
+    
+    if (data.kk_aj_admin.nyaansokningarcount != undefined) {       
+        if (data.kk_aj_admin.nyaansokningarcount) {
+            $('.kk_aj_newcount').show();
+            $('.kk_aj_newcount').html(data.kk_aj_admin.nyaansokningarcount);
+        } else {            
+            $('.kk_aj_newcount').hide();
+        }  
+        if (data.kk_aj_admin.approvedansokningarcount) {
+            $('.kk_aj_approvedcount').show();
+            $('.kk_aj_approvedcount').html(data.kk_aj_admin.approvedansokningarcount);
+        } else {            
+            $('.kk_aj_approvedcount').hide();
+        }  
+        if (data.kk_aj_admin.deniedansokningarcount){
+            $('.kk_aj_deniedcount').show();
+            $('.kk_aj_deniedcount').html(data.kk_aj_admin.deniedansokningarcount);
+        } else {            
+            $('.kk_aj_deniedcount').hide();
+        }                    
+    }
+};

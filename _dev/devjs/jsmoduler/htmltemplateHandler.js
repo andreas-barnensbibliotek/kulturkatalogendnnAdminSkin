@@ -6,14 +6,26 @@ module.exports = {
         alert(msg);
     },
     injecthtmltemplate: function (targetClass, usetemplateName, currentdata) {
-        console.log("6. inne i templatehandler");
+        console.log("6 1. inne i templatehandler");
         $.get(appsettings.htmltemplateURL +"/"+ usetemplateName, function (data) {
             var temptpl = Handlebars.compile(data);
-
-            console.log("7. template klar att levereras");
+            updatecountmenybox(data);
+            console.log("7 1. template klar att levereras");
             $(targetClass).html(temptpl(currentdata));
             //callback(htmltemplate)
         }, 'html');
     }
 
+};
+var updatecountmenybox = function (data) {
+    console.log("81 dount");
+    if (data.nyaansokningarcount) {
+        $('.kk_aj_newcount').html(data.nyaansokningarcount);
+    }
+    if (data.approvedansokningarcount) {
+        $('.kk_aj_approvedcount').html(data.approvedansokningarcount);
+    }
+    if (data.deniedansokningarcount) {
+        $('.kk_aj_deniedcount').html(data.deniedansokningarcount);
+    }
 };
