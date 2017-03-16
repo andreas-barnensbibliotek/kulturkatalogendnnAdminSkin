@@ -69,7 +69,6 @@
 	        
 	        loadpageHandler.pageloader(_pageType);
 
-
 	        //ServiceHandler.injecttemplate("test", "0", function (data) {
 	        //    console.log("4. servicen h�mtar Templaten");
 	        //    templateHandler.injecthtmltemplate('.kk_aj_profile', 'kk_aj_profile.txt', data);
@@ -80,6 +79,8 @@
 	        //    console.log("4. servicen h�mtar debug Templaten");
 	        //    templateHandler.injecthtmltemplate('.kk_aj_topNav_message_menu', 'kk_aj_topNav_message_menu.txt', data);
 	        //})
+
+	       
 
 	    }
 	    init();
@@ -287,43 +288,36 @@
 	            
 	            if (data.kk_aj_admin.ansokningarlista) {              
 	                var sortorder;
-	                var sortobjIndex;
+	                var sortobjtosearch;
 
 	                if (sortera != undefined) {
 	                    // 2=ansokningtitle, 4= ansokningutovare                     
 	                    sortorder = sortera.order;
-	                    sortobjIndex = parseInt(sortera.tosort);
+	                    sortobjtosearch = sortera.tosort;
 	                }
+	                
 	                //"tosort": "title", "order": "down"
-	                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
-	                    if (sortorder == "down") {
-	                        if (Object.values(a)[sortobjIndex] == Object.values(b)[sortobjIndex])
+	                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {                   
+	                    if (sortorder == "down") {                        
+	                        if (a[sortobjtosearch] == b[sortobjtosearch])
 	                            return 0;
-	                        if (Object.values(a)[sortobjIndex] < Object.values(b)[sortobjIndex])
+	                        if (a[sortobjtosearch] < b[sortobjtosearch])
 	                            return -1;
-	                        if (Object.values(a)[sortobjIndex] > Object.values(b)[sortobjIndex])
+	                        if (a[sortobjtosearch] > b[sortobjtosearch])
 	                            return 1;
-	                    }else {
-	                        if (Object.values(a)[sortobjIndex] == Object.values(b)[sortobjIndex])
+	                    } else {
+	                        if (a[sortobjtosearch] == b[sortobjtosearch])
 	                            return 0;
-	                        if (Object.values(a)[sortobjIndex] > Object.values(b)[sortobjIndex])
+	                        if (a[sortobjtosearch] > b[sortobjtosearch])
 	                            return -1;
-	                        if (Object.values(a)[sortobjIndex] < Object.values(b)[sortobjIndex])
+	                        if (a[sortobjtosearch] < b[sortobjtosearch])
 	                            return 1;
 	                    }
 	                });
-
 	            }
-
 	            loadpagetemplates(value, data, function (data) {
 	                if (data == "ja") {
-	                    console.log("KLART");
-	                    if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {
-	                        $('.kk_aj_ansokningar .kk_aj_sortutovare i').removeClass('fa-caret-down').addClass('fa-caret-up');
-	                    } else {
-	                        $('.kk_aj_sortutovare i').removeClass('fa-caret-up').addClass('fa-caret-down');
-
-	                    };
+	                    console.log("KLART");                    
 	                }
 	            });
 	        });
@@ -10712,35 +10706,46 @@
 	        });
 
 	        $('body').on('click', '.kk_aj_sortutovare', function (event) {
-	            //console.log('1-1. .kk_aj_nyadansokningar'); 
-	            var curpage = $('.kk_aj_CurrentPageType').html();
-
+	            var curpage = $('.kk_aj_box-title').attr('rel');
 	            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
-	                sortobj = { "tosort": "2", "order": "down", "status": "ansokningutovare" };
-	                loadlistView(curpage, sortobj);               
+	                sortobj = { "tosort": "ansokningtitle", "order": "up"};
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortutovare i').removeClass('fa-caret-down').addClass('fa-caret-up');
 	            } else {
-	                sortobj = { "tosort": "2", "order": "up", "status": "ansokningutovare" };
-	                loadlistView(curpage, sortobj);                
-	            };
-	            
+	                sortobj = { "tosort": "ansokningtitle", "order": "down" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortutovare i').removeClass('fa-caret-up').addClass('fa-caret-down');                
+	            };            
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
-	            //console.log('1-1. .kk_aj_nyadansokningar'); 
-	            var curpage = $('.kk_aj_CurrentPageType').html();
-
-	            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {
-	                sortobj = { "tosort": "4", "order": "down", "status": "ansokningutovare" };
+	        $('body').on('click', '.kk_aj_sortrubrik', function (event) {            
+	            var curpage = $('.kk_aj_box-title').attr('rel');
+	            if ($('.kk_aj_sortrubrik i').hasClass('fa-caret-down')) {
+	                sortobj = { "tosort": "ansokningutovare", "order": "up" };
 	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortrubrik i').removeClass('fa-caret-down').addClass('fa-caret-up');
 	            } else {
-	                sortobj = { "tosort": "4", "order": "up", "status": "ansokningutovare" };
+	                sortobj = { "tosort": "ansokningutovare", "order": "down" };
 	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortrubrik i').removeClass('fa-caret-up').addClass('fa-caret-down');
 	            };
-
 	            return false;
 	        });
 
+	        $('body').on('click', '.kk_aj_sortdatum', function (event) {
+	            var curpage = $('.kk_aj_box-title').attr('rel');
+	            if ($('.kk_aj_sortdatum i').hasClass('fa-caret-down')) {
+	                sortobj = { "tosort": "ansokningdate", "order": "up" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortdatum i').removeClass('fa-caret-down').addClass('fa-caret-up');
+	            } else {
+	                sortobj = { "tosort": "ansokningdate", "order": "down" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortdatum i').removeClass('fa-caret-up').addClass('fa-caret-down');
+	            };
+	            return false;
+	        });
 	    }
 	}
 
@@ -10808,11 +10813,7 @@
 
 	};
 
-	var markeraallaannonser = function () {
-	    
-	    
-	    
-	}
+
 
 /***/ }
 /******/ ]);

@@ -51,35 +51,46 @@ module.exports = {
         });
 
         $('body').on('click', '.kk_aj_sortutovare', function (event) {
-            //console.log('1-1. .kk_aj_nyadansokningar'); 
-            var curpage = $('.kk_aj_CurrentPageType').html();
-
+            var curpage = $('.kk_aj_box-title').attr('rel');
             if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
-                sortobj = { "tosort": "2", "order": "down", "status": "ansokningutovare" };
-                loadlistView(curpage, sortobj);               
+                sortobj = { "tosort": "ansokningtitle", "order": "up"};
+                loadlistView(curpage, sortobj);
+                $('.kk_aj_sortutovare i').removeClass('fa-caret-down').addClass('fa-caret-up');
             } else {
-                sortobj = { "tosort": "2", "order": "up", "status": "ansokningutovare" };
-                loadlistView(curpage, sortobj);                
-            };
-            
+                sortobj = { "tosort": "ansokningtitle", "order": "down" };
+                loadlistView(curpage, sortobj);
+                $('.kk_aj_sortutovare i').removeClass('fa-caret-up').addClass('fa-caret-down');                
+            };            
             return false;
         });
 
-        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
-            //console.log('1-1. .kk_aj_nyadansokningar'); 
-            var curpage = $('.kk_aj_CurrentPageType').html();
-
-            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {
-                sortobj = { "tosort": "4", "order": "down", "status": "ansokningutovare" };
+        $('body').on('click', '.kk_aj_sortrubrik', function (event) {            
+            var curpage = $('.kk_aj_box-title').attr('rel');
+            if ($('.kk_aj_sortrubrik i').hasClass('fa-caret-down')) {
+                sortobj = { "tosort": "ansokningutovare", "order": "up" };
                 loadlistView(curpage, sortobj);
+                $('.kk_aj_sortrubrik i').removeClass('fa-caret-down').addClass('fa-caret-up');
             } else {
-                sortobj = { "tosort": "4", "order": "up", "status": "ansokningutovare" };
+                sortobj = { "tosort": "ansokningutovare", "order": "down" };
                 loadlistView(curpage, sortobj);
+                $('.kk_aj_sortrubrik i').removeClass('fa-caret-up').addClass('fa-caret-down');
             };
-
             return false;
         });
 
+        $('body').on('click', '.kk_aj_sortdatum', function (event) {
+            var curpage = $('.kk_aj_box-title').attr('rel');
+            if ($('.kk_aj_sortdatum i').hasClass('fa-caret-down')) {
+                sortobj = { "tosort": "ansokningdate", "order": "up" };
+                loadlistView(curpage, sortobj);
+                $('.kk_aj_sortdatum i').removeClass('fa-caret-down').addClass('fa-caret-up');
+            } else {
+                sortobj = { "tosort": "ansokningdate", "order": "down" };
+                loadlistView(curpage, sortobj);
+                $('.kk_aj_sortdatum i').removeClass('fa-caret-up').addClass('fa-caret-down');
+            };
+            return false;
+        });
     }
 }
 
@@ -147,8 +158,3 @@ var updatemainannonscount = function () {
 
 };
 
-var markeraallaannonser = function () {
-    
-    
-    
-}

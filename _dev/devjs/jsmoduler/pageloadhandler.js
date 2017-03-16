@@ -61,43 +61,36 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera) {
             
             if (data.kk_aj_admin.ansokningarlista) {              
                 var sortorder;
-                var sortobjIndex;
+                var sortobjtosearch;
 
                 if (sortera != undefined) {
                     // 2=ansokningtitle, 4= ansokningutovare                     
                     sortorder = sortera.order;
-                    sortobjIndex = parseInt(sortera.tosort);
+                    sortobjtosearch = sortera.tosort;
                 }
+                
                 //"tosort": "title", "order": "down"
-                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
-                    if (sortorder == "down") {
-                        if (Object.values(a)[sortobjIndex] == Object.values(b)[sortobjIndex])
+                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {                   
+                    if (sortorder == "down") {                        
+                        if (a[sortobjtosearch] == b[sortobjtosearch])
                             return 0;
-                        if (Object.values(a)[sortobjIndex] < Object.values(b)[sortobjIndex])
+                        if (a[sortobjtosearch] < b[sortobjtosearch])
                             return -1;
-                        if (Object.values(a)[sortobjIndex] > Object.values(b)[sortobjIndex])
+                        if (a[sortobjtosearch] > b[sortobjtosearch])
                             return 1;
-                    }else {
-                        if (Object.values(a)[sortobjIndex] == Object.values(b)[sortobjIndex])
+                    } else {
+                        if (a[sortobjtosearch] == b[sortobjtosearch])
                             return 0;
-                        if (Object.values(a)[sortobjIndex] > Object.values(b)[sortobjIndex])
+                        if (a[sortobjtosearch] > b[sortobjtosearch])
                             return -1;
-                        if (Object.values(a)[sortobjIndex] < Object.values(b)[sortobjIndex])
+                        if (a[sortobjtosearch] < b[sortobjtosearch])
                             return 1;
                     }
                 });
-
             }
-
             loadpagetemplates(value, data, function (data) {
                 if (data == "ja") {
-                    console.log("KLART");
-                    if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {
-                        $('.kk_aj_ansokningar .kk_aj_sortutovare i').removeClass('fa-caret-down').addClass('fa-caret-up');
-                    } else {
-                        $('.kk_aj_sortutovare i').removeClass('fa-caret-up').addClass('fa-caret-down');
-
-                    };
+                    console.log("KLART");                    
                 }
             });
         });

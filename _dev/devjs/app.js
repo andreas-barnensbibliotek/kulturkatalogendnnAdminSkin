@@ -23,7 +23,6 @@ $(function () {
         
         loadpageHandler.pageloader(_pageType);
 
-
         //ServiceHandler.injecttemplate("test", "0", function (data) {
         //    console.log("4. servicen hämtar Templaten");
         //    templateHandler.injecthtmltemplate('.kk_aj_profile', 'kk_aj_profile.txt', data);
@@ -34,6 +33,8 @@ $(function () {
         //    console.log("4. servicen hämtar debug Templaten");
         //    templateHandler.injecthtmltemplate('.kk_aj_topNav_message_menu', 'kk_aj_topNav_message_menu.txt', data);
         //})
+
+       
 
     }
     init();
