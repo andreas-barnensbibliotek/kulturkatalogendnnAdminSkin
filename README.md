@@ -24,3 +24,19 @@ då körs först webpack js
 
 
 #Detta är produktionsfilen för använding i projektet.
+
+// dependencyfilerna dessa används för att köra hela kulturkatalogen ADMIN
+
+Dnn Modules repos för Kulturkatalogen Admin
+
+https://github.com/andreas-barnensbibliotek/Dnn_module_kk_aj_startView.git
+
+https://github.com/andreas-barnensbibliotek/Dnn_module_kk_ajdiarieView.git
+
+https://github.com/andreas-barnensbibliotek/Dnn_module_kk_aj_ansokningarView.git
+
+https://github.com/andreas-barnensbibliotek/Dnn_module_kk_aj_menuAvatar.git
+
+https://github.com/andreas-barnensbibliotek/Dnn_module_kk_aj_topnavNotify.git
+
+https://github.com/andreas-barnensbibliotek/Dnn_Module_kk_aj_adminConfig.git
