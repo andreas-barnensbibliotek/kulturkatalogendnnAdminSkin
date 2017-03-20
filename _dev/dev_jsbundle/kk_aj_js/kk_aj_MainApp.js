@@ -82,37 +82,37 @@
 	        //})
 	        
 
-	        var cache = {};
-	        $(".kk_aj_ansoksearchform").autocomplete({
-	            source: function (request, response) {
-	                $.ajax({
-	                    type: "GET",
-	                    url: "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_autocomplete.aspx",
-	                    data: {cmdtyp: request.term.toLowerCase()},
-	                    dataType: "json",
-	                    success: function (data) {
-	                        console.log(data.label);
-	                        response(data.label);
-	                    },
-	                    error: function (result) {  }
-	                });
-	            },
-	            minLength: 1
+	        //var cache = {};
+	        //$(".kk_aj_ansoksearchform").autocomplete({
+	        //    source: function (request, response) {
+	        //        $.ajax({
+	        //            type: "GET",
+	        //            url: "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_autocomplete.aspx",
+	        //            data: {cmdtyp: request.term.toLowerCase()},
+	        //            dataType: "json",
+	        //            success: function (data) {
+	        //                console.log(data.label);
+	        //                response(data.label);
+	        //            },
+	        //            error: function (result) {  }
+	        //        });
+	        //    },
+	        //    minLength: 1
 
-	            //minLength: 2,
-	            //source: function (request, response) {
-	            //    var term = request.term;
-	            //    if (term in cache) {
-	            //        response(cache[term]);
-	            //        return;
-	            //    }
+	        //    //minLength: 2,
+	        //    //source: function (request, response) {
+	        //    //    var term = request.term;
+	        //    //    if (term in cache) {
+	        //    //        response(cache[term]);
+	        //    //        return;
+	        //    //    }
 
-	            //    $.getJSON("http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_autocomplete.aspx", request, function (data, status, xhr) {
-	            //        cache[term] = data;
-	            //        response(data);
-	            //    });
-	            //}
-	        });
+	        //    //    $.getJSON("http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_autocomplete.aspx", request, function (data, status, xhr) {
+	        //    //        cache[term] = data;
+	        //    //        response(data);
+	        //    //    });
+	        //    //}
+	        //});
 
 
 
@@ -131,9 +131,8 @@
 	// object
 	//var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
 	var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
-	//var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+	var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
-	var _htmltemplateURL = "http://localhost:63366/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 	window.kk_aj_startView= [
 	    {
 	        templatename: "startUserprofileTmpl",
@@ -188,6 +187,22 @@
 	        filename: "kk_aj_topNav_message_menu.txt"
 	    }
 	];
+	window.kk_aj_detailView = [
+	    {
+	        templatename: "detailTmpl",
+	        templatedata: "kk_aj_detailvyjson",
+	        targetdiv: ".kk_aj_detaljvyContainer",
+	        filename: "kk_aj_detaljvy.txt"
+	    }
+	];
+	window.kk_aj_detailmotiveringloggView = [
+	    {
+	        templatename: "motiveringloggTmpl",
+	        templatedata: "kk_aj_detailmotiveringloggjson",
+	        targetdiv: ".kk_aj_motiveringlogg",
+	        filename: ".kk_aj_motiveringlogg.txt"
+	    }
+	];
 	window.kk_aj_kk_aj_topNavView = [
 	    {
 	        templatename: "TopNavMenuTmpl",
@@ -207,7 +222,9 @@
 	    approvedansokningartemplate: window.kk_aj_approvedansokningarView,
 	    deniedansokningartemplate: window.kk_aj_deniedansokningarView,
 	    archiveansokningartemplate: window.kk_aj_archiveansokningarView,
-	    diarietemplate:window.kk_aj_DiarieView
+	    diarietemplate: window.kk_aj_DiarieView,
+	    detailetemplate: window.kk_aj_detailView,
+	    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView
 	}
 
 
@@ -302,6 +319,11 @@
 	                loadtemplateTypes(appsettings.topnavtemplate);
 	                loadtemplateTypes(appsettings.diarietemplate, 0, sortobj);
 	                break;
+	            case "kk_aj_detailView":
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
+	                loadtemplateTypes(appsettings.topnavtemplate);
+	                loadtemplateTypes(appsettings.detailetemplate, 0, sortobj);
+	                break;
 	            default:
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
 	                loadtemplateTypes(appsettings.topnavtemplate);
@@ -316,7 +338,7 @@
 	   
 	    //for (var obj in pagetemplate) {
 	    $.each(pagetemplate, function( obj, value ) {
-	        //console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
+	        console.log("33.  körs obj= " + obj + " val= " + value.templatedata);
 	        
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
 	           // console.log("3.1.  körs");
@@ -10680,6 +10702,12 @@
 	                break;
 	            case "kk_aj_diariejson":
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
+	                break;
+	            case "kk_aj_detailvyjson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
+	                break;
+	            case "kk_aj_detailmotiveringloggjson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
 	                break;
 	            case "kk_aj_topnavjson":
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";

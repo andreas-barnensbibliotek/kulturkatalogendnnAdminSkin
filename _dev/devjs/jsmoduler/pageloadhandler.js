@@ -40,6 +40,11 @@ module.exports = {
                 loadtemplateTypes(appsettings.topnavtemplate);
                 loadtemplateTypes(appsettings.diarietemplate, 0, sortobj);
                 break;
+            case "kk_aj_detailView":
+                console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
+                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.detailetemplate, 0, sortobj);
+                break;
             default:
                 console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
                 loadtemplateTypes(appsettings.topnavtemplate);
@@ -54,7 +59,7 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera) {
    
     //for (var obj in pagetemplate) {
     $.each(pagetemplate, function( obj, value ) {
-        //console.log("3.  körs obj= " + obj + " val= " + value.templatedata);
+        console.log("33.  körs obj= " + obj + " val= " + value.templatedata);
         
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
            // console.log("3.1.  körs");

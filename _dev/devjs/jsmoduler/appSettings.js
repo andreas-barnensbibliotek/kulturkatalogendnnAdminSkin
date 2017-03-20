@@ -1,9 +1,8 @@
 ﻿// object
 //var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
 var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
-//var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
-var _htmltemplateURL = "http://localhost:63366/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 window.kk_aj_startView= [
     {
         templatename: "startUserprofileTmpl",
@@ -58,6 +57,22 @@ window.kk_aj_DiarieView =[
         filename: "kk_aj_topNav_message_menu.txt"
     }
 ];
+window.kk_aj_detailView = [
+    {
+        templatename: "detailTmpl",
+        templatedata: "kk_aj_detailvyjson",
+        targetdiv: ".kk_aj_detaljvyContainer",
+        filename: "kk_aj_detaljvy.txt"
+    }
+];
+window.kk_aj_detailmotiveringloggView = [
+    {
+        templatename: "motiveringloggTmpl",
+        templatedata: "kk_aj_detailmotiveringloggjson",
+        targetdiv: ".kk_aj_motiveringlogg",
+        filename: ".kk_aj_motiveringlogg.txt"
+    }
+];
 window.kk_aj_kk_aj_topNavView = [
     {
         templatename: "TopNavMenuTmpl",
@@ -77,7 +92,9 @@ module.exports = {
     approvedansokningartemplate: window.kk_aj_approvedansokningarView,
     deniedansokningartemplate: window.kk_aj_deniedansokningarView,
     archiveansokningartemplate: window.kk_aj_archiveansokningarView,
-    diarietemplate:window.kk_aj_DiarieView
+    diarietemplate: window.kk_aj_DiarieView,
+    detailetemplate: window.kk_aj_detailView,
+    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView
 }
 
 

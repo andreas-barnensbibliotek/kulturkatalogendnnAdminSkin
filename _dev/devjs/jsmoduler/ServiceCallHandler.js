@@ -48,6 +48,12 @@ module.exports = {
             case "kk_aj_diariejson":
                 currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
                 break;
+            case "kk_aj_detailvyjson":
+                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
+                break;
+            case "kk_aj_detailmotiveringloggjson":
+                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
+                break;
             case "kk_aj_topnavjson":
                 currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
                 break;
