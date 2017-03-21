@@ -62,7 +62,8 @@ window.kk_aj_detailView = [
         templatename: "detailTmpl",
         templatedata: "kk_aj_detailvyjson",
         targetdiv: ".kk_aj_detaljvyContainer",
-        filename: "kk_aj_detaljvy.txt"
+        filename: "kk_aj_detaljvy.txt",
+        detailid: window.detailid
     }
 ];
 window.kk_aj_detailmotiveringloggView = [
@@ -94,7 +95,8 @@ module.exports = {
     archiveansokningartemplate: window.kk_aj_archiveansokningarView,
     diarietemplate: window.kk_aj_DiarieView,
     detailetemplate: window.kk_aj_detailView,
-    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView
+    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
+    basepageUri: "http://dnndev.me/Kulturkatalogen"
 }
 
 

@@ -14,15 +14,42 @@ $(function () {
     var _userid = $('.kk_aj_CurrentUserid').html();
     var _rollid = $('.kk_aj_CurrentRollid').html();
     var _pageType = $('.kk_aj_CurrentPageType').html();
-
+   
     // start eventhandler -----------------------------
     registerJqueryEvents.jqueryEVENTS(_userid);
     // end eventhandler
 
+
+    // ta hand om querystring parametrar och lagra dom i ett jsonobject urlparam.
+    var urlParams;
+    (window.onpopstate = function () {
+        var match,
+            pl = /\+/g,  // Regex for replacing addition symbol with a space
+            search = /([^&=]+)=?([^&]*)/g,
+            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+            query = window.location.search.substring(1);
+
+        urlParams = {};
+        while (match = search.exec(query))
+            urlParams[decode(match[1])] = decode(match[2]);
+    })();
+
+
+
     var init = function () {
         console.log("1. init körs");
+        if (urlParams.id) {
+            appsettings.detailetemplate.detailid = urlParams.id;           
+        }
         
-        loadpageHandler.pageloader(_pageType);
+
+        if (urlParams.sida) {
+            //alert("sida= " + urlParams.sida);
+            registerJqueryEvents.laddanysida(urlParams.sida);
+        } else {
+            loadpageHandler.pageloader(_pageType);
+        }
+        
 
         //ServiceHandler.injecttemplate("test", "0", function (data) {
         //    console.log("4. servicen hämtar Templaten");

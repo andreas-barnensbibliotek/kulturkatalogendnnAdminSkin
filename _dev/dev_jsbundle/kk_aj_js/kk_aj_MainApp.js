@@ -60,15 +60,42 @@
 	    var _userid = $('.kk_aj_CurrentUserid').html();
 	    var _rollid = $('.kk_aj_CurrentRollid').html();
 	    var _pageType = $('.kk_aj_CurrentPageType').html();
-
+	   
 	    // start eventhandler -----------------------------
 	    registerJqueryEvents.jqueryEVENTS(_userid);
 	    // end eventhandler
 
+
+	    // ta hand om querystring parametrar och lagra dom i ett jsonobject urlparam.
+	    var urlParams;
+	    (window.onpopstate = function () {
+	        var match,
+	            pl = /\+/g,  // Regex for replacing addition symbol with a space
+	            search = /([^&=]+)=?([^&]*)/g,
+	            decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+	            query = window.location.search.substring(1);
+
+	        urlParams = {};
+	        while (match = search.exec(query))
+	            urlParams[decode(match[1])] = decode(match[2]);
+	    })();
+
+
+
 	    var init = function () {
 	        console.log("1. init k�rs");
+	        if (urlParams.id) {
+	            appsettings.detailetemplate.detailid = urlParams.id;           
+	        }
 	        
-	        loadpageHandler.pageloader(_pageType);
+
+	        if (urlParams.sida) {
+	            //alert("sida= " + urlParams.sida);
+	            registerJqueryEvents.laddanysida(urlParams.sida);
+	        } else {
+	            loadpageHandler.pageloader(_pageType);
+	        }
+	        
 
 	        //ServiceHandler.injecttemplate("test", "0", function (data) {
 	        //    console.log("4. servicen h�mtar Templaten");
@@ -192,7 +219,8 @@
 	        templatename: "detailTmpl",
 	        templatedata: "kk_aj_detailvyjson",
 	        targetdiv: ".kk_aj_detaljvyContainer",
-	        filename: "kk_aj_detaljvy.txt"
+	        filename: "kk_aj_detaljvy.txt",
+	        detailid: window.detailid
 	    }
 	];
 	window.kk_aj_detailmotiveringloggView = [
@@ -224,7 +252,8 @@
 	    archiveansokningartemplate: window.kk_aj_archiveansokningarView,
 	    diarietemplate: window.kk_aj_DiarieView,
 	    detailetemplate: window.kk_aj_detailView,
-	    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView
+	    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
+	    basepageUri: "http://dnndev.me/Kulturkatalogen"
 	}
 
 
@@ -285,7 +314,7 @@
 	        alert(msg);
 	    },
 	    pageloader: function (pagetoload, sortobj) {
-	       
+	      
 	        switch(pagetoload) {
 	            case "kk_aj_startView":
 	                console.log("2. kk_aj_startView körs");                
@@ -293,14 +322,13 @@
 	                loadtemplateTypes(appsettings.starttemplate);
 	                break;
 	            case "kk_aj_ansokningarView": //nya              
-	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView =nya");                
-
-	                loadtemplateTypes(appsettings.topnavtemplate);                
+	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView= " );
+	                
+	                loadtemplateTypes(appsettings.topnavtemplate);
 	                loadtemplateTypes(appsettings.nyaansokningartemplate,0, sortobj);
 	                break;
 	            case "kk_aj_approvedansokningarView": //godkända
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
-
 	                loadtemplateTypes(appsettings.topnavtemplate);
 	                loadtemplateTypes(appsettings.approvedansokningartemplate, 0, sortobj);
 	                break;
@@ -10753,26 +10781,31 @@
 	        $('body').on('click', '.kk_aj_nyadansokningar', function () {
 	            //console.log('1-1. .kk_aj_nyadansokningar'); 
 	            sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
-	            loadlistView("kk_aj_ansokningarView",sortobj);
-	            
+	            loadlistView("kk_aj_ansokningarView", sortobj);
+
+	            history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
+
 	            return false;
 	        });
 
 	        $('body').on('click', '.kk_aj_approvedansokningar', function () {
 	            //console.log('1-1. .kk_aj_approvedansokningar');           
 	            loadlistView("kk_aj_approvedansokningarView");
+	            history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView');
 	            return false;
 	        });
 
 	        $('body').on('click', '.kk_aj_deniedansokningar', function () {
 	            //console.log('1-1. .kk_aj_deniedansokningar');
 	            loadlistView("kk_aj_deniedansokningarView");
+	            history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView');
 	            return false;
 	        });
 
 	        $('body').on('click', '.kk_aj_archiveansokningar', function () {
 	            //console.log('1-1. .kk_aj_archiveansokningar');
 	            loadlistView("kk_aj_archiveansokningarView");
+	            history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
 	            return false;
 	        });
 
@@ -10835,6 +10868,9 @@
 	            };
 	            return false;
 	        });
+	    },
+	    laddanysida: function (sidvy) {
+	        loadlistView(sidvy);
 	    }
 	}
 

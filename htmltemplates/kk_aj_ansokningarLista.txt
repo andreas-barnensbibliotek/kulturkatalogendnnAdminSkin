@@ -13,9 +13,9 @@
 				
 			</a>
 		</td>
-		<td class="mailbox-name"><a href="{{ansokningurl}}" rel="{{ansokningid}}">{{ansokningutovare}}</a></td>
+		<td class="mailbox-name"><a href="http://dnndev.me/Kulturkatalogen/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningutovare}}</a></td>
 		<td class="mailbox-subject">
-			<a href="{{ansokningurl}}" rel="{{ansokningid}}">{{ansokningtitle}} <b>{{ansokningsubtitle}}</b></a>
+			<a href="http://dnndev.me/Kulturkatalogen/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}} <b>{{ansokningsubtitle}}</b></a>
 		</td>
 		<td class="mailbox-date">{{ansokningdate}}</td>       
 		<td class="mailbox-attachment">

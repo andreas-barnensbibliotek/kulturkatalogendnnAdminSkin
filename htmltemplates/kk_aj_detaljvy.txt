@@ -1,7 +1,9 @@
 ﻿<!-- /.box-header -->
 <div class="kk_aj_ansokanboxheader box-header with-border label-primary ">
     <h3 class="box-title">Hantera ansökning</h3>
-                            
+    <div class="box-tools pull-right">
+        <button type="button" class="btn btn-block btn-default btn-sm kk_aj_detailback"><i class="fa fa-arrow-left"></i> Tillbaka</button>
+    </div>                       
 </div>
 <!-- /.box-header -->
 <div class="box-body no-padding">

@@ -6,7 +6,7 @@ module.exports = {
         alert(msg);
     },
     pageloader: function (pagetoload, sortobj) {
-       
+      
         switch(pagetoload) {
             case "kk_aj_startView":
                 console.log("2. kk_aj_startView körs");                
@@ -14,14 +14,13 @@ module.exports = {
                 loadtemplateTypes(appsettings.starttemplate);
                 break;
             case "kk_aj_ansokningarView": //nya              
-                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView =nya");                
-
-                loadtemplateTypes(appsettings.topnavtemplate);                
+                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView= " );
+                
+                loadtemplateTypes(appsettings.topnavtemplate);
                 loadtemplateTypes(appsettings.nyaansokningartemplate,0, sortobj);
                 break;
             case "kk_aj_approvedansokningarView": //godkända
                 console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
-
                 loadtemplateTypes(appsettings.topnavtemplate);
                 loadtemplateTypes(appsettings.approvedansokningartemplate, 0, sortobj);
                 break;

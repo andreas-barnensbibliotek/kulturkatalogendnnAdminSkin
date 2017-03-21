@@ -9,26 +9,31 @@ module.exports = {
         $('body').on('click', '.kk_aj_nyadansokningar', function () {
             //console.log('1-1. .kk_aj_nyadansokningar'); 
             sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
-            loadlistView("kk_aj_ansokningarView",sortobj);
-            
+            loadlistView("kk_aj_ansokningarView", sortobj);
+
+            history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
+
             return false;
         });
 
         $('body').on('click', '.kk_aj_approvedansokningar', function () {
             //console.log('1-1. .kk_aj_approvedansokningar');           
             loadlistView("kk_aj_approvedansokningarView");
+            history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView');
             return false;
         });
 
         $('body').on('click', '.kk_aj_deniedansokningar', function () {
             //console.log('1-1. .kk_aj_deniedansokningar');
             loadlistView("kk_aj_deniedansokningarView");
+            history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView');
             return false;
         });
 
         $('body').on('click', '.kk_aj_archiveansokningar', function () {
             //console.log('1-1. .kk_aj_archiveansokningar');
             loadlistView("kk_aj_archiveansokningarView");
+            history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
             return false;
         });
 
@@ -91,6 +96,9 @@ module.exports = {
             };
             return false;
         });
+    },
+    laddanysida: function (sidvy) {
+        loadlistView(sidvy);
     }
 }
 
