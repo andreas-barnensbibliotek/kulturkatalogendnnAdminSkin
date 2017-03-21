@@ -83,6 +83,14 @@ window.kk_aj_kk_aj_topNavView = [
     }
 ];
 
+window.kk_aj_pagerHandler = 
+    {       
+        page_max_size : "",
+        page_startitem : "0",
+        page_item_per_page: "10",
+        page_currentlimit: "10"
+    };
+
 module.exports = {  
     localOrServerURL: _localOrServerURL,
     htmltemplateURL: _htmltemplateURL,
@@ -96,8 +104,10 @@ module.exports = {
     diarietemplate: window.kk_aj_DiarieView,
     detailetemplate: window.kk_aj_detailView,
     motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
-    basepageUri: "http://dnndev.me/Kulturkatalogen"
+    basepageUri: "http://dnndev.me/Kulturkatalogen",
+    pagerHandler: window.kk_aj_pagerHandler
 }
+
 
 
 

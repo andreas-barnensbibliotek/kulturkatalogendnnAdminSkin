@@ -37,6 +37,15 @@ module.exports = {
             return false;
         });
 
+
+        //$('body').on('click', '.kk_aj_listannonsnext', function () {            
+        //    var next = limit;
+        //    if(max_size>=next) {
+        //        limit = limit+elements_per_page;
+         
+        //    return false;
+        //});
+       
         //ansökningsidor EVENT ---------------------------------------------------------------
         $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
             var curpage = $('.kk_aj_box-title').attr('rel');            

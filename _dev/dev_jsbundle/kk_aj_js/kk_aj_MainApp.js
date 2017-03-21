@@ -240,6 +240,14 @@
 	    }
 	];
 
+	window.kk_aj_pagerHandler = 
+	    {       
+	        page_max_size : "",
+	        page_startitem : "0",
+	        page_item_per_page: "10",
+	        page_currentlimit: "10"
+	    };
+
 	module.exports = {  
 	    localOrServerURL: _localOrServerURL,
 	    htmltemplateURL: _htmltemplateURL,
@@ -253,8 +261,10 @@
 	    diarietemplate: window.kk_aj_DiarieView,
 	    detailetemplate: window.kk_aj_detailView,
 	    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
-	    basepageUri: "http://dnndev.me/Kulturkatalogen"
+	    basepageUri: "http://dnndev.me/Kulturkatalogen",
+	    pagerHandler: window.kk_aj_pagerHandler
 	}
+
 
 
 
@@ -399,7 +409,9 @@
 	                            return 1;
 	                    }
 	                });
+	                data = datapager(data);
 	            }
+
 	            loadpagetemplates(value, data, function (data) {
 	                if (data == "ja") {
 	                    console.log("KLART");                    
@@ -450,6 +462,38 @@
 	        }                    
 	    }
 	};
+
+
+	function datapager(data) {
+	    var retdata = data;
+	    //retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
+	    var settings = appsettings.pagerHandler;
+	    appsettings.pagerHandler.page_max_size = data.kk_aj_admin.ansokningarlista.ansokningar.length;
+	    
+	    appsettings.pagerHandler.page_currentlimit = appsettings.pagerHandler.page_item_per_page;
+	    var b = data.kk_aj_admin.ansokningarlista.ansokningar;
+	    retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
+	    
+	    for (var i = settings.page_startitem ; i < settings.page_currentlimit; i++) {
+	        if (typeof b[i] !== 'undefined') {
+	            var test = {
+	                "ansokningid": b[i]['ansokningid'],
+	                "ansokningdate": b[i]['ansokningdate'],
+	                "ansokningtitle": b[i]['ansokningtitle'],
+	                "ansokningsubtitle": b[i]['ansokningsubtitle'],
+	                "ansokningutovare": b[i]['ansokningutovare'],
+	                "ansokningurl": b[i]['ansokningurl'],
+	                "ansokningbilaga": b[i]['ansokningbilaga'],
+	                "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
+	                "ansokninglast": b[i]['ansokninglast'],
+	                "ansokningstatus": b[i]['ansokningstatus']
+	            };
+
+	            retdata.kk_aj_admin.ansokningarlista.ansokningar.push(test);
+	        }
+	    }
+	    return retdata;
+	}
 
 /***/ },
 /* 4 */
@@ -10809,6 +10853,15 @@
 	            return false;
 	        });
 
+
+	        //$('body').on('click', '.kk_aj_listannonsnext', function () {            
+	        //    var next = limit;
+	        //    if(max_size>=next) {
+	        //        limit = limit+elements_per_page;
+	         
+	        //    return false;
+	        //});
+	       
 	        //ansökningsidor EVENT ---------------------------------------------------------------
 	        $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
 	            var curpage = $('.kk_aj_box-title').attr('rel');            

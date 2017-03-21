@@ -91,7 +91,9 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera) {
                             return 1;
                     }
                 });
+                data = datapager(data);
             }
+
             loadpagetemplates(value, data, function (data) {
                 if (data == "ja") {
                     console.log("KLART");                    
@@ -142,3 +144,35 @@ var updatecountmenybox = function (data) {
         }                    
     }
 };
+
+
+function datapager(data) {
+    var retdata = data;
+    //retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
+    var settings = appsettings.pagerHandler;
+    appsettings.pagerHandler.page_max_size = data.kk_aj_admin.ansokningarlista.ansokningar.length;
+    
+    appsettings.pagerHandler.page_currentlimit = appsettings.pagerHandler.page_item_per_page;
+    var b = data.kk_aj_admin.ansokningarlista.ansokningar;
+    retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
+    
+    for (var i = settings.page_startitem ; i < settings.page_currentlimit; i++) {
+        if (typeof b[i] !== 'undefined') {
+            var test = {
+                "ansokningid": b[i]['ansokningid'],
+                "ansokningdate": b[i]['ansokningdate'],
+                "ansokningtitle": b[i]['ansokningtitle'],
+                "ansokningsubtitle": b[i]['ansokningsubtitle'],
+                "ansokningutovare": b[i]['ansokningutovare'],
+                "ansokningurl": b[i]['ansokningurl'],
+                "ansokningbilaga": b[i]['ansokningbilaga'],
+                "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
+                "ansokninglast": b[i]['ansokninglast'],
+                "ansokningstatus": b[i]['ansokningstatus']
+            };
+
+            retdata.kk_aj_admin.ansokningarlista.ansokningar.push(test);
+        }
+    }
+    return retdata;
+}
