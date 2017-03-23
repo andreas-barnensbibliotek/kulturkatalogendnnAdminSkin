@@ -450,7 +450,7 @@
 	            };
 	            return false;
 	        });
-	        $('body').on('click', '. kk_aj_detailback', function (event) {
+	        $('body').on('click', '.kk_aj_detailback', function (event) {
 	            history.back(-1);
 	            return false;
 	        });
