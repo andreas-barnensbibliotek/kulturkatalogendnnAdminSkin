@@ -39,7 +39,8 @@ $(function () {
     var init = function () {
         console.log("1. init körs");
         if (urlParams.id) {
-            appsettings.detailetemplate.detailid = urlParams.id;           
+            appsettings.detailetemplate.detailid = urlParams.id;
+            
         }
         
 

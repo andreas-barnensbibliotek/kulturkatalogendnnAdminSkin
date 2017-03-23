@@ -105,13 +105,23 @@ module.exports = {
             };
             return false;
         });
+        $('body').on('click', '. kk_aj_detailback', function (event) {
+            history.back(-1);
+            return false;
+        });
+       
+
     },
     laddanysida: function (sidvy) {
         loadlistView(sidvy);
+    },
+    updatacontentheader: function (listview, options) {
+        updateansokHeaderjquery(listview, options);
     }
+
 }
 
-var updateansokHeaderjquery = function (currentListView) {
+var updateansokHeaderjquery = function (currentListView, options) {
     var classname = "";
     var headertext = "";
     var activeclass = "";
@@ -139,13 +149,16 @@ var updateansokHeaderjquery = function (currentListView) {
             break;
     };
     
-    $('.kk_aj_ansokningar').html('<tr><td><div class="kk_aj_loader"></div></td></tr>');
+   
+    if (options != "detailview") {
+        $('.kk_aj_ansokningar').html('<tr><td><div class="kk_aj_loader"></div></td></tr>');
+        $('.kk_aj_ansokanboxheader').attr('class', $('.kk_aj_ansokanboxheader').attr('class').replace(/(^|\s)label-\S+/g, '')).addClass(classname);
+        $('.kk_aj_box-title').html(headertext);
+        $('.kk_aj_ansoksearchform').attr('placeholder', 'Sök i ' + headertext);
 
-    $('.kk_aj_ansokanboxheader').attr('class', $('.kk_aj_ansokanboxheader').attr('class').replace(/(^|\s)label-\S+/g, '')).addClass(classname);
-    $('.kk_aj_box-title').html(headertext);
-    $('.kk_aj_ansoksearchform').attr('placeholder', 'Sök i ' + headertext);
-
-    $('.kk_aj_box-title').attr('rel', currentListView);
+        $('.kk_aj_box-title').attr('rel', currentListView);
+    }
+    
 
     $('.kk_aj_ansokanmenu li.active').removeClass('active');
     $(activeclass).addClass('active');

@@ -61,39 +61,42 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera) {
         console.log("33.  körs obj= " + obj + " val= " + value.templatedata);
         
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
-           // console.log("3.1.  körs");
-            
-            if (data.kk_aj_admin.ansokningarlista) {              
-                var sortorder;
-                var sortobjtosearch;
+            // console.log("3.1.  körs");
 
-                if (sortera != undefined) {
-                    // 2=ansokningtitle, 4= ansokningutovare                     
-                    sortorder = sortera.order;
-                    sortobjtosearch = sortera.tosort;
-                }
-                
-                //"tosort": "title", "order": "down"
-                data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {                   
-                    if (sortorder == "down") {                        
-                        if (a[sortobjtosearch] == b[sortobjtosearch])
-                            return 0;
-                        if (a[sortobjtosearch] < b[sortobjtosearch])
-                            return -1;
-                        if (a[sortobjtosearch] > b[sortobjtosearch])
-                            return 1;
-                    } else {
-                        if (a[sortobjtosearch] == b[sortobjtosearch])
-                            return 0;
-                        if (a[sortobjtosearch] > b[sortobjtosearch])
-                            return -1;
-                        if (a[sortobjtosearch] < b[sortobjtosearch])
-                            return 1;
+            //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
+            if (value.templatename != "detailTmpl") {
+
+                if (data.kk_aj_admin.ansokningarlista) {              
+                    var sortorder;
+                    var sortobjtosearch;
+
+                    if (sortera != undefined) {
+                        // 2=ansokningtitle, 4= ansokningutovare                     
+                        sortorder = sortera.order;
+                        sortobjtosearch = sortera.tosort;
                     }
-                });
-                data = datapager(data);
+                
+                    //"tosort": "title", "order": "down"
+                    data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {                   
+                        if (sortorder == "down") {                        
+                            if (a[sortobjtosearch] == b[sortobjtosearch])
+                                return 0;
+                            if (a[sortobjtosearch] < b[sortobjtosearch])
+                                return -1;
+                            if (a[sortobjtosearch] > b[sortobjtosearch])
+                                return 1;
+                        } else {
+                            if (a[sortobjtosearch] == b[sortobjtosearch])
+                                return 0;
+                            if (a[sortobjtosearch] > b[sortobjtosearch])
+                                return -1;
+                            if (a[sortobjtosearch] < b[sortobjtosearch])
+                                return 1;
+                        }
+                    });
+                    data = datapager(data);
+                }
             }
-
             loadpagetemplates(value, data, function (data) {
                 if (data == "ja") {
                     console.log("KLART");                    
@@ -146,9 +149,8 @@ var updatecountmenybox = function (data) {
 };
 
 
-function datapager(data) {
+var datapager = function(data) {
     var retdata = data;
-    //retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
     var settings = appsettings.pagerHandler;
     appsettings.pagerHandler.page_max_size = data.kk_aj_admin.ansokningarlista.ansokningar.length;
     
@@ -167,7 +169,7 @@ function datapager(data) {
                 "ansokningurl": b[i]['ansokningurl'],
                 "ansokningbilaga": b[i]['ansokningbilaga'],
                 "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
-                "ansokninglast": b[i]['ansokninglast'],
+                "ansokninglast": b[i]['ansokninglast'],                
                 "ansokningstatus": b[i]['ansokningstatus']
             };
 

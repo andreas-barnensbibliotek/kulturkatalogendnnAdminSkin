@@ -1,5 +1,6 @@
 ﻿<!-- /.box-header -->
-<div class="kk_aj_ansokanboxheader box-header with-border label-primary ">
+{{#iftype kk_aj_admin.ansokningstyp}}
+{{/iftype}}
     <h3 class="box-title">Hantera ansökning</h3>
     <div class="box-tools pull-right">
         <button type="button" class="btn btn-block btn-default btn-sm kk_aj_detailback"><i class="fa fa-arrow-left"></i> Tillbaka</button>
@@ -8,10 +9,10 @@
 <!-- /.box-header -->
 <div class="box-body no-padding">
     <div class="mailbox-read-info">
-        <h3>Skolbio förskolan: <b>Mustang</b></h3>
+        <h3>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}: <b>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}</b></h3>
         <h5>
-            Från: Andreas josefsson
-            <span class="mailbox-read-time pull-right">15 Jan. 2017 11:03 PM</span>
+            Utövare: {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningutovare}}
+            <span class="mailbox-read-time pull-right">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>
         </h5>
     </div>
     <!-- /.mailbox-read-info -->
@@ -23,37 +24,17 @@
     </div>
     <!-- /.mailbox-controls -->
     <div class="mailbox-read-message">                                                                                              
-        <h3>Skolbio förskolan: Mustang</h3>
-        <p>                                    
-            Rek för åk 7 – gymnasiet (107 minuter)
-        </p><p>    Fem föräldralösa tonårssystrar bor i en liten by . En dag stojar de med killarna på väg hem från skolan, en oskyldig lek som andra tolkar som osedlighet. Ryktet sprids snabbt och mormor blir orolig för att deras värde på äktenskapsmarknaden. Historien växer till oanade proportioner och snart börjar systrarnas frihet kringskäras allt mer. Deras hem blir ett fängelse, men upproret bubblar under ytan. Filmen tar upp unga kvinnors rätt att bestämma över sina liv, kroppar och sin sexualitet.
-        </p><p>
-        Trailer: https://www.youtube.com/watch?v=rU9JAN8LtIk
-        </p><p>
-        Filmhandledning: http://www.filminstitutet.se/sv/fa-kunskap-om-film/film-i-skolan/filmhan...
-        </p><p>
-        Bokas av Scanbox; clasg@scanbox.com
-        </p> 
+         <h3>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}: {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}</h3>       
+        <p>
+		{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningscontent}}
+		</p>		
         <hr />                               
         <h3>Fakta</h3>
-        <p>  
-        Arrangörsstöd:Arrangören betalar 50%                                
-        </p><p>
-            Lärarhandledning ingår: Nej
-        </p><p>                               
-            Kontaktperson:
-            Pia-Marie Wehrling<br />
-            Telefonnummer:
-            0313335135<br />
-            Adress:
-            Rosenlundsgatan 4<br />
-            Postnummer:
-            41120<br />
-            Ort:
-            Göteborg<br />
-            E-post:
-            pia-mari.wehrling@kulturivast.se<br />
-        <p>
+		{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokanFaktalista}}
+		<p>		
+		 <b>{{this.rubrik}} : </b> {{this.value}}
+		</p>
+		{{/each}}       
 </div>
     <!-- /.mailbox-read-message -->
 </div>
@@ -61,25 +42,25 @@
 <div class="box-footer">
     <ul class="mailbox-attachments clearfix">
         <li>
-            <span class="mailbox-attachment-icon has-img"><img src="../../dist/img/kulturkatalogen/mustang_h.jpg" /></span>
+            <span class="mailbox-attachment-icon has-img"><img alt="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.alt}}" src="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.url}}" /></span>
             <div class="mailbox-attachment-info">
-                <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> mustang_h.jpg</a>
+                <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.url}}" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.filename}}</a>
                 <span class="mailbox-attachment-size">
-                    1.9 MB
-                    <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                    {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.size}}
+                    <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.url}}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                 </span>
             </div>
         </li>
         <li>
-            <span class="mailbox-attachment-icon has-img">
-
-                <img src="../../dist/img/kulturkatalogen/Youtube.jpg" />
+            <span class="has-img">
+			<iframe width="198" height="131" src="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.url}}" frameborder="0" allowfullscreen></iframe>
+               
             </span>
             <div class="mailbox-attachment-info">
-                <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i>watch?v=rU9JAN8LtIk</a>
+                <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.url}}" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.filename}}</a>
                 <span class="mailbox-attachment-size">
-                    3:03 min
-                    <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                    {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.size}}
+                    <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.url}}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                 </span>
             </div>
         </li>

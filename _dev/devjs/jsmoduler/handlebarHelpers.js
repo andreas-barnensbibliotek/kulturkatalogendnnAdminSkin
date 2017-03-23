@@ -1,4 +1,4 @@
-﻿
+﻿var registerJqueryEvents = require("./eventhandler.js");
 module.exports = {
     inithelper: ""
 
@@ -22,4 +22,30 @@ Handlebars.registerHelper('ifBilaga', function (bilagaobj, bilagaurl) {
     } else {
         return '';
     }
+});
+
+// kollar om ansökningar har bilaga eller ej
+Handlebars.registerHelper('iftype', function (ansoktyp) {
+    var changedtyp = "";
+    var changeclass = "";
+    switch(ansoktyp){
+        case "nya":
+            changedtyp = "kk_aj_ansokningarView"
+            changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border label-primary">';
+            break;
+        case "approved":
+            changedtyp = "kk_aj_approvedansokningarView"
+            changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border label-success">';
+            break;
+        case "denied":
+            changedtyp = "kk_aj_deniedansokningarView"
+            changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border label-danger">';
+            break;
+        case "archived":
+            changedtyp = "kk_aj_archiveansokningarView"
+            changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border">';
+            break;                  
+    }         
+    registerJqueryEvents.updatacontentheader(changedtyp, "detailview");
+    return changeclass;
 });
