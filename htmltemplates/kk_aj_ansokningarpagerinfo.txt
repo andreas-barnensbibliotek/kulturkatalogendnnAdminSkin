@@ -1,0 +1,6 @@
+﻿{{kk_aj_admin.ansokningarlistacurrentpage}}/ {{kk_aj_admin.ansokningarlistatotalpages}}
+<div class="btn-group">
+    <button type="button" class="btn btn-default btn-sm kk_aj_listannonsprev" rel="{{kk_aj_admin.ansokningarlistacurrentpage}}"><i class="fa fa-chevron-left"></i></button>
+    <button type="button" class="btn btn-default btn-sm kk_aj_listannonsnext" rel="{{kk_aj_admin.ansokningarlistacurrentpage}}"><i class="fa fa-chevron-right"></i></button>
+</div>
+<!-- /.btn-group -->

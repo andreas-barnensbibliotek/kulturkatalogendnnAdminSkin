@@ -207,6 +207,14 @@
 	        filename: "kk_aj_ansokningarLista.txt"
 	    }
 	];
+	window.kk_aj_ansokningarpagerinfoView = [
+	    {
+	        templatename: "ansokningarpagerinfoTmpl",
+	        templatedata: "test",
+	        targetdiv: ".kk_aj_listpagecount",
+	        filename: "kk_aj_ansokningarpagerinfo.txt"
+	    }
+	];
 	window.kk_aj_DiarieView =[    
 	    {
 	        templatename: "DiareTmpl",
@@ -245,8 +253,10 @@
 	    {       
 	        page_max_size : "",
 	        page_startitem : "0",
-	        page_item_per_page: "10",
-	        page_currentlimit: "10"
+	        page_item_per_page: "5",
+	        page_currentlimit: "",
+	        page_currentdataset: [],
+	        page_currenttemplate:""
 	    };
 
 	module.exports = {  
@@ -259,6 +269,7 @@
 	    approvedansokningartemplate: window.kk_aj_approvedansokningarView,
 	    deniedansokningartemplate: window.kk_aj_deniedansokningarView,
 	    archiveansokningartemplate: window.kk_aj_archiveansokningarView,
+	    ansokningarpagerinfotemplate: window.kk_aj_ansokningarpagerinfoView,
 	    diarietemplate: window.kk_aj_DiarieView,
 	    detailetemplate: window.kk_aj_detailView,
 	    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
@@ -382,14 +393,28 @@
 	            return false;
 	        });
 
+	        //ansökningsidor Pager EVENT ---------------------------------------------------------------
+	        $('body').on('click', '.kk_aj_listannonsnext', function () {
+	            var setting = appsettings.pagerHandler;
 
-	        //$('body').on('click', '.kk_aj_listannonsnext', function () {            
-	        //    var next = limit;
-	        //    if(max_size>=next) {
-	        //        limit = limit+elements_per_page;
-	         
-	        //    return false;
-	        //});
+	            var next = setting.page_currentlimit;            
+	            if (setting.page_max_size >= next) {
+	                setting.page_currentlimit = parseInt(setting.page_currentlimit) + parseInt(setting.page_item_per_page);
+	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, next, setting.page_currentlimit);
+	            }
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_listannonsprev', function () {
+	            var setting = appsettings.pagerHandler;
+	           
+	            var pre = setting.page_currentlimit-(2*setting.page_item_per_page);
+	            if(pre>=0) { 
+	                setting.page_currentlimit = parseInt(setting.page_currentlimit) - parseInt(setting.page_item_per_page);
+	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, pre, setting.page_currentlimit);
+	            }
+	            return false;
+	        });
 	       
 	        //ansökningsidor EVENT ---------------------------------------------------------------
 	        $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
@@ -10817,6 +10842,13 @@
 	                loadtemplateTypes(appsettings.starttemplate);
 	                break;
 	        }
+	    },
+	    pagechanger: function (currdata, currtemp, sta, limit) {
+	        partpageloadertemplates(currtemp, datapager(currdata,sta, limit), function (data) {
+	            if (data == "ja") {
+	                console.log("ansokningarpagerinfotemplate");
+	            }
+	        });
 	    }
 	};
 
@@ -10826,7 +10858,9 @@
 	    //for (var obj in pagetemplate) {
 	    $.each(pagetemplate, function( obj, value ) {
 	        console.log("33.  körs obj= " + obj + " val= " + value.templatedata);
-	        
+	        console.log("44.  appsettings.ansokningarpagerinfotemplate= " + appsettings.ansokningarpagerinfotemplate[0].filename);
+	        console.log("55.  appsettings.kk_aj_deniedansokningarView= " + appsettings.deniedansokningartemplate[0].filename);
+
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
 	            // console.log("3.1.  körs");
 
@@ -10861,8 +10895,18 @@
 	                                return 1;
 	                        }
 	                    });
+	                    var test = data;
+	                    appsettings.pagerHandler.page_currentdataset = test;
+	                    appsettings.pagerHandler.page_currenttemplate = value;
 	                    data = datapager(data);
+
+	                    partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
+	                        if (data == "ja") {
+	                            console.log("ansokningarpagerinfotemplate");
+	                        }
+	                    });
 	                }
+	               
 	            }
 	            loadpagetemplates(value, data, function (data) {
 	                if (data == "ja") {
@@ -10891,6 +10935,19 @@
 
 	}
 
+	var partpageloadertemplates = function (template, currentdata, callback) {
+	    console.log("61. partpagerladdar: " + template.filename);
+	   
+	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
+	        var temptpl = Handlebars.compile(data);
+	        console.log("71. " + template.filename + " klar att levereras");
+	        $(template.targetdiv).html(temptpl(currentdata));
+	        callback("ja");
+	    }, 'html');
+
+
+	}
+
 	var updatecountmenybox = function (data) {
 	    
 	    if (data.kk_aj_admin.nyaansokningarcount != undefined) {       
@@ -10916,16 +10973,28 @@
 	};
 
 
-	var datapager = function(data) {
-	    var retdata = data;
+	var datapager = function(datat,sta,limit) {
+	    var retdata = jQuery.extend(true, {}, datat);
 	    var settings = appsettings.pagerHandler;
-	    appsettings.pagerHandler.page_max_size = data.kk_aj_admin.ansokningarlista.ansokningar.length;
+	    appsettings.pagerHandler.page_max_size = datat.kk_aj_admin.ansokningarlista.ansokningar.length;//var max_size=b.length;
 	    
-	    appsettings.pagerHandler.page_currentlimit = appsettings.pagerHandler.page_item_per_page;
-	    var b = data.kk_aj_admin.ansokningarlista.ansokningar;
+	    //appsettings.pagerHandler.page_currentlimit = //appsettings.pagerHandler.page_item_per_page; //10
+	    var b = datat.kk_aj_admin.ansokningarlista.ansokningar;
 	    retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
 	    
-	    for (var i = settings.page_startitem ; i < settings.page_currentlimit; i++) {
+	    if (typeof sta == 'undefined'){
+	        sta = settings.page_startitem;
+	    }
+	    if (typeof limit == 'undefined') {
+	        limit = settings.page_item_per_page;
+	    }
+
+	    appsettings.pagerHandler.page_currentlimit = limit;
+	    //var elements_per_page = 4;
+	    //var limit = elements_per_page;
+
+
+	    for (var i = sta ; i < limit; i++) {
 	        if (typeof b[i] !== 'undefined') {
 	            var test = {
 	                "ansokningid": b[i]['ansokningid'],

@@ -37,14 +37,28 @@ module.exports = {
             return false;
         });
 
+        //ansökningsidor Pager EVENT ---------------------------------------------------------------
+        $('body').on('click', '.kk_aj_listannonsnext', function () {
+            var setting = appsettings.pagerHandler;
 
-        //$('body').on('click', '.kk_aj_listannonsnext', function () {            
-        //    var next = limit;
-        //    if(max_size>=next) {
-        //        limit = limit+elements_per_page;
-         
-        //    return false;
-        //});
+            var next = setting.page_currentlimit;            
+            if (setting.page_max_size >= next) {
+                setting.page_currentlimit = parseInt(setting.page_currentlimit) + parseInt(setting.page_item_per_page);
+                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, next, setting.page_currentlimit);
+            }
+            return false;
+        });
+
+        $('body').on('click', '.kk_aj_listannonsprev', function () {
+            var setting = appsettings.pagerHandler;
+           
+            var pre = setting.page_currentlimit-(2*setting.page_item_per_page);
+            if(pre>=0) { 
+                setting.page_currentlimit = parseInt(setting.page_currentlimit) - parseInt(setting.page_item_per_page);
+                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, pre, setting.page_currentlimit);
+            }
+            return false;
+        });
        
         //ansökningsidor EVENT ---------------------------------------------------------------
         $('body').on('click', '.kk_aj_uppdateraannonser', function () {            

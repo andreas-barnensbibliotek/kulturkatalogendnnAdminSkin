@@ -49,6 +49,14 @@ window.kk_aj_archiveansokningarView = [
         filename: "kk_aj_ansokningarLista.txt"
     }
 ];
+window.kk_aj_ansokningarpagerinfoView = [
+    {
+        templatename: "ansokningarpagerinfoTmpl",
+        templatedata: "test",
+        targetdiv: ".kk_aj_listpagecount",
+        filename: "kk_aj_ansokningarpagerinfo.txt"
+    }
+];
 window.kk_aj_DiarieView =[    
     {
         templatename: "DiareTmpl",
@@ -87,8 +95,10 @@ window.kk_aj_pagerHandler =
     {       
         page_max_size : "",
         page_startitem : "0",
-        page_item_per_page: "10",
-        page_currentlimit: "10"
+        page_item_per_page: "5",
+        page_currentlimit: "",
+        page_currentdataset: [],
+        page_currenttemplate:""
     };
 
 module.exports = {  
@@ -101,6 +111,7 @@ module.exports = {
     approvedansokningartemplate: window.kk_aj_approvedansokningarView,
     deniedansokningartemplate: window.kk_aj_deniedansokningarView,
     archiveansokningartemplate: window.kk_aj_archiveansokningarView,
+    ansokningarpagerinfotemplate: window.kk_aj_ansokningarpagerinfoView,
     diarietemplate: window.kk_aj_DiarieView,
     detailetemplate: window.kk_aj_detailView,
     motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,

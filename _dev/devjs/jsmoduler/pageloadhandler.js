@@ -50,6 +50,13 @@ module.exports = {
                 loadtemplateTypes(appsettings.starttemplate);
                 break;
         }
+    },
+    pagechanger: function (currdata, currtemp, sta, limit) {
+        partpageloadertemplates(currtemp, datapager(currdata,sta, limit), function (data) {
+            if (data == "ja") {
+                console.log("ansokningarpagerinfotemplate");
+            }
+        });
     }
 };
 
@@ -59,7 +66,9 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera) {
     //for (var obj in pagetemplate) {
     $.each(pagetemplate, function( obj, value ) {
         console.log("33.  körs obj= " + obj + " val= " + value.templatedata);
-        
+        console.log("44.  appsettings.ansokningarpagerinfotemplate= " + appsettings.ansokningarpagerinfotemplate[0].filename);
+        console.log("55.  appsettings.kk_aj_deniedansokningarView= " + appsettings.deniedansokningartemplate[0].filename);
+
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, function (data) {
             // console.log("3.1.  körs");
 
@@ -94,8 +103,18 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera) {
                                 return 1;
                         }
                     });
+                    var test = data;
+                    appsettings.pagerHandler.page_currentdataset = test;
+                    appsettings.pagerHandler.page_currenttemplate = value;
                     data = datapager(data);
+
+                    partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
+                        if (data == "ja") {
+                            console.log("ansokningarpagerinfotemplate");
+                        }
+                    });
                 }
+               
             }
             loadpagetemplates(value, data, function (data) {
                 if (data == "ja") {
@@ -124,6 +143,19 @@ var loadpagetemplates = function (template, currentdata,callback) {
 
 }
 
+var partpageloadertemplates = function (template, currentdata, callback) {
+    console.log("61. partpagerladdar: " + template.filename);
+   
+    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
+        var temptpl = Handlebars.compile(data);
+        console.log("71. " + template.filename + " klar att levereras");
+        $(template.targetdiv).html(temptpl(currentdata));
+        callback("ja");
+    }, 'html');
+
+
+}
+
 var updatecountmenybox = function (data) {
     
     if (data.kk_aj_admin.nyaansokningarcount != undefined) {       
@@ -149,16 +181,28 @@ var updatecountmenybox = function (data) {
 };
 
 
-var datapager = function(data) {
-    var retdata = data;
+var datapager = function(datat,sta,limit) {
+    var retdata = jQuery.extend(true, {}, datat);
     var settings = appsettings.pagerHandler;
-    appsettings.pagerHandler.page_max_size = data.kk_aj_admin.ansokningarlista.ansokningar.length;
+    appsettings.pagerHandler.page_max_size = datat.kk_aj_admin.ansokningarlista.ansokningar.length;//var max_size=b.length;
     
-    appsettings.pagerHandler.page_currentlimit = appsettings.pagerHandler.page_item_per_page;
-    var b = data.kk_aj_admin.ansokningarlista.ansokningar;
+    //appsettings.pagerHandler.page_currentlimit = //appsettings.pagerHandler.page_item_per_page; //10
+    var b = datat.kk_aj_admin.ansokningarlista.ansokningar;
     retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
     
-    for (var i = settings.page_startitem ; i < settings.page_currentlimit; i++) {
+    if (typeof sta == 'undefined'){
+        sta = settings.page_startitem;
+    }
+    if (typeof limit == 'undefined') {
+        limit = settings.page_item_per_page;
+    }
+
+    appsettings.pagerHandler.page_currentlimit = limit;
+    //var elements_per_page = 4;
+    //var limit = elements_per_page;
+
+
+    for (var i = sta ; i < limit; i++) {
         if (typeof b[i] !== 'undefined') {
             var test = {
                 "ansokningid": b[i]['ansokningid'],
