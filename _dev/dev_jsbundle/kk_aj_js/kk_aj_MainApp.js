@@ -160,6 +160,7 @@
 	//var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
 	var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
 	var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+	//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
 	window.kk_aj_startView= [
 	    {
@@ -434,7 +435,7 @@
 	            });           
 	        });
 
-	        $('body').on('click', '.kk_aj_sortutovare', function (event) {
+	        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
 	            var curpage = $('.kk_aj_box-title').attr('rel');
 	            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
 	                sortobj = { "tosort": "ansokningtitle", "order": "up"};
@@ -448,7 +449,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_sortrubrik', function (event) {            
+	        $('body').on('click', '.kk_aj_sortutovare', function (event) {
 	            var curpage = $('.kk_aj_box-title').attr('rel');
 	            if ($('.kk_aj_sortrubrik i').hasClass('fa-caret-down')) {
 	                sortobj = { "tosort": "ansokningutovare", "order": "up" };

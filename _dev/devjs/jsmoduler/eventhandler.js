@@ -78,7 +78,7 @@ module.exports = {
             });           
         });
 
-        $('body').on('click', '.kk_aj_sortutovare', function (event) {
+        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
             var curpage = $('.kk_aj_box-title').attr('rel');
             if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
                 sortobj = { "tosort": "ansokningtitle", "order": "up"};
@@ -92,7 +92,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_sortrubrik', function (event) {            
+        $('body').on('click', '.kk_aj_sortutovare', function (event) {
             var curpage = $('.kk_aj_box-title').attr('rel');
             if ($('.kk_aj_sortrubrik i').hasClass('fa-caret-down')) {
                 sortobj = { "tosort": "ansokningutovare", "order": "up" };

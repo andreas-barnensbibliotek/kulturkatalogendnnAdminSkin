@@ -74,9 +74,9 @@
     </section>        
     <section class="sidebar">  
       <!--meny -->
-            <dnn:MENU ID="MENU1" MenuStyle="Simple" runat="Server"/>
+           
         <!--meny end -->
-            <dnn:LOGIN ID="LOGIN2" CssClass="loginbox" runat="server" Text="Logga in" LegacyMode="false" />
+            
         </section>
     <!-- /.sidebar -->
   </aside>
@@ -119,6 +119,10 @@
           <li>
             <a href="#">Andreas Josefsson</a>
           </li>
+        <li> 
+            <dnn:MENU ID="MENU1" MenuStyle="Simple" runat="Server" />
+            <dnn:LOGIN ID="LOGIN2" CssClass="loginbox" runat="server" Text="Logga in" LegacyMode="false" />
+        </li>
         </ul>
         <!-- /.control-sidebar-menu -->
 

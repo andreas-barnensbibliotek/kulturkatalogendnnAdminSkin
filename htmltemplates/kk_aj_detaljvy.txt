@@ -6,37 +6,34 @@
         <button type="button" class="btn btn-block btn-default btn-sm kk_aj_detailback"><i class="fa fa-arrow-left"></i> Tillbaka</button>
     </div>                       
 </div>
-<!-- /.box-header -->
-<div class="box-body no-padding">
-    <div class="mailbox-read-info">
-        <h3>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}: <b>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}</b></h3>
-        <h5>
-            Utövare: {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningutovare}}
-            <span class="mailbox-read-time pull-right">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>
-        </h5>
-    </div>
-    <!-- /.mailbox-read-info -->
-    <div class="mailbox-controls with-border text-right">                                
-        <!-- /.btn-group -->                                
-        <button type="button" class="btn btn-default" data-toggle="tooltip" title="Print">                                        
-                <i class="fa fa-print"></i> Skriv ut
-        </button>                                
-    </div>
-    <!-- /.mailbox-controls -->
-    <div class="mailbox-read-message">                                                                                              
-         <h3>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}: {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}</h3>       
-        <p>
+	<!-- /.box-header -->
+	<div class="box-body no-padding">
+		<div class="mailbox-read-info"><div class="pull-right">                                
+			<!-- /.btn-group -->                                
+			<button type="button" class="btn btn-default" data-toggle="tooltip" title="Print">                                        
+					<i class="fa fa-print"></i> Skriv ut
+			</button>                                
+		</div>
+		<span class="mailbox-read-time ">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>       
+		<h3>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}: <b>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}</b></h3>
+		<h5>Utövare: {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningutovare}}</h5>
+	</div>
+		<!-- /.mailbox-read-info -->
+    
+	<!-- /.mailbox-controls -->
+	<div class="mailbox-read-message">                                                                                              
+		<p>
 		{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningscontent}}
 		</p>		
-        <hr />                               
-        <h3>Fakta</h3>
+		<hr />                               
+		<h3>Fakta</h3>
 		{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokanFaktalista}}
 		<p>		
-		 <b>{{this.rubrik}} : </b> {{this.value}}
+			<b>{{this.rubrik}} : </b> {{this.value}}
 		</p>
 		{{/each}}       
-</div>
-    <!-- /.mailbox-read-message -->
+	</div>
+<!-- /.mailbox-read-message -->
 </div>
 <!-- /.box-body -->
 <div class="box-footer">
@@ -64,15 +61,16 @@
                 </span>
             </div>
         </li>
-    </ul>
+    </ul><div class="pull-right">
+		<button type="button" class="btn btn-default kk_aj_detailedit" title="Ändra"><i class="fa fa-cog" aria-hidden="true"></i> Ändra</button>
+    </div>
 </div>                        
 <!-- /.box-footer -->
-<div class="box-footer kk_aj_motiveringlogg">
-                            
-    <button type="button" class="btn btn-default" title="Godkänn"><i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
-    <button type="button" class="btn btn-default" title="Neka"><i class="fa fa-times" aria-hidden="true"></i> Neka</button>
-                       
+<div class="box-footer kk_aj_motiveringlogg">    
     <h4>Motivering *</h4>
     <textarea id="Motivering" class="motivering" style="width:100%;"></textarea>
+	<button type="button" class="btn btn-default kk_aj_detailapprove" title="Godkänn"><i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
+    <button type="button" class="btn btn-default kk_aj_detaildenie" title="Neka"><i class="fa fa-times" aria-hidden="true"></i> Neka</button>
+    
 </div>
 <!-- /.box-footer -->
