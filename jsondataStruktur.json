@@ -118,7 +118,10 @@
 				"ansokningutovare": "Lajvverkstaden",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"ja",
+				"ansokningkonstform": "Teater",
+				"ansokningutovare": "Lajvverkstaden",
 				"ansokninglast": "nej",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "ny"
 			},
 			{
@@ -128,8 +131,10 @@
 				"ansokningsubtitle": "Mustang",
 				"ansokningutovare": "Lajvverkstaden",
 				"ansokningurl": "www.barnensbibliotek.se",
-				"ansokningbilaga":"ja",
+				"ansokningbilaga":"ja",				
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "nej",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "ny"
 			},
 			{
@@ -140,7 +145,9 @@
 				"ansokningutovare": "Lajvverkstaden",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"nej",
+				"ansokningkonstform": "Dans",
 				"ansokninglast": "ja",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "ny"				
 			}
 			]
@@ -169,7 +176,9 @@
 				"ansokningutovare": "Lajvverkstaden",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"ja",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "nej",
+				"ansokningpublicerad": "ja",
 				"ansokningstatus": "approved"
 			},
 			{
@@ -180,7 +189,9 @@
 				"ansokningutovare": "L--",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"ja",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "nej",
+				"ansokningpublicerad": "ja",
 				"ansokningstatus": "approved"
 			},
 			{
@@ -191,7 +202,9 @@
 				"ansokningutovare": "Lajvverkstaden",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"nej",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "ja",
+				"ansokningpublicerad": "ja",
 				"ansokningstatus": "approved"				
 			}
 			]
@@ -220,7 +233,9 @@
 				"ansokningutovare": "Nissesbyrå",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"ja",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "nej",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "denied"
 			},
 			{
@@ -231,7 +246,9 @@
 				"ansokningutovare": "Lajvverkstaden",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"ja",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "nej",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "denied"
 			},
 			{
@@ -242,7 +259,9 @@
 				"ansokningutovare": "--",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"nej",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "ja",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "denied"				
 			}
 			]
@@ -271,7 +290,9 @@
 				"ansokningutovare": "Nissesbyrå",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"ja",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "nej",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "archive"
 			},
 			{
@@ -282,7 +303,9 @@
 				"ansokningutovare": "--",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"ja",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "nej",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "archive"
 			},
 			{
@@ -293,7 +316,9 @@
 				"ansokningutovare": "Lajvverkstaden",
 				"ansokningurl": "www.barnensbibliotek.se",
 				"ansokningbilaga":"nej",
+				"ansokningkonstform": "Teater",
 				"ansokninglast": "ja",
+				"ansokningpublicerad": "nej",
 				"ansokningstatus": "archive"				
 			}
 			]
@@ -506,5 +531,216 @@
 			"userroll": "1"
 		},
 		"status": "User is Up and running"
+	}
+}
+
+// Log message
+{
+	"kk_aj_admin": {
+		"logcount": "2",
+		"loglist":[{
+				"logid": "1",
+				"logtypid": "1",
+				"logtyp": "systemevent",
+				"arrid":"1",
+				"arrrubrik": "test",
+				"arrutovare":"nisse",				
+				"statustypid":"1",
+				"statustyp" : "Nekad"
+				"changebyuserid": "2",
+				"changebyuser": "testnisse",
+				"datum":"17-02-22",
+				"beskrivning": "godkänd och klar"				
+			},
+			{
+				"logid": "2",
+				"logtypid": "3",
+				"logtyp": "systemevent",
+				"arrid":"1",
+				"arrrubrik": "test",
+				"arrutovare":"nisse",				
+				"statustypid":"1",
+				"statustyp" : "Ändrad"
+				"changebyuserid": "2",
+				"changebyuser": "testnisse",
+				"datum":"17-02-23",
+				"beskrivning": "godkänd och klar"				
+			}]
+		},
+		"status": "Logg is correct"
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// JSON DETAIL ////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+{
+	"kk_aj_admin": {
+		"ansokningstyp": "denied",
+		"ansokningarlista": {
+			"ansokningarcount": "1",
+			"ansokningar": [{
+				"ansokningid": "1",
+				"ansokningdate": "2017-01-15",
+				"ansokningtitle": "dennaLova! Sa Smulan",
+				"ansokningsubtitle": "En flerspråkig danssaga för 3-6 år",
+				"ansokningutovare": "Hagateatern",
+				"ansokningurl": "kurage@hagateatern.se",
+				"ansokningbilaga": "ja",
+				"ansokningbilagaUrl": "www.barnensbibliotek.se",
+				"ansokninglast": "nej",
+				"ansokningscontent": "Fem föräldralösa tonårssystrar bor i en liten by. En dag stojar de med killarna på väg hem från skolan, en oskyldig lek som andra tolkar som osedlighet. Ryktet sprids snabbt och mormor blir orolig för att deras värde på äktenskapsmarknaden. Historien växer till oanade proportioner och snart börjar systrarnas frihet kringskäras allt mer.Deras hem blir ett fängelse, men upproret bubblar under ytan.Filmen tar upp unga kvinnors rätt att bestämma över sina liv, kroppar och sin sexualitet.Trailer: https: //www.youtube.com/watch?v=rU9JAN8LtIk Filmhandledning: http: //www.filminstitutet.se/sv/fa-kunskap-om-film/film-i-skolan/filmhan... Bokas av Scanbox;clasg @scanbox.com",
+				"ansokningstatus": "ny",                
+                "ansokningpublicerad": "nej",
+                "ansokningmainimage": {
+						"url": "http://kulturivast.se/sites/default/files/styles/mozaik/public/ceamna8_h.jpg",
+                        "filename":"bildsmulan_h.jpg",
+						"size": "1.9MB",
+						"alt": "mustang bild",
+						"foto": "Åsa Holts"
+				},
+			    "ansokningmovieclip": {
+						"url": "https://www.youtube.com/embed/BfUhTpYlQoE",
+                        "filename":"https://youtu.be/TpVIOe-kRAo",
+						"size": "12.30Min",
+						"alt": "mustang Filmclip"
+				},
+				"ansokanFaktalista": {
+					"Arrangorsstod": { 
+                        "rubrik":"Arrangörsstöd",
+                        "value":"Arrangören betalar 50%"
+                     },
+					"Antalmedvarkande": { 
+                        "rubrik":"Antal medverkande",
+                        "value":10
+					},                    
+                    "Medverkande": { 
+                        "rubrik":"Medverkande",
+                        "value":"Av: Moni Nolsson Idé och koncept: Scenkonsttrion Kurage Regi: Rebecca Alverfors och Charlotta Grimfjord Cederblad På scen: Furat Jari Koreografi: Fredrika Byman Moberg och Charlotta Grimfjord Cederblad Ljus och rum: Åsa Holtz Illustration: Jenny Carlsson Produktion: Hanna Jansson "
+                     }, 
+					"Period":{ 
+                        "rubrik":"Period",
+                        "value":"Enligt överenskommelse"
+                     }, 
+					"Bokningsbartom":{ 
+                        "rubrik":"Bokningsbar t.om.",
+                        "value":"30 juni 2018"
+                     },  
+					"Maxpublik": { 
+                        "rubrik":"Max publik",
+                        "value":"60"
+                     },
+					"Franalder": { 
+                        "rubrik":"Från ålder",
+                        "value":"3 år"
+                     },
+					"Tillalder": { 
+                        "rubrik":"Till ålder",
+                        "value":"6 år"
+                     },
+					"Foreställningarperdag": { 
+                        "rubrik":"Föreställningar per dag",
+                        "value":"2"
+                     },
+					"Byggtid": { 
+                        "rubrik":"Byggtid",
+                        "value":"60 min"
+                     },
+                     "Rivtid": { 
+                        "rubrik":"Rivtid",
+                        "value":"45 min"
+                     },					
+					"Breddpascen": { 
+                        "rubrik":"Bredd på scen",
+                        "value":"4 m"
+                     },	
+					"Djuppascen": { 
+                        "rubrik":"Djup på scen",
+                        "value":"3 m"
+                     },	
+					"Takhojdoverscen": { 
+                        "rubrik":"Takhöjd över scen",
+                        "value":"3 m"
+                     },	
+					"Ljus": { 
+                        "rubrik":"Ljus",
+                        "value":"Tar med eget/Ingår"
+                     },	
+					"Barhjalpbehovs": { 
+                        "rubrik":"Bärhjälp behövs",
+                        "value":"Ja"
+                     },
+					"El": { 
+                        "rubrik":"El",
+                        "value":"10 A"
+                     },
+					"Ovrigalokalkrav": { 
+                        "rubrik":"Övriga lokalkrav",
+                        "value":"Ej upphöjd scen ej scen där publiken hamnar för långt bort från skådespelaren."
+                     },
+					"Kostnadforstaarrangemanget": { 
+                        "rubrik":"Kostnad första arrangemanget",
+                        "value":"3000 kr"
+                     },
+					"Kostnadandraarrangemanget": { 
+                        "rubrik":"Kostnad andra arrangemanget",
+                        "value":"2000 kr"
+                     },
+					"Resoringartillkommer": { 
+                        "rubrik":"Resor ingår/tillkommer",
+                        "value":"Tillkommmer"
+                     },
+					"Logiingartillkommer": { 
+                        "rubrik":"Logi ingår/tillkommer",
+                        "value":"Tillkommmer"
+                     },
+					"Logi": { 
+                        "rubrik":"Logi",
+                        "value":"2 st enkelrum"
+                     },
+					"Traktamenteingartillkommer":{ 
+                        "rubrik":"Traktamente ingår/tillkommer",
+                        "value":"Tillkommmer"
+                     },
+					"Lararhandledningingaringar": { 
+                        "rubrik":"Lärarhandledningar",
+                        "value":"Nej"
+                     },
+					"kontaktperson": { 
+                        "rubrik":"Kontaktperson",
+                        "value":"Hanna Jansson"
+                     },                    
+					"Telefonnummer": { 
+                        "rubrik":"Telefonnummer",
+                        "value":"031-126668"
+                     },
+					"Adress":{ 
+                        "rubrik":"Adress",
+                        "value":"Hagateatern Södra Allégatan 2"
+                     },
+					"Postnummer": { 
+                        "rubrik":"Postnummer",
+                        "value":"413 01"
+                     },
+					"Ort": { 
+                        "rubrik":"Ort",
+                        "value":"Göteborg"
+                     },
+					"Epost": { 
+                        "rubrik":"E-post",
+                        "value":"kurage@hagateatern.se"	
+                     }			
+				}
+			}]
+		},
+		"ansokningarlistacount": "1",
+		"ansokningarlistacurrentpage": "1",
+		"ansokningarlistatotalpages": "1",
+		"nyaansokningarcount": "12",
+		"approvedansokningarcount": "7",
+		"deniedansokningarcount": "8",
+		"status": "nyansokningar listan funkar"
 	}
 }

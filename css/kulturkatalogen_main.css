@@ -37,3 +37,5 @@ min-height:40px !important;
     text-overflow: ellipsis;
     word-break:break-all;
 }
+/* margin fix till ingångarmenyn*/
+.kk_aj_ansokanmenu{margin-left: 0px;}

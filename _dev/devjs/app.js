@@ -14,7 +14,7 @@ $(function () {
     var _userid = $('.kk_aj_CurrentUserid').html();
     var _rollid = $('.kk_aj_CurrentRollid').html();
     var _pageType = $('.kk_aj_CurrentPageType').html();
-   
+    appsettings.currentUserid = _userid;
     // start eventhandler -----------------------------
     registerJqueryEvents.jqueryEVENTS(_userid);
     // end eventhandler
@@ -38,6 +38,8 @@ $(function () {
 
     var init = function () {
         console.log("1. init körs");
+        appsettings.currentUserid = _userid;
+
         if (urlParams.id) {
             appsettings.detailetemplate.detailid = urlParams.id;
             

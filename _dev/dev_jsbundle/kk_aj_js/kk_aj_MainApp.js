@@ -60,7 +60,7 @@
 	    var _userid = $('.kk_aj_CurrentUserid').html();
 	    var _rollid = $('.kk_aj_CurrentRollid').html();
 	    var _pageType = $('.kk_aj_CurrentPageType').html();
-	   
+	    appsettings.currentUserid = _userid;
 	    // start eventhandler -----------------------------
 	    registerJqueryEvents.jqueryEVENTS(_userid);
 	    // end eventhandler
@@ -84,6 +84,8 @@
 
 	    var init = function () {
 	        console.log("1. init k�rs");
+	        appsettings.currentUserid = _userid;
+
 	        if (urlParams.id) {
 	            appsettings.detailetemplate.detailid = urlParams.id;
 	            
@@ -158,7 +160,8 @@
 
 	// object
 	//var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
-	var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
+	var _localOrServerURL = "http://localhost:60485/Api_v2";
+	//var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
 	var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 	//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
@@ -10810,32 +10813,32 @@
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView= " );
 	                
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.nyaansokningartemplate,0, sortobj);
+	                loadtemplateTypes(appsettings.nyaansokningartemplate, appsettings.currentUserid, sortobj);
 	                break;
 	            case "kk_aj_approvedansokningarView": //godkända
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.approvedansokningartemplate, 0, sortobj);
+	                loadtemplateTypes(appsettings.approvedansokningartemplate, appsettings.currentUserid, sortobj);
 	                break;
 	            case "kk_aj_deniedansokningarView": //nekade
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.deniedansokningartemplate, 0, sortobj);
+	                loadtemplateTypes(appsettings.deniedansokningartemplate, appsettings.currentUserid, sortobj);
 	                break;
 	            case "kk_aj_archiveansokningarView": //arkiv
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.archiveansokningartemplate, 0, sortobj);
+	                loadtemplateTypes(appsettings.archiveansokningartemplate, appsettings.currentUserid, sortobj);
 	                break;                
 	            case "kk_aj_diarieView":
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.diarietemplate, 0, sortobj);
+	                loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj);
 	                break;
 	            case "kk_aj_detailView":
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
 	                loadtemplateTypes(appsettings.topnavtemplate);
-	                loadtemplateTypes(appsettings.detailetemplate, 0, sortobj);
+	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj);
 	                break;
 	            default:
 	                console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
@@ -11045,7 +11048,7 @@
 	       
 	    //},
 	    injecttemplateDebug: function (callTyp, usrid, callback) {
-	        console.log("4. servicen hämtar debug data");
+	        console.log("4. servicen hämtar debug data ----->>> " + usrid);
 
 	        var currurl="";
 	        switch(callTyp) {
@@ -11056,16 +11059,20 @@
 	                currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
 	                break;
 	            case "kk_aj_nyaansokjson":
-	                currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_nyaansokjson.aspx";
+	                //currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_nyaansokjson.aspx";
+	                currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/1/devkey/alf?type=json&callback=testar";
 	                break;
 	            case "kk_aj_approvedansokjson":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_approvedansokjson.aspx";
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_approvedansokjson.aspx";
+	                currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/2/devkey/alf?type=json&callback=testar";
 	                break;
 	            case "kk_aj_deniedansokjson":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";
+	                currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/3/devkey/alf?type=json&callback=testar";
 	                break;
 	            case "kk_aj_archiveansokjson":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_archiveansokjson.aspx";
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_archiveansokjson.aspx";
+	                currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/4/devkey/alf?type=json&callback=testar";
 	                break;
 	            case "kk_aj_diariejson":
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";

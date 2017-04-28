@@ -3,3 +3,6 @@ skin döps efter
 1. förkortat kulturkatalogen = kk_
 2. starwars creatures i bokstavsordning som versionskod. ordning finns här http://www.starwars.com/databank
 
+databasnman konvention
+tabeller: kk_aj_tbl_[NAMN]
+stored procedures: kk_aj_proc_[NAMN]
