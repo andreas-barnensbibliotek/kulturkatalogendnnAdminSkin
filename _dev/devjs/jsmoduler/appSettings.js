@@ -51,6 +51,44 @@ window.kk_aj_archiveansokningarView = [
         filename: "kk_aj_ansokningarLista.txt"
     }
 ];
+
+window.kk_aj_search_nyaansokningarView = [
+    {
+        templatename: "nyaAnsokningarTmpl",
+        templatedata: "kk_aj_SearchNyaansokjson",
+        targetdiv: ".kk_aj_ansokningar",
+        filename: "kk_aj_ansokningarLista.txt",
+        searchstr:""
+    }
+];
+window.kk_aj_search_approvedansokningarView = [
+    {
+        templatename: "approvedansokningarTmpl",
+        templatedata: "kk_aj_SearchApprovedansokjson",
+        targetdiv: ".kk_aj_ansokningar",
+        filename: "kk_aj_ansokningarLista.txt",            
+        searchstr: ""
+    }
+];
+window.kk_aj_search_deniedansokningarView = [
+    {
+        templatename: "deniedansokningarTmpl",
+        templatedata: "kk_aj_SearchDeniedansokjson",
+        targetdiv: ".kk_aj_ansokningar",
+        filename: "kk_aj_ansokningarLista.txt",
+        searchstr: ""
+    }
+];
+window.kk_aj_search_archiveansokningarView = [
+    {
+        templatename: "archiveansokningarTmpl",
+        templatedata: "kk_aj_SearchArchiveansokjson",
+        targetdiv: ".kk_aj_ansokningar",
+        filename: "kk_aj_ansokningarLista.txt",
+        searchstr: ""
+    }
+];
+
 window.kk_aj_ansokningarpagerinfoView = [
     {
         templatename: "ansokningarpagerinfoTmpl",
@@ -100,7 +138,9 @@ window.kk_aj_pagerHandler =
         page_item_per_page: "5",
         page_currentlimit: "",
         page_currentdataset: [],
-        page_currenttemplate:""
+        page_currenttemplate: "",
+        page_totalpages: "",
+        page_currentpage:"0"
     };
 
 module.exports = {  
@@ -114,6 +154,12 @@ module.exports = {
     deniedansokningartemplate: window.kk_aj_deniedansokningarView,
     archiveansokningartemplate: window.kk_aj_archiveansokningarView,
     ansokningarpagerinfotemplate: window.kk_aj_ansokningarpagerinfoView,
+    searchansokningartemplate:{
+        nya: window.kk_aj_search_nyaansokningarView,
+        approved: kk_aj_search_approvedansokningarView,
+        denied: kk_aj_search_deniedansokningarView,
+        archive: kk_aj_search_archiveansokningarView
+    }, 
     diarietemplate: window.kk_aj_DiarieView,
     detailetemplate: window.kk_aj_detailView,
     motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,

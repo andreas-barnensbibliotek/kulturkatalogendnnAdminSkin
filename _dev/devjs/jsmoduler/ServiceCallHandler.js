@@ -22,9 +22,9 @@ module.exports = {
     //    });
        
     //},
-    injecttemplateDebug: function (callTyp, usrid, callback) {
-        console.log("4. servicen hämtar debug data ----->>> " + usrid);
-
+    injecttemplateDebug: function (callTyp, usrid, val, callback) {
+        //console.log("4. servicen hämtar debug data ----->>> " + usrid);
+        console.log("injecttemplateDebug: " + val);
         var currurl="";
         switch(callTyp) {
             case "kk_aj_userinfojson":
@@ -33,10 +33,9 @@ module.exports = {
             case "kk_aj_lasteventjson":
                 currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
                 break;
-            case "kk_aj_nyaansokjson":
-                //currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_nyaansokjson.aspx";
-                currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/1/devkey/alf?type=json&callback=testar";
-                break;
+            case "kk_aj_nyaansokjson":                
+                 currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/1/devkey/alf?type=json&callback=testar";
+                 break;
             case "kk_aj_approvedansokjson":
                 //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_approvedansokjson.aspx";
                 currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/2/devkey/alf?type=json&callback=testar";
@@ -61,6 +60,26 @@ module.exports = {
             case "kk_aj_topnavjson":
                 currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
                 break;
+            case "kk_aj_SearchNyaansokjson":
+                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
+                var search = appsettings.searchansokningartemplate.nya.searchstr;
+                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/1/val/"+ search +"/devkey/alf?type=json&callback=testar";
+                break;
+            case "kk_aj_SearchApprovedansokjson":
+                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
+                var search = appsettings.searchansokningartemplate.approved.searchstr;
+                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/2/val/" + search + "/devkey/alf?type=json&callback=testar";
+                break;
+            case "kk_aj_SearchDeniedansokjson":
+                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
+                var search = appsettings.searchansokningartemplate.denied.searchstr;
+                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/3/val/" + search + "/devkey/alf?type=json&callback=testar";
+                break;
+            case "kk_aj_SearchArchiveansokjson":
+                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
+                var search = appsettings.searchansokningartemplate.archive.searchstr;
+                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/alf?type=json&callback=testar";
+                break;
             default:
                 currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar_help";
                 break;
@@ -72,12 +91,12 @@ module.exports = {
             url: currurl, //"kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_json.aspx",
             dataType: "json",
             success: function (data) {
-                console.log("5. servicen har hämtat debugg datan from " + callTyp);
+                //console.log("5. servicen har hämtat debugg datan from " + callTyp);
                 callback(data)
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
                 alert("Nått blev fel med debugdatan!");
             }
         });

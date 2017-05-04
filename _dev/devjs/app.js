@@ -20,39 +20,71 @@ $(function () {
     // end eventhandler
 
 
-    // ta hand om querystring parametrar och lagra dom i ett jsonobject urlparam.
-    var urlParams;
-    (window.onpopstate = function () {
+    //// ta hand om querystring parametrar och lagra dom i ett jsonobject urlparam.
+    var urlParams = {};
+    var checkparamsinurl = function () {
         var match,
             pl = /\+/g,  // Regex for replacing addition symbol with a space
-            search = /([^&=]+)=?([^&]*)/g,
+            search = /([^&=]+)=?([^&]*)/g,           
             decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
             query = window.location.search.substring(1);
 
         urlParams = {};
         while (match = search.exec(query))
             urlParams[decode(match[1])] = decode(match[2]);
-    })();
-
-
+        
+        if(!urlParams.sida){
+            var sPageURL = window.location.href.split('/');
+            var index = sPageURL.indexOf("sida");
+            if(index > 0){
+                urlParams.sida = sPageURL[index + 1];
+            };
+            var index = sPageURL.indexOf("id");
+            if (index > 0) {
+                urlParams.id = sPageURL[index + 1];
+            };
+            var index = sPageURL.indexOf("search");
+            if (index > 0) {
+                urlParams.search = sPageURL[index + 1];
+            };
+        }
+    };
+       
 
     var init = function () {
-        console.log("1. init körs");
+        
         appsettings.currentUserid = _userid;
+        checkparamsinurl();
 
         if (urlParams.id) {
-            appsettings.detailetemplate.detailid = urlParams.id;
-            
-        }
-        
+            appsettings.detailetemplate.detailid = urlParams.id;            
+        }        
 
-        if (urlParams.sida) {
-            //alert("sida= " + urlParams.sida);
-            registerJqueryEvents.laddanysida(urlParams.sida);
-        } else {
-            loadpageHandler.pageloader(_pageType);
-        }
         
+       
+        //if (urlParams.search) {
+        //    var setting = appsettings.pagerHandler;
+        //    console.log('search ' + setting);
+
+        //    var next = urlParams.search;
+        //    console.log('search ' + next);
+
+        //    if (setting.page_max_size >= next) {
+        //        setting.page_currentlimit = parseInt(setting.page_currentlimit) + parseInt(setting.page_item_per_page);
+        //        console.log("search setting.page_currentlimit " + setting.page_currentlimit + " setting.page_currentdataset: " + setting.page_currentdataset)
+        //        console.log("search setting.page_currenttemplate " + setting.page_currenttemplate + " next " + next + ", setting.page_currentlimit " + setting.page_currentlimit);
+        //        loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, next, setting.page_currentlimit);
+        //    }
+
+        //} else {
+            if (urlParams.sida) {
+                registerJqueryEvents.laddanysida(urlParams.sida);
+            } else {
+                loadpageHandler.pageloader(_pageType);
+            }
+        //}
+
+
 
         //ServiceHandler.injecttemplate("test", "0", function (data) {
         //    console.log("4. servicen hämtar Templaten");
