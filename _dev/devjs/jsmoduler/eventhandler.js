@@ -149,6 +149,20 @@ module.exports = {
             return false;
         });
 
+        $('body').on('click', '.kk_aj_sortkonstform', function (event) {
+            var curpage = $('.kk_aj_box-title').attr('rel');
+            if ($('.kk_aj_sortkonstform i').hasClass('fa-caret-down')) {
+                sortobj = { "tosort": "ansokningkonstform", "order": "up" };
+                loadlistView(curpage, sortobj);
+                $('.kk_aj_sortkonstform i').removeClass('fa-caret-down').addClass('fa-caret-up');
+            } else {
+                sortobj = { "tosort": "ansokningkonstform", "order": "down" };
+                loadlistView(curpage, sortobj);
+                $('.kk_aj_sortkonstform i').removeClass('fa-caret-up').addClass('fa-caret-down');
+            };
+            return false;
+        });
+
         $('body').on('click', '.kk_aj_sortdatum', function (event) {
             var curpage = $('.kk_aj_box-title').attr('rel');
             if ($('.kk_aj_sortdatum i').hasClass('fa-caret-down')) {
@@ -270,6 +284,7 @@ var updateansokHeaderjquery = function (currentListView, options) {
     var headertext = "";
     var activeclass = "";
     var searchtyp ="nya";
+    $('.kk_aj_approveannons').hide();
 
     switch (currentListView) {
         case "kk_aj_ansokningarView":            
@@ -283,6 +298,7 @@ var updateansokHeaderjquery = function (currentListView, options) {
             headertext= "Godkända";
             activeclass = ".kk_aj_approvedansokanmenu";
             searchtyp = "approved";
+            $('.kk_aj_approveannons').show();
             break;
         case "kk_aj_deniedansokningarView":
             classname ="label-danger";

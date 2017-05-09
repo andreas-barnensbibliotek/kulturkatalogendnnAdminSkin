@@ -396,7 +396,43 @@
 	        return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
 	    }    
 	});
+	Handlebars.registerHelper('getFlag', function (read, pub, typ) {
 
+	    switch (typ) {
+	        case "Ny":
+	            if (read === "nej") {
+	                return '<i class="fa fa-star text-yellow" title="Ej läst"></i>';
+	            } else {
+	                return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
+	            }
+	            break;
+	        case "Nekad":
+	            if (read === "nej") {
+	                return '<i class="fa fa-star text-yellow" title="Nekad, ej läst"></i>';
+	            } else {
+	                return '<i class="fa fa-exclamation text-red" aria-hidden="true" title="Nekad, ej publicerad"></i>';
+	            }
+	            break;
+	        case "Arkiv":          
+	            return '<i class="fa fa-lock text-black" title="Arkiverad"></i>';
+	            break;
+
+	        default:
+	            if (read === "nej") {
+	                return '<i class="fa fa-star text-yellow" title="Publicerad, ej läst"></i>';
+	            } else {
+	                if (pub === "nej") {
+	                    return '<i class="fa fa-exclamation text-red" title="Ej publicerad"></i>';
+	                } else {
+	                    return '<i class="fa fa-flag-o text-green" title="Publicerad"></i>';
+	                }
+	            }
+	    };
+
+
+
+	    
+	});
 	// kollar om ansökningar har bilaga eller ej
 	Handlebars.registerHelper('ifBilaga', function (bilagaobj, bilagaurl) {
 	    if (bilagaobj === "ja") {
@@ -587,6 +623,20 @@
 	            return false;
 	        });
 
+	        $('body').on('click', '.kk_aj_sortkonstform', function (event) {
+	            var curpage = $('.kk_aj_box-title').attr('rel');
+	            if ($('.kk_aj_sortkonstform i').hasClass('fa-caret-down')) {
+	                sortobj = { "tosort": "ansokningkonstform", "order": "up" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortkonstform i').removeClass('fa-caret-down').addClass('fa-caret-up');
+	            } else {
+	                sortobj = { "tosort": "ansokningkonstform", "order": "down" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortkonstform i').removeClass('fa-caret-up').addClass('fa-caret-down');
+	            };
+	            return false;
+	        });
+
 	        $('body').on('click', '.kk_aj_sortdatum', function (event) {
 	            var curpage = $('.kk_aj_box-title').attr('rel');
 	            if ($('.kk_aj_sortdatum i').hasClass('fa-caret-down')) {
@@ -708,6 +758,7 @@
 	    var headertext = "";
 	    var activeclass = "";
 	    var searchtyp ="nya";
+	    $('.kk_aj_approveannons').hide();
 
 	    switch (currentListView) {
 	        case "kk_aj_ansokningarView":            
@@ -721,6 +772,7 @@
 	            headertext= "Godkända";
 	            activeclass = ".kk_aj_approvedansokanmenu";
 	            searchtyp = "approved";
+	            $('.kk_aj_approveannons').show();
 	            break;
 	        case "kk_aj_deniedansokningarView":
 	            classname ="label-danger";
@@ -11174,6 +11226,7 @@
 	                    });
 	                    var test = data;
 	                    appsettings.pagerHandler.page_currentdataset = test;
+	                    console.log("page_currentdataset " + test);
 	                    appsettings.pagerHandler.page_currenttemplate = value;
 	                    appsettings.pagerHandler.page_totalpages = Math.ceil( parseInt(data.kk_aj_admin.Ansokningarlistacount) /  parseInt(appsettings.pagerHandler.page_item_per_page));
 	                    data = datapager(data);
@@ -11284,7 +11337,8 @@
 	                "ansokningurl": b[i]['ansokningurl'],
 	                "ansokningbilaga": b[i]['ansokningbilaga'],
 	                "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
-	                "ansokninglast": b[i]['ansokninglast'],                
+	                "ansokninglast": b[i]['ansokninglast'],
+	                "ansokningkonstform": b[i]['ansokningkonstform'],
 	                "ansokningstatus": b[i]['ansokningstatus']
 	            };
 

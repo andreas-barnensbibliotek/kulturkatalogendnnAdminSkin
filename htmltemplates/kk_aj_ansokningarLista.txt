@@ -4,24 +4,20 @@
 		<td><input type="checkbox" name="kk_aj_chkAnnons" class="kk_aj_chkboxAnnons" ></td>
 		<td class="mailbox-star">
 			<a href="#">
-				{{#ifLast ansokninglast}}
-					<i class="fa fa-star text-yellow" title="Ej läst"></i>
-				{{else}}
-					<i class="fa fa-star-o text-yellow" title="Läst"></i>			
-				{{/ifLast}}
-				
+				{{#getFlag ansokninglast ansokningpublicerad ansokningstatus}}					
+				{{/getFlag}}
 				
 			</a>
 		</td>
-		<td class="mailbox-name"><a href="http://dnndev.me/Kulturkatalogen/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningutovare}}</a></td>
 		<td class="mailbox-subject">
 			<a href="http://dnndev.me/Kulturkatalogen/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}} <b>{{ansokningsubtitle}}</b></a>
 		</td>
-		<td class="mailbox-date">{{ansokningdate}}</td>       
+		<td class="mailbox-name"><a href="http://dnndev.me/Kulturkatalogen/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningutovare}}</a></td>
 		<td class="mailbox-attachment">
-			{{#ifBilaga ansokningbilaga ansokningbilagaUrl}}					
-			{{/ifBilaga}}
+			{{ansokningkonstform}}
 		</td>        
+		<td class="mailbox-date">{{ansokningdate}}</td>       
+		
 	</tr>
 	{{/each}}
 	<!-- item loop STOP -->

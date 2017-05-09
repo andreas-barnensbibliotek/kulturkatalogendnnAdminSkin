@@ -135,6 +135,7 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
                     });
                     var test = data;
                     appsettings.pagerHandler.page_currentdataset = test;
+                    console.log("page_currentdataset " + test);
                     appsettings.pagerHandler.page_currenttemplate = value;
                     appsettings.pagerHandler.page_totalpages = Math.ceil( parseInt(data.kk_aj_admin.Ansokningarlistacount) /  parseInt(appsettings.pagerHandler.page_item_per_page));
                     data = datapager(data);
@@ -245,7 +246,8 @@ var datapager = function(datat,sta,limit) {
                 "ansokningurl": b[i]['ansokningurl'],
                 "ansokningbilaga": b[i]['ansokningbilaga'],
                 "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
-                "ansokninglast": b[i]['ansokninglast'],                
+                "ansokninglast": b[i]['ansokninglast'],
+                "ansokningkonstform": b[i]['ansokningkonstform'],
                 "ansokningstatus": b[i]['ansokningstatus']
             };
 
