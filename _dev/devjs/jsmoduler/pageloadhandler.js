@@ -10,70 +10,70 @@ module.exports = {
         switch(pagetoload) {
             case "kk_aj_startView":
                // console.log("2. kk_aj_startView körs");                
-                loadtemplateTypes(appsettings.topnavtemplate);
-                loadtemplateTypes(appsettings.starttemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+                loadtemplateTypes(appsettings.starttemplate,appsettings.currentUserid);
                 break;
             case "kk_aj_ansokningarView": //nya              
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView= " );
                 
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.nyaansokningartemplate, appsettings.currentUserid, sortobj, val);
                 pagetotalblock();
                 break;
             case "kk_aj_approvedansokningarView": //godkända
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.approvedansokningartemplate, appsettings.currentUserid, sortobj, val);
                 pagetotalblock();
                 break;
             case "kk_aj_deniedansokningarView": //nekade
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.deniedansokningartemplate, appsettings.currentUserid, sortobj, val);
                 break;
                 pagetotalblock();
             case "kk_aj_archiveansokningarView": //arkiv
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.archiveansokningartemplate, appsettings.currentUserid, sortobj, val);
                 pagetotalblock();
                 break;                
             case "kk_aj_diarieView":
                // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, val);
                 break;
             case "kk_aj_detailView":
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj);
                 break;
 
             case "kk_aj_search_nyaansokningarView": //sök i nya              
                 //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.searchansokningartemplate.nya, appsettings.currentUserid, sortobj, val);
                 break;            
             case "kk_aj_search_approvedansokningarView": //sök i nya              
                 //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.searchansokningartemplate.approved, appsettings.currentUserid, sortobj, val);
                 break;
             case "kk_aj_search_deniedansokningarView": //sök i nya              
                 //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.searchansokningartemplate.denied, appsettings.currentUserid, sortobj, val);
                 break;
             case "kk_aj_search_archiveansokningarView": //sök i nya              
                 //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
-                loadtemplateTypes(appsettings.topnavtemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.searchansokningartemplate.archive, appsettings.currentUserid, sortobj, val);
                 break;
 
             default:
                // console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
-                loadtemplateTypes(appsettings.topnavtemplate);
-                loadtemplateTypes(appsettings.starttemplate);
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+                loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid);
                 break;
         }
         

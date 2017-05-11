@@ -24,11 +24,14 @@ module.exports = {
     //},
     injecttemplateDebug: function (callTyp, usrid, val, callback) {
         //console.log("4. servicen hämtar debug data ----->>> " + usrid);
-        console.log("injecttemplateDebug: " + val);
+        console.log("injecttemplateDebug: " + usrid);
+        console.log("appsettings.currentUserid: " + appsettings.currentUserid);
         var currurl="";
         switch(callTyp) {
             case "kk_aj_userinfojson":
-                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_userinfojson.aspx";
+                //currurl = "http://localhost:60485/Api_v2/user/usrinfo/id/2/devkey/alf?type=json&callback=testar"
+                currurl = appsettings.localOrServerURL + "/user/usrinfo/id/" + usrid + "/devkey/alf?type=json&callback=testar";
+                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_userinfojson.aspx";
                 break;
             case "kk_aj_lasteventjson":
                 currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
