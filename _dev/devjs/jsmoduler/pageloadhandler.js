@@ -211,6 +211,12 @@ var updatecountmenybox = function (data) {
             $('.kk_aj_deniedcount').hide();
         }                    
     }
+    if (data.kk_aj_admin.userinfo != undefined) {
+        $('.kk_aj_menyNamn').html('<p>' + data.kk_aj_admin.userinfo.username + '</p>');
+        $('.kk_aj_menyNamn').append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
+        $('.kk_aj_menyAvatar img').attr('src', data.kk_aj_admin.userinfo.useravatar)
+    }
+    console.log("inne i test")
 };
 
 

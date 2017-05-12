@@ -28,4 +28,5 @@ var updatecountmenybox = function (data) {
     if (data.deniedansokningarcount) {
         $('.kk_aj_deniedcount').html(data.deniedansokningarcount);
     }
+   
 };

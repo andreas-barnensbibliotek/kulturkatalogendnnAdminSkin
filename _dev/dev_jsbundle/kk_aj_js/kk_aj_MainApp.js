@@ -192,10 +192,14 @@
 
 	// object
 	//var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
-	var _localOrServerURL = "http://localhost:60485/Api_v2";
-	//var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
-	var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
-	//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+
+	//lokalafiler----------------------kommentera ut dessa på servern
+	//var _localOrServerURL = "http://localhost:60485/Api_v2";
+	//var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+
+	//Serverfiler---------------------- kommentera ut dessa lokalt
+	var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
+	var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
 	window.kk_aj_startView= [
 	    {
@@ -11302,6 +11306,12 @@
 	            $('.kk_aj_deniedcount').hide();
 	        }                    
 	    }
+	    if (data.kk_aj_admin.userinfo != undefined) {
+	        $('.kk_aj_menyNamn').html('<p>' + data.kk_aj_admin.userinfo.username + '</p>');
+	        $('.kk_aj_menyNamn').append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
+	        $('.kk_aj_menyAvatar img').attr('src', data.kk_aj_admin.userinfo.useravatar)
+	    }
+	    console.log("inne i test")
 	};
 
 
@@ -11431,7 +11441,8 @@
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
 	                break;
 	            case "kk_aj_topnavjson":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
+	                currurl = appsettings.localOrServerURL + "/notify/get/id/" + usrid + "/devkey/alf?type=json&callback=testar";
 	                break;
 	            case "kk_aj_SearchNyaansokjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              

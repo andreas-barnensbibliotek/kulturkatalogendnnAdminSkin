@@ -1,9 +1,13 @@
 ﻿// object
 //var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
-var _localOrServerURL = "http://localhost:60485/Api_v2";
-//var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v1";
-var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
-//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+
+//lokalafiler----------------------kommentera ut dessa på servern
+//var _localOrServerURL = "http://localhost:60485/Api_v2";
+//var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+
+//Serverfiler---------------------- kommentera ut dessa lokalt
+var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
+var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
 window.kk_aj_startView= [
     {

@@ -12,7 +12,7 @@
                         <!-- start message -->
                         <a href="#">                            
                             <!-- Message title and timestamp -->
-                            <h4>{{title}} <small><i class="fa fa-clock-o"></i>{{date}}</small> </h4>
+                            <h4>{{Title}} <small><i class="fa fa-clock-o"></i>{{Datum}}</small> </h4>
                             <!-- The message -->
                             <p></p>
                         </a></li>
@@ -28,7 +28,7 @@
     <!-- Notifications Menu -->
     <li class="dropdown notifications-menu kk_aj_topNav_notifications_menu">
         <!-- Menu toggle button -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i><span class="label label-warning">10</span> </a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i><span class="label label-warning">{{kk_aj_admin.topnotificationcount}}</span> </a>
         <ul class="dropdown-menu">
             <li class="header">Du har {{kk_aj_admin.topnotificationcount}} Notifieringar</li>
             <li>
@@ -37,7 +37,7 @@
 					{{#each kk_aj_admin.topnotification}}
 						<li>
 							<!-- start notification -->
-							<a href="#"><i class="fa fa-users text-aqua"></i>{{title}} </a>
+							<a href="#"><i class="fa fa-users text-aqua"></i>{{Title}} </a>
 						</li>
 					{{/each}}                    
                     <!-- end notification -->
@@ -49,7 +49,7 @@
     <!-- Tasks Menu -->
     <li class="dropdown tasks-menu kk_aj_topNav_tasks_menu">
         <!-- Menu Toggle Button -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag-o"></i><span class="label label-danger">9</span> </a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag-o"></i><span class="label label-danger">{{kk_aj_admin.toptaskcount}}</span> </a>
         <ul class="dropdown-menu">
             <li class="header">Du har {{kk_aj_admin.toptaskcount}} tasks</li>
             <li>
@@ -58,7 +58,7 @@
 				{{#each kk_aj_admin.toptask}}
 						<li>
 							<!-- start notification -->
-							<a href="#"><i class="fa fa-users text-aqua"></i>{{title}} </a>
+							<a href="#"><i class="fa fa-users text-aqua"></i>{{Title}} </a>
 						</li>
 					{{/each}}               
 
@@ -74,14 +74,14 @@
         <!-- Menu Toggle Button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            <img src="{{kk_aj_admin.topuserinfo.useravatar}}" class="user-image" alt="User Image">
+            <img src="{{kk_aj_admin.userinfo.useravatar}}" class="user-image" alt="User Image">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">{{kk_aj_admin.topuserinfo.username}}</span> </a>
+            <span class="hidden-xs">{{kk_aj_admin.userinfo.username}}</span> </a>
         <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-                <img src="{{kk_aj_admin.topuserinfo.useravatar}}" class="img-circle" alt="User Image">
-                <p>{{kk_aj_admin.topuserinfo.username}} - {{kk_aj_admin.topuserinfo.userinfoheader}}</p>
+                <img src="{{kk_aj_admin.userinfo.useravatar}}" class="img-circle" alt="User Image">
+                <p>{{kk_aj_admin.userinfo.username}} - {{kk_aj_admin.userinfo.userinfoheader}}</p>
             </li>
             
             <!-- Menu Footer-->

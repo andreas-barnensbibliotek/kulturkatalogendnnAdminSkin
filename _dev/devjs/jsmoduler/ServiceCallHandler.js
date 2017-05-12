@@ -61,7 +61,8 @@ module.exports = {
                 currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
                 break;
             case "kk_aj_topnavjson":
-                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
+                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
+                currurl = appsettings.localOrServerURL + "/notify/get/id/" + usrid + "/devkey/alf?type=json&callback=testar";
                 break;
             case "kk_aj_SearchNyaansokjson":
                 //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              

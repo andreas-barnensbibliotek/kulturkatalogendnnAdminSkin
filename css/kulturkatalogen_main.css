@@ -40,3 +40,12 @@ min-height:40px !important;
 /* margin fix till ingångarmenyn*/
 .kk_aj_ansokanmenu{margin-left: 0px;}
 .kk_aj_approveannons{display:none;}
+
+/*fixa listan med roller i profilvyn på startsidan*/
+.kk_aj_rolllist_ul{
+  list-style: none;
+  display: block;
+  text-align: right;
+  color:#666;
+}
+.kk_aj_rolllist{ overflow:hidden; }
