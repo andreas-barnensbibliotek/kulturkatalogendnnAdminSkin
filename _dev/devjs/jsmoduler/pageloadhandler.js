@@ -9,7 +9,7 @@ module.exports = {
        
         switch(pagetoload) {
             case "kk_aj_startView":
-               // console.log("2. kk_aj_startView körs");                
+                console.log("2. kk_aj_startView körs");                
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.starttemplate,appsettings.currentUserid);
                 break;
@@ -46,7 +46,7 @@ module.exports = {
             case "kk_aj_detailView":
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj);
+                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
                 break;
 
             case "kk_aj_search_nyaansokningarView": //sök i nya              

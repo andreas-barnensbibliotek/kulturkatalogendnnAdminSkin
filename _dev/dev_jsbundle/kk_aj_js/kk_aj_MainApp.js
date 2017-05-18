@@ -194,12 +194,12 @@
 	//var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	//var _localOrServerURL = "http://localhost:60485/Api_v2";
-	//var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+	var _localOrServerURL = "http://localhost:60485/Api_v2";
+	var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
-	var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+	//var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
+	//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
 	window.kk_aj_startView= [
 	    {
@@ -490,7 +490,8 @@
 	            sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
 	            loadlistView("kk_aj_ansokningarView", sortobj);
 
-	            history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
+	            //history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
+	            history.pushState('1', '', '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
 
 	            return false;
 	        });
@@ -499,7 +500,7 @@
 	            //console.log('1-1. .kk_aj_approvedansokningar');   
 	            resetsearchformdata();
 	            loadlistView("kk_aj_approvedansokningarView");
-	            history.pushState('2', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView');
+	            history.pushState('2', '', '/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView');
 	            return false;
 	        });
 
@@ -507,7 +508,7 @@
 	            resetsearchformdata();
 	            //console.log('1-1. .kk_aj_deniedansokningar');
 	            loadlistView("kk_aj_deniedansokningarView");
-	            history.pushState('3', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView');
+	            history.pushState('3', '','/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView');
 	            return false;
 	        });
 
@@ -515,7 +516,7 @@
 	            resetsearchformdata();
 	            //console.log('1-1. .kk_aj_archiveansokningar');
 	            loadlistView("kk_aj_archiveansokningarView");
-	            history.pushState('4', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
+	            history.pushState('4', '', '/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
 	            return false;
 	        });
 
@@ -11104,7 +11105,7 @@
 	       
 	        switch(pagetoload) {
 	            case "kk_aj_startView":
-	               // console.log("2. kk_aj_startView körs");                
+	                console.log("2. kk_aj_startView körs");                
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
 	                loadtemplateTypes(appsettings.starttemplate,appsettings.currentUserid);
 	                break;
@@ -11141,7 +11142,7 @@
 	            case "kk_aj_detailView":
 	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj);
+	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
 	                break;
 
 	            case "kk_aj_search_nyaansokningarView": //sök i nya              
@@ -11435,7 +11436,9 @@
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
 	                break;
 	            case "kk_aj_detailvyjson":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx?id="+ val;
+	                //currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/4/devkey/alf?type=json&callback=testar";
+
 	                break;
 	            case "kk_aj_detailmotiveringloggjson":
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";

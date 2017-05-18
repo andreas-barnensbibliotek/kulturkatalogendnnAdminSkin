@@ -51,12 +51,15 @@
 		"userinfo": {
 			"userid": "105",
 			"username": "Testnisse",
+			"userfornamn":"andreas",
+			"userefternamn" : "Josefsson"
 			"useravatar":"http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/img/alf-aj.jpg",
 			"userepost": "andreas.josefsson@kulturivast.se",
-			"usertel": "0708-183215",
+			"usertel": "0708-183215",			
 			"userinfoheader": "Systemutvecklare på Kultur i Väst",
 			"userinfotext": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.",
-			"userroll": "1"
+			"userroll": "1",
+			"userrollname": "administratör"
 		},
 		"status": "userinfo is ok"
 	}
@@ -123,8 +126,7 @@
 				"ansokninglast": "nej",
 				"ansokningpublicerad": "nej",
 				"ansokningstatus": "ny"
-			},
-			{
+			},{
 				"ansokningid": "2",
 				"ansokningdate": "2017-01-16",
 				"ansokningtitle": "Skolbio förskolan: ",
@@ -136,8 +138,7 @@
 				"ansokninglast": "nej",
 				"ansokningpublicerad": "nej",
 				"ansokningstatus": "ny"
-			},
-			{
+			},{
 				"ansokningid": "2",
 				"ansokningdate": "2017-01-16",
 				"ansokningtitle": "Skapande i skolan:",
@@ -578,7 +579,7 @@
 
 {
 	"kk_aj_admin": {
-		"ansokningstyp": "denied",
+		"ansokningstatus": "denied",
 		"ansokningarlista": {
 			"ansokningarcount": "1",
 			"ansokningar": [{
@@ -592,7 +593,9 @@
 				"ansokningbilagaUrl": "www.barnensbibliotek.se",
 				"ansokninglast": "nej",
 				"ansokningscontent": "Fem föräldralösa tonårssystrar bor i en liten by. En dag stojar de med killarna på väg hem från skolan, en oskyldig lek som andra tolkar som osedlighet. Ryktet sprids snabbt och mormor blir orolig för att deras värde på äktenskapsmarknaden. Historien växer till oanade proportioner och snart börjar systrarnas frihet kringskäras allt mer.Deras hem blir ett fängelse, men upproret bubblar under ytan.Filmen tar upp unga kvinnors rätt att bestämma över sina liv, kroppar och sin sexualitet.Trailer: https: //www.youtube.com/watch?v=rU9JAN8LtIk Filmhandledning: http: //www.filminstitutet.se/sv/fa-kunskap-om-film/film-i-skolan/filmhan... Bokas av Scanbox;clasg @scanbox.com",
-				"ansokningstatus": "ny",                
+				"ansokningstatus": "denied", 
+				"ansokningtyp": "Resmål",
+				"konstform": "Teater",				
                 "ansokningpublicerad": "nej",
                 "ansokningmainimage": {
 						"url": "http://kulturivast.se/sites/default/files/styles/mozaik/public/ceamna8_h.jpg",
@@ -744,3 +747,111 @@
 		"status": "nyansokningar listan funkar"
 	}
 }
+
+
+Lägg till Nytt arrangemang skicka denna json via POST till api:t
+
+User-Agent: Fiddler
+Host: localhost:60485
+Content-Length: 1136
+Content-Type: application/json
+
+url POST: http://localhost:60485/Api_v2/arrangemang/add/devkey/alf
+
+{
+"addArrangemangDataInfo":{	
+	"Arrangemangtyp":"1",	
+	"rubrik":"rubriktext",
+	"underrubrik":"underrubrik",
+	"innehall":"massa text",
+	"konstform":"2",	
+	"mainImage": {
+		"MediaAlt":"finbild med banan",
+		"ImageFilename":"bildnummer1.jpg",
+        "ImageFoto":"andreas Josefsson",
+        "ImageSize":"300kb",
+        "ImageUrl":"s-media-cache-ak0.pinimg.com/originals/a1/3d/7f/a13d7f89a80cad02f76830f87a7eaf52.jpg" 
+	},
+    "MediaClip":{
+		"MediaAlt":"finbild",
+		"MediaFilename":"FILMnummer1.jpg",
+        "MediaFoto":"andreas Josefsson",
+        "MediaSize":"300kb",
+        "MediaUrl":"p1.pichost.me/i/40/1636199.jpg" 
+	},                  
+	"utovare":"0",	
+	"UtovareData" :{
+		"Adress" : "grönahögsvägen 15",
+		"Efternamn" : "Josefsson",
+		"Epost" : "test@test.se",
+		"Fornamn" : "B-G",
+		"Kommun" : "Ulricehamn",
+		"Organisation" : "biomatec",
+		"Ort" : "Ulricehamn",
+		"Postnr" : "52330",
+		"Telefon" : "0321-15310",
+		"Weburl" : "www.biomatec.se"	
+	},
+	"Faktalist": [{	     
+		"FaktaTypID": "12",
+		"FaktaValue":"Brett ska de vara"
+		},
+		{	     
+		"FaktaTypID": "14",
+		"FaktaValue":"högt ska de vara"
+	}]	 
+}
+      }
+    
+// alla properties i arrangemangJSON alla behövs dock inte för att lägga till ny endel är för definierade
+
+{
+	"ArrangemangStatus": "3",
+	"Arrangemangtyp":"1",	
+	"Arrid":"1",
+	"rubrik":"rubriktext",
+	"underrubrik":"underrubrik",
+	"innehall":"massa text",
+	"konstform":"2",	
+	"mainImage": {
+		"MediaAlt":"finbild med banan",
+		"ImageFilename":"bildnummer1.jpg",
+        "ImageFoto":"andreas Josefsson",
+        "ImageSize":"300kb",
+        "ImageUrl":"s-media-cache-ak0.pinimg.com/originals/a1/3d/7f/a13d7f89a80cad02f76830f87a7eaf52.jpg" 
+	},
+    "MediaClip":{
+		"MediaAlt":"finbild",
+		"MediaFilename":"FILMnummer1.jpg",
+        "MediaFoto":"andreas Josefsson",
+        "MediaSize":"300kb",
+        "MediaUrl":"p1.pichost.me/i/40/1636199.jpg" 
+	},                  
+	"utovare":"0",	
+	"UtovareData" :{
+		"Adress" : "grönahögsvägen 15",
+		"Efternamn" : "Josefsson",
+		"Epost" : "test@test.se",
+		"Fornamn" : "B-G",
+		"Kommun" : "Ulricehamn",
+		"Organisation" : "biomatec",
+		"Ort" : "Ulricehamn",
+		"Postnr" : "52330",
+		"Telefon" : "0321-15310",
+		"Weburl" : "www.biomatec.se"	
+	},
+	"Faktalist": [{	     
+		"FaktaTypID": "12",
+		"FaktaValue":"Brett ska de vara"
+		},
+		{	     
+		"FaktaTypID": "14",
+		"FaktaValue":"högt ska de vara"
+		}],	
+	"Datum":"",	 
+}
+        
+DELETE Ta bort arrangemang via arrangemangid
+api anrop: Api_v2/arrangemang/{userid}/del/{arrid}/devkey/alf
+url DELETE http://localhost:60485/Api_v2/arrangemang/0/del/56/devkey/alf
+server DELETE url: http://kulturkatalog.kivdev.se:8080/Api_v2/arrangemang/0/del/18/devkey/alf

@@ -12,7 +12,8 @@ module.exports = {
             sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
             loadlistView("kk_aj_ansokningarView", sortobj);
 
-            history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
+            //history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
+            history.pushState('1', '', '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
 
             return false;
         });
@@ -21,7 +22,7 @@ module.exports = {
             //console.log('1-1. .kk_aj_approvedansokningar');   
             resetsearchformdata();
             loadlistView("kk_aj_approvedansokningarView");
-            history.pushState('2', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView');
+            history.pushState('2', '', '/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView');
             return false;
         });
 
@@ -29,7 +30,7 @@ module.exports = {
             resetsearchformdata();
             //console.log('1-1. .kk_aj_deniedansokningar');
             loadlistView("kk_aj_deniedansokningarView");
-            history.pushState('3', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView');
+            history.pushState('3', '','/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView');
             return false;
         });
 
@@ -37,7 +38,7 @@ module.exports = {
             resetsearchformdata();
             //console.log('1-1. .kk_aj_archiveansokningar');
             loadlistView("kk_aj_archiveansokningarView");
-            history.pushState('4', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
+            history.pushState('4', '', '/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
             return false;
         });
 
