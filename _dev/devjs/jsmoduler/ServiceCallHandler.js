@@ -55,9 +55,8 @@ module.exports = {
                 currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
                 break;
             case "kk_aj_detailvyjson":
-                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx?id="+ val;
-                //currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/4/devkey/alf?type=json&callback=testar";
-
+                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx?id="+ val;
+                currurl = appsettings.localOrServerURL +"/arrangemang/details/uid/" + usrid + "/typ/"+ val +"/devkey/alf?type=json&callback=testar";
                 break;
             case "kk_aj_detailmotiveringloggjson":
                 currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";

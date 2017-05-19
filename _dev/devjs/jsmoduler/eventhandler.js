@@ -182,18 +182,18 @@ module.exports = {
             return false;
         });
        
-        $('body').on('click', '.mailbox-name a', function (event) {
-            var val = $(this).attr('rel');
-            alert("funkar: " + val);
+        //$('body').on('click', '.mailbox-name a', function (event) {
+        //    var val = $(this).attr('rel');
+        //    alert("funkar: " + val);
 
-            return false;
-        });
-        $('body').on('click', '.mailbox-subject a', function (event) {
-            var val = $(this).attr('rel');
-            alert("funkar: " + val);
+        //    return false;
+        //});
+        //$('body').on('click', '.mailbox-subject a', function (event) {
+        //    var val = $(this).attr('rel');
+        //    alert("funkar: " + val);
 
-            return false;
-        });
+        //    return false;
+        //});
 
         $('body').on('click', '.kk_aj_ansoksearchformSubmit', function (event) {
             var arrstat = $('.kk_aj_ansoksearchform').attr('rel');

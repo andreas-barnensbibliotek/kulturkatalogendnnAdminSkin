@@ -1,5 +1,5 @@
 ﻿<!-- /.box-header -->
-{{#iftype kk_aj_admin.ansokningstyp}}
+{{#iftype kk_aj_admin.Ansokningstyp}}
 {{/iftype}}
     <h3 class="box-title">Hantera ansökning</h3>
     <div class="box-tools pull-right">
@@ -23,13 +23,13 @@
 	<!-- /.mailbox-controls -->
 	<div class="mailbox-read-message">                                                                                              
 		<p>
-		{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningscontent}}
+		{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}
 		</p>		
 		<hr />                               
 		<h3>Fakta</h3>
-		{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokanFaktalista}}
+		{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
 		<p>		
-			<b>{{this.rubrik}} : </b> {{this.value}}
+			<b>{{this.Faktarubrik}} : </b> {{this.FaktaValue}}
 		</p>
 		{{/each}}       
 	</div>
@@ -39,25 +39,25 @@
 <div class="box-footer">
     <ul class="mailbox-attachments clearfix">
         <li>
-            <span class="mailbox-attachment-icon has-img"><img alt="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.alt}}" src="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.url}}" /></span>
+            <span class="mailbox-attachment-icon has-img"><img alt="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaAlt}}" src="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" /></span>
             <div class="mailbox-attachment-info">
-                <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.url}}" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.filename}}</a>
+                <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaFilename}}</a>
                 <span class="mailbox-attachment-size">
-                    {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.size}}
-                    <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmainimage.url}}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                    {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaSize}}
+                    <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                 </span>
             </div>
         </li>
         <li>
             <span class="has-img">
-			<iframe width="198" height="131" src="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.url}}" frameborder="0" allowfullscreen></iframe>
+			<iframe width="198" height="131" src="{{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaUrl}}}" frameborder="0" allowfullscreen></iframe>
                
             </span>
             <div class="mailbox-attachment-info">
-                <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.url}}" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.filename}}</a>
+                <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaUrl}}" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaFilename}}</a>
                 <span class="mailbox-attachment-size">
-                    {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.size}}
-                    <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningmovieclip.url}}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                    {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaSize}}
+                    <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaUrl}}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                 </span>
             </div>
         </li>

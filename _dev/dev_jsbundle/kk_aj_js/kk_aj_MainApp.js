@@ -450,8 +450,9 @@
 	Handlebars.registerHelper('iftype', function (ansoktyp) {
 	    var changedtyp = "";
 	    var changeclass = "";
-	    switch(ansoktyp){
-	        case "nya":
+	    var loweranskotyp = ansoktyp.toLowerCase();
+	    switch (loweranskotyp) {
+	        case "ny":
 	            changedtyp = "kk_aj_ansokningarView"
 	            changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border label-primary">';
 	            break;
@@ -660,18 +661,18 @@
 	            return false;
 	        });
 	       
-	        $('body').on('click', '.mailbox-name a', function (event) {
-	            var val = $(this).attr('rel');
-	            alert("funkar: " + val);
+	        //$('body').on('click', '.mailbox-name a', function (event) {
+	        //    var val = $(this).attr('rel');
+	        //    alert("funkar: " + val);
 
-	            return false;
-	        });
-	        $('body').on('click', '.mailbox-subject a', function (event) {
-	            var val = $(this).attr('rel');
-	            alert("funkar: " + val);
+	        //    return false;
+	        //});
+	        //$('body').on('click', '.mailbox-subject a', function (event) {
+	        //    var val = $(this).attr('rel');
+	        //    alert("funkar: " + val);
 
-	            return false;
-	        });
+	        //    return false;
+	        //});
 
 	        $('body').on('click', '.kk_aj_ansoksearchformSubmit', function (event) {
 	            var arrstat = $('.kk_aj_ansoksearchform').attr('rel');
@@ -11436,9 +11437,8 @@
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
 	                break;
 	            case "kk_aj_detailvyjson":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx?id="+ val;
-	                //currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/4/devkey/alf?type=json&callback=testar";
-
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx?id="+ val;
+	                currurl = appsettings.localOrServerURL +"/arrangemang/details/uid/" + usrid + "/typ/"+ val +"/devkey/alf?type=json&callback=testar";
 	                break;
 	            case "kk_aj_detailmotiveringloggjson":
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";

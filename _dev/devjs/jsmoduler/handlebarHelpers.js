@@ -64,8 +64,9 @@ Handlebars.registerHelper('ifBilaga', function (bilagaobj, bilagaurl) {
 Handlebars.registerHelper('iftype', function (ansoktyp) {
     var changedtyp = "";
     var changeclass = "";
-    switch(ansoktyp){
-        case "nya":
+    var loweranskotyp = ansoktyp.toLowerCase();
+    switch (loweranskotyp) {
+        case "ny":
             changedtyp = "kk_aj_ansokningarView"
             changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border label-primary">';
             break;
