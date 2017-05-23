@@ -308,6 +308,12 @@
 	        targetdiv: ".kk_aj_detaljvyContainer",
 	        filename: "kk_aj_detaljvy.txt",
 	        detailid: window.detailid
+	    },
+	    {
+	        templatename: "logdetaljvyNewTmpl",
+	        templatedata: "kk_aj_detailloggListjson",
+	        targetdiv: ".kk_aj_motiveringlogg",
+	        filename: "kk_aj_logdetaljvyList.txt"
 	    }
 	];
 	window.kk_aj_detailmotiveringloggView = [
@@ -471,6 +477,49 @@
 	    }         
 	    registerJqueryEvents.updatacontentheader(changedtyp, "detailview");
 	    return changeclass;
+	});
+
+	// kollar om ansökningar har bilaga eller ej
+	Handlebars.registerHelper('fixstatuscolor', function (Statustypid) {
+	   
+	    var statuscolor = "";
+	    switch (Statustypid) {
+	        case 1:
+	            statuscolor = '<span class="label label-primary">Ny</span>';            
+	            break;
+	        case 2:
+	            statuscolor = '<span class="label label-warning">Granskas</span>';
+	            break;
+	        case 3:
+	            statuscolor = '<span class="label label-success">Godkänd</span>';
+	            break;
+	        case 4:
+	            statuscolor = '<span class="label label-danger">Nekad</span>';
+	            break;
+	        case 5:
+	            statuscolor = '<span class="label label-info">Ändrad</span>';
+	            break;
+	        case 6:
+	            statuscolor = '<span class="label label-success">Publicerad</span>';
+	            break;
+	        case 7:
+	            statuscolor = '<span class="label label-warning">Avpublicerad</span>';
+	            break;
+	        case 8:
+	            statuscolor = '<span class="label label">Arkiverad</span>';
+	            break;
+	        case 9:
+	            statuscolor = '<span class="label label-default">Event</span>';
+	            break;
+	        case 10:
+	            statuscolor = '<span class="label label-danger">Borttagen</span>';
+	            break;
+	        default:
+	            statuscolor = '<span class="label label-default">Event</span>';
+	            break;
+	    }
+	    
+	    return statuscolor;
 	});
 
 /***/ },
@@ -11467,6 +11516,9 @@
 	                var search = appsettings.searchansokningartemplate.archive.searchstr;
 	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/alf?type=json&callback=testar";
 	                break;
+	            case "kk_aj_detailloggListjson":
+	                currurl = "http://localhost:60485/Api_v2/log/byarrid/id/1/devkey/alf?type=json&callback=testar";
+	                break;               
 	            default:
 	                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar_help";
 	                break;

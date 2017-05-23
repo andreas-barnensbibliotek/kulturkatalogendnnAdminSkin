@@ -66,11 +66,3 @@
     </div>
 </div>                        
 <!-- /.box-footer -->
-<div class="box-footer kk_aj_motiveringlogg">    
-    <h4>Motivering *</h4>
-    <textarea id="Motivering" class="motivering" style="width:100%;"></textarea>
-	<button type="button" class="btn btn-default kk_aj_detailapprove" title="Godkänn"><i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
-    <button type="button" class="btn btn-default kk_aj_detaildenie" title="Neka"><i class="fa fa-times" aria-hidden="true"></i> Neka</button>
-    
-</div>
-<!-- /.box-footer -->

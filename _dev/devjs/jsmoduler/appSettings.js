@@ -116,6 +116,12 @@ window.kk_aj_detailView = [
         targetdiv: ".kk_aj_detaljvyContainer",
         filename: "kk_aj_detaljvy.txt",
         detailid: window.detailid
+    },
+    {
+        templatename: "logdetaljvyNewTmpl",
+        templatedata: "kk_aj_detailloggListjson",
+        targetdiv: ".kk_aj_motiveringlogg",
+        filename: "kk_aj_logdetaljvyList.txt"
     }
 ];
 window.kk_aj_detailmotiveringloggView = [

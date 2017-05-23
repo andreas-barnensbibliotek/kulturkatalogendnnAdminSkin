@@ -85,6 +85,9 @@ module.exports = {
                 var search = appsettings.searchansokningartemplate.archive.searchstr;
                 currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/alf?type=json&callback=testar";
                 break;
+            case "kk_aj_detailloggListjson":
+                currurl = "http://localhost:60485/Api_v2/log/byarrid/id/1/devkey/alf?type=json&callback=testar";
+                break;               
             default:
                 currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar_help";
                 break;

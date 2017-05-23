@@ -1,0 +1,38 @@
+﻿<span class="motiveringEditblock" style="display:none;">
+	<h4>Motivering *</h4>
+	<textarea id="Motivering" class="motivering" style="width:100%;"></textarea>
+	<button type="button" class="btn btn-default kk_aj_detailapprove" title="Godkänn">
+		<i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
+	<button type="button" class="btn btn-default kk_aj_detaildenie" title="Neka">
+	<i class="fa fa-times" aria-hidden="true"></i> Neka</button>
+<!-- /.box-footer -->
+</span>
+
+<span class="motiveringListblock"> 
+	<div class="box-header">
+		<h3 class="box-title">Motivering/ logg </h3>
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-default" title="Ändra"><i class="fa fa-check" aria-hidden="true"></i>Ändra</button>
+			<button type="button" class="btn btn-default" title="Ta bort"><i class="fa fa-times" aria-hidden="true"></i> Ta bort</button>
+		</div>
+	</div>
+	<!-- /.box-header -->
+	<div class="box-body table-responsive no-padding">
+		<table class="table table-hover">		 
+			<tr>                                           
+				<th>Datum</th>
+				<th>Status</th>
+				<th>Motivering</th>
+			</tr>
+		<!-- item loop START -->	
+		{{#each kk_aj_admin.Logitemlist}}
+			<tr>                                            
+				<td>{{Datum}}</td>
+				<td>{{#fixstatuscolor Statustypid}} {{/fixstatuscolor}}</td>
+				<td>{{Beskrivning}}</td>
+			</tr>                                        
+		{{/each}}
+		</table>
+	</div>
+	<!-- /.box-body -->
+</span>

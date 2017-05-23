@@ -585,172 +585,227 @@ localhost:60485/Api_v2/arrangemang/details/uid/3/typ/3/devkey/alf?type=json&call
 
 {
 	"kk_aj_admin": {
-		"ansokningstatus": "denied",
+		"Ansokningstyp": "Godkänd",
 		"ansokningarlista": {
 			"ansokningarcount": "1",
 			"ansokningar": [{
-				"ansokningid": "1",
-				"ansokningdate": "2017-01-15",
-				"ansokningtitle": "dennaLova! Sa Smulan",
-				"ansokningsubtitle": "En flerspråkig danssaga för 3-6 år",
-				"ansokningutovare": "Hagateatern",
-				"ansokningurl": "kurage@hagateatern.se",
-				"ansokningbilaga": "ja",
-				"ansokningbilagaUrl": "www.barnensbibliotek.se",
-				"ansokninglast": "nej",
-				"ansokningscontent": "Fem föräldralösa tonårssystrar bor i en liten by. En dag stojar de med killarna på väg hem från skolan, en oskyldig lek som andra tolkar som osedlighet. Ryktet sprids snabbt och mormor blir orolig för att deras värde på äktenskapsmarknaden. Historien växer till oanade proportioner och snart börjar systrarnas frihet kringskäras allt mer.Deras hem blir ett fängelse, men upproret bubblar under ytan.Filmen tar upp unga kvinnors rätt att bestämma över sina liv, kroppar och sin sexualitet.Trailer: https: //www.youtube.com/watch?v=rU9JAN8LtIk Filmhandledning: http: //www.filminstitutet.se/sv/fa-kunskap-om-film/film-i-skolan/filmhan... Bokas av Scanbox;clasg @scanbox.com",
-				"ansokningstatus": "denied", 
-				"ansokningtyp": "Resmål",
-				"konstform": "Teater",				
-                "ansokningpublicerad": "nej",
-                "ansokningmainimage": {
-						"url": "http://kulturivast.se/sites/default/files/styles/mozaik/public/ceamna8_h.jpg",
-                        "filename":"bildsmulan_h.jpg",
-						"size": "1.9MB",
-						"alt": "mustang bild",
-						"foto": "Åsa Holts"
+				"ansokningid": 1,
+				"ansokningdate": "2017-04-20 11:02:45",
+				"ansokningtitle": "Dödsängel",
+				"ansokningsubtitle": "En föreställning om vår närhet till ondska och längtan te att slå sig fri.",
+				"ansokningutovare": "Teater Jaguar",
+				"ansokningurl": "",
+				"ansokningbilaga": "",
+				"ansokningpublicerad": "nej",
+				"ansokninglast": "ja",
+				"ansokningstatus": "Godkänd",
+				"ansokningtyp": "Föreställning på tuné",
+				"ansokningkonstform": "Teater",
+				"ansokningFaktalist": [{
+					"FaktaTypID": 1,
+					"Faktarubrik": "Arrangörsstöd ",
+					"FaktaValue": "Arrangören betalar 50%",
+					"Faktaid": 1
+				}, {
+					"FaktaTypID": 2,
+					"Faktarubrik": "Antal medverkande",
+					"FaktaValue": "1",
+					"Faktaid": 2
+				}, {
+					"FaktaTypID": 3,
+					"Faktarubrik": "Medverkande ",
+					"FaktaValue": "På scen: Torben Sigelius Kulin\r\nRegi: Viktoria Folkesson\r\nMusik: Lisen Rylander Löve\r\nKostym: Nonno Nordqvist\r\nScenografi: Ida Elisabet Liffner & Torben Sigelius Kulin\r\nText: Torben Sigelius Kulin \r\nLjus: Torben Sigelius Kulin\r\nTeknik: My Persson & Madeleine Strandberg\r\nDramaturgiskt bollplank: Lena Fridell\r\nProduktion: Naemi Pebaque",
+					"Faktaid": 3
+				}, {
+					"FaktaTypID": 4,
+					"Faktarubrik": "Period ",
+					"FaktaValue": "\r\nv 160115-171230 annars enligt överenskommelse.",
+					"Faktaid": 4
+				}, {
+					"FaktaTypID": 5,
+					"Faktarubrik": "Bokningsbar t.om",
+					"FaktaValue": "2018-06-30",
+					"Faktaid": 5
+				}, {
+					"FaktaTypID": 6,
+					"Faktarubrik": "Max publik",
+					"FaktaValue": "100",
+					"Faktaid": 6
+				}, {
+					"FaktaTypID": 7,
+					"Faktarubrik": "Från ålder",
+					"FaktaValue": "15",
+					"Faktaid": 7
+				}, {
+					"FaktaTypID": 8,
+					"Faktarubrik": "Till ålder ",
+					"FaktaValue": "19",
+					"Faktaid": 8
+				}, {
+					"FaktaTypID": 9,
+					"Faktarubrik": "Föreställningar per dag ",
+					"FaktaValue": "2",
+					"Faktaid": 9
+				}, {
+					"FaktaTypID": 10,
+					"Faktarubrik": "Byggtid ",
+					"FaktaValue": "120 min",
+					"Faktaid": 10
+				}, {
+					"FaktaTypID": 11,
+					"Faktarubrik": "Rivtid ",
+					"FaktaValue": "120 min",
+					"Faktaid": 11
+				}, {
+					"FaktaTypID": 12,
+					"Faktarubrik": "Bredd på scen",
+					"FaktaValue": "5,5 m",
+					"Faktaid": 12
+				}, {
+					"FaktaTypID": 13,
+					"Faktarubrik": "Djup på scen",
+					"FaktaValue": "4 m",
+					"Faktaid": 13
+				}, {
+					"FaktaTypID": 14,
+					"Faktarubrik": "Takhöjd över scen",
+					"FaktaValue": "3 m",
+					"Faktaid": 14
+				}, {
+					"FaktaTypID": 15,
+					"Faktarubrik": "Ljus ",
+					"FaktaValue": "\r\nTar med eget/Ingår",
+					"Faktaid": 15
+				}, {
+					"FaktaTypID": 16,
+					"Faktarubrik": "Bärhjälp behövs",
+					"FaktaValue": "Nej",
+					"Faktaid": 16
+				}, {
+					"FaktaTypID": 17,
+					"Faktarubrik": "El ",
+					"FaktaValue": "16 A",
+					"Faktaid": 17
+				}, {
+					"FaktaTypID": 18,
+					"Faktarubrik": "Övriga lokalkrav",
+					"FaktaValue": "Krav mörklagt.\r\nArrangören ordnar publikplatser om det ej finns befintliga.",
+					"Faktaid": 18
+				}, {
+					"FaktaTypID": 19,
+					"Faktarubrik": "Kostnad första arrangemanget",
+					"FaktaValue": "9800 kr",
+					"Faktaid": 19
+				}, {
+					"FaktaTypID": 20,
+					"Faktarubrik": "Kostnad andra arrangemanget ",
+					"FaktaValue": "8600 kr",
+					"Faktaid": 20
+				}, {
+					"FaktaTypID": 21,
+					"Faktarubrik": "Resor ingår/tillkommer",
+					"FaktaValue": "Tillkommer",
+					"Faktaid": 21
+				}, {
+					"FaktaTypID": 22,
+					"Faktarubrik": "Logi ingår/tillkommer ",
+					"FaktaValue": "Tillkommer",
+					"Faktaid": 22
+				}, {
+					"FaktaTypID": 23,
+					"Faktarubrik": "Logi ",
+					"FaktaValue": "2 enkelrum",
+					"Faktaid": 23
+				}, {
+					"FaktaTypID": 24,
+					"Faktarubrik": "Traktamente ingår/tillkommer",
+					"FaktaValue": "Tillkommer",
+					"Faktaid": 24
+				}, {
+					"FaktaTypID": 25,
+					"Faktarubrik": "Lärarhandledning",
+					"FaktaValue": "Ingår",
+					"Faktaid": 25
+				}, {
+					"FaktaTypID": 32,
+					"Faktarubrik": "Speltid (min)",
+					"FaktaValue": "60 min",
+					"Faktaid": 32
+				}, {
+					"FaktaTypID": 33,
+					"Faktarubrik": "Mörkläggning krävs",
+					"FaktaValue": "Ja nödvändigt",
+					"Faktaid": 33
+				}, {
+					"FaktaTypID": 34,
+					"Faktarubrik": "Ljud",
+					"FaktaValue": "\r\nTar med eget/Ingår",
+					"Faktaid": 34
+				}, {
+					"FaktaTypID": 35,
+					"Faktarubrik": "Kostnad paket",
+					"FaktaValue": "\r\nEnligt överenskommelse. kr",
+					"Faktaid": 35
+				}, {
+					"FaktaTypID": 36,
+					"Faktarubrik": "Övrigt om kostnad",
+					"FaktaValue": "Kostnad för andra arrangemanget gäller vid samma spelplats samma dag.",
+					"Faktaid": 36
+				}, {
+					"FaktaTypID": 37,
+					"Faktarubrik": "Resor",
+					"FaktaValue": "Faktiska kostnader hyra skåpbil fr Göteborg kr/mil",
+					"Faktaid": 37
+				}, {
+					"FaktaTypID": 38,
+					"Faktarubrik": "Traktamente",
+					"FaktaValue": "110 kr dag/pers, 220 kr dygn/pers. Kostnad ingår vid turné inom VG-regionen",
+					"Faktaid": 38
+				}, {
+					"FaktaTypID": 39,
+					"Faktarubrik": "Övrigt",
+					"FaktaValue": "1 tekniker medföljer på turnén",
+					"Faktaid": 39
+				}],
+				"ansokningContent": "Göteborg 2015. Angelo är på väg från sin fars begravning med blodig kniv i handen.  \r\nBuenos Aires 1979. Carlos är på jakt efter gamla SS-officerare däribland sin egen far.  \r\nAuschwitz 1944. Axel, en lägervakt förälskar sig i en av sina fångar.\r\n\r\nDödsängel skildrar vårt förhållande till ondska, kärlek och hämnd. Med tät spänning vecklas en släkthistoria ut och hemligheter kommer upp till ytan.\r\n\r\nVia dagboksanteckningar, brev och illustrerade projektioner slungas vi runt i både tid och rum och släktträdet broderas ut. Historien återupprepas och hämden tar aldrig slut. \r\nOm fördomar, hämnd och historiens felsteg.\r\n\r\n\"Skrämmande trovärdigt\" Alba\r\n\r\n\"Utomordentligt välspelad\" Göteborgsposten",
+				"ansokningUsername": "2",
+				"ansokningMediaImage": {
+					"MediaUrl": "http://leto.premium.se/vgr/media/uploads/47/2414/TeaterJaguar_Dodsangel_IdaLiffner_PosterA2_t.jpg",
+					"MediaFilename": "TeaterJaguar_Dodsangel_IdaLiffner_PosterA2_t.jpg",
+					"MediaSize": "3 kb",
+					"MediaAlt": "Dödsängel",
+					"MediaFoto": "Ida Elisabet Liffner"
 				},
-			    "ansokningmovieclip": {
-						"url": "https://www.youtube.com/embed/BfUhTpYlQoE",
-                        "filename":"https://youtu.be/TpVIOe-kRAo",
-						"size": "12.30Min",
-						"alt": "mustang Filmclip"
+				"ansokningMovieClip": {
+					"MediaUrl": "https://www.youtube.com/embed/BfUhTpYlQoE",
+					"MediaFilename": "https://youtu.be/TpVIOe-kRAo",
+					"MediaSize": "12.30Min",
+					"MediaAlt": "mustang Filmclip",
+					"MediaFoto": null
 				},
-				"ansokanFaktalista": {
-					"Arrangorsstod": { 
-                        "rubrik":"Arrangörsstöd",
-                        "value":"Arrangören betalar 50%"
-                     },
-					"Antalmedvarkande": { 
-                        "rubrik":"Antal medverkande",
-                        "value":10
-					},                    
-                    "Medverkande": { 
-                        "rubrik":"Medverkande",
-                        "value":"Av: Moni Nolsson Idé och koncept: Scenkonsttrion Kurage Regi: Rebecca Alverfors och Charlotta Grimfjord Cederblad På scen: Furat Jari Koreografi: Fredrika Byman Moberg och Charlotta Grimfjord Cederblad Ljus och rum: Åsa Holtz Illustration: Jenny Carlsson Produktion: Hanna Jansson "
-                     }, 
-					"Period":{ 
-                        "rubrik":"Period",
-                        "value":"Enligt överenskommelse"
-                     }, 
-					"Bokningsbartom":{ 
-                        "rubrik":"Bokningsbar t.om.",
-                        "value":"30 juni 2018"
-                     },  
-					"Maxpublik": { 
-                        "rubrik":"Max publik",
-                        "value":"60"
-                     },
-					"Franalder": { 
-                        "rubrik":"Från ålder",
-                        "value":"3 år"
-                     },
-					"Tillalder": { 
-                        "rubrik":"Till ålder",
-                        "value":"6 år"
-                     },
-					"Foreställningarperdag": { 
-                        "rubrik":"Föreställningar per dag",
-                        "value":"2"
-                     },
-					"Byggtid": { 
-                        "rubrik":"Byggtid",
-                        "value":"60 min"
-                     },
-                     "Rivtid": { 
-                        "rubrik":"Rivtid",
-                        "value":"45 min"
-                     },					
-					"Breddpascen": { 
-                        "rubrik":"Bredd på scen",
-                        "value":"4 m"
-                     },	
-					"Djuppascen": { 
-                        "rubrik":"Djup på scen",
-                        "value":"3 m"
-                     },	
-					"Takhojdoverscen": { 
-                        "rubrik":"Takhöjd över scen",
-                        "value":"3 m"
-                     },	
-					"Ljus": { 
-                        "rubrik":"Ljus",
-                        "value":"Tar med eget/Ingår"
-                     },	
-					"Barhjalpbehovs": { 
-                        "rubrik":"Bärhjälp behövs",
-                        "value":"Ja"
-                     },
-					"El": { 
-                        "rubrik":"El",
-                        "value":"10 A"
-                     },
-					"Ovrigalokalkrav": { 
-                        "rubrik":"Övriga lokalkrav",
-                        "value":"Ej upphöjd scen ej scen där publiken hamnar för långt bort från skådespelaren."
-                     },
-					"Kostnadforstaarrangemanget": { 
-                        "rubrik":"Kostnad första arrangemanget",
-                        "value":"3000 kr"
-                     },
-					"Kostnadandraarrangemanget": { 
-                        "rubrik":"Kostnad andra arrangemanget",
-                        "value":"2000 kr"
-                     },
-					"Resoringartillkommer": { 
-                        "rubrik":"Resor ingår/tillkommer",
-                        "value":"Tillkommmer"
-                     },
-					"Logiingartillkommer": { 
-                        "rubrik":"Logi ingår/tillkommer",
-                        "value":"Tillkommmer"
-                     },
-					"Logi": { 
-                        "rubrik":"Logi",
-                        "value":"2 st enkelrum"
-                     },
-					"Traktamenteingartillkommer":{ 
-                        "rubrik":"Traktamente ingår/tillkommer",
-                        "value":"Tillkommmer"
-                     },
-					"Lararhandledningingaringar": { 
-                        "rubrik":"Lärarhandledningar",
-                        "value":"Nej"
-                     },
-					"kontaktperson": { 
-                        "rubrik":"Kontaktperson",
-                        "value":"Hanna Jansson"
-                     },                    
-					"Telefonnummer": { 
-                        "rubrik":"Telefonnummer",
-                        "value":"031-126668"
-                     },
-					"Adress":{ 
-                        "rubrik":"Adress",
-                        "value":"Hagateatern Södra Allégatan 2"
-                     },
-					"Postnummer": { 
-                        "rubrik":"Postnummer",
-                        "value":"413 01"
-                     },
-					"Ort": { 
-                        "rubrik":"Ort",
-                        "value":"Göteborg"
-                     },
-					"Epost": { 
-                        "rubrik":"E-post",
-                        "value":"kurage@hagateatern.se"	
-                     }			
+				"ansokningUtovarid": 0,
+				"ansokningUtovardata": {
+					"UtovarID": 1,
+					"Organisation": "Teater Jaguar",
+					"Fornamn": "Naemi",
+					"Efternamn": "Pebaque",
+					"Telefon": "031132310 0707317425",
+					"Adress": "Storgatan 3",
+					"Postnr": "41124",
+					"Ort": "Göteborg",
+					"Epost": "kontoret@teaterjaguar.se",
+					"Kommun": "Göteborg",
+					"Weburl": "www.teaterjaguar.se"
 				}
 			}]
 		},
-		"ansokningarlistacount": "1",
-		"ansokningarlistacurrentpage": "1",
-		"ansokningarlistatotalpages": "1",
-		"nyaansokningarcount": "12",
-		"approvedansokningarcount": "7",
-		"deniedansokningarcount": "8",
-		"status": "nyansokningar listan funkar"
+		"Ansokningarlistacount": 1,
+		"Ansokningarlistacurrentpage": 0,
+		"Ansokningarlistatotalpages": 1,
+		"nyaansokningarcount": 13,
+		"approvedansokningarcount": 2,
+		"deniedansokningarcount": 1,
+		"status": "Arrangemangsdetaljer är listade!"
 	}
 }
 
@@ -868,3 +923,19 @@ DELETE Ta bort arrangemang via arrangemangid
 api anrop: Api_v2/arrangemang/{userid}/del/{arrid}/devkey/alf
 url DELETE http://localhost:60485/Api_v2/arrangemang/0/del/56/devkey/alf
 server DELETE url: http://kulturkatalog.kivdev.se:8080/Api_v2/arrangemang/0/del/18/devkey/alf
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// JSON Update Arrangemang status till(ny, godkänd, nekad, arkiv) /////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+{
+	"CmdTyp": "arrstat",
+	"Userid": "3",
+	"Arrid": "25",
+	"Logtypid": "1",
+	"Logstatusid": "4",
+	"Logbeskrivning": "Nekad för att beskivande text varför",
+	"UpdValue": "3"
+}

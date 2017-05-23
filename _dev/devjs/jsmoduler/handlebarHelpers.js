@@ -86,3 +86,46 @@ Handlebars.registerHelper('iftype', function (ansoktyp) {
     registerJqueryEvents.updatacontentheader(changedtyp, "detailview");
     return changeclass;
 });
+
+// kollar om ansökningar har bilaga eller ej
+Handlebars.registerHelper('fixstatuscolor', function (Statustypid) {
+   
+    var statuscolor = "";
+    switch (Statustypid) {
+        case 1:
+            statuscolor = '<span class="label label-primary">Ny</span>';            
+            break;
+        case 2:
+            statuscolor = '<span class="label label-warning">Granskas</span>';
+            break;
+        case 3:
+            statuscolor = '<span class="label label-success">Godkänd</span>';
+            break;
+        case 4:
+            statuscolor = '<span class="label label-danger">Nekad</span>';
+            break;
+        case 5:
+            statuscolor = '<span class="label label-info">Ändrad</span>';
+            break;
+        case 6:
+            statuscolor = '<span class="label label-success">Publicerad</span>';
+            break;
+        case 7:
+            statuscolor = '<span class="label label-warning">Avpublicerad</span>';
+            break;
+        case 8:
+            statuscolor = '<span class="label label">Arkiverad</span>';
+            break;
+        case 9:
+            statuscolor = '<span class="label label-default">Event</span>';
+            break;
+        case 10:
+            statuscolor = '<span class="label label-danger">Borttagen</span>';
+            break;
+        default:
+            statuscolor = '<span class="label label-default">Event</span>';
+            break;
+    }
+    
+    return statuscolor;
+});
