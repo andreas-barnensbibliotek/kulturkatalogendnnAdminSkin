@@ -116,12 +116,15 @@ window.kk_aj_detailView = [
         targetdiv: ".kk_aj_detaljvyContainer",
         filename: "kk_aj_detaljvy.txt",
         detailid: window.detailid
-    },
+    }    
+];
+window.kk_aj_detaillogView = [
     {
         templatename: "logdetaljvyNewTmpl",
         templatedata: "kk_aj_detailloggListjson",
         targetdiv: ".kk_aj_motiveringlogg",
-        filename: "kk_aj_logdetaljvyList.txt"
+        filename: "kk_aj_logdetaljvyList.txt",
+        arrid: window.arrid
     }
 ];
 window.kk_aj_detailmotiveringloggView = [
@@ -172,6 +175,7 @@ module.exports = {
     }, 
     diarietemplate: window.kk_aj_DiarieView,
     detailetemplate: window.kk_aj_detailView,
+    detaillogtemplate: window.kk_aj_detaillogView,
     motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
     basepageUri: "http://dnndev.me/Kulturkatalogen",
     pagerHandler: window.kk_aj_pagerHandler

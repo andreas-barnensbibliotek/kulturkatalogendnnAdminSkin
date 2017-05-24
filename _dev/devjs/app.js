@@ -14,6 +14,7 @@ $(function () {
     var _userid = $('.kk_aj_CurrentUserid').html();
     var _rollid = $('.kk_aj_CurrentRollid').html();
     var _pageType = $('.kk_aj_CurrentPageType').html();
+    var _url_id ="";
     appsettings.currentUserid = _userid;
     // start eventhandler -----------------------------
     registerJqueryEvents.jqueryEVENTS(_userid);
@@ -47,6 +48,10 @@ $(function () {
             if (index > 0) {
                 urlParams.search = sPageURL[index + 1];
             };
+            var index = sPageURL.indexOf("p");
+            if (index > 0) {
+                urlParams.p = sPageURL[index + 1];
+            };
         }
     };
        
@@ -56,8 +61,10 @@ $(function () {
         appsettings.currentUserid = _userid;
         checkparamsinurl();
 
-        if (urlParams.id) {
-            appsettings.detailetemplate.detailid = urlParams.id;            
+        _url_id = urlParams.id
+        if (_url_id) {
+            appsettings.detailetemplate.detailid = _url_id;
+            appsettings.detaillogtemplate.arrid = _url_id;
         }        
 
         

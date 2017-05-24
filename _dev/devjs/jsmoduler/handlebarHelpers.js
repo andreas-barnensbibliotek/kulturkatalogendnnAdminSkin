@@ -78,7 +78,7 @@ Handlebars.registerHelper('iftype', function (ansoktyp) {
             changedtyp = "kk_aj_deniedansokningarView"
             changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border label-danger">';
             break;
-        case "archived":
+        case "arkiv":
             changedtyp = "kk_aj_archiveansokningarView"
             changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border">';
             break;                  

@@ -4,24 +4,44 @@ module.exports = {
     testar: function (msg) {
         alert(msg);
     },
-    //injecttemplate: function (callTyp, usrid, callback) {
-    //    console.log("2. servicen hämtar data");
-    //    $.ajax({
-    //        type: "GET",
-    //        url: appsettings.localOrServerURL +"/"+ callTyp + "/devkey/testar",
-    //        dataType: "json",
-    //        success: function (data) {
-    //            console.log("3. servicen har hämtat datan");
-    //            callback(data)
-                
-    //        },
-    //        error: function (xhr, ajaxOptions, thrownError) {
-    //            console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-    //            alert("Nått blev fel!");
-    //        }
-    //    });
+    updateparam: function (callTyp, usrid, arrid, val, callback) {
+        var devkeysnippet = "alf?type=json&callback=testar";
+        var currurl="";
+        switch(callTyp) {
+            case "UpdateLookedAtParam":
+                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
+                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+                break;
+            case "UpdateArrstatusParam":
+                //currurl = "/updatearrangemang/arrstat/id/2/uid/2/val/2/devkey/alf?type=json&callback=testar;
+                currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+                break;
+            case "UpdatePublishedParam":
+                //currurl = "/updatearrangemang/pub/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
+                currurl = appsettings.localOrServerURL + "/updatearrangemang/pub/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+                break;
+            default:
+                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar_help";
+                break;
+        }
+
+        console.log("2. servicen hämtar data");
+        $.ajax({
+            async: true,
+            type: "GET",            
+            url: currurl,
+            dataType: "json",
+            success: function (data) {
+                console.log("Parameter updaterad: " + callTyp);
+                callback(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+                alert("Nått blev fel vid uppdatering av parametrarna!");
+            }
+        });
        
-    //},
+    },
     injecttemplateDebug: function (callTyp, usrid, val, callback) {
         //console.log("4. servicen hämtar debug data ----->>> " + usrid);
         console.log("injecttemplateDebug: " + usrid);
@@ -86,8 +106,13 @@ module.exports = {
                 currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/alf?type=json&callback=testar";
                 break;
             case "kk_aj_detailloggListjson":
-                currurl = "http://localhost:60485/Api_v2/log/byarrid/id/1/devkey/alf?type=json&callback=testar";
-                break;               
+                //currurl = "http://localhost:60485/Api_v2/log/byarrid/id/1/devkey/alf?type=json&callback=testar";
+                currurl = appsettings.localOrServerURL + "/log/byarrid/id/" + val + "/devkey/alf?type=json&callback=testar";
+                break;
+            case "kk_aj_UpdateLookedAt":
+                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
+                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + val + "/uid/" + usrid + "/val/ja/devkey/alf?type=json&callback=testar";
+                break;
             default:
                 currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar_help";
                 break;

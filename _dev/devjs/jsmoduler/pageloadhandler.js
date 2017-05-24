@@ -47,8 +47,8 @@ module.exports = {
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
+                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid,'', appsettings.detaillogtemplate.arrid);
                 break;
-
             case "kk_aj_search_nyaansokningarView": //sök i nya              
                 //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
@@ -87,6 +87,13 @@ module.exports = {
     },
     pagetotalupdater: function () {
         pagetotalblock();
+    },
+    pageParameterUpdater: function (callTyp, usrid, arrid, val, callback) {
+
+        ServiceHandler.updateparam(callTyp, usrid, arrid, val, function (data) {
+            callback();
+                           
+        });
     }
 };
 

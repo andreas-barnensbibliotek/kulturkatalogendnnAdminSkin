@@ -2,8 +2,8 @@
 	 {{#each kk_aj_admin.ansokningarlista.ansokningar}}
 	<tr>
 		<td><input type="checkbox" name="kk_aj_chkAnnons" class="kk_aj_chkboxAnnons" ></td>
-		<td class="mailbox-star">
-			<a href="#">
+		<td class="mailbox-star" rel="{{ansokningid}}">
+			<a href="#" >
 				{{#getFlag ansokninglast ansokningpublicerad ansokningstatus}}					
 				{{/getFlag}}
 				
