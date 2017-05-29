@@ -46,8 +46,8 @@ module.exports = {
             case "kk_aj_detailView":
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
-                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid,'', appsettings.detaillogtemplate.arrid);
+                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);               
+                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
                 break;
             case "kk_aj_search_nyaansokningarView": //sök i nya              
                 //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
@@ -89,10 +89,13 @@ module.exports = {
         pagetotalblock();
     },
     pageParameterUpdater: function (callTyp, usrid, arrid, val, callback) {
-
         ServiceHandler.updateparam(callTyp, usrid, arrid, val, function (data) {
+            callback();                           
+        });
+    },
+    pagePostParameterUpdater: function (postjson, callback) {
+        ServiceHandler.updatePostparam(postjson, function (data) {
             callback();
-                           
         });
     }
 };
@@ -108,11 +111,11 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
 
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
             // console.log("3.1.  körs");
-
+            
             //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
             if (value.templatename != "detailTmpl") {
 
-                if (data.kk_aj_admin.ansokningarlista) {              
+                if (data.kk_aj_admin.ansokningarlista) {
                     var sortorder;
                     var sortobjtosearch;
 
@@ -121,10 +124,10 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
                         sortorder = sortera.order;
                         sortobjtosearch = sortera.tosort;
                     }
-                
+
                     //"tosort": "title", "order": "down"
-                    data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {                   
-                        if (sortorder == "down") {                        
+                    data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
+                        if (sortorder == "down") {
                             if (a[sortobjtosearch] == b[sortobjtosearch])
                                 return 0;
                             if (a[sortobjtosearch] < b[sortobjtosearch])
@@ -144,18 +147,18 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
                     appsettings.pagerHandler.page_currentdataset = test;
                     console.log("page_currentdataset " + test);
                     appsettings.pagerHandler.page_currenttemplate = value;
-                    appsettings.pagerHandler.page_totalpages = Math.ceil( parseInt(data.kk_aj_admin.Ansokningarlistacount) /  parseInt(appsettings.pagerHandler.page_item_per_page));
+                    appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
                     data = datapager(data);
 
                     partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
                         if (data == "ja") {
                             pagetotalblock();
-                           // console.log("ansokningarpagerinfotemplate");
+                            // console.log("ansokningarpagerinfotemplate");
                         }
                     });
                 }
-               
-            }
+
+            };
             loadpagetemplates(value, data, function (data) {
                 if (data == "ja") {
                    // console.log("KLART");                    

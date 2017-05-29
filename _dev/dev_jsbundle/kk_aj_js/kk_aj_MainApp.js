@@ -331,7 +331,7 @@
 	        templatename: "motiveringloggTmpl",
 	        templatedata: "kk_aj_detailmotiveringloggjson",
 	        targetdiv: ".kk_aj_motiveringlogg",
-	        filename: ".kk_aj_motiveringlogg.txt"
+	        filename: "kk_aj_motiveringlogg.txt"
 	    }
 	];
 	window.kk_aj_kk_aj_topNavView = [
@@ -533,6 +533,22 @@
 	    return statuscolor;
 	});
 
+	Handlebars.registerHelper('ifdetailstatus', function (currarrstatus, options) {
+	    var tmpcurrarrstatus = currarrstatus.toLowerCase();
+	    if (tmpcurrarrstatus === "1") {
+	        return options.fn(this);
+	    };
+	});
+
+	Handlebars.registerHelper('ifdetailstatusList', function (currarrstatus, options) {
+	    var tmpcurrarrstatus = currarrstatus.toLowerCase();
+	    if (tmpcurrarrstatus != "1") {
+	        return options.fn(this);
+	    };
+	});
+
+
+
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
@@ -552,7 +568,7 @@
 	            loadlistView("kk_aj_ansokningarView", sortobj);
 
 	            //history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
-	            history.pushState('1', '', '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
+	            history.pushState('1', '', '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
 
 	            return false;
 	        });
@@ -561,7 +577,7 @@
 	            //console.log('1-1. .kk_aj_approvedansokningar');   
 	            resetsearchformdata();
 	            loadlistView("kk_aj_approvedansokningarView");
-	            history.pushState('2', '', '/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView');
+	            history.pushState('2', '', '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView');
 	            return false;
 	        });
 
@@ -569,7 +585,7 @@
 	            resetsearchformdata();
 	            //console.log('1-1. .kk_aj_deniedansokningar');
 	            loadlistView("kk_aj_deniedansokningarView");
-	            history.pushState('3', '','/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView');
+	            history.pushState('3', '', '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView');
 	            return false;
 	        });
 
@@ -577,7 +593,7 @@
 	            resetsearchformdata();
 	            //console.log('1-1. .kk_aj_archiveansokningar');
 	            loadlistView("kk_aj_archiveansokningarView");
-	            history.pushState('4', '', '/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
+	            history.pushState('4', '', '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
 	            return false;
 	        });
 
@@ -620,7 +636,7 @@
 	            loadpageHandler.pagetotalupdater();
 	            if (setting.page_max_size >= next) {
 	                setting.page_currentlimit = parseInt(setting.page_currentlimit) + parseInt(setting.page_item_per_page);
-	                history.pushState('pages', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=' + searchpagetyp + '&p=' + next);
+	                history.pushState('pages', '', appsettings.basepageUri + '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=' + searchpagetyp + '&p=' + next);
 
 	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, next, setting.page_currentlimit);
 	            }
@@ -637,7 +653,7 @@
 
 	            if (pre >= 0) {
 	                setting.page_currentlimit = parseInt(setting.page_currentlimit) - parseInt(setting.page_item_per_page);
-	                history.pushState('p', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=' + searchpagetyp + '&p=' + pre);
+	                history.pushState('p', '', appsettings.basepageUri + '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=' + searchpagetyp + '&p=' + pre);
 	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, pre, setting.page_currentlimit);
 	            }
 	            return false;
@@ -753,22 +769,22 @@
 	                    case "nya":
 	                        appsettings.searchansokningartemplate.nya.searchstr = searchtyp;
 	                        loadlistView("kk_aj_search_nyaansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
+	                        history.pushState('', '', appsettings.basepageUri + '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
 	                        break;
 	                    case "approved":
 	                        appsettings.searchansokningartemplate.approved.searchstr = searchtyp;
 	                        loadlistView("kk_aj_search_approvedansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_search_approvedansokningarView&search=' + searchtyp);
+	                        history.pushState('', '', appsettings.basepageUri + '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_search_approvedansokningarView&search=' + searchtyp);
 	                        break;
 	                    case "denied":
 	                        appsettings.searchansokningartemplate.denied.searchstr = searchtyp;
 	                        loadlistView("kk_aj_search_deniedansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_search_deniedansokningarView&search=' + searchtyp);
+	                        history.pushState('', '', appsettings.basepageUri + '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_search_deniedansokningarView&search=' + searchtyp);
 	                        break;
 	                    case "archive":
 	                        appsettings.searchansokningartemplate.archive.searchstr = searchtyp;
 	                        loadlistView("kk_aj_search_archiveansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_search_archiveansokningarView&search=' + searchtyp);
+	                        history.pushState('', '', appsettings.basepageUri + '/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_search_archiveansokningarView&search=' + searchtyp);
 	                        break;
 
 	                }
@@ -779,6 +795,26 @@
 	           
 	        });
 	        
+	        //detaljvy event
+	        $('body').on('click', '.kk_aj_addmotivering', function (event) {
+	            $('.motiveringEditblock').toggle();
+	        })
+	        
+	        $('body').on('click', '.kk_aj_detailapproved', function (event) {
+	            updateArrangemangMotivering("2", function(){
+	                
+	                location.href = "/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_approvedansokningarView";
+	            });            
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_detaildenied', function (event) {
+	            updateArrangemangMotivering("3",function(){
+	                location.href = "/KulturkatalogenAdmin/KatalogenAnsokningar?sida=kk_aj_deniedansokningarView";
+	            });
+	            return false;
+	        });
+	      
 	        $(window).on('popstate', function (e) {
 	            var match,
 	                pl = /\+/g,  // Regex for replacing addition symbol with a space
@@ -934,6 +970,24 @@
 	var resetsearchformdata = function () {
 	    $('.kk_aj_ansoksearchform').val("");
 	};
+
+	var updateArrangemangMotivering = function (NyArrStatus, callback) {
+	    var tmpstatusid = parseInt(NyArrStatus) + 1;
+
+	    var postjson = {
+	        CmdTyp:"arrstat",
+	        Userid: appsettings.currentUserid,
+	        Arrid: $('.motiveringEditblock').attr('rel'),
+	        Logtypid:"1",
+	        Logstatusid: tmpstatusid,
+	        Logbeskrivning: $('.motivering').val(),          
+	        UpdValue:NyArrStatus
+	    };
+	    loadpageHandler.pagePostParameterUpdater(postjson, function () {
+	              
+	        callback();        
+	    });
+	}
 
 
 /***/ },
@@ -11214,8 +11268,8 @@
 	            case "kk_aj_detailView":
 	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
-	                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid,'', appsettings.detaillogtemplate.arrid);
+	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);               
+	                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
 	                break;
 	            case "kk_aj_search_nyaansokningarView": //sök i nya              
 	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
@@ -11257,10 +11311,13 @@
 	        pagetotalblock();
 	    },
 	    pageParameterUpdater: function (callTyp, usrid, arrid, val, callback) {
-
 	        ServiceHandler.updateparam(callTyp, usrid, arrid, val, function (data) {
+	            callback();                           
+	        });
+	    },
+	    pagePostParameterUpdater: function (postjson, callback) {
+	        ServiceHandler.updatePostparam(postjson, function (data) {
 	            callback();
-	                           
 	        });
 	    }
 	};
@@ -11276,11 +11333,11 @@
 
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
 	            // console.log("3.1.  körs");
-
+	            
 	            //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
 	            if (value.templatename != "detailTmpl") {
 
-	                if (data.kk_aj_admin.ansokningarlista) {              
+	                if (data.kk_aj_admin.ansokningarlista) {
 	                    var sortorder;
 	                    var sortobjtosearch;
 
@@ -11289,10 +11346,10 @@
 	                        sortorder = sortera.order;
 	                        sortobjtosearch = sortera.tosort;
 	                    }
-	                
+
 	                    //"tosort": "title", "order": "down"
-	                    data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {                   
-	                        if (sortorder == "down") {                        
+	                    data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
+	                        if (sortorder == "down") {
 	                            if (a[sortobjtosearch] == b[sortobjtosearch])
 	                                return 0;
 	                            if (a[sortobjtosearch] < b[sortobjtosearch])
@@ -11312,18 +11369,18 @@
 	                    appsettings.pagerHandler.page_currentdataset = test;
 	                    console.log("page_currentdataset " + test);
 	                    appsettings.pagerHandler.page_currenttemplate = value;
-	                    appsettings.pagerHandler.page_totalpages = Math.ceil( parseInt(data.kk_aj_admin.Ansokningarlistacount) /  parseInt(appsettings.pagerHandler.page_item_per_page));
+	                    appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
 	                    data = datapager(data);
 
 	                    partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
 	                        if (data == "ja") {
 	                            pagetotalblock();
-	                           // console.log("ansokningarpagerinfotemplate");
+	                            // console.log("ansokningarpagerinfotemplate");
 	                        }
 	                    });
 	                }
-	               
-	            }
+
+	            };
 	            loadpagetemplates(value, data, function (data) {
 	                if (data == "ja") {
 	                   // console.log("KLART");                    
@@ -11501,6 +11558,27 @@
 	            }
 	        });
 	       
+	    },
+	    updatePostparam: function (postjson, callback) {
+	        
+	        var currurl = "http://localhost:60485/Api_v2/updatearrangemang/upd/devkey/alf";
+	             
+	        console.log("2. servicen POSTAR data"); 
+	        $.ajax({
+	            async: true,
+	            type: "POST",
+	            url: currurl,
+	            data: postjson,
+	            success: function (data) {
+	                console.log("Parameter updaterad: ");
+	                callback(data);
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel vid uppdatering av parametrarna!");
+	            }
+	        });
+
 	    },
 	    injecttemplateDebug: function (callTyp, usrid, val, callback) {
 	        //console.log("4. servicen hämtar debug data ----->>> " + usrid);

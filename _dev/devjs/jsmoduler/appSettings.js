@@ -132,7 +132,7 @@ window.kk_aj_detailmotiveringloggView = [
         templatename: "motiveringloggTmpl",
         templatedata: "kk_aj_detailmotiveringloggjson",
         targetdiv: ".kk_aj_motiveringlogg",
-        filename: ".kk_aj_motiveringlogg.txt"
+        filename: "kk_aj_motiveringlogg.txt"
     }
 ];
 window.kk_aj_kk_aj_topNavView = [

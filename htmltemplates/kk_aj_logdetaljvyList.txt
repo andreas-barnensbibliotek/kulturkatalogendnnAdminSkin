@@ -1,9 +1,22 @@
-﻿<span class="motiveringEditblock" style="display:none;">
+﻿{{#ifdetailstatus kk_aj_admin.CurrentArrStatus}}
+<span class="motiveringEditblock" rel="{{kk_aj_admin.Logitemlist.0.Arrid}}" >
+	<h4>Motivering *</h4>
+	<textarea id="Motivering" class="motivering" style="width:100%;"></textarea>	
+	<button type="button" class="btn btn-default kk_aj_detailapproved" title="Godkänn">
+		<i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
+	<button type="button" class="btn btn-default kk_aj_detaildenied" title="Neka">
+	<i class="fa fa-times" aria-hidden="true"></i> Neka</button>
+<!-- /.box-footer -->
+</span>
+{{/ifdetailstatus}}
+	
+{{#ifdetailstatusList kk_aj_admin.CurrentArrStatus}}
+ <span class="motiveringEditblock" rel="{{kk_aj_admin.Logitemlist.0.Arrid}}" style="display:none;">
 	<h4>Motivering *</h4>
 	<textarea id="Motivering" class="motivering" style="width:100%;"></textarea>
-	<button type="button" class="btn btn-default kk_aj_detailapprove" title="Godkänn">
+	<button type="button" class="btn btn-default kk_aj_detailapproved" title="Godkänn">
 		<i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
-	<button type="button" class="btn btn-default kk_aj_detaildenie" title="Neka">
+	<button type="button" class="btn btn-default kk_aj_detaildenied" title="Neka">
 	<i class="fa fa-times" aria-hidden="true"></i> Neka</button>
 <!-- /.box-footer -->
 </span>
@@ -12,7 +25,7 @@
 	<div class="box-header">
 		<h3 class="box-title">Motivering/ logg </h3>
 		<div class="btn-group pull-right">
-			<button type="button" class="btn btn-default" title="Ändra"><i class="fa fa-check" aria-hidden="true"></i>Ändra</button>
+			<button type="button" class="btn btn-default kk_aj_addmotivering" title="Ändra"><i class="fa fa-check" aria-hidden="true"></i>Ändra</button>
 			<button type="button" class="btn btn-default" title="Ta bort"><i class="fa fa-times" aria-hidden="true"></i> Ta bort</button>
 		</div>
 	</div>
@@ -36,3 +49,4 @@
 	</div>
 	<!-- /.box-body -->
 </span>
+{{/ifdetailstatusList}}

@@ -129,3 +129,18 @@ Handlebars.registerHelper('fixstatuscolor', function (Statustypid) {
     
     return statuscolor;
 });
+
+Handlebars.registerHelper('ifdetailstatus', function (currarrstatus, options) {
+    var tmpcurrarrstatus = currarrstatus.toLowerCase();
+    if (tmpcurrarrstatus === "1") {
+        return options.fn(this);
+    };
+});
+
+Handlebars.registerHelper('ifdetailstatusList', function (currarrstatus, options) {
+    var tmpcurrarrstatus = currarrstatus.toLowerCase();
+    if (tmpcurrarrstatus != "1") {
+        return options.fn(this);
+    };
+});
+

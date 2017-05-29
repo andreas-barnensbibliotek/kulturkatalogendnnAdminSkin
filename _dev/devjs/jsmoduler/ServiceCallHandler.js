@@ -42,6 +42,27 @@ module.exports = {
         });
        
     },
+    updatePostparam: function (postjson, callback) {
+        
+        var currurl = "http://localhost:60485/Api_v2/updatearrangemang/upd/devkey/alf";
+             
+        console.log("2. servicen POSTAR data"); 
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: currurl,
+            data: postjson,
+            success: function (data) {
+                console.log("Parameter updaterad: ");
+                callback(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+                alert("Nått blev fel vid uppdatering av parametrarna!");
+            }
+        });
+
+    },
     injecttemplateDebug: function (callTyp, usrid, val, callback) {
         //console.log("4. servicen hämtar debug data ----->>> " + usrid);
         console.log("injecttemplateDebug: " + usrid);
