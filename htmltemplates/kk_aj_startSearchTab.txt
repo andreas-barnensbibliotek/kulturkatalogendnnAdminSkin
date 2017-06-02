@@ -1,0 +1,68 @@
+﻿ <!-- katalogen SearchFORM START -->
+    <form class="form-horizontal">  
+	                               
+		<!-- Select Search -->
+		<div class="form-group">
+			<label for="inputsearchstr" class="col-sm-2 control-label">Sök arrangemang</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="inputsearchstr" placeholder="Sök arrangemang">
+			</div>
+		</div>									
+
+		<!-- Radio select arrangemangsStatus -->																
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="ArrStatusRadio">Arrangemangsstatus</label>
+			<div class="col-md-10"> 
+			<label class="radio-inline" for="ArrStatusRadio-0">
+				<input name="ArrStatusRadio" id="ArrStatusRadio-0" value="Alla" checked="checked" type="radio">
+				Alla
+			</label> 
+			<label class="radio-inline" for="ArrStatusRadio-1">
+				<input name="ArrStatusRadio" id="ArrStatusRadio-1" value="Nya" type="radio">
+				Nya
+			</label> 
+			<label class="radio-inline" for="ArrStatusRadio-2">
+				<input name="ArrStatusRadio" id="ArrStatusRadio-2" value="Godkända" type="radio">
+				Godkända
+			</label> 
+			<label class="radio-inline" for="ArrStatusRadio-3">
+				<input name="ArrStatusRadio" id="ArrStatusRadio-3" value="Nekade" type="radio">
+				Nekade
+			</label> 
+			<label class="radio-inline" for="ArrStatusRadio-4">
+				<input name="ArrStatusRadio" id="ArrStatusRadio-4" value="Arkivet" type="radio">
+				Arkivet
+			</label>
+			</div>
+		</div>
+									
+		<!-- Select Basic -->
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="arrangemangstyp">Välj arrangemangstyp</label>
+			<div class="col-md-6">
+			<select id="arrangemangstyp" name="arrangemangstyp" class="form-control">
+				<option value="1" selected>Alla</option>
+				<option value="2">Fortbildningar</option>
+				<option value="3">Föreställning på tuné</option>
+				<option value="4">Kulturpedagogiskt projekt</option>
+				<option value="5">Resmålsbesök</option>
+				<option value="6">Föreställning på fast scen</option>
+				<option value="7">Författarbesök</option>
+				<option value="8">Museelådor</option>
+				<option value="9">Skolbio</option>
+			</select>
+			</div>
+		</div>
+									
+		<!-- Button (Double) -->
+		<div class="form-group">
+			<label class="col-md-2 control-label" for="button1id"></label>
+			<div class="col-md-10">
+			<button type="submit" id="button1id" class="btn btn-primary">Sök</button>
+			<button type="reset" id="button2id" name="button2id" class="btn btn-default">Rensa</button>
+			</div>
+		</div>									
+                                    
+    </form>
+<!--  / katalogen SearchFORM END -->
+

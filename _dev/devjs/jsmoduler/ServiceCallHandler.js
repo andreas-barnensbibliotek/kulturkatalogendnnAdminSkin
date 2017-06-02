@@ -44,7 +44,7 @@ module.exports = {
     },
     updatePostparam: function (postjson, callback) {
         
-        var currurl = "http://localhost:60485/Api_v2/updatearrangemang/upd/devkey/alf";
+        var currurl = appsettings.localOrServerURL + "/updatearrangemang/upd/devkey/alf";
              
         console.log("2. servicen POSTAR data"); 
         $.ajax({
@@ -75,7 +75,10 @@ module.exports = {
                 //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_userinfojson.aspx";
                 break;
             case "kk_aj_lasteventjson":
-                currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
+                //currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
+                //currurl="http://localhost:60485/Api_v2/arrangemang/bylatest/uid/4/typ/0/val/top5/devkey/alf?type=json&callback=testar";
+                currurl = appsettings.localOrServerURL + "/arrangemang/bylatest/uid/" + usrid + "/typ/0/val/" + val + "/devkey/alf?type=json&callback=testar";
+
                 break;
             case "kk_aj_nyaansokjson":                
                  currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/1/devkey/alf?type=json&callback=testar";
@@ -135,9 +138,11 @@ module.exports = {
                 currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + val + "/uid/" + usrid + "/val/ja/devkey/alf?type=json&callback=testar";
                 break;
             default:
-                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar_help";
+                // resultat är en empty json response
+                currurl =""
                 break;
         }
+        if (currurl != "") {
 
         $.ajax({
             type: "GET",
@@ -155,6 +160,10 @@ module.exports = {
             }
         });
 
+        } else {
+            var emptyjsonresponse = { "kk_aj_admin": { "status": "emptyjson" } };
+            callback(emptyjsonresponse);
+        }
     }
 }
 

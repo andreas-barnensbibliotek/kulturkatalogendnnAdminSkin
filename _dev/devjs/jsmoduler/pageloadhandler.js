@@ -11,7 +11,7 @@ module.exports = {
             case "kk_aj_startView":
                 console.log("2. kk_aj_startView körs");                
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-                loadtemplateTypes(appsettings.starttemplate,appsettings.currentUserid);
+                loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid, "", "top5");
                 break;
             case "kk_aj_ansokningarView": //nya              
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView= " );

@@ -1,14 +1,14 @@
-﻿ {{#each kk_aj_admin.latestevents.messlist}}
+﻿ {{#each kk_aj_admin.ansokningarlista.ansokningar}}
  <!-- Post -->
 <div class="post">
     <div class="user-block">
-        <h5 class="text-green">{{eventstatus}}</h5>
-        <span class="username"><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{eventid}}" rel="{{eventid}}">{{eventmaintitle}}</a><a href="#"></a><a href="#" class="pull-right btn-box-tool">{{eventdate}}</a> </span><span class="description">{{eventsubtitle}}</span></div>
+        <h5 class="text-green">{{ansokningstatus}}</h5>
+        <span class="username"><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}}</a><a href="#"></a><a href="#" class="pull-right btn-box-tool">{{ansokningdate}}</a> </span><span class="description">{{ansokningsubtitle}}</span></div>
     <!-- /.user-block -->
     <h5>Annonstext:</h5>
-    <p>{{eventcontent}}</p>
+    <p>{{ansokningContent}}</p>
     <ul class="list-inline">
-        <li><a href="/KulturkatalogenAdmin/katalogendetaljvy?id=1" rel="{{eventid}}" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i>Gå till arrangemang</a></li>
+        <li><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i>Gå till arrangemang</a></li>
     </ul>
 </div>
 <!-- /.post -->

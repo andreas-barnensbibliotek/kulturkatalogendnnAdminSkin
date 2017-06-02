@@ -21,6 +21,12 @@ window.kk_aj_startView= [
         templatedata: "kk_aj_lasteventjson",
         targetdiv: ".kk_aj_startsenastelist",
         filename: "kk_aj_startSenasteList.txt"
+    },
+    {
+        templatename: "StartSearchTmpl",
+        templatedata: "",
+        targetdiv: ".kk_aj_startsearch",
+        filename: "kk_aj_startSearchTab.txt"
     }
 ];
 window.kk_aj_nyaansokningarView = [
@@ -177,7 +183,7 @@ module.exports = {
     detailetemplate: window.kk_aj_detailView,
     detaillogtemplate: window.kk_aj_detaillogView,
     motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
-    basepageUri: "http://dnndev.me/Kulturkatalogen",
+    basepageUri: "/KulturkatalogenAdmin/KatalogenAnsokningar",
     pagerHandler: window.kk_aj_pagerHandler
 }
 

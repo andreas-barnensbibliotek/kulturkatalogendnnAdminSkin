@@ -65,6 +65,10 @@ Handlebars.registerHelper('iftype', function (ansoktyp) {
     var changedtyp = "";
     var changeclass = "";
     var loweranskotyp = ansoktyp.toLowerCase();
+  
+    if (loweranskotyp == "nekad") {
+        loweranskotyp = "denied";
+    };
     switch (loweranskotyp) {
         case "ny":
             changedtyp = "kk_aj_ansokningarView"
