@@ -25,7 +25,7 @@ module.exports = {
                 break;
         }
 
-        console.log("2. servicen hämtar data");
+        //console.log("2. servicen hämtar data");
         $.ajax({
             async: true,
             type: "GET",            
@@ -65,8 +65,8 @@ module.exports = {
     },
     injecttemplateDebug: function (callTyp, usrid, val, callback) {
         //console.log("4. servicen hämtar debug data ----->>> " + usrid);
-        console.log("injecttemplateDebug: " + usrid);
-        console.log("appsettings.currentUserid: " + appsettings.currentUserid);
+        //console.log("injecttemplateDebug: " + usrid);
+        //console.log("appsettings.currentUserid: " + appsettings.currentUserid);
         var currurl="";
         switch(callTyp) {
             case "kk_aj_userinfojson":

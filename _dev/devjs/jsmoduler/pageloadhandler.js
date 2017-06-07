@@ -8,14 +8,11 @@ module.exports = {
     pageloader: function (pagetoload, sortobj, val) {
        
         switch(pagetoload) {
-            case "kk_aj_startView":
-                console.log("2. kk_aj_startView körs");                
+            case "kk_aj_startView":                  
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid, "", "top5");
                 break;
             case "kk_aj_ansokningarView": //nya              
-                //console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView= " );
-                
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.nyaansokningartemplate, appsettings.currentUserid, sortobj, val);
                 pagetotalblock();
@@ -102,62 +99,59 @@ module.exports = {
 
 var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
     var i = 0;
-   
-    //for (var obj in pagetemplate) {
-    $.each(pagetemplate, function( obj, value ) {
-        //console.log("33.  körs obj= " + obj + " val= " + value.templatedata);
-        //console.log("44.  appsettings.ansokningarpagerinfotemplate= " + appsettings.ansokningarpagerinfotemplate[0].filename);
-        //console.log("55.  appsettings.kk_aj_deniedansokningarView= " + appsettings.deniedansokningartemplate[0].filename);
-
+       
+    $.each(pagetemplate, function( obj, value ) {       
+        
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
-            // console.log("3.1.  körs");
-            
+          
             //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
             if (value.templatename != "detailTmpl") {
+                if (value.templatename != "StartSenasteListTmpl") {
+                    if (value.templatename != "DiareTmpl") {
+                        if (data.kk_aj_admin.ansokningarlista) {
+                            var sortorder;
+                            var sortobjtosearch;
 
-                if (data.kk_aj_admin.ansokningarlista) {
-                    var sortorder;
-                    var sortobjtosearch;
+                            if (sortera != undefined) {
+                                // 2=ansokningtitle, 4= ansokningutovare                     
+                                sortorder = sortera.order;
+                                sortobjtosearch = sortera.tosort;
+                            }
 
-                    if (sortera != undefined) {
-                        // 2=ansokningtitle, 4= ansokningutovare                     
-                        sortorder = sortera.order;
-                        sortobjtosearch = sortera.tosort;
-                    }
+                            //"tosort": "title", "order": "down"
+                            data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
+                                if (sortorder == "down") {
+                                    if (a[sortobjtosearch] == b[sortobjtosearch])
+                                        return 0;
+                                    if (a[sortobjtosearch] < b[sortobjtosearch])
+                                        return -1;
+                                    if (a[sortobjtosearch] > b[sortobjtosearch])
+                                        return 1;
+                                } else {
+                                    if (a[sortobjtosearch] == b[sortobjtosearch])
+                                        return 0;
+                                    if (a[sortobjtosearch] > b[sortobjtosearch])
+                                        return -1;
+                                    if (a[sortobjtosearch] < b[sortobjtosearch])
+                                        return 1;
+                                }
+                            });
+                            var test = data;
+                            appsettings.pagerHandler.page_currentdataset = test;
 
-                    //"tosort": "title", "order": "down"
-                    data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
-                        if (sortorder == "down") {
-                            if (a[sortobjtosearch] == b[sortobjtosearch])
-                                return 0;
-                            if (a[sortobjtosearch] < b[sortobjtosearch])
-                                return -1;
-                            if (a[sortobjtosearch] > b[sortobjtosearch])
-                                return 1;
-                        } else {
-                            if (a[sortobjtosearch] == b[sortobjtosearch])
-                                return 0;
-                            if (a[sortobjtosearch] > b[sortobjtosearch])
-                                return -1;
-                            if (a[sortobjtosearch] < b[sortobjtosearch])
-                                return 1;
+                            appsettings.pagerHandler.page_currenttemplate = value;
+                            appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
+                            data = datapager(data);
+
+                            partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
+                                if (data == "ja") {
+                                    pagetotalblock();
+                                    // console.log("ansokningarpagerinfotemplate");
+                                }
+                            });
                         }
-                    });
-                    var test = data;
-                    appsettings.pagerHandler.page_currentdataset = test;
-                    console.log("page_currentdataset " + test);
-                    appsettings.pagerHandler.page_currenttemplate = value;
-                    appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
-                    data = datapager(data);
-
-                    partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
-                        if (data == "ja") {
-                            pagetotalblock();
-                            // console.log("ansokningarpagerinfotemplate");
-                        }
-                    });
-                }
-
+                    };
+                };
             };
             loadpagetemplates(value, data, function (data) {
                 if (data == "ja") {
@@ -167,19 +161,17 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
         });
         //ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
         //    loadpagetemplates(pagetemplate[obj], data);
-        });
-    //};
+    });
+   
 }
 
 
 var loadpagetemplates = function (template, currentdata,callback) {
-    //console.log("6. laddar: " + template.filename);   
+    
     $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
         var temptpl = Handlebars.compile(data);
 
         updatecountmenybox(currentdata);
-
-        //console.log("7. "+template.filename +" klar att levereras");
         $(template.targetdiv).html(temptpl(currentdata));
         callback("ja");
     }, 'html');
@@ -187,10 +179,10 @@ var loadpagetemplates = function (template, currentdata,callback) {
 }
 
 var partpageloadertemplates = function (template, currentdata, callback) {
-    //console.log("61. partpagerladdar: " + template.filename);
    
     $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
         var temptpl = Handlebars.compile(data);
+
         //console.log("71. " + template.filename + " klar att levereras");
         $(template.targetdiv).html(temptpl(currentdata));
         callback("ja");
@@ -226,7 +218,7 @@ var updatecountmenybox = function (data) {
         $('.kk_aj_menyNamn').append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
         $('.kk_aj_menyAvatar img').attr('src', data.kk_aj_admin.userinfo.useravatar)
     }
-    console.log("inne i test")
+    //console.log("inne i test")
 };
 
 

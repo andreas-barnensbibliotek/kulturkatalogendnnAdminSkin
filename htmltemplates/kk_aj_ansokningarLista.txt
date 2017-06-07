@@ -10,7 +10,7 @@
 			</a>
 		</td>
 		<td class="mailbox-subject">
-			<a href="/Kulturkatalogen/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}} <b>{{ansokningsubtitle}}</b></a>
+			<a href="/Kulturkatalogen/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}} <br/><b>{{ansokningsubtitle}}</b></a>
 		</td>
 		<td class="mailbox-name"><a href="/Kulturkatalogen/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningutovare}}</a></td>
 		<td class="mailbox-attachment">

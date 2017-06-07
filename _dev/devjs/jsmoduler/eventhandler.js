@@ -187,6 +187,9 @@ module.exports = {
        
         $('body').on('click', '.mailbox-name a', function (event) {
             var arrid = $(this).attr('rel');
+
+            if (arrid === "0") { return false; };
+
             var isNotRead = $('.mailbox-star[rel="' + arrid + '"] i').hasClass('fa-star')
             if (isNotRead) {
                 event.preventDefault();
@@ -194,10 +197,13 @@ module.exports = {
                 loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "ja", function () {
                     location.href = event.currentTarget.getAttribute('href');
                 });
-            };
+            };            
         });
+
         $('body').on('click', '.mailbox-subject a', function (event) {
             var arrid = $(this).attr('rel');
+            if (arrid === "0") { return false; };
+
             var isNotRead =$('.mailbox-star[rel="'+ arrid +'"] i').hasClass('fa-star')
             if (isNotRead) {
                 event.preventDefault();
@@ -220,28 +226,27 @@ module.exports = {
                     case "nya":
                         appsettings.searchansokningartemplate.nya.searchstr = searchtyp;
                         loadlistView("kk_aj_search_nyaansokningarView", sortobj, "");
-                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
+                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
                         break;
                     case "approved":
                         appsettings.searchansokningartemplate.approved.searchstr = searchtyp;
                         loadlistView("kk_aj_search_approvedansokningarView", sortobj, "");
-                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=kk_aj_search_approvedansokningarView&search=' + searchtyp);
+                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_approvedansokningarView&search=' + searchtyp);
                         break;
                     case "denied":
                         appsettings.searchansokningartemplate.denied.searchstr = searchtyp;
                         loadlistView("kk_aj_search_deniedansokningarView", sortobj, "");
-                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=kk_aj_search_deniedansokningarView&search=' + searchtyp);
+                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_deniedansokningarView&search=' + searchtyp);
                         break;
                     case "archive":
                         appsettings.searchansokningartemplate.archive.searchstr = searchtyp;
                         loadlistView("kk_aj_search_archiveansokningarView", sortobj, "");
-                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=kk_aj_search_archiveansokningarView&search=' + searchtyp);
+                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_archiveansokningarView&search=' + searchtyp);
                         break;
-
                 }
-            }else{
+            } else {
                 $('.kk_aj_ansoksearchform').focus();
-            }
+            };
             return false;
            
         });
@@ -252,20 +257,36 @@ module.exports = {
         })
         
         $('body').on('click', '.kk_aj_detailapproved', function (event) {
-            updateArrangemangMotivering("2", function(){
-                
-                location.href = _desktopmoduleURL +"?sida=kk_aj_approvedansokningarView";
-            });            
+            var motiveringbox = $(".motivering");
+            var checktext = motiveringbox.val();           
+            if (checktext != "") {
+                updateArrangemangMotivering("2", function () {
+                    location.href = _desktopmoduleURL + "?sida=kk_aj_approvedansokningarView";
+                });               
+            } else {
+                motiveringbox.addClass('markborderRed');
+            };
             return false;
         });
 
-        $('body').on('click', '.kk_aj_detaildenied', function (event) {
-            updateArrangemangMotivering("3",function(){
-                location.href = _desktopmoduleURL +"?sida=kk_aj_deniedansokningarView";
-            });
+        $('body').on('click', '.kk_aj_detaildenied', function (event) {            
+                var motiveringbox = $(".motivering");
+                var checktext = motiveringbox.val();
+                if (checktext != "") {
+                    updateArrangemangMotivering("3", function () {
+                        location.href = _desktopmoduleURL + "?sida=kk_aj_deniedansokningarView";
+                    });
+                } else {
+                    motiveringbox.addClass('markborderRed');
+                };
             return false;
         });
-      
+
+        $('body').on('keydown', '.motivering', function (event) {
+            $('.motivering').removeClass('markborderRed');
+        });
+        //detaljvy event END
+
         $(window).on('popstate', function (e) {
             var match,
                 pl = /\+/g,  // Regex for replacing addition symbol with a space
@@ -307,6 +328,12 @@ module.exports = {
 
 
         });
+
+        $(function () {
+            menyIsActive();
+            validateform();
+        });
+
     },
     laddanysida: function (sidvy) {
         loadlistView(sidvy);
@@ -434,8 +461,42 @@ var updateArrangemangMotivering = function (NyArrStatus, callback) {
         Logbeskrivning: $('.motivering').val(),          
         UpdValue:NyArrStatus
     };
+    var arridt = postjson.Arrid
     loadpageHandler.pagePostParameterUpdater(postjson, function () {
-              
-        callback();        
+
+        callback();
+        ////uppdatera looked at efter att ha godkänt/nekat ett arrangemang
+        //loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", postjson.Userid, postjson.Arrid, "nej", function () {
+        //    callback();
+        //});     
     });
+    
 }
+
+
+var menyIsActive = function () {
+    var pageType = $('.kk_aj_CurrentPageType').html();
+    $('.sidebar-menu li').removeClass('active');          
+
+    switch (pageType) {
+        case "kk_aj_startView":
+            $('.menystart').addClass('active');
+            break;
+        case "kk_aj_ansokningarView":
+            $('.menyansokningar').addClass('active');
+            break;
+        case "kk_aj_diarieView":
+            $('.menydiarielog').addClass('active');
+            break;                    
+        case "kk_aj_detailView":
+            $('.menyansokningar').addClass('active');
+            break;
+        default:
+            $('.menystart').addClass('active');
+            break;
+    };
+}
+
+var validateform = function () {
+    
+};

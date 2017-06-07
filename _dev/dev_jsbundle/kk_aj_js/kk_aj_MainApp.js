@@ -182,8 +182,7 @@
 	        //    //    });
 	        //    //}
 	        //});
-
-
+	            
 
 	    }
 	    init();
@@ -301,7 +300,7 @@
 	window.kk_aj_ansokningarpagerinfoView = [
 	    {
 	        templatename: "ansokningarpagerinfoTmpl",
-	        templatedata: "test",
+	        templatedata: "",
 	        targetdiv: ".kk_aj_listpagecount",
 	        filename: "kk_aj_ansokningarpagerinfo.txt"
 	    }
@@ -752,6 +751,9 @@
 	       
 	        $('body').on('click', '.mailbox-name a', function (event) {
 	            var arrid = $(this).attr('rel');
+
+	            if (arrid === "0") { return false; };
+
 	            var isNotRead = $('.mailbox-star[rel="' + arrid + '"] i').hasClass('fa-star')
 	            if (isNotRead) {
 	                event.preventDefault();
@@ -759,10 +761,13 @@
 	                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "ja", function () {
 	                    location.href = event.currentTarget.getAttribute('href');
 	                });
-	            };
+	            };            
 	        });
+
 	        $('body').on('click', '.mailbox-subject a', function (event) {
 	            var arrid = $(this).attr('rel');
+	            if (arrid === "0") { return false; };
+
 	            var isNotRead =$('.mailbox-star[rel="'+ arrid +'"] i').hasClass('fa-star')
 	            if (isNotRead) {
 	                event.preventDefault();
@@ -785,28 +790,27 @@
 	                    case "nya":
 	                        appsettings.searchansokningartemplate.nya.searchstr = searchtyp;
 	                        loadlistView("kk_aj_search_nyaansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
+	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
 	                        break;
 	                    case "approved":
 	                        appsettings.searchansokningartemplate.approved.searchstr = searchtyp;
 	                        loadlistView("kk_aj_search_approvedansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=kk_aj_search_approvedansokningarView&search=' + searchtyp);
+	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_approvedansokningarView&search=' + searchtyp);
 	                        break;
 	                    case "denied":
 	                        appsettings.searchansokningartemplate.denied.searchstr = searchtyp;
 	                        loadlistView("kk_aj_search_deniedansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=kk_aj_search_deniedansokningarView&search=' + searchtyp);
+	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_deniedansokningarView&search=' + searchtyp);
 	                        break;
 	                    case "archive":
 	                        appsettings.searchansokningartemplate.archive.searchstr = searchtyp;
 	                        loadlistView("kk_aj_search_archiveansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=kk_aj_search_archiveansokningarView&search=' + searchtyp);
+	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_archiveansokningarView&search=' + searchtyp);
 	                        break;
-
 	                }
-	            }else{
+	            } else {
 	                $('.kk_aj_ansoksearchform').focus();
-	            }
+	            };
 	            return false;
 	           
 	        });
@@ -817,20 +821,36 @@
 	        })
 	        
 	        $('body').on('click', '.kk_aj_detailapproved', function (event) {
-	            updateArrangemangMotivering("2", function(){
-	                
-	                location.href = _desktopmoduleURL +"?sida=kk_aj_approvedansokningarView";
-	            });            
+	            var motiveringbox = $(".motivering");
+	            var checktext = motiveringbox.val();           
+	            if (checktext != "") {
+	                updateArrangemangMotivering("2", function () {
+	                    location.href = _desktopmoduleURL + "?sida=kk_aj_approvedansokningarView";
+	                });               
+	            } else {
+	                motiveringbox.addClass('markborderRed');
+	            };
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_detaildenied', function (event) {
-	            updateArrangemangMotivering("3",function(){
-	                location.href = _desktopmoduleURL +"?sida=kk_aj_deniedansokningarView";
-	            });
+	        $('body').on('click', '.kk_aj_detaildenied', function (event) {            
+	                var motiveringbox = $(".motivering");
+	                var checktext = motiveringbox.val();
+	                if (checktext != "") {
+	                    updateArrangemangMotivering("3", function () {
+	                        location.href = _desktopmoduleURL + "?sida=kk_aj_deniedansokningarView";
+	                    });
+	                } else {
+	                    motiveringbox.addClass('markborderRed');
+	                };
 	            return false;
 	        });
-	      
+
+	        $('body').on('keydown', '.motivering', function (event) {
+	            $('.motivering').removeClass('markborderRed');
+	        });
+	        //detaljvy event END
+
 	        $(window).on('popstate', function (e) {
 	            var match,
 	                pl = /\+/g,  // Regex for replacing addition symbol with a space
@@ -872,6 +892,12 @@
 
 
 	        });
+
+	        $(function () {
+	            menyIsActive();
+	            validateform();
+	        });
+
 	    },
 	    laddanysida: function (sidvy) {
 	        loadlistView(sidvy);
@@ -999,12 +1025,45 @@
 	        Logbeskrivning: $('.motivering').val(),          
 	        UpdValue:NyArrStatus
 	    };
+	    var arridt = postjson.Arrid
 	    loadpageHandler.pagePostParameterUpdater(postjson, function () {
-	              
-	        callback();        
+
+	        callback();
+	        ////uppdatera looked at efter att ha godkänt/nekat ett arrangemang
+	        //loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", postjson.Userid, postjson.Arrid, "nej", function () {
+	        //    callback();
+	        //});     
 	    });
+	    
 	}
 
+
+	var menyIsActive = function () {
+	    var pageType = $('.kk_aj_CurrentPageType').html();
+	    $('.sidebar-menu li').removeClass('active');          
+
+	    switch (pageType) {
+	        case "kk_aj_startView":
+	            $('.menystart').addClass('active');
+	            break;
+	        case "kk_aj_ansokningarView":
+	            $('.menyansokningar').addClass('active');
+	            break;
+	        case "kk_aj_diarieView":
+	            $('.menydiarielog').addClass('active');
+	            break;                    
+	        case "kk_aj_detailView":
+	            $('.menyansokningar').addClass('active');
+	            break;
+	        default:
+	            $('.menystart').addClass('active');
+	            break;
+	    };
+	}
+
+	var validateform = function () {
+	    
+	};
 
 /***/ },
 /* 4 */
@@ -11246,14 +11305,11 @@
 	    pageloader: function (pagetoload, sortobj, val) {
 	       
 	        switch(pagetoload) {
-	            case "kk_aj_startView":
-	                console.log("2. kk_aj_startView körs");                
+	            case "kk_aj_startView":                  
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
 	                loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid, "", "top5");
 	                break;
 	            case "kk_aj_ansokningarView": //nya              
-	                //console.log("3. servicen hämtar debug Templaten: kk_aj_ansokningarView= " );
-	                
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
 	                loadtemplateTypes(appsettings.nyaansokningartemplate, appsettings.currentUserid, sortobj, val);
 	                pagetotalblock();
@@ -11340,62 +11396,59 @@
 
 	var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
 	    var i = 0;
-	   
-	    //for (var obj in pagetemplate) {
-	    $.each(pagetemplate, function( obj, value ) {
-	        //console.log("33.  körs obj= " + obj + " val= " + value.templatedata);
-	        //console.log("44.  appsettings.ansokningarpagerinfotemplate= " + appsettings.ansokningarpagerinfotemplate[0].filename);
-	        //console.log("55.  appsettings.kk_aj_deniedansokningarView= " + appsettings.deniedansokningartemplate[0].filename);
-
+	       
+	    $.each(pagetemplate, function( obj, value ) {       
+	        
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
-	            // console.log("3.1.  körs");
-	            
+	          
 	            //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
 	            if (value.templatename != "detailTmpl") {
+	                if (value.templatename != "StartSenasteListTmpl") {
+	                    if (value.templatename != "DiareTmpl") {
+	                        if (data.kk_aj_admin.ansokningarlista) {
+	                            var sortorder;
+	                            var sortobjtosearch;
 
-	                if (data.kk_aj_admin.ansokningarlista) {
-	                    var sortorder;
-	                    var sortobjtosearch;
+	                            if (sortera != undefined) {
+	                                // 2=ansokningtitle, 4= ansokningutovare                     
+	                                sortorder = sortera.order;
+	                                sortobjtosearch = sortera.tosort;
+	                            }
 
-	                    if (sortera != undefined) {
-	                        // 2=ansokningtitle, 4= ansokningutovare                     
-	                        sortorder = sortera.order;
-	                        sortobjtosearch = sortera.tosort;
-	                    }
+	                            //"tosort": "title", "order": "down"
+	                            data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
+	                                if (sortorder == "down") {
+	                                    if (a[sortobjtosearch] == b[sortobjtosearch])
+	                                        return 0;
+	                                    if (a[sortobjtosearch] < b[sortobjtosearch])
+	                                        return -1;
+	                                    if (a[sortobjtosearch] > b[sortobjtosearch])
+	                                        return 1;
+	                                } else {
+	                                    if (a[sortobjtosearch] == b[sortobjtosearch])
+	                                        return 0;
+	                                    if (a[sortobjtosearch] > b[sortobjtosearch])
+	                                        return -1;
+	                                    if (a[sortobjtosearch] < b[sortobjtosearch])
+	                                        return 1;
+	                                }
+	                            });
+	                            var test = data;
+	                            appsettings.pagerHandler.page_currentdataset = test;
 
-	                    //"tosort": "title", "order": "down"
-	                    data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
-	                        if (sortorder == "down") {
-	                            if (a[sortobjtosearch] == b[sortobjtosearch])
-	                                return 0;
-	                            if (a[sortobjtosearch] < b[sortobjtosearch])
-	                                return -1;
-	                            if (a[sortobjtosearch] > b[sortobjtosearch])
-	                                return 1;
-	                        } else {
-	                            if (a[sortobjtosearch] == b[sortobjtosearch])
-	                                return 0;
-	                            if (a[sortobjtosearch] > b[sortobjtosearch])
-	                                return -1;
-	                            if (a[sortobjtosearch] < b[sortobjtosearch])
-	                                return 1;
+	                            appsettings.pagerHandler.page_currenttemplate = value;
+	                            appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
+	                            data = datapager(data);
+
+	                            partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
+	                                if (data == "ja") {
+	                                    pagetotalblock();
+	                                    // console.log("ansokningarpagerinfotemplate");
+	                                }
+	                            });
 	                        }
-	                    });
-	                    var test = data;
-	                    appsettings.pagerHandler.page_currentdataset = test;
-	                    console.log("page_currentdataset " + test);
-	                    appsettings.pagerHandler.page_currenttemplate = value;
-	                    appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
-	                    data = datapager(data);
-
-	                    partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
-	                        if (data == "ja") {
-	                            pagetotalblock();
-	                            // console.log("ansokningarpagerinfotemplate");
-	                        }
-	                    });
-	                }
-
+	                    };
+	                };
 	            };
 	            loadpagetemplates(value, data, function (data) {
 	                if (data == "ja") {
@@ -11405,19 +11458,17 @@
 	        });
 	        //ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
 	        //    loadpagetemplates(pagetemplate[obj], data);
-	        });
-	    //};
+	    });
+	   
 	}
 
 
 	var loadpagetemplates = function (template, currentdata,callback) {
-	    //console.log("6. laddar: " + template.filename);   
+	    
 	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
 	        var temptpl = Handlebars.compile(data);
 
 	        updatecountmenybox(currentdata);
-
-	        //console.log("7. "+template.filename +" klar att levereras");
 	        $(template.targetdiv).html(temptpl(currentdata));
 	        callback("ja");
 	    }, 'html');
@@ -11425,10 +11476,10 @@
 	}
 
 	var partpageloadertemplates = function (template, currentdata, callback) {
-	    //console.log("61. partpagerladdar: " + template.filename);
 	   
 	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
 	        var temptpl = Handlebars.compile(data);
+
 	        //console.log("71. " + template.filename + " klar att levereras");
 	        $(template.targetdiv).html(temptpl(currentdata));
 	        callback("ja");
@@ -11464,7 +11515,7 @@
 	        $('.kk_aj_menyNamn').append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
 	        $('.kk_aj_menyAvatar img').attr('src', data.kk_aj_admin.userinfo.useravatar)
 	    }
-	    console.log("inne i test")
+	    //console.log("inne i test")
 	};
 
 
@@ -11558,7 +11609,7 @@
 	                break;
 	        }
 
-	        console.log("2. servicen hämtar data");
+	        //console.log("2. servicen hämtar data");
 	        $.ajax({
 	            async: true,
 	            type: "GET",            
@@ -11598,8 +11649,8 @@
 	    },
 	    injecttemplateDebug: function (callTyp, usrid, val, callback) {
 	        //console.log("4. servicen hämtar debug data ----->>> " + usrid);
-	        console.log("injecttemplateDebug: " + usrid);
-	        console.log("appsettings.currentUserid: " + appsettings.currentUserid);
+	        //console.log("injecttemplateDebug: " + usrid);
+	        //console.log("appsettings.currentUserid: " + appsettings.currentUserid);
 	        var currurl="";
 	        switch(callTyp) {
 	            case "kk_aj_userinfojson":

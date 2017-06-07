@@ -102,7 +102,7 @@ window.kk_aj_search_archiveansokningarView = [
 window.kk_aj_ansokningarpagerinfoView = [
     {
         templatename: "ansokningarpagerinfoTmpl",
-        templatedata: "test",
+        templatedata: "",
         targetdiv: ".kk_aj_listpagecount",
         filename: "kk_aj_ansokningarpagerinfo.txt"
     }

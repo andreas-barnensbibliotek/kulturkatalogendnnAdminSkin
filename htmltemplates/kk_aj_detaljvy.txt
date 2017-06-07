@@ -9,10 +9,13 @@
 	<!-- /.box-header -->
 	<div class="box-body no-padding">
 		<div class="mailbox-read-info"><div class="pull-right">                                
-			<!-- /.btn-group -->                                
+			<!-- /.btn-group -->
+			<button type="button" class="btn btn-default kk_aj_detailedit" title="Ändra">
+				<i class="fa fa-cog" aria-hidden="true"></i> Ändra
+			</button>                                
 			<button type="button" class="btn btn-default" data-toggle="tooltip" title="Print">                                        
 					<i class="fa fa-print"></i> Skriv ut
-			</button>                                
+			</button>    			
 		</div>
 		<span class="mailbox-read-time ">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>       
 		<h3>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}: <b>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}</b></h3>
@@ -61,8 +64,6 @@
                 </span>
             </div>
         </li>
-    </ul><div class="pull-right">
-		<button type="button" class="btn btn-default kk_aj_detailedit" title="Ändra"><i class="fa fa-cog" aria-hidden="true"></i> Ändra</button>
-    </div>
+    </ul>
 </div>                        
 <!-- /.box-footer -->
