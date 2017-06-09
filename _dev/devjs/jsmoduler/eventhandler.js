@@ -1,4 +1,5 @@
-﻿var $ = require("jquery");
+﻿
+var $ = require("jquery");
 var appsettings = require("./appSettings.js");
 var loadpageHandler = require("./pageloadhandler.js");
 
@@ -332,8 +333,14 @@ module.exports = {
         $(function () {
             menyIsActive();
             validateform();
+            $('#diarieTable').editableTableWidget();
         });
-
+        $('#diarieTable td').on('change', function(evt, newValue) {
+            // do something with the new cell value 
+            alert("testar");
+                //return false; // reject change
+            
+        });
     },
     laddanysida: function (sidvy) {
         loadlistView(sidvy);

@@ -50,9 +50,9 @@
 	var loadpageHandler = __webpack_require__(5);
 	var registerJqueryEvents = __webpack_require__(3);
 	//var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
-
+	var testarjs = __webpack_require__(7);
 	var $ = __webpack_require__(4);
-	__webpack_require__(7);
+	__webpack_require__(8);
 
 	$(function () {
 
@@ -182,13 +182,26 @@
 	        //    //    });
 	        //    //}
 	        //});
-	            
+	            var ViewModel = function (first, last) {
+	                this.firstName = ko.observable(first);
+	                this.lastName = ko.observable(last);
 
+	                this.fullName = ko.computed(function () {
+	                    // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
+	                    return this.firstName() + " " + this.lastName();
+	                }, this);
+	            };
+
+	            //ko.applyBindings(new ViewModel("alg", "Earth")); // This makes Knockout get to work
+	           
+	    
 	    }
 	    init();
 	    //$("body").attr('style','background:#fff;')
 	    //    .append("funkar! Webpack och concat");
 	    //msg.testar("ja du det funkar med Webpack och concat");
+
+	    
 	});
 
 
@@ -555,13 +568,55 @@
 	        return options.fn(this);
 	    };
 	});
+	// kollar om ansökningar har bilaga eller ej
+	Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
+	    var tmpstatus = ansokningstatus.toLowerCase();
+	    var statuscolorClass = "";
+	    switch (tmpstatus) {
+	        case "godkänd":
+	            statuscolorClass = 'text-green';
+	            break;
+	        case "nekad":
+	            statuscolorClass = 'text-danger';
+	            break;
+	        case "ny":
+	            statuscolorClass = 'text-primary';
+	            break;
+	        case "granskas":
+	            statuscolorClass = 'text-warning';
+	            break;
+	        case "ändrad":
+	            statuscolorClass = 'text-info';
+	            break;
+	        case "publicerad":
+	            statuscolorClass = 'text-success';
+	            break;
+	        case "avpublicerad":
+	            statuscolorClass = 'text-warning';
+	            break;
+	        case "arkiverad":
+	            statuscolorClass = 'text-info';
+	            break;
+	        case "event":
+	            statuscolorClass = 'text-info';
+	            break;
+	        case "borttagen":
+	            statuscolorClass = 'text-danger';
+	            break;
+	        default:
+	            statuscolorClass = 'text-info';
+	            break;
+	    }
 
+	    return statuscolorClass;
+	});
 
 
 /***/ },
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
+	
 	var $ = __webpack_require__(4);
 	var appsettings = __webpack_require__(1);
 	var loadpageHandler = __webpack_require__(5);
@@ -896,8 +951,14 @@
 	        $(function () {
 	            menyIsActive();
 	            validateform();
+	            $('#diarieTable').editableTableWidget();
 	        });
-
+	        $('#diarieTable td').on('change', function(evt, newValue) {
+	            // do something with the new cell value 
+	            alert("testar");
+	                //return false; // reject change
+	            
+	        });
 	    },
 	    laddanysida: function (sidvy) {
 	        loadlistView(sidvy);
@@ -11755,6 +11816,147 @@
 
 /***/ },
 /* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*** IMPORTS FROM imports-loader ***/
+	var $ = __webpack_require__(4);
+
+	/*global $, window*/
+	$.fn.editableTableWidget = function (options) {
+		'use strict';
+		return $(this).each(function () {
+			var buildDefaultOptions = function () {
+					var opts = $.extend({}, $.fn.editableTableWidget.defaultOptions);
+					opts.editor = opts.editor.clone();
+					return opts;
+				},
+				activeOptions = $.extend(buildDefaultOptions(), options),
+				ARROW_LEFT = 37, ARROW_UP = 38, ARROW_RIGHT = 39, ARROW_DOWN = 40, ENTER = 13, ESC = 27, TAB = 9,
+				element = $(this),
+				editor = activeOptions.editor.css('position', 'absolute').hide().appendTo(element.parent()),
+				active,
+				showEditor = function (select) {
+					active = element.find('td:focus');
+					if (active.length) {
+						editor.val(active.text())
+							.removeClass('error')
+							.show()
+							.offset(active.offset())
+							.css(active.css(activeOptions.cloneProperties))
+							.width(active.width())
+							.height(active.height())
+							.focus();
+						if (select) {
+							editor.select();
+						}
+					}
+				},
+				setActiveText = function () {
+					var text = editor.val(),
+						evt = $.Event('change'),
+						originalContent;
+					if (active.text() === text || editor.hasClass('error')) {
+						return true;
+					}
+					originalContent = active.html();
+					active.text(text).trigger(evt, text);
+					if (evt.result === false) {
+						active.html(originalContent);
+					}
+				},
+				movement = function (element, keycode) {
+					if (keycode === ARROW_RIGHT) {
+						return element.next('td');
+					} else if (keycode === ARROW_LEFT) {
+						return element.prev('td');
+					} else if (keycode === ARROW_UP) {
+						return element.parent().prev().children().eq(element.index());
+					} else if (keycode === ARROW_DOWN) {
+						return element.parent().next().children().eq(element.index());
+					}
+					return [];
+				};
+			editor.blur(function () {
+				setActiveText();
+				editor.hide();
+			}).keydown(function (e) {
+				if (e.which === ENTER) {
+					setActiveText();
+					editor.hide();
+					active.focus();
+					e.preventDefault();
+					e.stopPropagation();
+				} else if (e.which === ESC) {
+					editor.val(active.text());
+					e.preventDefault();
+					e.stopPropagation();
+					editor.hide();
+					active.focus();
+				} else if (e.which === TAB) {
+					active.focus();
+				} else if (this.selectionEnd - this.selectionStart === this.value.length) {
+					var possibleMove = movement(active, e.which);
+					if (possibleMove.length > 0) {
+						possibleMove.focus();
+						e.preventDefault();
+						e.stopPropagation();
+					}
+				}
+			})
+			.on('input paste', function () {
+				var evt = $.Event('validate');
+				active.trigger(evt, editor.val());
+				if (evt.result === false) {
+					editor.addClass('error');
+				} else {
+					editor.removeClass('error');
+				}
+			});
+			element.on('click keypress dblclick', showEditor)
+			.css('cursor', 'pointer')
+			.keydown(function (e) {
+				var prevent = true,
+					possibleMove = movement($(e.target), e.which);
+				if (possibleMove.length > 0) {
+					possibleMove.focus();
+				} else if (e.which === ENTER) {
+					showEditor(false);
+				} else if (e.which === 17 || e.which === 91 || e.which === 93) {
+					showEditor(true);
+					prevent = false;
+				} else {
+					prevent = false;
+				}
+				if (prevent) {
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			});
+
+			element.find('td').prop('tabindex', 1);
+
+			$(window).on('resize', function () {
+				if (editor.is(':visible')) {
+					editor.offset(active.offset())
+					.width(active.width())
+					.height(active.height());
+				}
+			});
+		});
+
+	};
+	$.fn.editableTableWidget.defaultOptions = {
+		cloneProperties: ['padding', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right',
+						  'text-align', 'font', 'font-size', 'font-family', 'font-weight',
+						  'border', 'border-top', 'border-bottom', 'border-left', 'border-right'],
+		editor: $('<input>')
+	};
+
+
+
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery UI - v1.12.1 - 2016-09-14

@@ -21,7 +21,10 @@
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.Client.ClientResourceManagement" Assembly="DotNetNuke.Web.Client" %>
 <%@ Register TagPrefix="fortyfingers" TagName="STYLEHELPER" Src="~/DesktopModules/40Fingers/SkinObjects/StyleHelper/StyleHelper.ascx" %>
 <%@ Register TagPrefix="dnn" TagName="jQuery" Src="~/Admin/Skins/jQuery.ascx" %>
+<%@ Register TagPrefix="dnn" TagName="JavaScriptLibraryInclude" Src="~/admin/Skins/JavaScriptLibraryInclude.ascx" %>
+
 <dnn:DnnJsInclude runat="server" FilePath="~/Resources/Shared/Scripts/jquery/jquery-ui.min.js" />
+<dnn:DnnJsInclude ID="DnnJsInclude" runat="server" FilePath="~/Resources/Shared/scripts/knockout.js" />
 <!-- Html Meta header -->
 <fortyfingers:STYLEHELPER ID="headMeta1" AddToHead='<meta http-equiv="X-UA-Compatible" content="IE=edge">' runat="server" />
 <fortyfingers:STYLEHELPER ID="headMeta2" AddToHead='<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' runat="server" />
@@ -88,7 +91,7 @@
         <div id="ContentPane" class="contentPane content-wrapper" runat="server"></div>
     
     <!-- /.content-wrapper -->
-
+   
 <!-- ################################################################################################ -->
    
   <!-- Main Footer -->
@@ -157,15 +160,17 @@
     
 </div>
 
-
 <dnn:JQUERY ID="dnnjQuery" runat="server" />
+
 <fortyfingers:STYLEHELPER ID="Bootstrap_js" AddJsFile="bootstrap/js/bootstrap.min.js" runat="server" />
+<fortyfingers:STYLEHELPER ID="STYLEHELPER3" AddJsFile="public/js/editabletable/mindmup-editabletable.js" runat="server" />
 <fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="public/js/kk_aj_bundle.js" runat="server" />
 
 
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
         $('body').addClass('hold-transition skin-black sidebar-mini');
+        
     });
 </script>
 <dnn:SEARCH ID="dnnSearch2" runat="server" ShowSite="false" ShowWeb="false" EnableTheming="true" Submit="Search" CssClass="SearchButton" Visible="false" />

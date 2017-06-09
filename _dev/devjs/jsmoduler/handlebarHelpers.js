@@ -147,4 +147,45 @@ Handlebars.registerHelper('ifdetailstatusList', function (currarrstatus, options
         return options.fn(this);
     };
 });
+// kollar om ansökningar har bilaga eller ej
+Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
+    var tmpstatus = ansokningstatus.toLowerCase();
+    var statuscolorClass = "";
+    switch (tmpstatus) {
+        case "godkänd":
+            statuscolorClass = 'text-green';
+            break;
+        case "nekad":
+            statuscolorClass = 'text-danger';
+            break;
+        case "ny":
+            statuscolorClass = 'text-primary';
+            break;
+        case "granskas":
+            statuscolorClass = 'text-warning';
+            break;
+        case "ändrad":
+            statuscolorClass = 'text-info';
+            break;
+        case "publicerad":
+            statuscolorClass = 'text-success';
+            break;
+        case "avpublicerad":
+            statuscolorClass = 'text-warning';
+            break;
+        case "arkiverad":
+            statuscolorClass = 'text-info';
+            break;
+        case "event":
+            statuscolorClass = 'text-info';
+            break;
+        case "borttagen":
+            statuscolorClass = 'text-danger';
+            break;
+        default:
+            statuscolorClass = 'text-info';
+            break;
+    }
 
+    return statuscolorClass;
+});

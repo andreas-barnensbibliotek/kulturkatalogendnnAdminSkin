@@ -4,7 +4,7 @@ var handlebarshelpers = require("./jsmoduler/handlebarHelpers.js");
 var loadpageHandler = require("./jsmoduler/pageloadhandler.js");
 var registerJqueryEvents = require("./jsmoduler/eventhandler.js");
 //var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
-
+var testarjs = require("imports-loader?$=jquery!./jsmoduler/mindmup-editabletable.js");
 var $ = require("jquery");
 require('jquery-ui-dist/jquery-ui.js');
 
@@ -136,11 +136,24 @@ $(function () {
         //    //    });
         //    //}
         //});
-            
+            var ViewModel = function (first, last) {
+                this.firstName = ko.observable(first);
+                this.lastName = ko.observable(last);
 
+                this.fullName = ko.computed(function () {
+                    // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
+                    return this.firstName() + " " + this.lastName();
+                }, this);
+            };
+
+            //ko.applyBindings(new ViewModel("alg", "Earth")); // This makes Knockout get to work
+           
+    
     }
     init();
     //$("body").attr('style','background:#fff;')
     //    .append("funkar! Webpack och concat");
     //msg.testar("ja du det funkar med Webpack och concat");
+
+    
 });
