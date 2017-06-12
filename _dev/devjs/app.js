@@ -3,8 +3,12 @@ var appsettings = require("./jsmoduler/appSettings.js");
 var handlebarshelpers = require("./jsmoduler/handlebarHelpers.js");
 var loadpageHandler = require("./jsmoduler/pageloadhandler.js");
 var registerJqueryEvents = require("./jsmoduler/eventhandler.js");
+var registerJqueryMainPluginEvents = require("./jsmoduler/maineventpluginhandler.js");
+
 //var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
-var testarjs = require("imports-loader?$=jquery!./jsmoduler/mindmup-editabletable.js");
+//var testjs = require("imports-loader?$=jquery!./jsmoduler/externalplugin/jsgrid.js");
+//require("script-loader?define=>false,$=jquery!./jsmoduler/externalplugin/jsgrid.js");
+//var testarjs = require("imports-loader?$=jquery!./jsmoduler/externalplugin/mindmup-editabletable.js");
 var $ = require("jquery");
 require('jquery-ui-dist/jquery-ui.js');
 
@@ -14,10 +18,14 @@ $(function () {
     var _userid = $('.kk_aj_CurrentUserid').html();
     var _rollid = $('.kk_aj_CurrentRollid').html();
     var _pageType = $('.kk_aj_CurrentPageType').html();
-    var _url_id ="";
+    var _url_id = "";
+
+    // init base values
     appsettings.currentUserid = _userid;
+
     // start eventhandler -----------------------------
     registerJqueryEvents.jqueryEVENTS(_userid);
+    registerJqueryMainPluginEvents.jqueryMainPluginEVENTS(_userid);
     // end eventhandler
 
 
@@ -92,7 +100,6 @@ $(function () {
         //}
 
 
-
         //ServiceHandler.injecttemplate("test", "0", function (data) {
         //    console.log("4. servicen hämtar Templaten");
         //    templateHandler.injecthtmltemplate('.kk_aj_profile', 'kk_aj_profile.txt', data);
@@ -103,7 +110,7 @@ $(function () {
         //    console.log("4. servicen hämtar debug Templaten");
         //    templateHandler.injecthtmltemplate('.kk_aj_topNav_message_menu', 'kk_aj_topNav_message_menu.txt', data);
         //})
-        
+            
 
         //var cache = {};
         //$(".kk_aj_ansoksearchform").autocomplete({
@@ -136,24 +143,23 @@ $(function () {
         //    //    });
         //    //}
         //});
-            var ViewModel = function (first, last) {
-                this.firstName = ko.observable(first);
-                this.lastName = ko.observable(last);
+            //var ViewModel = function (first, last) {
+            //    this.firstName = ko.observable(first);
+            //    this.lastName = ko.observable(last);
 
-                this.fullName = ko.computed(function () {
-                    // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
-                    return this.firstName() + " " + this.lastName();
-                }, this);
-            };
+            //    this.fullName = ko.computed(function () {
+            //        // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
+            //        return this.firstName() + " " + this.lastName();
+            //    }, this);
+            //};
 
             //ko.applyBindings(new ViewModel("alg", "Earth")); // This makes Knockout get to work
            
-    
+            
     }
     init();
     //$("body").attr('style','background:#fff;')
     //    .append("funkar! Webpack och concat");
     //msg.testar("ja du det funkar med Webpack och concat");
 
-    
 });

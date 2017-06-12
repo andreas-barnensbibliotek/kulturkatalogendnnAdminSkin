@@ -330,17 +330,7 @@ module.exports = {
 
         });
 
-        $(function () {
-            menyIsActive();
-            validateform();
-            $('#diarieTable').editableTableWidget();
-        });
-        $('#diarieTable td').on('change', function(evt, newValue) {
-            // do something with the new cell value 
-            alert("testar");
-                //return false; // reject change
-            
-        });
+        
     },
     laddanysida: function (sidvy) {
         loadlistView(sidvy);
@@ -480,30 +470,3 @@ var updateArrangemangMotivering = function (NyArrStatus, callback) {
     
 }
 
-
-var menyIsActive = function () {
-    var pageType = $('.kk_aj_CurrentPageType').html();
-    $('.sidebar-menu li').removeClass('active');          
-
-    switch (pageType) {
-        case "kk_aj_startView":
-            $('.menystart').addClass('active');
-            break;
-        case "kk_aj_ansokningarView":
-            $('.menyansokningar').addClass('active');
-            break;
-        case "kk_aj_diarieView":
-            $('.menydiarielog').addClass('active');
-            break;                    
-        case "kk_aj_detailView":
-            $('.menyansokningar').addClass('active');
-            break;
-        default:
-            $('.menystart').addClass('active');
-            break;
-    };
-}
-
-var validateform = function () {
-    
-};
