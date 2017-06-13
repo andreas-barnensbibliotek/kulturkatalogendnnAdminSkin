@@ -78,9 +78,10 @@ module.exports = {
             }
 
             Grid.prototype = {
-                width: "auto",
-                height: "auto",
+                height: "70%",
+                width: "100%",
                 updateOnResize: true,
+                //updateOnResize: true,
 
                 rowClass: $.noop,
                 rowRenderer: null,
@@ -92,7 +93,7 @@ module.exports = {
                 },
                 rowDoubleClick: $.noop,
 
-                noDataContent: "Not found",
+                noDataContent: "Inget hittades",
                 noDataRowClass: "jsgrid-nodata-row",
 
                 heading: true,
@@ -113,7 +114,7 @@ module.exports = {
                 editRowClass: "jsgrid-edit-row",
 
                 confirmDeleting: true,
-                deleteConfirm: "Are you sure?",
+                deleteConfirm: "Är du säker på att du vill ta bort posten?",
 
                 selecting: true,
                 selectedRowClass: "jsgrid-selected-row",
@@ -132,10 +133,10 @@ module.exports = {
                 pageSize: 20,
                 pageButtonCount: 15,
                 pagerFormat: "Pages: {first} {prev} {pages} {next} {last} &nbsp;&nbsp; {pageIndex} of {pageCount}",
-                pagePrevText: "Prev",
-                pageNextText: "Next",
-                pageFirstText: "First",
-                pageLastText: "Last",
+                pagePrevText: "Föregående",
+                pageNextText: "Nästa",
+                pageFirstText: "Först",
+                pageLastText: "Sist",
                 pageNavigatorNextText: "...",
                 pageNavigatorPrevText: "...",
                 pagerContainerClass: "jsgrid-pager-container",
@@ -153,10 +154,10 @@ module.exports = {
 
                 loadIndication: true,
                 loadIndicationDelay: 500,
-                loadMessage: "Please, wait...",
+                loadMessage: "Vänta!...",
                 loadShading: true,
 
-                invalidMessage: "Invalid data entered!",
+                invalidMessage: "Något är felifyllt i formuläret!",
 
                 invalidNotify: function (args) {
                     var messages = $.map(args.errors, function (error) {
@@ -258,7 +259,7 @@ module.exports = {
                 },
 
                 _detachWindowResizeCallback: function () {
-                    $(window).off("resize", this._refreshSize);
+                   $(window).off("resize", this._refreshSize);
                 },
 
                 option: function (key, value) {
@@ -488,7 +489,7 @@ module.exports = {
                 },
 
                 _prepareCell: function (cell, field, cssprop, cellClass) {
-                    return $(cell).css("width", field.width)
+                    return $(cell).css("width-ee", field.width)
                         .addClass(cellClass || this.cellClass)
                         .addClass((cssprop && field[cssprop]) || field.css)
                         .addClass(field.align ? ("jsgrid-align-" + field.align) : "");

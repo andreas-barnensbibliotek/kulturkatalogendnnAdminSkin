@@ -25,7 +25,7 @@ $(function () {
 
     // start eventhandler -----------------------------
     registerJqueryEvents.jqueryEVENTS(_userid);
-    registerJqueryMainPluginEvents.jqueryMainPluginEVENTS(_userid);
+    registerJqueryMainPluginEvents.jqueryMainPluginEVENTS(_userid, _pageType);
     // end eventhandler
 
 
