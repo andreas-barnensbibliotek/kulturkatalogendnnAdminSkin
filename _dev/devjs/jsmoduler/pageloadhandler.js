@@ -38,7 +38,7 @@ module.exports = {
             case "kk_aj_diarieView":
                // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-                loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, val);
+                loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, "all");
                 break;
             case "kk_aj_detailView":
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");

@@ -7,6 +7,7 @@ Licence: <a href="http://www.os-templates.com/template-terms">Website Template L
 */
 
 @import url(bootstrap/css/bootstrap.min.css);
+@import url(bootstrap/css/dataTables.bootstrap.css);
 @import url(css/fonts/font-awesome.min.css);
 @import url(css/fonts/ionicons.min.css);
 @import url(css/AdminLTE.css);

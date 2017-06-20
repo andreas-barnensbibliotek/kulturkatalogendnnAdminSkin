@@ -9,6 +9,41 @@ var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/
 //var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
 //var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
+
+var _dataTabelOption = {
+    "processing": true,
+    "stateSave": true,
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "language": {
+        "decimal": "",
+        "emptyTable": "Det finns inget att visa",
+        "info": "Visar _START_ av _END_ totalt _TOTAL_ ",
+        "infoEmpty": "Visar 0 av 0 totalt 0",
+        "infoFiltered": "(filtered from _MAX_ total entries)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Visa _MENU_",
+        "loadingRecords": "Laddar...",
+        "processing": "Jobbar...",
+        "search": "Sök:",
+        "zeroRecords": "Inget hittades",
+        "paginate": {
+            "first": "Först",
+            "last": "Sist",
+            "next": "Nästa",
+            "previous": "Föregående"
+        },
+        "aria": {
+            "sortAscending": ": activate to sort column ascending",
+            "sortDescending": ": activate to sort column descending"
+        }
+    }
+};
 window.kk_aj_startView= [
     {
         templatename: "startUserprofileTmpl",
@@ -111,8 +146,8 @@ window.kk_aj_DiarieView =[
     {
         templatename: "DiareTmpl",
         templatedata: "kk_aj_diariejson",
-        targetdiv: "",
-        filename: "kk_aj_topNav_message_menu.txt"
+        targetdiv: ".kk_aj_diarietbl",
+        filename: "kk_aj_diarieTable.txt"
     }
 ];
 window.kk_aj_detailView = [
@@ -184,7 +219,8 @@ module.exports = {
     detaillogtemplate: window.kk_aj_detaillogView,
     motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
     basepageUri: "/KulturkatalogenAdmin/KatalogenAnsokningar",
-    pagerHandler: window.kk_aj_pagerHandler
+    pagerHandler: window.kk_aj_pagerHandler,
+    dataTableOption: _dataTabelOption
 }
 
 

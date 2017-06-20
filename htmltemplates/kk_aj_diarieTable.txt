@@ -1,0 +1,13 @@
+﻿<!-- item loop START -->
+	{{#each kk_aj_admin.Logitemlist}}
+		<tr>
+			<td>{{Arrid}}</td>
+			<td>{{Datum}}</td>
+			<td><a rel="{{ArrutovareID}}>{{Arrrubrik}}</td>
+			<td><a rel="{{ArrutovareID}}>{{Arrutovare}}</a></td>                                        
+			<td>{{Beskrivning}}</td>
+			<td>{{ChangebyUsernamn}}</td>
+			<td>{{#fixstatuscolor Statustypid}}{{/fixstatuscolor}}</td>
+		</tr>
+	{{/each}}
+<!-- item loop STOP -->
