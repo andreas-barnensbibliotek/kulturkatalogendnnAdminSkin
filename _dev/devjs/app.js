@@ -5,10 +5,6 @@ var loadpageHandler = require("./jsmoduler/pageloadhandler.js");
 var registerJqueryEvents = require("./jsmoduler/eventhandler.js");
 var registerJqueryMainPluginEvents = require("./jsmoduler/maineventpluginhandler.js");
 
-//var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
-//var testjs = require("imports-loader?$=jquery!./jsmoduler/externalplugin/jsgrid.js");
-//require("script-loader?define=>false,$=jquery!./jsmoduler/externalplugin/jsgrid.js");
-//var testarjs = require("imports-loader?$=jquery!./jsmoduler/externalplugin/mindmup-editabletable.js");
 var $ = require("jquery");
 require('jquery-ui-dist/jquery-ui.js');
 

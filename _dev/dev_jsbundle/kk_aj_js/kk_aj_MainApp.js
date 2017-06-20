@@ -51,10 +51,6 @@
 	var registerJqueryEvents = __webpack_require__(3);
 	var registerJqueryMainPluginEvents = __webpack_require__(7);
 
-	//var templateHandler = require("./jsmoduler/htmltemplateHandler.js");
-	//var testjs = require("imports-loader?$=jquery!./jsmoduler/externalplugin/jsgrid.js");
-	//require("script-loader?define=>false,$=jquery!./jsmoduler/externalplugin/jsgrid.js");
-	//var testarjs = require("imports-loader?$=jquery!./jsmoduler/externalplugin/mindmup-editabletable.js");
 	var $ = __webpack_require__(4);
 	__webpack_require__(8);
 
