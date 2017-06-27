@@ -9,41 +9,9 @@ var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/
 //var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
 //var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
+//devkey
+var _devkeysnippet = "alf?type=json&callback=testar";
 
-var _dataTabelOption = {
-    "processing": true,
-    "stateSave": true,
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true,
-    "autoWidth": false,
-    "language": {
-        "decimal": "",
-        "emptyTable": "Det finns inget att visa",
-        "info": "Visar _START_ av _END_ totalt _TOTAL_ ",
-        "infoEmpty": "Visar 0 av 0 totalt 0",
-        "infoFiltered": "(filtered from _MAX_ total entries)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Visa _MENU_",
-        "loadingRecords": "Laddar...",
-        "processing": "Jobbar...",
-        "search": "Sök:",
-        "zeroRecords": "Inget hittades",
-        "paginate": {
-            "first": "Först",
-            "last": "Sist",
-            "next": "Nästa",
-            "previous": "Föregående"
-        },
-        "aria": {
-            "sortAscending": ": activate to sort column ascending",
-            "sortDescending": ": activate to sort column descending"
-        }
-    }
-};
 window.kk_aj_startView= [
     {
         templatename: "startUserprofileTmpl",
@@ -159,6 +127,15 @@ window.kk_aj_detailView = [
         detailid: window.detailid
     }    
 ];
+window.kk_aj_detailEditView = [
+    {
+        templatename: "detailEditTmpl",
+        templatedata: "kk_aj_detailvyjson",
+        targetdiv: ".kk_aj_detaljvyContainer",
+        filename: "kk_aj_detaljvyedit.txt",
+        detailid: window.detailid
+    }
+];
 window.kk_aj_detaillogView = [
     {
         templatename: "logdetaljvyNewTmpl",
@@ -216,26 +193,10 @@ module.exports = {
     }, 
     diarietemplate: window.kk_aj_DiarieView,
     detailetemplate: window.kk_aj_detailView,
+    detailEdittemplate: window.kk_aj_detailEditView,
     detaillogtemplate: window.kk_aj_detaillogView,
     motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
-    basepageUri: "/KulturkatalogenAdmin/KatalogenAnsokningar",
+    basepageUri: "/KulturkatalogenAdmin",
     pagerHandler: window.kk_aj_pagerHandler,
-    dataTableOption: _dataTabelOption
+    devkeysnippet: _devkeysnippet
 }
-
-
-
-
-
-
-//Handlebars.registerHelper('ifLast', function (object) {
-//   // var ret = true;
-//    console.log("inne!");
-//    if (object === "nej") {
-//        return '<i class="fa fa-star text-yellow" title="Ej läst"></i>';
-//    } else {
-//        return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
-//    }
-//    // ret;
-//    //return (object == "nej") ? false : true;
-//});

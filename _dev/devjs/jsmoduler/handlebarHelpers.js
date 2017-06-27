@@ -153,39 +153,45 @@ Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
     var statuscolorClass = "";
     switch (tmpstatus) {
         case "godkänd":
-            statuscolorClass = 'text-green';
+            statuscolorClass = '<span class="label label-primary">Ny</span>'; //'text-green';
             break;
         case "nekad":
-            statuscolorClass = 'text-danger';
+            statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
             break;
         case "ny":
-            statuscolorClass = 'text-primary';
+            statuscolorClass = '<span class="label label-primary">Ny</span>'; // 'text-primary';
             break;
         case "granskas":
-            statuscolorClass = 'text-warning';
+            statuscolorClass = '<span class="label label-warning">Granskas</span>'; // 'text-warning';
             break;
         case "ändrad":
-            statuscolorClass = 'text-info';
+            statuscolorClass = '<span class="label label-info">Ändrad</span>';// 'text-info';
             break;
         case "publicerad":
-            statuscolorClass = 'text-success';
+            statuscolorClass = '<span class="label label-success">Godkänd</span>';// 'text-success';
             break;
         case "avpublicerad":
-            statuscolorClass = 'text-warning';
+            statuscolorClass = '<span class="label label-warning">Granskas</span>'; // 'text-warning';
             break;
         case "arkiverad":
-            statuscolorClass = 'text-info';
+            statuscolorClass = '<span class="label label-info">Arkiverad</span>';//'text-info';
             break;
         case "event":
-            statuscolorClass = 'text-info';
+            statuscolorClass = '<span class="label label-info">Event</span>';//'text-info';
             break;
         case "borttagen":
-            statuscolorClass = 'text-danger';
+            statuscolorClass = '<span class="label label-danger">Nekad</span>;'//'text-danger';
             break;
         default:
-            statuscolorClass = 'text-info';
+            statuscolorClass = '<span class="label label-info">Event</span>';//'text-info';
             break;
     }
 
     return statuscolorClass;
+});
+
+Handlebars.registerHelper('contenttext', function (text) {
+    text = Handlebars.Utils.escapeExpression(text);   
+
+    return new Handlebars.SafeString(text);
 });

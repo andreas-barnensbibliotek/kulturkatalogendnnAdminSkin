@@ -2,7 +2,7 @@
  <!-- Post -->
 <div class="post">
     <div class="user-block">
-        <h5 class="{{#fixStatuscolorlabel ansokningstatus }}{{/fixStatuscolorlabel}}">{{ansokningstatus}}</h5>
+        <h5>{{#fixStatuscolorlabel ansokningstatus }}{{/fixStatuscolorlabel}}</h5>
         <span class="username"><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}}</a><a href="#"></a><a href="#" class="pull-right btn-box-tool">{{ansokningdate}}</a> </span><span class="description">{{ansokningsubtitle}}</span></div>
     <!-- /.user-block -->
     <h5>Annonstext:</h5>

@@ -222,41 +222,9 @@
 	//var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
 	//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
+	//devkey
+	var _devkeysnippet = "alf?type=json&callback=testar";
 
-	var _dataTabelOption = {
-	    "processing": true,
-	    "stateSave": true,
-	    "paging": true,
-	    "lengthChange": true,
-	    "searching": true,
-	    "ordering": true,
-	    "info": true,
-	    "autoWidth": false,
-	    "language": {
-	        "decimal": "",
-	        "emptyTable": "Det finns inget att visa",
-	        "info": "Visar _START_ av _END_ totalt _TOTAL_ ",
-	        "infoEmpty": "Visar 0 av 0 totalt 0",
-	        "infoFiltered": "(filtered from _MAX_ total entries)",
-	        "infoPostFix": "",
-	        "thousands": ",",
-	        "lengthMenu": "Visa _MENU_",
-	        "loadingRecords": "Laddar...",
-	        "processing": "Jobbar...",
-	        "search": "Sök:",
-	        "zeroRecords": "Inget hittades",
-	        "paginate": {
-	            "first": "Först",
-	            "last": "Sist",
-	            "next": "Nästa",
-	            "previous": "Föregående"
-	        },
-	        "aria": {
-	            "sortAscending": ": activate to sort column ascending",
-	            "sortDescending": ": activate to sort column descending"
-	        }
-	    }
-	};
 	window.kk_aj_startView= [
 	    {
 	        templatename: "startUserprofileTmpl",
@@ -372,6 +340,15 @@
 	        detailid: window.detailid
 	    }    
 	];
+	window.kk_aj_detailEditView = [
+	    {
+	        templatename: "detailEditTmpl",
+	        templatedata: "kk_aj_detailvyjson",
+	        targetdiv: ".kk_aj_detaljvyContainer",
+	        filename: "kk_aj_detaljvyedit.txt",
+	        detailid: window.detailid
+	    }
+	];
 	window.kk_aj_detaillogView = [
 	    {
 	        templatename: "logdetaljvyNewTmpl",
@@ -429,29 +406,13 @@
 	    }, 
 	    diarietemplate: window.kk_aj_DiarieView,
 	    detailetemplate: window.kk_aj_detailView,
+	    detailEdittemplate: window.kk_aj_detailEditView,
 	    detaillogtemplate: window.kk_aj_detaillogView,
 	    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
-	    basepageUri: "/KulturkatalogenAdmin/KatalogenAnsokningar",
+	    basepageUri: "/KulturkatalogenAdmin",
 	    pagerHandler: window.kk_aj_pagerHandler,
-	    dataTableOption: _dataTabelOption
+	    devkeysnippet: _devkeysnippet
 	}
-
-
-
-
-
-
-	//Handlebars.registerHelper('ifLast', function (object) {
-	//   // var ret = true;
-	//    console.log("inne!");
-	//    if (object === "nej") {
-	//        return '<i class="fa fa-star text-yellow" title="Ej läst"></i>';
-	//    } else {
-	//        return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
-	//    }
-	//    // ret;
-	//    //return (object == "nej") ? false : true;
-	//});
 
 /***/ },
 /* 2 */
@@ -612,43 +573,48 @@
 	    var statuscolorClass = "";
 	    switch (tmpstatus) {
 	        case "godkänd":
-	            statuscolorClass = 'text-green';
+	            statuscolorClass = '<span class="label label-primary">Ny</span>'; //'text-green';
 	            break;
 	        case "nekad":
-	            statuscolorClass = 'text-danger';
+	            statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
 	            break;
 	        case "ny":
-	            statuscolorClass = 'text-primary';
+	            statuscolorClass = '<span class="label label-primary">Ny</span>'; // 'text-primary';
 	            break;
 	        case "granskas":
-	            statuscolorClass = 'text-warning';
+	            statuscolorClass = '<span class="label label-warning">Granskas</span>'; // 'text-warning';
 	            break;
 	        case "ändrad":
-	            statuscolorClass = 'text-info';
+	            statuscolorClass = '<span class="label label-info">Ändrad</span>';// 'text-info';
 	            break;
 	        case "publicerad":
-	            statuscolorClass = 'text-success';
+	            statuscolorClass = '<span class="label label-success">Godkänd</span>';// 'text-success';
 	            break;
 	        case "avpublicerad":
-	            statuscolorClass = 'text-warning';
+	            statuscolorClass = '<span class="label label-warning">Granskas</span>'; // 'text-warning';
 	            break;
 	        case "arkiverad":
-	            statuscolorClass = 'text-info';
+	            statuscolorClass = '<span class="label label-info">Arkiverad</span>';//'text-info';
 	            break;
 	        case "event":
-	            statuscolorClass = 'text-info';
+	            statuscolorClass = '<span class="label label-info">Event</span>';//'text-info';
 	            break;
 	        case "borttagen":
-	            statuscolorClass = 'text-danger';
+	            statuscolorClass = '<span class="label label-danger">Nekad</span>;'//'text-danger';
 	            break;
 	        default:
-	            statuscolorClass = 'text-info';
+	            statuscolorClass = '<span class="label label-info">Event</span>';//'text-info';
 	            break;
 	    }
 
 	    return statuscolorClass;
 	});
 
+	Handlebars.registerHelper('contenttext', function (text) {
+	    text = Handlebars.Utils.escapeExpression(text);   
+
+	    return new Handlebars.SafeString(text);
+	});
 
 /***/ },
 /* 3 */
@@ -659,7 +625,7 @@
 	var appsettings = __webpack_require__(1);
 	var loadpageHandler = __webpack_require__(5);
 
-	var _desktopmoduleURL = appsettings.basepageUri; //"/KulturkatalogenAdmin/KatalogenAnsokningar"
+	var _desktopmoduleURL = "/KatalogenAnsokningar"; //"/KulturkatalogenAdmin/KatalogenAnsokningar"
 
 	module.exports = {
 	    jqueryEVENTS: function (userid) {
@@ -672,7 +638,7 @@
 	            loadlistView("kk_aj_ansokningarView", sortobj);
 
 	            //history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
-	            history.pushState('1', '', _desktopmoduleURL +'?sida=kk_aj_ansokningarView');
+	            history.pushState('1', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_ansokningarView');
 
 	            return false;
 	        });
@@ -681,7 +647,7 @@
 	            //console.log('1-1. .kk_aj_approvedansokningar');   
 	            resetsearchformdata();
 	            loadlistView("kk_aj_approvedansokningarView");
-	            history.pushState('2', '', _desktopmoduleURL + '?sida=kk_aj_approvedansokningarView');
+	            history.pushState('2', '', appsettings.basepageUri + _desktopmoduleURL+ '?sida=kk_aj_approvedansokningarView');
 	            return false;
 	        });
 
@@ -689,7 +655,7 @@
 	            resetsearchformdata();
 	            //console.log('1-1. .kk_aj_deniedansokningar');
 	            loadlistView("kk_aj_deniedansokningarView");
-	            history.pushState('3', '', _desktopmoduleURL + '?sida=kk_aj_deniedansokningarView');
+	            history.pushState('3', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_deniedansokningarView');
 	            return false;
 	        });
 
@@ -697,39 +663,10 @@
 	            resetsearchformdata();
 	            //console.log('1-1. .kk_aj_archiveansokningar');
 	            loadlistView("kk_aj_archiveansokningarView");
-	            history.pushState('4', '', _desktopmoduleURL +'?sida=kk_aj_archiveansokningarView');
+	            history.pushState('4', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_archiveansokningarView');
 	            return false;
 	        });
-
-	        //$('body').on('change', '.kk_aj_ansoksearchform', function () {
-	        //    //console.log('1-1. .kk_aj_archiveansokningar');
-	        //    var searchtyp = $(this).attr('rel');
-	            
-	        //    switch (searchtyp)
-	        //    {
-	        //        case "nya":
-	        //            appsettings.searchansokningartemplate.nya.searchstr = $(this).val();
-	        //            loadlistView("kk_aj_search_nyaansokningarView", sortobj, "");
-	        //            break;
-	        //        case "approved":
-	        //            appsettings.searchansokningartemplate.approved.searchstr = $(this).val();
-	        //            loadlistView("kk_aj_search_approvedansokningarView", sortobj, "");
-	        //            break;
-	        //        case "denied":
-	        //            appsettings.searchansokningartemplate.denied.searchstr = $(this).val();
-	        //            loadlistView("kk_aj_search_deniedansokningarView", sortobj, "");
-	        //            break;
-	        //        case "archive":
-	        //            appsettings.searchansokningartemplate.archive.searchstr = $(this).val();
-	        //            loadlistView("kk_aj_search_archiveansokningarView", sortobj, "");
-	        //            break;
-
-	        //    } 
-	            
-	        //    history.replaceState('', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_archiveansokningarView');
-	        //    return false;
-	        //});
-	        
+	                
 	        //ansökningsidor Pager EVENT ---------------------------------------------------------------
 	        $('body').on('click', '.kk_aj_listannonsnext', function () {
 	            var searchpagetyp = $('.kk_aj_box-title').attr('rel');
@@ -757,12 +694,25 @@
 
 	            if (pre >= 0) {
 	                setting.page_currentlimit = parseInt(setting.page_currentlimit) - parseInt(setting.page_item_per_page);
-	                history.pushState('p', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=' + searchpagetyp + '&p=' + pre);
+	                history.pushState('p', '', appsettings.basepageUri +  _desktopmoduleURL +'?sida=' + searchpagetyp + '&p=' + pre);
 	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, pre, setting.page_currentlimit);
 	            }
 	            return false;
 	        });
+	        // Edit Detailvy
+	        $('body').on('click', '.kk_aj_detailbackfromEdit', function () {
+	            console.log("testar detta: " +userid)
+	            loadlistView("kk_aj_detailView");
+	            return false;
+	        });
 	       
+	        $('body').on('click', '.kk_aj_detailedit', function () {            
+	            console.log("testar detta: " + userid);
+	            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	            loadlistView("kk_aj_detailEditView", "", userid);
+
+	            return false;
+	        });
 	        //ansökningsidor EVENT ---------------------------------------------------------------
 	        $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
 	            var curpage = $('.kk_aj_box-title').attr('rel');            
@@ -918,7 +868,7 @@
 	            var checktext = motiveringbox.val();           
 	            if (checktext != "") {
 	                updateArrangemangMotivering("2", function () {
-	                    location.href = _desktopmoduleURL + "?sida=kk_aj_approvedansokningarView";
+	                    location.href = appsettings.basepageUri + _desktopmoduleURL + "?sida=kk_aj_approvedansokningarView";
 	                });               
 	            } else {
 	                motiveringbox.addClass('markborderRed');
@@ -931,7 +881,7 @@
 	                var checktext = motiveringbox.val();
 	                if (checktext != "") {
 	                    updateArrangemangMotivering("3", function () {
-	                        location.href = _desktopmoduleURL + "?sida=kk_aj_deniedansokningarView";
+	                        location.href = appsettings.basepageUri + _desktopmoduleURL + "?sida=kk_aj_deniedansokningarView";
 	                    });
 	                } else {
 	                    motiveringbox.addClass('markborderRed');
@@ -981,11 +931,7 @@
 	                    loadlistView(urlParams.sida);
 	                }
 	            }
-
-
-
 	        });
-
 	        
 	    },
 	    laddanysida: function (sidvy) {
@@ -994,7 +940,6 @@
 	    updatacontentheader: function (listview, options) {
 	        updateansokHeaderjquery(listview, options);
 	    }
-
 	}
 
 	var updateansokHeaderjquery = function (currentListView, options) {
@@ -1087,15 +1032,6 @@
 	        $(classtocheck).append('</i> Nekade <span class="label label-danger pull-right kk_aj_deniedcount">65</span>');
 	    };
 
-
-	    //if (!$(".kk_aj_deniedansokningar span").length) {
-	    //    $('.kk_aj_deniedansokningar').append('</i> Nekade <span class="label label-danger pull-right kk_aj_deniedcount">65</span>');
-	    //} else {
-
-	    //    $('.kk_aj_deniedansokningar').append('funkar');
-
-	    //}
-
 	};
 
 	var resetsearchformdata = function () {
@@ -1117,11 +1053,7 @@
 	    var arridt = postjson.Arrid
 	    loadpageHandler.pagePostParameterUpdater(postjson, function () {
 
-	        callback();
-	        ////uppdatera looked at efter att ha godkänt/nekat ett arrangemang
-	        //loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", postjson.Userid, postjson.Arrid, "nej", function () {
-	        //    callback();
-	        //});     
+	        callback();        
 	    });
 	    
 	}
@@ -11403,7 +11335,13 @@
 	            case "kk_aj_detailView":
 	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);               
+	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
+	                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
+	                break;
+	            case "kk_aj_detailEditView":
+	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.detailEdittemplate, appsettings.currentUserid, sortobj, appsettings.detailEdittemplate.detailid);
 	                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
 	                break;
 	            case "kk_aj_search_nyaansokningarView": //sök i nya              
@@ -11465,7 +11403,13 @@
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
 	          
 	            //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
-	            if (value.templatename != "detailTmpl") {
+	            if (!(value.templatename == "detailEditTmpl")) {
+	                console.log("funkar detta är inte detailEditTmpl ");
+	            } else {
+	                console.log("detta är detailEditTmpl ");
+	            }
+
+	            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl")) {
 	                if (value.templatename != "StartSenasteListTmpl") {
 	                    if (value.templatename != "DiareTmpl") {
 	                        if (data.kk_aj_admin.ansokningarlista) {
@@ -11653,23 +11597,23 @@
 	        alert(msg);
 	    },
 	    updateparam: function (callTyp, usrid, arrid, val, callback) {
-	        var devkeysnippet = "alf?type=json&callback=testar";
+	        
 	        var currurl="";
 	        switch(callTyp) {
 	            case "UpdateLookedAtParam":
 	                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
-	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "UpdateArrstatusParam":
 	                //currurl = "/updatearrangemang/arrstat/id/2/uid/2/val/2/devkey/alf?type=json&callback=testar;
-	                currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "UpdatePublishedParam":
 	                //currurl = "/updatearrangemang/pub/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
-	                currurl = appsettings.localOrServerURL + "/updatearrangemang/pub/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                currurl = appsettings.localOrServerURL + "/updatearrangemang/pub/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            default:
-	                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar_help";
+	                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar";
 	                break;
 	        }
 
@@ -11712,7 +11656,7 @@
 
 	    },
 	    utovarData: function (callTyp, Utovarid, callback) {
-	        var devkeysnippet = "alf?type=json&callback=testar";
+	       
 	        var currurl="";
 	        switch(callTyp) {
 	            case "getutovarelista":
@@ -11760,7 +11704,7 @@
 	                break;
 	            default:
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
-	                currurl = "http://localhost:60485/Api_v2/log/all/id/1/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/log/" + callTyp + "/id/" + Utovarid + "/devkey/" + devkeysnippet;
 	                break;
 	        }
 
@@ -11788,73 +11732,71 @@
 	        switch(callTyp) {
 	            case "kk_aj_userinfojson":
 	                //currurl = "http://localhost:60485/Api_v2/user/usrinfo/id/2/devkey/alf?type=json&callback=testar"
-	                currurl = appsettings.localOrServerURL + "/user/usrinfo/id/" + usrid + "/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/user/usrinfo/id/" + usrid + "/devkey/" + appsettings.devkeysnippet;
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_userinfojson.aspx";
 	                break;
 	            case "kk_aj_lasteventjson":
 	                //currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
 	                //currurl="http://localhost:60485/Api_v2/arrangemang/bylatest/uid/4/typ/0/val/top5/devkey/alf?type=json&callback=testar";
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bylatest/uid/" + usrid + "/typ/0/val/" + val + "/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bylatest/uid/" + usrid + "/typ/0/val/" + val + "/devkey/" + appsettings.devkeysnippet;
 
 	                break;
 	            case "kk_aj_nyaansokjson":                
-	                 currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/1/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/1/devkey/" + appsettings.devkeysnippet;
 	                 break;
 	            case "kk_aj_approvedansokjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_approvedansokjson.aspx";
-	                currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/2/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/2/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_deniedansokjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";
-	                currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/3/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/3/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_archiveansokjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_archiveansokjson.aspx";
-	                currurl = appsettings.localOrServerURL +"/arrangemang/bystatus/uid/"+ usrid +"/typ/4/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/4/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_diariejson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";        
-	                
-	               
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";    
 	                break;
 	            case "kk_aj_detailvyjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx?id="+ val;
-	                currurl = appsettings.localOrServerURL +"/arrangemang/details/uid/" + usrid + "/typ/"+ val +"/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/details/uid/" + usrid + "/typ/" + val + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_detailmotiveringloggjson":
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
 	                break;
 	            case "kk_aj_topnavjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
-	                currurl = appsettings.localOrServerURL + "/notify/get/id/" + usrid + "/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/notify/get/id/" + usrid + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_SearchNyaansokjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
 	                var search = appsettings.searchansokningartemplate.nya.searchstr;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/1/val/"+ search +"/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/1/val/" + search + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_SearchApprovedansokjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
 	                var search = appsettings.searchansokningartemplate.approved.searchstr;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/2/val/" + search + "/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/2/val/" + search + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_SearchDeniedansokjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
 	                var search = appsettings.searchansokningartemplate.denied.searchstr;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/3/val/" + search + "/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/3/val/" + search + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_SearchArchiveansokjson":
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
 	                var search = appsettings.searchansokningartemplate.archive.searchstr;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_detailloggListjson":
 	                //currurl = "http://localhost:60485/Api_v2/log/byarrid/id/1/devkey/alf?type=json&callback=testar";
-	                currurl = appsettings.localOrServerURL + "/log/byarrid/id/" + val + "/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/log/byarrid/id/" + val + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            case "kk_aj_UpdateLookedAt":
 	                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
-	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + val + "/uid/" + usrid + "/val/ja/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + val + "/uid/" + usrid + "/val/ja/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            default:
 	                // resultat är en empty json response
@@ -11900,8 +11842,6 @@
 	var jsboottbl = __webpack_require__(9);
 	var jsjquerytbl = __webpack_require__(10);
 
-	var _desktopmoduleURL = appsettings.basepageUri; //"/KulturkatalogenAdmin/KatalogenAnsokningar"
-
 	module.exports = {
 	    jqueryMainPluginEVENTS: function (userid, currpageType) {
 
@@ -11911,259 +11851,155 @@
 
 
 	            jsboottbl.bootTableInit();
-	            jsjquerytbl.jqueryTableInit();            
-	            ServiceHandler.injectdiarietable("all", "0", function (datajson) {
+	            jsjquerytbl.jqueryTableInit();    
+	            
+	            if (currpageType == "kk_aj_diarieView") {
+	         
+	                ServiceHandler.injectdiarietable("all", "0", function (datajson) {
 	                
-	                $('#diarieTable').DataTable({
-	                    "processing": true,
-	                    "stateSave": true,
-	                    "paging": true,
-	                    "lengthChange": true,
-	                    "searching": true,
-	                    "ordering": true,
-	                    "info": true,
-	                    "autoWidth": false,
-	                    "language": {
-	                        "decimal": "",
-	                        "emptyTable": "Det finns inget att visa",
-	                        "info": "Visar _START_ av _END_ totalt _TOTAL_ ",
-	                        "infoEmpty": "Visar 0 av 0 totalt 0",
-	                        "infoFiltered": "(Filtrerat från totalt _MAX_ poster)",
-	                        "infoPostFix": "",
-	                        "thousands": ",",
-	                        "lengthMenu": "Visa _MENU_",
-	                        "loadingRecords": "Laddar...",
-	                        "processing": "Jobbar...",
-	                        "search": "Sök:",
-	                        "zeroRecords": "Inget hittades",
-	                        "paginate": {
-	                            "first": "Först",
-	                            "last": "Sist",
-	                            "next": "Nästa",
-	                            "previous": "Föregående"
-	                        },
-	                        "aria": {
-	                            "sortAscending": ": activate to sort column ascending",
-	                            "sortDescending": ": activate to sort column descending"
-	                        }
-	                    },
-	                    "data": datajson.kk_aj_admin.Logitemlist,
-	                    "columns": [
-	                        { "data": "Arrid", "render": function (data, type, row, meta) {
-	                                if (type === 'display') {
-	                                    data = '<a href="/Kulturkatalogen/katalogendetaljvy?id=' + row.Arrid + '">'  + data + '</a>';
-	                                }
-
-	                                return data;
-	                        },
-	                        "width": "5%"
-	                        },
-	                        { "data": "Datum" },
-	                        { "data": "Arrrubrik", "render": function (data, type, row, meta) {
-	                                if (type === 'display') {
-	                                    data = '<a href="/Kulturkatalogen/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
-	                                }
-
-	                                return data;
-	                        },
-	                        "width": "30%"
-	                        },
-	                        { "data": "Statustypid" },
-	                        { "data": "ArrutovareID" },                       
-	                        { "data": "Arrutovare",
-	                            "render": function (data, type, row, meta) {
-	                                if (type === 'display') {
-	                                    data = '<a href="' + appsettings.basepageUri + '?utovarid=' + row.ArrutovareID + '">' + data + '</a>';
-	                                }
-
-	                                return data;
-	                            }, "width": "20%"
-	                        },
-	                        { "data": "Beskrivning", "width": "35%" },
-	                        { "data": "ChangebyUsernamn", "width": "5%" },
-	                        
-	                        {
-	                            "data": "Statustyp",
-	                            "width": "5%",
-	                            "render": function (data, type, row, meta) {
-	                                if (type === 'display') {                                                                     
-	                                    var statuscolor = "";
-	                                    switch (row.Statustypid) {
-	                                        case 1:
-	                                            statuscolor = '<span class="label label-primary">';
-	                                            break;
-	                                        case 2:
-	                                            statuscolor = '<span class="label label-warning">';
-	                                            break;
-	                                        case 3:
-	                                            statuscolor = '<span class="label label-success">';
-	                                            break;
-	                                        case 4:
-	                                            statuscolor = '<span class="label label-danger">';
-	                                            break;
-	                                        case 5:
-	                                            statuscolor = '<span class="label label-info">';
-	                                            break;
-	                                        case 6:
-	                                            statuscolor = '<span class="label label-success">';
-	                                            break;
-	                                        case 7:
-	                                            statuscolor = '<span class="label label-warning">';
-	                                            break;
-	                                        case 8:
-	                                            statuscolor = '<span class="label label">';
-	                                            break;
-	                                        case 9:
-	                                            statuscolor = '<span class="label label-default">';
-	                                            break;
-	                                        case 10:
-	                                            statuscolor = '<span class="label label-danger">';
-	                                            break;
-	                                        default:
-	                                            statuscolor = '<span class="label label-default">';
-	                                            break;
-	                                    }
-	                                                 
-	                                    data = statuscolor + data + '</span>';
-	                                }
-
-	                                return data;
+	                    $('#diarieTable').DataTable({
+	                        "processing": true,
+	                        "stateSave": true,
+	                        "paging": true,
+	                        "lengthChange": true,
+	                        "searching": true,
+	                        "ordering": true,
+	                        "info": true,
+	                        "autoWidth": false,
+	                        "language": {
+	                            "decimal": "",
+	                            "emptyTable": "Det finns inget att visa",
+	                            "info": "Visar _START_ av _END_ totalt _TOTAL_ ",
+	                            "infoEmpty": "Visar 0 av 0 totalt 0",
+	                            "infoFiltered": "(Filtrerat från totalt _MAX_ poster)",
+	                            "infoPostFix": "",
+	                            "thousands": ",",
+	                            "lengthMenu": "Visa _MENU_",
+	                            "loadingRecords": "Laddar...",
+	                            "processing": "Jobbar...",
+	                            "search": "Sök:",
+	                            "zeroRecords": "Inget hittades",
+	                            "paginate": {
+	                                "first": "Först",
+	                                "last": "Sist",
+	                                "next": "Nästa",
+	                                "previous": "Föregående"
+	                            },
+	                            "aria": {
+	                                "sortAscending": ": activate to sort column ascending",
+	                                "sortDescending": ": activate to sort column descending"
 	                            }
-	                        }
-	                    ],
-	                    "columnDefs": [                       
-	                        {
-	                            "targets": [3],
-	                            "visible": false,
-	                            "searchable": false
 	                        },
-	                        {
-	                            "targets": [4],
-	                            "visible": false,
-	                            "searchable": false
-	                        }
-	                    ]
-	               }
+	                        "data": datajson.kk_aj_admin.Logitemlist,
+	                        "columns": [
+	                            { "data": "Arrid", "render": function (data, type, row, meta) {
+	                                if (type === 'display') {
+	                                    data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
+	                                }
+
+	                                return data;
+	                            },
+	                                "width": "5%"
+	                            },
+	                            { "data": "Datum" },
+	                            { "data": "Arrrubrik", "render": function (data, type, row, meta) {
+	                                if (type === 'display') {
+	                                    data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
+	                                }
+
+	                                return data;
+	                            },
+	                                "width": "30%"
+	                            },
+	                            { "data": "Statustypid" },
+	                            { "data": "ArrutovareID" },                       
+	                            { "data": "Arrutovare",
+	                                "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {
+	                                        data = '<a href="' + appsettings.basepageUri + '/katalogenutovarevy?utovarid=' + row.ArrutovareID + '">' + data + '</a>';
+	                                    }
+
+	                                    return data;
+	                                }, "width": "20%"
+	                            },
+	                            { "data": "Beskrivning", "width": "35%" },
+	                            { "data": "ChangebyUsernamn", "width": "5%" },
+	                        
+	                            {
+	                                "data": "Statustyp",
+	                                "width": "5%",
+	                                "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {                                                                     
+	                                        var statuscolor = "";
+	                                        switch (row.Statustypid) {
+	                                            case 1:
+	                                                statuscolor = '<span class="label label-primary">';
+	                                                break;
+	                                            case 2:
+	                                                statuscolor = '<span class="label label-warning">';
+	                                                break;
+	                                            case 3:
+	                                                statuscolor = '<span class="label label-success">';
+	                                                break;
+	                                            case 4:
+	                                                statuscolor = '<span class="label label-danger">';
+	                                                break;
+	                                            case 5:
+	                                                statuscolor = '<span class="label label-info">';
+	                                                break;
+	                                            case 6:
+	                                                statuscolor = '<span class="label label-success">';
+	                                                break;
+	                                            case 7:
+	                                                statuscolor = '<span class="label label-warning">';
+	                                                break;
+	                                            case 8:
+	                                                statuscolor = '<span class="label label">';
+	                                                break;
+	                                            case 9:
+	                                                statuscolor = '<span class="label label-default">';
+	                                                break;
+	                                            case 10:
+	                                                statuscolor = '<span class="label label-danger">';
+	                                                break;
+	                                            default:
+	                                                statuscolor = '<span class="label label-default">';
+	                                                break;
+	                                        }
+	                                                 
+	                                        data = statuscolor + data + '</span>';
+	                                    }
+
+	                                    return data;
+	                                }
+	                            }
+	                        ],
+	                        "columnDefs": [                       
+	                            {
+	                                "targets": [3],
+	                                "visible": false,
+	                                "searchable": false
+	                            },
+	                            {
+	                                "targets": [4],
+	                                "visible": false,
+	                                "searchable": false
+	                            }
+	                        ]
+	                    }
 	                );
 	               
 	            });
-	             
+	        }; 
 	       
 	/// REMOVE FROM HERE jsGRID ////////////////////////////////////////////////////////////////////////////////////
 	            if (currpageType == "kk_aj_utovareView") {
 	            };
 
-	//            jsGridPlugin.jsGridInit();
-	//            //       var clients = [
-	//            //{ "alf": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
-	//            //{ "alf": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
-	//            //{ "alf": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
-	//            //{ "alf": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
-	//            //{ "alf": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
-	//            //       ];
 
-	//            //var countries = [
-	//            //    { Name: "", Id: 0 },
-	//            //    { Name: "United States", Id: 1 },
-	//            //    { Name: "Canada", Id: 2 },
-	//            //    { Name: "United Kingdom", Id: 3 }
-	//            //];
-	//            ServiceHandler.utovarData("getutovarelista", "", function (datajson) {
-
-	//                    $("#jsGrid").jsGrid({
-	//                        height: "70%",
-	//                        width: "100%",
-
-	//                        inserting: false,
-	//                        editing: false,
-	//                        sorting: true,
-	//                        paging: true,
-	//                        rowClick: function (args) {
-	//                            showDetailsDialog("Edit", args.item);
-	//                        },
-	//                        data: datajson.kk_aj_admin.utovare,
-
-	//                        fields: [
-	//                            { name: "id", type: "text", width: 20, validate: "required" },
-	//                            { name: "organisation", type: "text", width: 70 },
-	//                            { name: "fornamn", type: "text", width: 50 },
-	//                            { name: "efternamn", type: "text", width: 50 },
-	//                            { name: "adress", type: "text", width: 80 },
-	//                            { name: "postnr", type: "text", width: 40 },
-	//                            { name: "ort", type: "text", width: 50 },
-	//                            { name: "kommun", type: "text", width: 50 },
-	//                            { name: "telefon", type: "text", width: 70 },
-	//                            { name: "epost", type: "text", width: 80 },
-	//                            { name: "weburl", type: "text", width: 100 },
-	//                            { name: "ovrigt", type: "text", width: 100 },
-	//                            {
-	//                                type: "control",
-	//                                modeSwitchButton: false,
-	//                                editButton: false,
-	//                                headerTemplate: function () {
-	//                                    return $("<button>").attr("type", "button").text("Add")
-	//                                            .on("click", function () {
-	//                                                showDetailsDialog("Add", {});
-	//                                            });
-	//                                }
-	//                            }
-	//                        ]
-	//                    });
-	//            });
-	//            }
-	                       
-	//            var formSubmitHandler = $.noop;
-	//            var showDetailsDialog = function (dialogType, client) {
-	//                $("#id").val(client.id);
-	//                $("#organisation").val(client.organisation);
-	//                $("#fornamn").val(client.fornamn);
-	//                $("#efternamn").val(client.efternamn);                
-
-	//                formSubmitHandler = function () {
-	//                    saveClient(client, dialogType === "Add");
-	//                };
-
-	//                $("#detailsDialog").dialog({
-	//                    autoOpen: false,
-	//                    modal: true,                    
-	//                    title: 'Kontaktuppgifter',
-	//                    buttons: {
-	//                        Ok: function () {
-	//                            $(this).dialog("close");
-	//                        }
-	//                    }
-	//                }).dialog("open");
-	//            };
-	//            //$('#diarieTable').editableTableWidget();
-
-	//            var saveClient = function (client, isNew) {
-	//                $.extend(client, {
-	//                    Name: $("#name").val(),
-	//                    Age: parseInt($("#age").val(), 10),
-	//                    Address: $("#address").val(),
-	//                    Country: parseInt($("#country").val(), 10),
-	//                    Married: $("#married").is(":checked")
-	//                });
-
-	//                $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", client);
-
-	//                $("#detailsDialog").dialog("close");
-	//            };
-
-	///// to here REMOVE to HERE jsGRID ////////////////////////////////////////////////////////////////////////////////////
 
 
 	        });//ready function end 
-
-
-
-	        //$('#diarieTable td').on('change', function (evt, newValue) {
-	        //    // do something with the new cell value 
-	        //    alert("testar");
-	        //    //return false; // reject change
-
-	        //});
-
 	      
 
 	        var menyIsActive = function () {

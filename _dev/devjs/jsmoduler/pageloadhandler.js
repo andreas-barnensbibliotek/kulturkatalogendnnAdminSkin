@@ -43,7 +43,13 @@ module.exports = {
             case "kk_aj_detailView":
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);               
+                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
+                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
+                break;
+            case "kk_aj_detailEditView":
+                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+                loadtemplateTypes(appsettings.detailEdittemplate, appsettings.currentUserid, sortobj, appsettings.detailEdittemplate.detailid);
                 loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
                 break;
             case "kk_aj_search_nyaansokningarView": //sök i nya              
@@ -105,7 +111,13 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
           
             //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
-            if (value.templatename != "detailTmpl") {
+            if (!(value.templatename == "detailEditTmpl")) {
+                console.log("funkar detta är inte detailEditTmpl ");
+            } else {
+                console.log("detta är detailEditTmpl ");
+            }
+
+            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl")) {
                 if (value.templatename != "StartSenasteListTmpl") {
                     if (value.templatename != "DiareTmpl") {
                         if (data.kk_aj_admin.ansokningarlista) {
