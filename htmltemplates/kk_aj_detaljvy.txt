@@ -10,7 +10,7 @@
 	<div class="box-body no-padding">
 		<div class="mailbox-read-info"><div class="pull-right">                                
 			<!-- /.btn-group -->
-			<button type="button" class="btn btn-default kk_aj_detailedit" title="Ändra">
+			<button type="button" class="btn btn-default kk_aj_detailedit" >
 				<i class="fa fa-cog" aria-hidden="true"></i> Ändra
 			</button>                                
 			<button type="button" class="btn btn-default" data-toggle="tooltip" title="Print">                                        
@@ -41,29 +41,9 @@
 <!-- /.box-body -->
 <div class="box-footer">
     <ul class="mailbox-attachments clearfix">
-        <li>
-            <span class="mailbox-attachment-icon has-img"><img alt="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaAlt}}" src="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" /></span>
-            <div class="mailbox-attachment-info">
-                <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaFilename}}</a>
-                <span class="mailbox-attachment-size">
-                    {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaSize}}
-                    <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                </span>
-            </div>
-        </li>
-        <li>
-            <span class="has-img">
-			<iframe width="198" height="131" src="{{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaUrl}}}" frameborder="0" allowfullscreen></iframe>
-               
-            </span>
-            <div class="mailbox-attachment-info">
-                <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaUrl}}" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaFilename}}</a>
-                <span class="mailbox-attachment-size">
-                    {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaSize}}
-                    <a href="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMovieClip.MediaUrl}}" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
-                </span>
-            </div>
-        </li>
+	{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMedialist}}
+		{{#ifMedia this}}{{/ifMedia}}
+	{{/each}}  
     </ul>
 </div>                        
 <!-- /.box-footer -->

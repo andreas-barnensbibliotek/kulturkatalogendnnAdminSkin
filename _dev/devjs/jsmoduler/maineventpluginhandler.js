@@ -16,7 +16,8 @@ module.exports = {
 
             jsboottbl.bootTableInit();
             jsjquerytbl.jqueryTableInit();    
-            
+           
+
             if (currpageType == "kk_aj_diarieView") {
          
                 ServiceHandler.injectdiarietable("all", "0", function (datajson) {
@@ -159,8 +160,8 @@ module.exports = {
 /// REMOVE FROM HERE jsGRID ////////////////////////////////////////////////////////////////////////////////////
             if (currpageType == "kk_aj_utovareView") {
             };
-
-
+           
+          
 
 
         });//ready function end 

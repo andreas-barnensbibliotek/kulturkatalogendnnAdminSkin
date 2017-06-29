@@ -47,12 +47,12 @@
 	var appsettings = __webpack_require__(1);
 	//var msg = require("./jsmoduler/main.js");
 	var handlebarshelpers = __webpack_require__(2);
-	var loadpageHandler = __webpack_require__(5);
-	var registerJqueryEvents = __webpack_require__(3);
-	var registerJqueryMainPluginEvents = __webpack_require__(7);
+	var loadpageHandler = __webpack_require__(6);
+	var registerJqueryEvents = __webpack_require__(4);
+	var registerJqueryMainPluginEvents = __webpack_require__(9);
 
-	var $ = __webpack_require__(4);
-	__webpack_require__(8);
+	var $ = __webpack_require__(3);
+	__webpack_require__(5);
 
 	$(function () {
 
@@ -418,7 +418,7 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var registerJqueryEvents = __webpack_require__(3);
+	/* WEBPACK VAR INJECTION */(function($) {var registerJqueryEvents = __webpack_require__(4);
 	module.exports = {
 	    inithelper: ""
 
@@ -616,452 +616,55 @@
 	    return new Handlebars.SafeString(text);
 	});
 
+	// kollar om ansökningar har bilaga eller ej
+	Handlebars.registerHelper('ifMedia', function (media) {
+	    var rethtml = "";
+	   
+	    switch (media.MediaTyp) {
+	        case "1":
+	            rethtml = "<li><span class='mailbox-attachment-icon has-img'><img alt='"+media.MediaAlt+"' src='"+media.MediaUrl+"' /></span>";
+	            rethtml += "<div class='mailbox-attachment-info'><a href='"+ media.MediaUrl +"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename +"</a>";
+	            rethtml += "<span class='mailbox-attachment-size'>";
+	            rethtml += media.MediaSize + "<a href='"+ media.MediaUrl +"' class='btn btn-default btn-xs pull-right'><i class='fa fa-cloud-download'></i></a>";
+	            rethtml += "</span></div></li>";
+	            break;
+	        case "2":
+	            rethtml = "<li><span class='has-img'>";
+	            rethtml += "<iframe width='198' height='131' src='"+ media.MediaUrl+"' frameborder='0' allowfullscreen></iframe>";
+	            rethtml += "</span><div class='mailbox-attachment-info'>";
+	            rethtml += "<a href='"+ media.MediaUrl+"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename+"</a>";
+	            rethtml += "<span class='mailbox-attachment-size'>"+ media.MediaSize+"<a href='"+ media.MediaUrl+"' class='btn btn-default btn-xs pull-right'>";
+	            rethtml += "<i class='fa fa-cloud-download'></i></a></span></div></li>";
+	            break;        
+	    }
+	    
+	    return rethtml;
+	});
+	// kollar om ansökningar har bilaga eller ej
+	Handlebars.registerHelper('ifEditMedia', function (mediatyp, mediaurl,mediaalt) {
+	    var rethtml = "";
+
+	    switch (mediatyp) {
+	        case "1":
+	            rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' />";
+	            break;
+	        case "2":
+	            rethtml = "<iframe width='198' height='131' src='" + mediaurl + "' frameborder='0' allowfullscreen></iframe>";
+	            
+	            break;
+	    }
+
+	    return rethtml;
+	});
+	window.Handlebars.registerHelper('select', function (value, options) {
+	    var $el = $('<select />').html(options.fn(this));
+	    $el.find('[value="' + value + '"]').attr({ 'selected': 'selected' });
+	    return $el.html();
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	var $ = __webpack_require__(4);
-	var appsettings = __webpack_require__(1);
-	var loadpageHandler = __webpack_require__(5);
-
-	var _desktopmoduleURL = "/KatalogenAnsokningar"; //"/KulturkatalogenAdmin/KatalogenAnsokningar"
-
-	module.exports = {
-	    jqueryEVENTS: function (userid) {
-	        var sortobj;
-
-	        $('body').on('click', '.kk_aj_nyadansokningar', function () {
-	            //console.log('1-1. .kk_aj_nyadansokningar'); 
-	            resetsearchformdata();
-	            sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
-	            loadlistView("kk_aj_ansokningarView", sortobj);
-
-	            //history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
-	            history.pushState('1', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_ansokningarView');
-
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_approvedansokningar', function () {
-	            //console.log('1-1. .kk_aj_approvedansokningar');   
-	            resetsearchformdata();
-	            loadlistView("kk_aj_approvedansokningarView");
-	            history.pushState('2', '', appsettings.basepageUri + _desktopmoduleURL+ '?sida=kk_aj_approvedansokningarView');
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_deniedansokningar', function () {
-	            resetsearchformdata();
-	            //console.log('1-1. .kk_aj_deniedansokningar');
-	            loadlistView("kk_aj_deniedansokningarView");
-	            history.pushState('3', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_deniedansokningarView');
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_archiveansokningar', function () {
-	            resetsearchformdata();
-	            //console.log('1-1. .kk_aj_archiveansokningar');
-	            loadlistView("kk_aj_archiveansokningarView");
-	            history.pushState('4', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_archiveansokningarView');
-	            return false;
-	        });
-	                
-	        //ansökningsidor Pager EVENT ---------------------------------------------------------------
-	        $('body').on('click', '.kk_aj_listannonsnext', function () {
-	            var searchpagetyp = $('.kk_aj_box-title').attr('rel');
-	            var setting = appsettings.pagerHandler;
-	           
-	            var next = setting.page_currentlimit;
-	            setting.page_currentpage = Math.ceil(next / parseInt(setting.page_item_per_page)) +1;
-	            loadpageHandler.pagetotalupdater();
-	            if (setting.page_max_size >= next) {
-	                setting.page_currentlimit = parseInt(setting.page_currentlimit) + parseInt(setting.page_item_per_page);
-	                history.pushState('pages', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=' + searchpagetyp + '&p=' + next);
-
-	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, next, setting.page_currentlimit);
-	            }
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_listannonsprev', function () {
-	            var searchpagetyp = $('.kk_aj_box-title').attr('rel');
-	            var setting = appsettings.pagerHandler;
-
-	            var pre = setting.page_currentlimit - (2 * setting.page_item_per_page);
-	            setting.page_currentpage = Math.ceil(pre / parseInt(setting.page_item_per_page)) +1;
-	            loadpageHandler.pagetotalupdater();
-
-	            if (pre >= 0) {
-	                setting.page_currentlimit = parseInt(setting.page_currentlimit) - parseInt(setting.page_item_per_page);
-	                history.pushState('p', '', appsettings.basepageUri +  _desktopmoduleURL +'?sida=' + searchpagetyp + '&p=' + pre);
-	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, pre, setting.page_currentlimit);
-	            }
-	            return false;
-	        });
-	        // Edit Detailvy
-	        $('body').on('click', '.kk_aj_detailbackfromEdit', function () {
-	            console.log("testar detta: " +userid)
-	            loadlistView("kk_aj_detailView");
-	            return false;
-	        });
-	       
-	        $('body').on('click', '.kk_aj_detailedit', function () {            
-	            console.log("testar detta: " + userid);
-	            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
-	            loadlistView("kk_aj_detailEditView", "", userid);
-
-	            return false;
-	        });
-	        //ansökningsidor EVENT ---------------------------------------------------------------
-	        $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
-	            var curpage = $('.kk_aj_box-title').attr('rel');            
-	            loadlistView(curpage);            
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_markall', function (event) {                
-	            // Iterate each checkbox
-	            $('.kk_aj_chkboxAnnons').each(function () {
-	                if (this.checked) {
-	                    this.checked = false;
-	                } else {
-	                    this.checked = true;
-	                }                  
-	            });           
-	        });
-
-	        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
-	            var curpage = $('.kk_aj_box-title').attr('rel');
-	            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
-	                sortobj = { "tosort": "ansokningtitle", "order": "up"};
-	                loadlistView(curpage, sortobj);
-	                $('.kk_aj_sortutovare i').removeClass('fa-caret-down').addClass('fa-caret-up');
-	            } else {
-	                sortobj = { "tosort": "ansokningtitle", "order": "down" };
-	                loadlistView(curpage, sortobj);
-	                $('.kk_aj_sortutovare i').removeClass('fa-caret-up').addClass('fa-caret-down');                
-	            };            
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_sortutovare', function (event) {
-	            var curpage = $('.kk_aj_box-title').attr('rel');
-	            if ($('.kk_aj_sortrubrik i').hasClass('fa-caret-down')) {
-	                sortobj = { "tosort": "ansokningutovare", "order": "up" };
-	                loadlistView(curpage, sortobj);
-	                $('.kk_aj_sortrubrik i').removeClass('fa-caret-down').addClass('fa-caret-up');
-	            } else {
-	                sortobj = { "tosort": "ansokningutovare", "order": "down" };
-	                loadlistView(curpage, sortobj);
-	                $('.kk_aj_sortrubrik i').removeClass('fa-caret-up').addClass('fa-caret-down');
-	            };
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_sortkonstform', function (event) {
-	            var curpage = $('.kk_aj_box-title').attr('rel');
-	            if ($('.kk_aj_sortkonstform i').hasClass('fa-caret-down')) {
-	                sortobj = { "tosort": "ansokningkonstform", "order": "up" };
-	                loadlistView(curpage, sortobj);
-	                $('.kk_aj_sortkonstform i').removeClass('fa-caret-down').addClass('fa-caret-up');
-	            } else {
-	                sortobj = { "tosort": "ansokningkonstform", "order": "down" };
-	                loadlistView(curpage, sortobj);
-	                $('.kk_aj_sortkonstform i').removeClass('fa-caret-up').addClass('fa-caret-down');
-	            };
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_sortdatum', function (event) {
-	            var curpage = $('.kk_aj_box-title').attr('rel');
-	            if ($('.kk_aj_sortdatum i').hasClass('fa-caret-down')) {
-	                sortobj = { "tosort": "ansokningdate", "order": "up" };
-	                loadlistView(curpage, sortobj);
-	                $('.kk_aj_sortdatum i').removeClass('fa-caret-down').addClass('fa-caret-up');
-	            } else {
-	                sortobj = { "tosort": "ansokningdate", "order": "down" };
-	                loadlistView(curpage, sortobj);
-	                $('.kk_aj_sortdatum i').removeClass('fa-caret-up').addClass('fa-caret-down');
-	            };
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_detailback', function (event) {
-	            history.back(-1);
-	            return false;
-	        });
-	       
-	        $('body').on('click', '.mailbox-name a', function (event) {
-	            var arrid = $(this).attr('rel');
-
-	            if (arrid === "0") { return false; };
-
-	            var isNotRead = $('.mailbox-star[rel="' + arrid + '"] i').hasClass('fa-star')
-	            if (isNotRead) {
-	                event.preventDefault();
-	                var arrid = $(this).attr('rel');
-	                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "ja", function () {
-	                    location.href = event.currentTarget.getAttribute('href');
-	                });
-	            };            
-	        });
-
-	        $('body').on('click', '.mailbox-subject a', function (event) {
-	            var arrid = $(this).attr('rel');
-	            if (arrid === "0") { return false; };
-
-	            var isNotRead =$('.mailbox-star[rel="'+ arrid +'"] i').hasClass('fa-star')
-	            if (isNotRead) {
-	                event.preventDefault();
-	                var arrid = $(this).attr('rel');
-	                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "ja", function () {
-	                    location.href = event.currentTarget.getAttribute('href');
-	                });
-	            };            
-	        });
-
-	        $('body').on('click', '.kk_aj_ansoksearchformSubmit', function (event) {
-	            var arrstat = $('.kk_aj_ansoksearchform').attr('rel');
-	            var searchtyp = $('.kk_aj_ansoksearchform').val();
-	            var convertarrstat = arrstat.toLowerCase();
-	            if (convertarrstat == "nekad") {
-	                arrstat = "denied";
-	            };             
-	            if (searchtyp) {
-	                switch (arrstat) {
-	                    case "nya":
-	                        appsettings.searchansokningartemplate.nya.searchstr = searchtyp;
-	                        loadlistView("kk_aj_search_nyaansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
-	                        break;
-	                    case "approved":
-	                        appsettings.searchansokningartemplate.approved.searchstr = searchtyp;
-	                        loadlistView("kk_aj_search_approvedansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_approvedansokningarView&search=' + searchtyp);
-	                        break;
-	                    case "denied":
-	                        appsettings.searchansokningartemplate.denied.searchstr = searchtyp;
-	                        loadlistView("kk_aj_search_deniedansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_deniedansokningarView&search=' + searchtyp);
-	                        break;
-	                    case "archive":
-	                        appsettings.searchansokningartemplate.archive.searchstr = searchtyp;
-	                        loadlistView("kk_aj_search_archiveansokningarView", sortobj, "");
-	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_archiveansokningarView&search=' + searchtyp);
-	                        break;
-	                }
-	            } else {
-	                $('.kk_aj_ansoksearchform').focus();
-	            };
-	            return false;
-	           
-	        });
-	        
-	        //detaljvy event
-	        $('body').on('click', '.kk_aj_addmotivering', function (event) {
-	            $('.motiveringEditblock').toggle();
-	        })
-	        
-	        $('body').on('click', '.kk_aj_detailapproved', function (event) {
-	            var motiveringbox = $(".motivering");
-	            var checktext = motiveringbox.val();           
-	            if (checktext != "") {
-	                updateArrangemangMotivering("2", function () {
-	                    location.href = appsettings.basepageUri + _desktopmoduleURL + "?sida=kk_aj_approvedansokningarView";
-	                });               
-	            } else {
-	                motiveringbox.addClass('markborderRed');
-	            };
-	            return false;
-	        });
-
-	        $('body').on('click', '.kk_aj_detaildenied', function (event) {            
-	                var motiveringbox = $(".motivering");
-	                var checktext = motiveringbox.val();
-	                if (checktext != "") {
-	                    updateArrangemangMotivering("3", function () {
-	                        location.href = appsettings.basepageUri + _desktopmoduleURL + "?sida=kk_aj_deniedansokningarView";
-	                    });
-	                } else {
-	                    motiveringbox.addClass('markborderRed');
-	                };
-	            return false;
-	        });
-
-	        $('body').on('keydown', '.motivering', function (event) {
-	            $('.motivering').removeClass('markborderRed');
-	        });
-	        //detaljvy event END
-
-	        $(window).on('popstate', function (e) {
-	            var match,
-	                pl = /\+/g,  // Regex for replacing addition symbol with a space
-	                search = /([^&=]+)=?([^&]*)/g,
-	                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-	                query = window.location.search.substring(1);
-
-	            urlParams = {};
-	            while (match = search.exec(query))
-	                urlParams[decode(match[1])] = decode(match[2]);
-
-	            if (urlParams.id) {
-	                appsettings.detailetemplate.detailid = urlParams.id;
-	                console.log("sida id= " + urlParams.id);
-	            };
-	            
-
-	            if (urlParams.p) {
-	                var setting = appsettings.pagerHandler;
-	                console.log('search ' + setting);
-
-	                var next = urlParams.p;
-	                console.log('search ' + next);
-
-	                if (setting.page_max_size >= next) {
-	                    setting.page_currentlimit = parseInt(setting.page_currentlimit) + parseInt(setting.page_item_per_page);
-	                    console.log("search setting.page_currentlimit " + setting.page_currentlimit + " setting.page_currentdataset: " + setting.page_currentdataset)
-	                    console.log("search setting.page_currenttemplate " + setting.page_currenttemplate + " next " + next + ", setting.page_currentlimit " + setting.page_currentlimit);
-	                    loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, next, setting.page_currentlimit);
-	                }
-
-	            } else {
-	                if (urlParams.sida) {
-	                    console.log("sida= " + urlParams.sida);
-	                    loadlistView(urlParams.sida);
-	                }
-	            }
-	        });
-	        
-	    },
-	    laddanysida: function (sidvy) {
-	        loadlistView(sidvy);
-	    },
-	    updatacontentheader: function (listview, options) {
-	        updateansokHeaderjquery(listview, options);
-	    }
-	}
-
-	var updateansokHeaderjquery = function (currentListView, options) {
-	    var classname = "";
-	    var headertext = "";
-	    var activeclass = "";
-	    var searchtyp ="nya";
-	    $('.kk_aj_approveannons').hide();
-
-	    switch (currentListView) {
-	        case "kk_aj_ansokningarView":            
-	            classname ="label-primary";
-	            headertext= "Nya ansökningar";
-	            activeclass = ".kk_aj_nyansokanmenu";
-	            searchtyp = "nya";
-	            break;
-	        case "kk_aj_approvedansokningarView":
-	            classname ="label-success";
-	            headertext= "Godkända";
-	            activeclass = ".kk_aj_approvedansokanmenu";
-	            searchtyp = "approved";
-	            $('.kk_aj_approveannons').show();
-	            break;
-	        case "kk_aj_deniedansokningarView":
-	            classname ="label-danger";
-	            headertext="Nekade";
-	            activeclass = ".kk_aj_deniedansokanmenu";
-	            searchtyp = "denied";
-	            break;
-	        case "kk_aj_archiveansokningarView":
-	            classname ="";
-	            headertext= "Arkiv";
-	            activeclass = ".kk_aj_archiveansokanmenu";
-	            searchtyp = "archive";
-	            break;
-	        case "kk_aj_search_nyaansokningarView":
-	            classname = "label-primary";
-	            headertext = "Nya ansökningar - Sökresultat";
-	            activeclass = ".kk_aj_nyansokanmenu";
-	            searchtyp = "nya";
-	            break;
-	        case "kk_aj_search_approvedansokningarView":
-	            classname = "label-success";
-	            headertext = "Godkända - Sökresultat";
-	            activeclass = ".kk_aj_approvedansokanmenu";
-	            searchtyp = "approved";
-	            break;
-	        case "kk_aj_search_deniedansokningarView":
-	            classname = "label-danger";
-	            headertext = "Nekade - Sökresultat";
-	            activeclass = ".kk_aj_deniedansokanmenu";
-	            searchtyp = "denied";
-	            break;
-	        case "kk_aj_search_archiveansokningarView":
-	            classname = "";
-	            headertext = "Arkiv - Sökresultat";
-	            activeclass = ".kk_aj_archiveansokanmenu";
-	            searchtyp = "archive";
-	            break;
-	           
-	    };
-	    
-	   
-	    if (options != "detailview") {
-	        $('.kk_aj_ansokningar').html('<tr><td><div class="kk_aj_loader"></div></td></tr>');
-	        $('.kk_aj_ansokanboxheader').attr('class', $('.kk_aj_ansokanboxheader').attr('class').replace(/(^|\s)label-\S+/g, '')).addClass(classname);
-	        $('.kk_aj_box-title').html(headertext);
-	        $('.kk_aj_ansoksearchform').attr('placeholder', 'Sök i ' + headertext);
-	        $('.kk_aj_ansoksearchform').attr('rel', searchtyp);
-	        $('.kk_aj_box-title').attr('rel', currentListView);
-	    }
-	    
-
-	    $('.kk_aj_ansokanmenu li.active').removeClass('active');
-	    $(activeclass).addClass('active');
-	};
-
-
-	var loadlistView = function (getlistview, sortobj, val) {
-	    updateansokHeaderjquery(getlistview);
-	    console.log("sök getlistview: " + getlistview);
-	    loadpageHandler.pageloader(getlistview, sortobj,val);
-	}
-
-	var updatemainannonscount = function () {
-	    var classtocheck = ".kk_aj_archiveansokningar";
-	    if ($(classtocheck + " span").length) {
-	        $(classtocheck + ' .label').html('2222');
-	    } else {
-	        $(classtocheck).append('</i> Nekade <span class="label label-danger pull-right kk_aj_deniedcount">65</span>');
-	    };
-
-	};
-
-	var resetsearchformdata = function () {
-	    $('.kk_aj_ansoksearchform').val("");
-	};
-
-	var updateArrangemangMotivering = function (NyArrStatus, callback) {
-	    var tmpstatusid = parseInt(NyArrStatus) + 1;
-
-	    var postjson = {
-	        CmdTyp:"arrstat",
-	        Userid: appsettings.currentUserid,
-	        Arrid: $('.motiveringEditblock').attr('rel'),
-	        Logtypid:"1",
-	        Logstatusid: tmpstatusid,
-	        Logbeskrivning: $('.motivering').val(),          
-	        UpdValue:NyArrStatus
-	    };
-	    var arridt = postjson.Arrid
-	    loadpageHandler.pagePostParameterUpdater(postjson, function () {
-
-	        callback();        
-	    });
-	    
-	}
-
-
-
-/***/ },
-/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11287,752 +10890,512 @@
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(jQuery) {var $ = __webpack_require__(4);
+	
+	var $ = __webpack_require__(3);
+	__webpack_require__(5);
 	var appsettings = __webpack_require__(1);
-	var ServiceHandler = __webpack_require__(6);
+	var loadpageHandler = __webpack_require__(6);
+
+	var _desktopmoduleURL = "/KatalogenAnsokningar"; //"/KulturkatalogenAdmin/KatalogenAnsokningar"
+	var jsautocomplete = __webpack_require__(8);
 	module.exports = {
-	    testar: function (msg) {
-	        alert(msg);
-	    },
-	    pageloader: function (pagetoload, sortobj, val) {
-	       
-	        switch(pagetoload) {
-	            case "kk_aj_startView":                  
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid, "", "top5");
-	                break;
-	            case "kk_aj_ansokningarView": //nya              
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.nyaansokningartemplate, appsettings.currentUserid, sortobj, val);
-	                pagetotalblock();
-	                break;
-	            case "kk_aj_approvedansokningarView": //godkända
-	                //console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.approvedansokningartemplate, appsettings.currentUserid, sortobj, val);
-	                pagetotalblock();
-	                break;
-	            case "kk_aj_deniedansokningarView": //nekade
-	                //console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.deniedansokningartemplate, appsettings.currentUserid, sortobj, val);
-	                break;
-	                pagetotalblock();
-	            case "kk_aj_archiveansokningarView": //arkiv
-	                //console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.archiveansokningartemplate, appsettings.currentUserid, sortobj, val);
-	                pagetotalblock();
-	                break;                
-	            case "kk_aj_diarieView":
-	               // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, "all");
-	                break;
-	            case "kk_aj_detailView":
-	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
-	                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
-	                break;
-	            case "kk_aj_detailEditView":
-	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.detailEdittemplate, appsettings.currentUserid, sortobj, appsettings.detailEdittemplate.detailid);
-	                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
-	                break;
-	            case "kk_aj_search_nyaansokningarView": //sök i nya              
-	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.searchansokningartemplate.nya, appsettings.currentUserid, sortobj, val);
-	                break;            
-	            case "kk_aj_search_approvedansokningarView": //sök i nya              
-	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.searchansokningartemplate.approved, appsettings.currentUserid, sortobj, val);
-	                break;
-	            case "kk_aj_search_deniedansokningarView": //sök i nya              
-	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.searchansokningartemplate.denied, appsettings.currentUserid, sortobj, val);
-	                break;
-	            case "kk_aj_search_archiveansokningarView": //sök i nya              
-	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.searchansokningartemplate.archive, appsettings.currentUserid, sortobj, val);
-	                break;
+	    jqueryEVENTS: function (userid) {
+	        var sortobj;
 
-	            default:
-	               // console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
-	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid);
-	                break;
-	        }
-	        
-	    },
-	    pagechanger: function (currdata, currtemp, sta, limit) {
-	        partpageloadertemplates(currtemp, datapager(currdata,sta, limit), function (data) {
-	            if (data == "ja") {
-	                //console.log("ansokningarpagerinfotemplate");
-	            }
-	        });
-	    },
-	    pagetotalupdater: function () {
-	        pagetotalblock();
-	    },
-	    pageParameterUpdater: function (callTyp, usrid, arrid, val, callback) {
-	        ServiceHandler.updateparam(callTyp, usrid, arrid, val, function (data) {
-	            callback();                           
-	        });
-	    },
-	    pagePostParameterUpdater: function (postjson, callback) {
-	        ServiceHandler.updatePostparam(postjson, function (data) {
-	            callback();
-	        });
-	    }
-	};
+	        $('body').on('click', '.kk_aj_nyadansokningar', function () {
+	            //console.log('1-1. .kk_aj_nyadansokningar'); 
+	            resetsearchformdata();
+	            sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
+	            loadlistView("kk_aj_ansokningarView", sortobj);
 
-	var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
-	    var i = 0;
-	       
-	    $.each(pagetemplate, function( obj, value ) {       
-	        
-	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
-	          
-	            //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
-	            if (!(value.templatename == "detailEditTmpl")) {
-	                console.log("funkar detta är inte detailEditTmpl ");
-	            } else {
-	                console.log("detta är detailEditTmpl ");
-	            }
+	            //history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
+	            history.pushState('1', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_ansokningarView');
 
-	            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl")) {
-	                if (value.templatename != "StartSenasteListTmpl") {
-	                    if (value.templatename != "DiareTmpl") {
-	                        if (data.kk_aj_admin.ansokningarlista) {
-	                            var sortorder;
-	                            var sortobjtosearch;
-
-	                            if (sortera != undefined) {
-	                                // 2=ansokningtitle, 4= ansokningutovare                     
-	                                sortorder = sortera.order;
-	                                sortobjtosearch = sortera.tosort;
-	                            }
-
-	                            //"tosort": "title", "order": "down"
-	                            data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
-	                                if (sortorder == "down") {
-	                                    if (a[sortobjtosearch] == b[sortobjtosearch])
-	                                        return 0;
-	                                    if (a[sortobjtosearch] < b[sortobjtosearch])
-	                                        return -1;
-	                                    if (a[sortobjtosearch] > b[sortobjtosearch])
-	                                        return 1;
-	                                } else {
-	                                    if (a[sortobjtosearch] == b[sortobjtosearch])
-	                                        return 0;
-	                                    if (a[sortobjtosearch] > b[sortobjtosearch])
-	                                        return -1;
-	                                    if (a[sortobjtosearch] < b[sortobjtosearch])
-	                                        return 1;
-	                                }
-	                            });
-	                            var test = data;
-	                            appsettings.pagerHandler.page_currentdataset = test;
-
-	                            appsettings.pagerHandler.page_currenttemplate = value;
-	                            appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
-	                            data = datapager(data);
-
-	                            partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
-	                                if (data == "ja") {
-	                                    pagetotalblock();
-	                                    // console.log("ansokningarpagerinfotemplate");
-	                                }
-	                            });
-	                        }
-	                    };
-	                };
-	            };
-	            loadpagetemplates(value, data, function (data) {
-	                if (data == "ja") {
-	                   // console.log("KLART");                    
-	                }
-	            });
-	        });
-	        //ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
-	        //    loadpagetemplates(pagetemplate[obj], data);
-	    });
-	   
-	}
-
-
-	var loadpagetemplates = function (template, currentdata,callback) {
-	    
-	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
-	        var temptpl = Handlebars.compile(data);
-
-	        updatecountmenybox(currentdata);
-	        $(template.targetdiv).html(temptpl(currentdata));
-	        callback("ja");
-	    }, 'html');
-
-	}
-
-	var partpageloadertemplates = function (template, currentdata, callback) {
-	   
-	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
-	        var temptpl = Handlebars.compile(data);
-
-	        //console.log("71. " + template.filename + " klar att levereras");
-	        $(template.targetdiv).html(temptpl(currentdata));
-	        callback("ja");
-	    }, 'html');
-
-
-	}
-
-	var updatecountmenybox = function (data) {
-	    
-	    if (data.kk_aj_admin.nyaansokningarcount != undefined) {       
-	        if (data.kk_aj_admin.nyaansokningarcount) {
-	            $('.kk_aj_newcount').show();
-	            $('.kk_aj_newcount').html(data.kk_aj_admin.nyaansokningarcount);
-	        } else {            
-	            $('.kk_aj_newcount').hide();
-	        }  
-	        if (data.kk_aj_admin.approvedansokningarcount) {
-	            $('.kk_aj_approvedcount').show();
-	            $('.kk_aj_approvedcount').html(data.kk_aj_admin.approvedansokningarcount);
-	        } else {            
-	            $('.kk_aj_approvedcount').hide();
-	        }  
-	        if (data.kk_aj_admin.deniedansokningarcount){
-	            $('.kk_aj_deniedcount').show();
-	            $('.kk_aj_deniedcount').html(data.kk_aj_admin.deniedansokningarcount);
-	        } else {            
-	            $('.kk_aj_deniedcount').hide();
-	        }                    
-	    }
-	    if (data.kk_aj_admin.userinfo != undefined) {
-	        $('.kk_aj_menyNamn').html('<p>' + data.kk_aj_admin.userinfo.username + '</p>');
-	        $('.kk_aj_menyNamn').append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
-	        $('.kk_aj_menyAvatar img').attr('src', data.kk_aj_admin.userinfo.useravatar)
-	    }
-	    //console.log("inne i test")
-	};
-
-
-	var datapager = function(datat,sta,limit) {
-	    var retdata = jQuery.extend(true, {}, datat);
-	    var settings = appsettings.pagerHandler;
-	    appsettings.pagerHandler.page_max_size = datat.kk_aj_admin.ansokningarlista.ansokningar.length;//var max_size=b.length;
-	    
-	    //appsettings.pagerHandler.page_currentlimit = //appsettings.pagerHandler.page_item_per_page; //10
-	    var b = datat.kk_aj_admin.ansokningarlista.ansokningar;
-	    retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
-	    
-	    if (typeof sta == 'undefined'){
-	        sta = settings.page_startitem;
-	    }
-	    if (typeof limit == 'undefined') {
-	        limit = settings.page_item_per_page;
-	    }
-
-	    appsettings.pagerHandler.page_currentlimit = limit;
-	    //var elements_per_page = 4;
-	    //var limit = elements_per_page;
-
-
-	    for (var i = sta ; i < limit; i++) {
-	        if (typeof b[i] !== 'undefined') {
-	            var test = {
-	                "ansokningid": b[i]['ansokningid'],
-	                "ansokningdate": b[i]['ansokningdate'],
-	                "ansokningtitle": b[i]['ansokningtitle'],
-	                "ansokningsubtitle": b[i]['ansokningsubtitle'],
-	                "ansokningutovare": b[i]['ansokningutovare'],
-	                "ansokningurl": b[i]['ansokningurl'],
-	                "ansokningbilaga": b[i]['ansokningbilaga'],
-	                "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
-	                "ansokninglast": b[i]['ansokninglast'],
-	                "ansokningkonstform": b[i]['ansokningkonstform'],
-	                "ansokningstatus": b[i]['ansokningstatus']
-	            };
-
-	            retdata.kk_aj_admin.ansokningarlista.ansokningar.push(test);
-	        }
-	    }
-	    return retdata;
-	}
-
-
-	var pagetotalblock = function () {
-	     
-	    if (appsettings.pagerHandler.page_currentpage <= 1) {
-	        appsettings.pagerHandler.page_currentpage = 1;
-	    }
-	    if (appsettings.pagerHandler.page_currentpage > appsettings.pagerHandler.page_totalpages) {
-	        appsettings.pagerHandler.page_currentpage = appsettings.pagerHandler.page_totalpages;
-	    }
-	    
-	    var pagehtml = appsettings.pagerHandler.page_currentpage + "/" + appsettings.pagerHandler.page_totalpages;
-
-	    $('.kk_aj_pageToTotal').html(pagehtml);
-
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(4);
-	var appsettings = __webpack_require__(1);
-	module.exports = {
-	    testar: function (msg) {
-	        alert(msg);
-	    },
-	    updateparam: function (callTyp, usrid, arrid, val, callback) {
-	        
-	        var currurl="";
-	        switch(callTyp) {
-	            case "UpdateLookedAtParam":
-	                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
-	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "UpdateArrstatusParam":
-	                //currurl = "/updatearrangemang/arrstat/id/2/uid/2/val/2/devkey/alf?type=json&callback=testar;
-	                currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "UpdatePublishedParam":
-	                //currurl = "/updatearrangemang/pub/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
-	                currurl = appsettings.localOrServerURL + "/updatearrangemang/pub/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            default:
-	                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar";
-	                break;
-	        }
-
-	        //console.log("2. servicen hämtar data");
-	        $.ajax({
-	            async: true,
-	            type: "GET",            
-	            url: currurl,
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("Parameter updaterad: " + callTyp);
-	                callback(data);
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel vid uppdatering av parametrarna!");
-	            }
-	        });
-	       
-	    },
-	    updatePostparam: function (postjson, callback) {
-	        
-	        var currurl = appsettings.localOrServerURL + "/updatearrangemang/upd/devkey/alf";
-	             
-	        console.log("2. servicen POSTAR data"); 
-	        $.ajax({
-	            async: true,
-	            type: "POST",
-	            url: currurl,
-	            data: postjson,
-	            success: function (data) {
-	                console.log("Parameter updaterad: ");
-	                callback(data);
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel vid uppdatering av parametrarna!");
-	            }
+	            return false;
 	        });
 
-	    },
-	    utovarData: function (callTyp, Utovarid, callback) {
-	       
-	        var currurl="";
-	        switch(callTyp) {
-	            case "getutovarelista":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
-	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
-	                break;
-	            case "getutovarebyid":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
-	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
-	                break;            
-	            default:
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
-	                break;
-	        }
-
-	        //console.log("2. servicen hämtar data");
-	        $.ajax({
-	            async: true,
-	            type: "GET",            
-	            url: currurl,
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("Parameter updaterad: " + callTyp);
-	                callback(data);
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel vid uppdatering av parametrarna!");
-	            }
-	        });
-	       
-	    },
-	    injectdiarietable: function (callTyp, Utovarid, callback) {        
-
-	        var devkeysnippet = "alf?type=json&callback=testar";
-	        var currurl = "";
-	        switch (callTyp) {
-	            case "bylogid":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
-	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
-	                break;
-	            case "bylogStatus":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
-	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
-	                break;
-	            default:
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
-	                currurl = appsettings.localOrServerURL + "/log/" + callTyp + "/id/" + Utovarid + "/devkey/" + devkeysnippet;
-	                break;
-	        }
-
-	        //console.log("2. servicen hämtar data");
-	        $.ajax({
-	            async: true,
-	            type: "GET",
-	            url: currurl,
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("LOGG datan är hämta  " + callTyp);
-	                callback(data);
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel vid uppdatering av parametrarna!");
-	            }
-	        });
-	    },
-	    injecttemplateDebug: function (callTyp, usrid, val, callback) {
-	        //console.log("4. servicen hämtar debug data ----->>> " + usrid);
-	        //console.log("injecttemplateDebug: " + usrid);
-	        //console.log("appsettings.currentUserid: " + appsettings.currentUserid);
-	        var currurl="";
-	        switch(callTyp) {
-	            case "kk_aj_userinfojson":
-	                //currurl = "http://localhost:60485/Api_v2/user/usrinfo/id/2/devkey/alf?type=json&callback=testar"
-	                currurl = appsettings.localOrServerURL + "/user/usrinfo/id/" + usrid + "/devkey/" + appsettings.devkeysnippet;
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_userinfojson.aspx";
-	                break;
-	            case "kk_aj_lasteventjson":
-	                //currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
-	                //currurl="http://localhost:60485/Api_v2/arrangemang/bylatest/uid/4/typ/0/val/top5/devkey/alf?type=json&callback=testar";
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bylatest/uid/" + usrid + "/typ/0/val/" + val + "/devkey/" + appsettings.devkeysnippet;
-
-	                break;
-	            case "kk_aj_nyaansokjson":                
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/1/devkey/" + appsettings.devkeysnippet;
-	                 break;
-	            case "kk_aj_approvedansokjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_approvedansokjson.aspx";
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/2/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_deniedansokjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/3/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_archiveansokjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_archiveansokjson.aspx";
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/4/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_diariejson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";    
-	                break;
-	            case "kk_aj_detailvyjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx?id="+ val;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/details/uid/" + usrid + "/typ/" + val + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_detailmotiveringloggjson":
-	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
-	                break;
-	            case "kk_aj_topnavjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
-	                currurl = appsettings.localOrServerURL + "/notify/get/id/" + usrid + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_SearchNyaansokjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
-	                var search = appsettings.searchansokningartemplate.nya.searchstr;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/1/val/" + search + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_SearchApprovedansokjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
-	                var search = appsettings.searchansokningartemplate.approved.searchstr;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/2/val/" + search + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_SearchDeniedansokjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
-	                var search = appsettings.searchansokningartemplate.denied.searchstr;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/3/val/" + search + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_SearchArchiveansokjson":
-	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
-	                var search = appsettings.searchansokningartemplate.archive.searchstr;
-	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_detailloggListjson":
-	                //currurl = "http://localhost:60485/Api_v2/log/byarrid/id/1/devkey/alf?type=json&callback=testar";
-	                currurl = appsettings.localOrServerURL + "/log/byarrid/id/" + val + "/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            case "kk_aj_UpdateLookedAt":
-	                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
-	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + val + "/uid/" + usrid + "/val/ja/devkey/" + appsettings.devkeysnippet;
-	                break;
-	            default:
-	                // resultat är en empty json response
-	                currurl =""
-	                break;
-	        }
-	        if (currurl != "") {
-
-	        $.ajax({
-	            type: "GET",
-	            //url: appsettings.localOrServerURL + "/" + callTyp + "/devkey/testar",
-	            url: currurl, //"kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_json.aspx",
-	            dataType: "json",
-	            success: function (data) {
-	               console.log("5. servicen har hämtat debugg datan from " + callTyp);
-	                callback(data)
-
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel med debugdatan!");
-	            }
+	        $('body').on('click', '.kk_aj_approvedansokningar', function () {
+	            //console.log('1-1. .kk_aj_approvedansokningar');   
+	            resetsearchformdata();
+	            loadlistView("kk_aj_approvedansokningarView");
+	            history.pushState('2', '', appsettings.basepageUri + _desktopmoduleURL+ '?sida=kk_aj_approvedansokningarView');
+	            return false;
 	        });
 
-	        } else {
-	            var emptyjsonresponse = { "kk_aj_admin": { "status": "emptyjson" } };
-	            callback(emptyjsonresponse);
-	        }
-	    }
-	}
+	        $('body').on('click', '.kk_aj_deniedansokningar', function () {
+	            resetsearchformdata();
+	            //console.log('1-1. .kk_aj_deniedansokningar');
+	            loadlistView("kk_aj_deniedansokningarView");
+	            history.pushState('3', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_deniedansokningarView');
+	            return false;
+	        });
 
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//här sätts alla pluggin och jquery.ready starters 
-	var $ = __webpack_require__(4);
-	__webpack_require__(8);
-	var appsettings = __webpack_require__(1);
-	var ServiceHandler = __webpack_require__(6);
-	var jsboottbl = __webpack_require__(9);
-	var jsjquerytbl = __webpack_require__(10);
-
-	module.exports = {
-	    jqueryMainPluginEVENTS: function (userid, currpageType) {
-
-	        $(function () {
-	            menyIsActive();
-	            validateform();
-
-
-	            jsboottbl.bootTableInit();
-	            jsjquerytbl.jqueryTableInit();    
-	            
-	            if (currpageType == "kk_aj_diarieView") {
-	         
-	                ServiceHandler.injectdiarietable("all", "0", function (datajson) {
+	        $('body').on('click', '.kk_aj_archiveansokningar', function () {
+	            resetsearchformdata();
+	            //console.log('1-1. .kk_aj_archiveansokningar');
+	            loadlistView("kk_aj_archiveansokningarView");
+	            history.pushState('4', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_archiveansokningarView');
+	            return false;
+	        });
 	                
-	                    $('#diarieTable').DataTable({
-	                        "processing": true,
-	                        "stateSave": true,
-	                        "paging": true,
-	                        "lengthChange": true,
-	                        "searching": true,
-	                        "ordering": true,
-	                        "info": true,
-	                        "autoWidth": false,
-	                        "language": {
-	                            "decimal": "",
-	                            "emptyTable": "Det finns inget att visa",
-	                            "info": "Visar _START_ av _END_ totalt _TOTAL_ ",
-	                            "infoEmpty": "Visar 0 av 0 totalt 0",
-	                            "infoFiltered": "(Filtrerat från totalt _MAX_ poster)",
-	                            "infoPostFix": "",
-	                            "thousands": ",",
-	                            "lengthMenu": "Visa _MENU_",
-	                            "loadingRecords": "Laddar...",
-	                            "processing": "Jobbar...",
-	                            "search": "Sök:",
-	                            "zeroRecords": "Inget hittades",
-	                            "paginate": {
-	                                "first": "Först",
-	                                "last": "Sist",
-	                                "next": "Nästa",
-	                                "previous": "Föregående"
-	                            },
-	                            "aria": {
-	                                "sortAscending": ": activate to sort column ascending",
-	                                "sortDescending": ": activate to sort column descending"
-	                            }
-	                        },
-	                        "data": datajson.kk_aj_admin.Logitemlist,
-	                        "columns": [
-	                            { "data": "Arrid", "render": function (data, type, row, meta) {
-	                                if (type === 'display') {
-	                                    data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
-	                                }
+	        //ansökningsidor Pager EVENT ---------------------------------------------------------------
+	        $('body').on('click', '.kk_aj_listannonsnext', function () {
+	            var searchpagetyp = $('.kk_aj_box-title').attr('rel');
+	            var setting = appsettings.pagerHandler;
+	           
+	            var next = setting.page_currentlimit;
+	            setting.page_currentpage = Math.ceil(next / parseInt(setting.page_item_per_page)) +1;
+	            loadpageHandler.pagetotalupdater();
+	            if (setting.page_max_size >= next) {
+	                setting.page_currentlimit = parseInt(setting.page_currentlimit) + parseInt(setting.page_item_per_page);
+	                history.pushState('pages', '', appsettings.basepageUri + _desktopmoduleURL +'?sida=' + searchpagetyp + '&p=' + next);
 
-	                                return data;
-	                            },
-	                                "width": "5%"
-	                            },
-	                            { "data": "Datum" },
-	                            { "data": "Arrrubrik", "render": function (data, type, row, meta) {
-	                                if (type === 'display') {
-	                                    data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
-	                                }
+	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, next, setting.page_currentlimit);
+	            }
+	            return false;
+	        });
 
-	                                return data;
-	                            },
-	                                "width": "30%"
-	                            },
-	                            { "data": "Statustypid" },
-	                            { "data": "ArrutovareID" },                       
-	                            { "data": "Arrutovare",
-	                                "render": function (data, type, row, meta) {
-	                                    if (type === 'display') {
-	                                        data = '<a href="' + appsettings.basepageUri + '/katalogenutovarevy?utovarid=' + row.ArrutovareID + '">' + data + '</a>';
-	                                    }
+	        $('body').on('click', '.kk_aj_listannonsprev', function () {
+	            var searchpagetyp = $('.kk_aj_box-title').attr('rel');
+	            var setting = appsettings.pagerHandler;
 
-	                                    return data;
-	                                }, "width": "20%"
-	                            },
-	                            { "data": "Beskrivning", "width": "35%" },
-	                            { "data": "ChangebyUsernamn", "width": "5%" },
-	                        
-	                            {
-	                                "data": "Statustyp",
-	                                "width": "5%",
-	                                "render": function (data, type, row, meta) {
-	                                    if (type === 'display') {                                                                     
-	                                        var statuscolor = "";
-	                                        switch (row.Statustypid) {
-	                                            case 1:
-	                                                statuscolor = '<span class="label label-primary">';
-	                                                break;
-	                                            case 2:
-	                                                statuscolor = '<span class="label label-warning">';
-	                                                break;
-	                                            case 3:
-	                                                statuscolor = '<span class="label label-success">';
-	                                                break;
-	                                            case 4:
-	                                                statuscolor = '<span class="label label-danger">';
-	                                                break;
-	                                            case 5:
-	                                                statuscolor = '<span class="label label-info">';
-	                                                break;
-	                                            case 6:
-	                                                statuscolor = '<span class="label label-success">';
-	                                                break;
-	                                            case 7:
-	                                                statuscolor = '<span class="label label-warning">';
-	                                                break;
-	                                            case 8:
-	                                                statuscolor = '<span class="label label">';
-	                                                break;
-	                                            case 9:
-	                                                statuscolor = '<span class="label label-default">';
-	                                                break;
-	                                            case 10:
-	                                                statuscolor = '<span class="label label-danger">';
-	                                                break;
-	                                            default:
-	                                                statuscolor = '<span class="label label-default">';
-	                                                break;
-	                                        }
-	                                                 
-	                                        data = statuscolor + data + '</span>';
-	                                    }
+	            var pre = setting.page_currentlimit - (2 * setting.page_item_per_page);
+	            setting.page_currentpage = Math.ceil(pre / parseInt(setting.page_item_per_page)) +1;
+	            loadpageHandler.pagetotalupdater();
 
-	                                    return data;
-	                                }
-	                            }
-	                        ],
-	                        "columnDefs": [                       
-	                            {
-	                                "targets": [3],
-	                                "visible": false,
-	                                "searchable": false
-	                            },
-	                            {
-	                                "targets": [4],
-	                                "visible": false,
-	                                "searchable": false
-	                            }
-	                        ]
-	                    }
-	                );
-	               
-	            });
-	        }; 
+	            if (pre >= 0) {
+	                setting.page_currentlimit = parseInt(setting.page_currentlimit) - parseInt(setting.page_item_per_page);
+	                history.pushState('p', '', appsettings.basepageUri +  _desktopmoduleURL +'?sida=' + searchpagetyp + '&p=' + pre);
+	                loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, pre, setting.page_currentlimit);
+	            }
+	            return false;
+	        });
+	        // Edit Detailvy
+	        $('body').on('click', '.kk_aj_detailbackfromEdit', function () {
+	            console.log("testar detta: " +userid)
+	            loadlistView("kk_aj_detailView");
+	            return false;
+	        });
 	       
-	/// REMOVE FROM HERE jsGRID ////////////////////////////////////////////////////////////////////////////////////
-	            if (currpageType == "kk_aj_utovareView") {
+	        $('body').on('click', '.kk_aj_detailedit', function () {            
+	            console.log("testar detta: " + userid);
+	            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	            loadlistView("kk_aj_detailEditView", "", userid);
+
+	            return false;
+	        });
+	        //ansökningsidor EVENT ---------------------------------------------------------------
+	        $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
+	            var curpage = $('.kk_aj_box-title').attr('rel');            
+	            loadlistView(curpage);            
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_markall', function (event) {                
+	            // Iterate each checkbox
+	            $('.kk_aj_chkboxAnnons').each(function () {
+	                if (this.checked) {
+	                    this.checked = false;
+	                } else {
+	                    this.checked = true;
+	                }                  
+	            });           
+	        });
+
+	        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
+	            var curpage = $('.kk_aj_box-title').attr('rel');
+	            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
+	                sortobj = { "tosort": "ansokningtitle", "order": "up"};
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortutovare i').removeClass('fa-caret-down').addClass('fa-caret-up');
+	            } else {
+	                sortobj = { "tosort": "ansokningtitle", "order": "down" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortutovare i').removeClass('fa-caret-up').addClass('fa-caret-down');                
+	            };            
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_sortutovare', function (event) {
+	            var curpage = $('.kk_aj_box-title').attr('rel');
+	            if ($('.kk_aj_sortrubrik i').hasClass('fa-caret-down')) {
+	                sortobj = { "tosort": "ansokningutovare", "order": "up" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortrubrik i').removeClass('fa-caret-down').addClass('fa-caret-up');
+	            } else {
+	                sortobj = { "tosort": "ansokningutovare", "order": "down" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortrubrik i').removeClass('fa-caret-up').addClass('fa-caret-down');
+	            };
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_sortkonstform', function (event) {
+	            var curpage = $('.kk_aj_box-title').attr('rel');
+	            if ($('.kk_aj_sortkonstform i').hasClass('fa-caret-down')) {
+	                sortobj = { "tosort": "ansokningkonstform", "order": "up" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortkonstform i').removeClass('fa-caret-down').addClass('fa-caret-up');
+	            } else {
+	                sortobj = { "tosort": "ansokningkonstform", "order": "down" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortkonstform i').removeClass('fa-caret-up').addClass('fa-caret-down');
+	            };
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_sortdatum', function (event) {
+	            var curpage = $('.kk_aj_box-title').attr('rel');
+	            if ($('.kk_aj_sortdatum i').hasClass('fa-caret-down')) {
+	                sortobj = { "tosort": "ansokningdate", "order": "up" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortdatum i').removeClass('fa-caret-down').addClass('fa-caret-up');
+	            } else {
+	                sortobj = { "tosort": "ansokningdate", "order": "down" };
+	                loadlistView(curpage, sortobj);
+	                $('.kk_aj_sortdatum i').removeClass('fa-caret-up').addClass('fa-caret-down');
+	            };
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_detailback', function (event) {
+	            history.back(-1);
+	            return false;
+	        });
+	       
+	        $('body').on('click', '.mailbox-name a', function (event) {
+	            var arrid = $(this).attr('rel');
+
+	            if (arrid === "0") { return false; };
+
+	            var isNotRead = $('.mailbox-star[rel="' + arrid + '"] i').hasClass('fa-star')
+	            if (isNotRead) {
+	                event.preventDefault();
+	                var arrid = $(this).attr('rel');
+	                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "ja", function () {
+	                    location.href = event.currentTarget.getAttribute('href');
+	                });
+	            };            
+	        });
+
+	        $('body').on('click', '.mailbox-subject a', function (event) {
+	            var arrid = $(this).attr('rel');
+	            if (arrid === "0") { return false; };
+
+	            var isNotRead =$('.mailbox-star[rel="'+ arrid +'"] i').hasClass('fa-star')
+	            if (isNotRead) {
+	                event.preventDefault();
+	                var arrid = $(this).attr('rel');
+	                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "ja", function () {
+	                    location.href = event.currentTarget.getAttribute('href');
+	                });
+	            };            
+	        });
+
+	        $('body').on('click', '.kk_aj_ansoksearchformSubmit', function (event) {
+	            var arrstat = $('.kk_aj_ansoksearchform').attr('rel');
+	            var searchtyp = $('.kk_aj_ansoksearchform').val();
+	            var convertarrstat = arrstat.toLowerCase();
+	            if (convertarrstat == "nekad") {
+	                arrstat = "denied";
+	            };             
+	            if (searchtyp) {
+	                switch (arrstat) {
+	                    case "nya":
+	                        appsettings.searchansokningartemplate.nya.searchstr = searchtyp;
+	                        loadlistView("kk_aj_search_nyaansokningarView", sortobj, "");
+	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
+	                        break;
+	                    case "approved":
+	                        appsettings.searchansokningartemplate.approved.searchstr = searchtyp;
+	                        loadlistView("kk_aj_search_approvedansokningarView", sortobj, "");
+	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_approvedansokningarView&search=' + searchtyp);
+	                        break;
+	                    case "denied":
+	                        appsettings.searchansokningartemplate.denied.searchstr = searchtyp;
+	                        loadlistView("kk_aj_search_deniedansokningarView", sortobj, "");
+	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_deniedansokningarView&search=' + searchtyp);
+	                        break;
+	                    case "archive":
+	                        appsettings.searchansokningartemplate.archive.searchstr = searchtyp;
+	                        loadlistView("kk_aj_search_archiveansokningarView", sortobj, "");
+	                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_archiveansokningarView&search=' + searchtyp);
+	                        break;
+	                }
+	            } else {
+	                $('.kk_aj_ansoksearchform').focus();
+	            };
+	            return false;
+	           
+	        });
+	        
+	        //detaljvy event
+	        $('body').on('click', '.kk_aj_addmotivering', function (event) {
+	            $('.motiveringEditblock').toggle();
+	        })
+	        
+	        $('body').on('click', '.kk_aj_detailapproved', function (event) {
+	            var motiveringbox = $(".motivering");
+	            var checktext = motiveringbox.val();           
+	            if (checktext != "") {
+	                updateArrangemangMotivering("2", function () {
+	                    location.href = appsettings.basepageUri + _desktopmoduleURL + "?sida=kk_aj_approvedansokningarView";
+	                });               
+	            } else {
+	                motiveringbox.addClass('markborderRed');
+	            };
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_detaildenied', function (event) {            
+	                var motiveringbox = $(".motivering");
+	                var checktext = motiveringbox.val();
+	                if (checktext != "") {
+	                    updateArrangemangMotivering("3", function () {
+	                        location.href = appsettings.basepageUri + _desktopmoduleURL + "?sida=kk_aj_deniedansokningarView";
+	                    });
+	                } else {
+	                    motiveringbox.addClass('markborderRed');
+	                };
+	            return false;
+	        });
+
+	        $('body').on('keydown', '.motivering', function (event) {
+	            $('.motivering').removeClass('markborderRed');
+	        });
+	        //detaljvy event END---------------------------------------------------------------------------
+	        //Detaljvy EDIT event START---------------------------------------------------------------------
+	        
+	        $('body').on('click', '.kk_aj_nymediabutton', function (event) {
+	            $(".kk_aj_nymediabox").show();
+	            return false;
+	        });
+	        $('body').on('click', '.kk_aj_Avbrytnymediabox', function (event) {
+	            $(".kk_aj_nymediabox").hide();
+	            return false;
+	        });
+	        $('body').on('click', '.kk_aj_btnaddfakta', function (event) {
+	            $(".kk_aj_addfaktablock").show();
+	            return false;
+	        });
+	        $('body').on('click', '.kk_aj_btnremovenewfakta', function (event) {
+	            $(".kk_aj_addfaktablock").hide();
+	            return false;
+	        });
+	        
+	        $('body').on('keydown', '#testauto', function (event) {
+	           
+
+	            $(this).autocomplete({
+	                //source: "http://localhost:60485/Api/helper/autocomplete/val/bio/devkey/alf?type=json&callback=testar",
+	                source: function (request, response) {
+	                    $.ajax({
+	                        url: "http://localhost:60485/Api/helper/autocomplete/val/"+request.term+"/devkey/alf?type=json&callback=testar",
+	                        dataType: "json",                        
+	                        success: function (data) {
+	                            response(data.kk_aj_admin.Utovarelist);
+	                        }
+	                    });
+	                },
+	                minLength: 2,
+	                select: function (event, ui) {                    
+	                    $('#testauto').val(ui.item.Organisation);
+	                    $('.kk_aj_kontaktnamn').html(ui.item.Fornamn + " " + ui.item.Efternamn);
+	                    $('.kk_aj_kontaktadress').html(ui.item.Adress);
+	                    $('.kk_aj_kontaktpostnrort').html(ui.item.Postnr + " " + ui.item.Ort);
+	                    $('.kk_aj_kontaktkommun').html(ui.item.Kommun);
+
+	                    $('.kk_aj_kontaktorganisation').html(ui.item.Organisation);
+	                    $('.kk_aj_kontaktTelefon').html(ui.item.Telefon);
+	                    $('.kk_aj_kontaktEpost').html(ui.item.Epost);
+	                    $('.kk_aj_kontaktHemsida').html(ui.item.Weburl);
+	                    return false;
+	                }
+	            }).autocomplete("instance")._renderItem = function (ul, item) {
+	                return $("<li>")
+	                  .append("<div>" + item.Organisation + " - kontakt: "+ item.Fornamn + " " + item.Efternamn +  "</div>")
+	                  .appendTo(ul);
 	            };
 
+	            ;
 
 
+	        });
+	        
+	        
+	        //Detaljvy EDIT event END-----------------------------------------------------------------------
 
-	        });//ready function end 
-	      
+	        $(window).on('popstate', function (e) {
+	            var match,
+	                pl = /\+/g,  // Regex for replacing addition symbol with a space
+	                search = /([^&=]+)=?([^&]*)/g,
+	                decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+	                query = window.location.search.substring(1);
 
-	        var menyIsActive = function () {
-	            var pageType = $('.kk_aj_CurrentPageType').html();
-	            $('.sidebar-menu li').removeClass('active');
+	            urlParams = {};
+	            while (match = search.exec(query))
+	                urlParams[decode(match[1])] = decode(match[2]);
 
-	            switch (pageType) {
-	                case "kk_aj_startView":
-	                    $('.menystart').addClass('active');
-	                    break;
-	                case "kk_aj_ansokningarView":
-	                    $('.menyansokningar').addClass('active');
-	                    break;
-	                case "kk_aj_diarieView":
-	                    $('.menydiarielog').addClass('active');
-	                    break;
-	                case "kk_aj_detailView":
-	                    $('.menyansokningar').addClass('active');
-	                    break;
-	                default:
-	                    $('.menystart').addClass('active');
-	                    break;
+	            if (urlParams.id) {
+	                appsettings.detailetemplate.detailid = urlParams.id;
+	                console.log("sida id= " + urlParams.id);
 	            };
-	        }
+	            
 
-	        var validateform = function () {
+	            if (urlParams.p) {
+	                var setting = appsettings.pagerHandler;
+	                console.log('search ' + setting);
 
-	        };
+	                var next = urlParams.p;
+	                console.log('search ' + next);
+
+	                if (setting.page_max_size >= next) {
+	                    setting.page_currentlimit = parseInt(setting.page_currentlimit) + parseInt(setting.page_item_per_page);
+	                    console.log("search setting.page_currentlimit " + setting.page_currentlimit + " setting.page_currentdataset: " + setting.page_currentdataset)
+	                    console.log("search setting.page_currenttemplate " + setting.page_currenttemplate + " next " + next + ", setting.page_currentlimit " + setting.page_currentlimit);
+	                    loadpageHandler.pagechanger(setting.page_currentdataset, setting.page_currenttemplate, next, setting.page_currentlimit);
+	                }
+
+	            } else {
+	                if (urlParams.sida) {
+	                    console.log("sida= " + urlParams.sida);
+	                    loadlistView(urlParams.sida);
+	                }
+	            }
+	        });
+	        
+	    },
+	    laddanysida: function (sidvy) {
+	        loadlistView(sidvy);
+	    },
+	    updatacontentheader: function (listview, options) {
+	        updateansokHeaderjquery(listview, options);
 	    }
 	}
 
+	var updateansokHeaderjquery = function (currentListView, options) {
+	    var classname = "";
+	    var headertext = "";
+	    var activeclass = "";
+	    var searchtyp ="nya";
+	    $('.kk_aj_approveannons').hide();
+
+	    switch (currentListView) {
+	        case "kk_aj_ansokningarView":            
+	            classname ="label-primary";
+	            headertext= "Nya ansökningar";
+	            activeclass = ".kk_aj_nyansokanmenu";
+	            searchtyp = "nya";
+	            break;
+	        case "kk_aj_approvedansokningarView":
+	            classname ="label-success";
+	            headertext= "Godkända";
+	            activeclass = ".kk_aj_approvedansokanmenu";
+	            searchtyp = "approved";
+	            $('.kk_aj_approveannons').show();
+	            break;
+	        case "kk_aj_deniedansokningarView":
+	            classname ="label-danger";
+	            headertext="Nekade";
+	            activeclass = ".kk_aj_deniedansokanmenu";
+	            searchtyp = "denied";
+	            break;
+	        case "kk_aj_archiveansokningarView":
+	            classname ="";
+	            headertext= "Arkiv";
+	            activeclass = ".kk_aj_archiveansokanmenu";
+	            searchtyp = "archive";
+	            break;
+	        case "kk_aj_search_nyaansokningarView":
+	            classname = "label-primary";
+	            headertext = "Nya ansökningar - Sökresultat";
+	            activeclass = ".kk_aj_nyansokanmenu";
+	            searchtyp = "nya";
+	            break;
+	        case "kk_aj_search_approvedansokningarView":
+	            classname = "label-success";
+	            headertext = "Godkända - Sökresultat";
+	            activeclass = ".kk_aj_approvedansokanmenu";
+	            searchtyp = "approved";
+	            break;
+	        case "kk_aj_search_deniedansokningarView":
+	            classname = "label-danger";
+	            headertext = "Nekade - Sökresultat";
+	            activeclass = ".kk_aj_deniedansokanmenu";
+	            searchtyp = "denied";
+	            break;
+	        case "kk_aj_search_archiveansokningarView":
+	            classname = "";
+	            headertext = "Arkiv - Sökresultat";
+	            activeclass = ".kk_aj_archiveansokanmenu";
+	            searchtyp = "archive";
+	            break;
+	           
+	    };
+	    
+	   
+	    if (options != "detailview") {
+	        $('.kk_aj_ansokningar').html('<tr><td><div class="kk_aj_loader"></div></td></tr>');
+	        $('.kk_aj_ansokanboxheader').attr('class', $('.kk_aj_ansokanboxheader').attr('class').replace(/(^|\s)label-\S+/g, '')).addClass(classname);
+	        $('.kk_aj_box-title').html(headertext);
+	        $('.kk_aj_ansoksearchform').attr('placeholder', 'Sök i ' + headertext);
+	        $('.kk_aj_ansoksearchform').attr('rel', searchtyp);
+	        $('.kk_aj_box-title').attr('rel', currentListView);
+	    }
+	    
+
+	    $('.kk_aj_ansokanmenu li.active').removeClass('active');
+	    $(activeclass).addClass('active');
+	};
+
+
+	var loadlistView = function (getlistview, sortobj, val) {
+	    updateansokHeaderjquery(getlistview);
+	    console.log("sök getlistview: " + getlistview);
+	    loadpageHandler.pageloader(getlistview, sortobj,val);
+	}
+
+	var updatemainannonscount = function () {
+	    var classtocheck = ".kk_aj_archiveansokningar";
+	    if ($(classtocheck + " span").length) {
+	        $(classtocheck + ' .label').html('2222');
+	    } else {
+	        $(classtocheck).append('</i> Nekade <span class="label label-danger pull-right kk_aj_deniedcount">65</span>');
+	    };
+
+	};
+
+	var resetsearchformdata = function () {
+	    $('.kk_aj_ansoksearchform').val("");
+	};
+
+	var updateArrangemangMotivering = function (NyArrStatus, callback) {
+	    var tmpstatusid = parseInt(NyArrStatus) + 1;
+
+	    var postjson = {
+	        CmdTyp:"arrstat",
+	        Userid: appsettings.currentUserid,
+	        Arrid: $('.motiveringEditblock').attr('rel'),
+	        Logtypid:"1",
+	        Logstatusid: tmpstatusid,
+	        Logbeskrivning: $('.motivering').val(),          
+	        UpdValue:NyArrStatus
+	    };
+	    var arridt = postjson.Arrid
+	    loadpageHandler.pagePostParameterUpdater(postjson, function () {
+
+	        callback();        
+	    });
+	    
+	}
+
+
+
 /***/ },
-/* 8 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery UI - v1.12.1 - 2016-09-14
@@ -12044,7 +11407,7 @@
 		if ( true ) {
 
 			// AMD. Register as an anonymous module.
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(4) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(3) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		} else {
 
 			// Browser globals
@@ -30743,7 +30106,1580 @@
 	}));
 
 /***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(jQuery) {var $ = __webpack_require__(3);
+	var appsettings = __webpack_require__(1);
+	var ServiceHandler = __webpack_require__(7);
+	module.exports = {
+	    testar: function (msg) {
+	        alert(msg);
+	    },
+	    pageloader: function (pagetoload, sortobj, val) {
+	       
+	        switch(pagetoload) {
+	            case "kk_aj_startView":                  
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid, "", "top5");
+	                break;
+	            case "kk_aj_ansokningarView": //nya              
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.nyaansokningartemplate, appsettings.currentUserid, sortobj, val);
+	                pagetotalblock();
+	                break;
+	            case "kk_aj_approvedansokningarView": //godkända
+	                //console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.approvedansokningartemplate, appsettings.currentUserid, sortobj, val);
+	                pagetotalblock();
+	                break;
+	            case "kk_aj_deniedansokningarView": //nekade
+	                //console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.deniedansokningartemplate, appsettings.currentUserid, sortobj, val);
+	                break;
+	                pagetotalblock();
+	            case "kk_aj_archiveansokningarView": //arkiv
+	                //console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.archiveansokningartemplate, appsettings.currentUserid, sortobj, val);
+	                pagetotalblock();
+	                break;                
+	            case "kk_aj_diarieView":
+	               // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, "all");
+	                break;
+	            case "kk_aj_detailView":
+	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.detailetemplate, appsettings.currentUserid, sortobj, appsettings.detailetemplate.detailid);
+	                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
+	                break;
+	            case "kk_aj_detailEditView":
+	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.detailEdittemplate, appsettings.currentUserid, sortobj, appsettings.detailEdittemplate.detailid);
+	                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, '', appsettings.detaillogtemplate.arrid);
+	                break;
+	            case "kk_aj_search_nyaansokningarView": //sök i nya              
+	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.searchansokningartemplate.nya, appsettings.currentUserid, sortobj, val);
+	                break;            
+	            case "kk_aj_search_approvedansokningarView": //sök i nya              
+	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.searchansokningartemplate.approved, appsettings.currentUserid, sortobj, val);
+	                break;
+	            case "kk_aj_search_deniedansokningarView": //sök i nya              
+	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.searchansokningartemplate.denied, appsettings.currentUserid, sortobj, val);
+	                break;
+	            case "kk_aj_search_archiveansokningarView": //sök i nya              
+	                //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.searchansokningartemplate.archive, appsettings.currentUserid, sortobj, val);
+	                break;
+
+	            default:
+	               // console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid);
+	                break;
+	        }
+	        
+	    },
+	    pagechanger: function (currdata, currtemp, sta, limit) {
+	        partpageloadertemplates(currtemp, datapager(currdata,sta, limit), function (data) {
+	            if (data == "ja") {
+	                //console.log("ansokningarpagerinfotemplate");
+	            }
+	        });
+	    },
+	    pagetotalupdater: function () {
+	        pagetotalblock();
+	    },
+	    pageParameterUpdater: function (callTyp, usrid, arrid, val, callback) {
+	        ServiceHandler.updateparam(callTyp, usrid, arrid, val, function (data) {
+	            callback();                           
+	        });
+	    },
+	    pagePostParameterUpdater: function (postjson, callback) {
+	        ServiceHandler.updatePostparam(postjson, function (data) {
+	            callback();
+	        });
+	    }
+	};
+
+	var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
+	    var i = 0;
+	       
+	    $.each(pagetemplate, function( obj, value ) {       
+	        
+	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
+	          
+	            //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
+	           if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl")) {
+	                if (value.templatename != "StartSenasteListTmpl") {
+	                    if (value.templatename != "DiareTmpl") {
+	                        if (data.kk_aj_admin.ansokningarlista) {
+	                            var sortorder;
+	                            var sortobjtosearch;
+
+	                            if (sortera != undefined) {
+	                                // 2=ansokningtitle, 4= ansokningutovare                     
+	                                sortorder = sortera.order;
+	                                sortobjtosearch = sortera.tosort;
+	                            }
+
+	                            //"tosort": "title", "order": "down"
+	                            data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
+	                                if (sortorder == "down") {
+	                                    if (a[sortobjtosearch] == b[sortobjtosearch])
+	                                        return 0;
+	                                    if (a[sortobjtosearch] < b[sortobjtosearch])
+	                                        return -1;
+	                                    if (a[sortobjtosearch] > b[sortobjtosearch])
+	                                        return 1;
+	                                } else {
+	                                    if (a[sortobjtosearch] == b[sortobjtosearch])
+	                                        return 0;
+	                                    if (a[sortobjtosearch] > b[sortobjtosearch])
+	                                        return -1;
+	                                    if (a[sortobjtosearch] < b[sortobjtosearch])
+	                                        return 1;
+	                                }
+	                            });
+	                            var test = data;
+	                            appsettings.pagerHandler.page_currentdataset = test;
+
+	                            appsettings.pagerHandler.page_currenttemplate = value;
+	                            appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
+	                            data = datapager(data);
+
+	                            partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
+	                                if (data == "ja") {
+	                                    pagetotalblock();
+	                                    // console.log("ansokningarpagerinfotemplate");
+	                                }
+	                            });
+	                        }
+	                    };
+	                };
+	            };
+	            loadpagetemplates(value, data, function (data) {
+	                if (data == "ja") {
+	                   // console.log("KLART");                    
+	                }
+	            });
+	        });
+	        //ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
+	        //    loadpagetemplates(pagetemplate[obj], data);
+	    });
+	   
+	}
+
+
+	var loadpagetemplates = function (template, currentdata,callback) {
+	    
+	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
+	        var temptpl = Handlebars.compile(data);
+
+	        updatecountmenybox(currentdata);
+	        $(template.targetdiv).html(temptpl(currentdata));
+	        callback("ja");
+	    }, 'html');
+
+	}
+
+	var partpageloadertemplates = function (template, currentdata, callback) {
+	   
+	    $.get(appsettings.htmltemplateURL + "/" + template.filename, function (data) {
+	        var temptpl = Handlebars.compile(data);
+
+	        //console.log("71. " + template.filename + " klar att levereras");
+	        $(template.targetdiv).html(temptpl(currentdata));
+	        callback("ja");
+	    }, 'html');
+
+
+	}
+
+	var updatecountmenybox = function (data) {
+	    
+	    if (data.kk_aj_admin.nyaansokningarcount != undefined) {       
+	        if (data.kk_aj_admin.nyaansokningarcount) {
+	            $('.kk_aj_newcount').show();
+	            $('.kk_aj_newcount').html(data.kk_aj_admin.nyaansokningarcount);
+	        } else {            
+	            $('.kk_aj_newcount').hide();
+	        }  
+	        if (data.kk_aj_admin.approvedansokningarcount) {
+	            $('.kk_aj_approvedcount').show();
+	            $('.kk_aj_approvedcount').html(data.kk_aj_admin.approvedansokningarcount);
+	        } else {            
+	            $('.kk_aj_approvedcount').hide();
+	        }  
+	        if (data.kk_aj_admin.deniedansokningarcount){
+	            $('.kk_aj_deniedcount').show();
+	            $('.kk_aj_deniedcount').html(data.kk_aj_admin.deniedansokningarcount);
+	        } else {            
+	            $('.kk_aj_deniedcount').hide();
+	        }                    
+	    }
+	    if (data.kk_aj_admin.userinfo != undefined) {
+	        $('.kk_aj_menyNamn').html('<p>' + data.kk_aj_admin.userinfo.username + '</p>');
+	        $('.kk_aj_menyNamn').append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
+	        $('.kk_aj_menyAvatar img').attr('src', data.kk_aj_admin.userinfo.useravatar)
+	    }
+	    //console.log("inne i test")
+	};
+
+
+	var datapager = function(datat,sta,limit) {
+	    var retdata = jQuery.extend(true, {}, datat);
+	    var settings = appsettings.pagerHandler;
+	    appsettings.pagerHandler.page_max_size = datat.kk_aj_admin.ansokningarlista.ansokningar.length;//var max_size=b.length;
+	    
+	    //appsettings.pagerHandler.page_currentlimit = //appsettings.pagerHandler.page_item_per_page; //10
+	    var b = datat.kk_aj_admin.ansokningarlista.ansokningar;
+	    retdata.kk_aj_admin.ansokningarlista.ansokningar = [];
+	    
+	    if (typeof sta == 'undefined'){
+	        sta = settings.page_startitem;
+	    }
+	    if (typeof limit == 'undefined') {
+	        limit = settings.page_item_per_page;
+	    }
+
+	    appsettings.pagerHandler.page_currentlimit = limit;
+	    //var elements_per_page = 4;
+	    //var limit = elements_per_page;
+
+
+	    for (var i = sta ; i < limit; i++) {
+	        if (typeof b[i] !== 'undefined') {
+	            var test = {
+	                "ansokningid": b[i]['ansokningid'],
+	                "ansokningdate": b[i]['ansokningdate'],
+	                "ansokningtitle": b[i]['ansokningtitle'],
+	                "ansokningsubtitle": b[i]['ansokningsubtitle'],
+	                "ansokningutovare": b[i]['ansokningutovare'],
+	                "ansokningurl": b[i]['ansokningurl'],
+	                "ansokningbilaga": b[i]['ansokningbilaga'],
+	                "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
+	                "ansokninglast": b[i]['ansokninglast'],
+	                "ansokningkonstform": b[i]['ansokningkonstform'],
+	                "ansokningstatus": b[i]['ansokningstatus']
+	            };
+
+	            retdata.kk_aj_admin.ansokningarlista.ansokningar.push(test);
+	        }
+	    }
+	    return retdata;
+	}
+
+
+	var pagetotalblock = function () {
+	     
+	    if (appsettings.pagerHandler.page_currentpage <= 1) {
+	        appsettings.pagerHandler.page_currentpage = 1;
+	    }
+	    if (appsettings.pagerHandler.page_currentpage > appsettings.pagerHandler.page_totalpages) {
+	        appsettings.pagerHandler.page_currentpage = appsettings.pagerHandler.page_totalpages;
+	    }
+	    
+	    var pagehtml = appsettings.pagerHandler.page_currentpage + "/" + appsettings.pagerHandler.page_totalpages;
+
+	    $('.kk_aj_pageToTotal').html(pagehtml);
+
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(3);
+	var appsettings = __webpack_require__(1);
+	module.exports = {
+	    testar: function (msg) {
+	        alert(msg);
+	    },
+	    updateparam: function (callTyp, usrid, arrid, val, callback) {
+	        
+	        var currurl="";
+	        switch(callTyp) {
+	            case "UpdateLookedAtParam":
+	                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
+	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "UpdateArrstatusParam":
+	                //currurl = "/updatearrangemang/arrstat/id/2/uid/2/val/2/devkey/alf?type=json&callback=testar;
+	                currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "UpdatePublishedParam":
+	                //currurl = "/updatearrangemang/pub/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
+	                currurl = appsettings.localOrServerURL + "/updatearrangemang/pub/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            default:
+	                currurl = "http://kulturkatalog.kivdev.se:8080/Api_v1/test/devkey/testar";
+	                break;
+	        }
+
+	        //console.log("2. servicen hämtar data");
+	        $.ajax({
+	            async: true,
+	            type: "GET",            
+	            url: currurl,
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("Parameter updaterad: " + callTyp);
+	                callback(data);
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel vid uppdatering av parametrarna!");
+	            }
+	        });
+	       
+	    },
+	    updatePostparam: function (postjson, callback) {
+	        
+	        var currurl = appsettings.localOrServerURL + "/updatearrangemang/upd/devkey/alf";
+	             
+	        console.log("2. servicen POSTAR data"); 
+	        $.ajax({
+	            async: true,
+	            type: "POST",
+	            url: currurl,
+	            data: postjson,
+	            success: function (data) {
+	                console.log("Parameter updaterad: ");
+	                callback(data);
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel vid uppdatering av parametrarna!");
+	            }
+	        });
+
+	    },
+	    utovarData: function (callTyp, Utovarid, callback) {
+	       
+	        var currurl="";
+	        switch(callTyp) {
+	            case "getutovarelista":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                break;
+	            case "getutovarebyid":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                break;            
+	            default:
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+	                break;
+	        }
+
+	        //console.log("2. servicen hämtar data");
+	        $.ajax({
+	            async: true,
+	            type: "GET",            
+	            url: currurl,
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("Parameter updaterad: " + callTyp);
+	                callback(data);
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel vid uppdatering av parametrarna!");
+	            }
+	        });
+	       
+	    },
+	    injectdiarietable: function (callTyp, Utovarid, callback) {        
+
+	        var devkeysnippet = "alf?type=json&callback=testar";
+	        var currurl = "";
+	        switch (callTyp) {
+	            case "bylogid":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                break;
+	            case "bylogStatus":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                break;
+	            default:
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
+	                currurl = appsettings.localOrServerURL + "/log/" + callTyp + "/id/" + Utovarid + "/devkey/" + devkeysnippet;
+	                break;
+	        }
+
+	        //console.log("2. servicen hämtar data");
+	        $.ajax({
+	            async: true,
+	            type: "GET",
+	            url: currurl,
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("LOGG datan är hämta  " + callTyp);
+	                callback(data);
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel vid uppdatering av parametrarna!");
+	            }
+	        });
+	    },
+	    injecttemplateDebug: function (callTyp, usrid, val, callback) {
+	        //console.log("4. servicen hämtar debug data ----->>> " + usrid);
+	        //console.log("injecttemplateDebug: " + usrid);
+	        //console.log("appsettings.currentUserid: " + appsettings.currentUserid);
+	        var currurl="";
+	        switch(callTyp) {
+	            case "kk_aj_userinfojson":
+	                //currurl = "http://localhost:60485/Api_v2/user/usrinfo/id/2/devkey/alf?type=json&callback=testar"
+	                currurl = appsettings.localOrServerURL + "/user/usrinfo/id/" + usrid + "/devkey/" + appsettings.devkeysnippet;
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_userinfojson.aspx";
+	                break;
+	            case "kk_aj_lasteventjson":
+	                //currurl="http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_lasteventjson.aspx";
+	                //currurl="http://localhost:60485/Api_v2/arrangemang/bylatest/uid/4/typ/0/val/top5/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bylatest/uid/" + usrid + "/typ/0/val/" + val + "/devkey/" + appsettings.devkeysnippet;
+
+	                break;
+	            case "kk_aj_nyaansokjson":                
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/1/devkey/" + appsettings.devkeysnippet;
+	                 break;
+	            case "kk_aj_approvedansokjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_approvedansokjson.aspx";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/2/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_deniedansokjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/3/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_archiveansokjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_archiveansokjson.aspx";
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/4/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_diariejson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";    
+	                break;
+	            case "kk_aj_detailvyjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx?id="+ val;
+	                currurl = appsettings.localOrServerURL + "/arrangemang/details/uid/" + usrid + "/typ/" + val + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_detailmotiveringloggjson":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_detaljjson.aspx";
+	                break;
+	            case "kk_aj_topnavjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_topnavjson.aspx";
+	                currurl = appsettings.localOrServerURL + "/notify/get/id/" + usrid + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_SearchNyaansokjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
+	                var search = appsettings.searchansokningartemplate.nya.searchstr;
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/1/val/" + search + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_SearchApprovedansokjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
+	                var search = appsettings.searchansokningartemplate.approved.searchstr;
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/2/val/" + search + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_SearchDeniedansokjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
+	                var search = appsettings.searchansokningartemplate.denied.searchstr;
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/3/val/" + search + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_SearchArchiveansokjson":
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_deniedansokjson.aspx";                              
+	                var search = appsettings.searchansokningartemplate.archive.searchstr;
+	                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_detailloggListjson":
+	                //currurl = "http://localhost:60485/Api_v2/log/byarrid/id/1/devkey/alf?type=json&callback=testar";
+	                currurl = appsettings.localOrServerURL + "/log/byarrid/id/" + val + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_UpdateLookedAt":
+	                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
+	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + val + "/uid/" + usrid + "/val/ja/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            default:
+	                // resultat är en empty json response
+	                currurl =""
+	                break;
+	        }
+	        if (currurl != "") {
+
+	        $.ajax({
+	            type: "GET",
+	            //url: appsettings.localOrServerURL + "/" + callTyp + "/devkey/testar",
+	            url: currurl, //"kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_json.aspx",
+	            dataType: "json",
+	            success: function (data) {
+	               console.log("5. servicen har hämtat debugg datan from " + callTyp);
+	                callback(data)
+
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel med debugdatan!");
+	            }
+	        });
+
+	        } else {
+	            var emptyjsonresponse = { "kk_aj_admin": { "status": "emptyjson" } };
+	            callback(emptyjsonresponse);
+	        }
+	    }
+	}
+
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($, jQuery) {
+
+	/*
+	 * jQuery Autocomplete plugin 1.1
+	 *
+	 * Copyright (c) 2009 Jörn Zaefferer
+	 *
+	 * Dual licensed under the MIT and GPL licenses:
+	 *   http://www.opensource.org/licenses/mit-license.php
+	 *   http://www.gnu.org/licenses/gpl.html
+	 *
+	 * Revision: $Id: jquery.autocomplete.js 15 2009-08-22 10:30:27Z joern.zaefferer $
+	 */
+	module.exports = {
+	    autocompleteInit: function (domID) {
+
+	        
+	            $.ajax({
+	                type: "GET",
+	                url: "http://dnndev.me/desktopmodules/kk_aj_utovareView/katalogautosearch.html",
+	                data: city = $(domID).value,
+	                success: function (data) {
+	                    var refinedlist = data.split(",");
+	                    $(domID).autocomplete(refinedlist);
+	                }
+	            });
+
+	       
+
+	        ; (function ($) {
+
+	            $.fn.extend({
+	                autocomplete: function (urlOrData, options) {
+	                    var isUrl = typeof urlOrData == "string";
+	                    options = $.extend({}, $.Autocompleter.defaults, {
+	                        url: isUrl ? urlOrData : null,
+	                        data: isUrl ? null : urlOrData,
+	                        delay: isUrl ? $.Autocompleter.defaults.delay : 10,
+	                        max: options && !options.scroll ? 10 : 150
+	                    }, options);
+
+	                    // if highlight is set to false, replace it with a do-nothing function
+	                    options.highlight = options.highlight || function (value) { return value; };
+
+	                    // if the formatMatch option is not specified, then use formatItem for backwards compatibility
+	                    options.formatMatch = options.formatMatch || options.formatItem;
+
+	                    return this.each(function () {
+	                        new $.Autocompleter(this, options);
+	                    });
+	                },
+	                result: function (handler) {
+	                    return this.bind("result", handler);
+	                },
+	                search: function (handler) {
+	                    return this.trigger("search", [handler]);
+	                },
+	                flushCache: function () {
+	                    return this.trigger("flushCache");
+	                },
+	                setOptions: function (options) {
+	                    return this.trigger("setOptions", [options]);
+	                },
+	                unautocomplete: function () {
+	                    return this.trigger("unautocomplete");
+	                }
+	            });
+
+	            $.Autocompleter = function (input, options) {
+
+	                var KEY = {
+	                    UP: 38,
+	                    DOWN: 40,
+	                    DEL: 46,
+	                    TAB: 9,
+	                    RETURN: 13,
+	                    ESC: 27,
+	                    COMMA: 188,
+	                    PAGEUP: 33,
+	                    PAGEDOWN: 34,
+	                    BACKSPACE: 8
+	                };
+
+	                // Create $ object for input element
+	                var $input = $(input).attr("autocomplete", "off").addClass(options.inputClass);
+
+	                var timeout;
+	                var previousValue = "";
+	                var cache = $.Autocompleter.Cache(options);
+	                var hasFocus = 0;
+	                var lastKeyPressCode;
+	                var config = {
+	                    mouseDownOnSelect: false
+	                };
+	                var select = $.Autocompleter.Select(options, input, selectCurrent, config);
+
+	                var blockSubmit;
+
+	                // prevent form submit in opera when selecting with return key
+	                $.browser.opera && $(input.form).bind("submit.autocomplete", function () {
+	                    if (blockSubmit) {
+	                        blockSubmit = false;
+	                        return false;
+	                    }
+	                });
+
+	                // only opera doesn't trigger keydown multiple times while pressed, others don't work with keypress at all
+	                $input.bind(($.browser.opera ? "keypress" : "keydown") + ".autocomplete", function (event) {
+	                    // a keypress means the input has focus
+	                    // avoids issue where input had focus before the autocomplete was applied
+	                    hasFocus = 1;
+	                    // track last key pressed
+	                    lastKeyPressCode = event.keyCode;
+	                    switch (event.keyCode) {
+
+	                        case KEY.UP:
+	                            event.preventDefault();
+	                            if (select.visible()) {
+	                                select.prev();
+	                            } else {
+	                                onChange(0, true);
+	                            }
+	                            break;
+
+	                        case KEY.DOWN:
+	                            event.preventDefault();
+	                            if (select.visible()) {
+	                                select.next();
+	                            } else {
+	                                onChange(0, true);
+	                            }
+	                            break;
+
+	                        case KEY.PAGEUP:
+	                            event.preventDefault();
+	                            if (select.visible()) {
+	                                select.pageUp();
+	                            } else {
+	                                onChange(0, true);
+	                            }
+	                            break;
+
+	                        case KEY.PAGEDOWN:
+	                            event.preventDefault();
+	                            if (select.visible()) {
+	                                select.pageDown();
+	                            } else {
+	                                onChange(0, true);
+	                            }
+	                            break;
+
+	                            // matches also semicolon
+	                        case options.multiple && $.trim(options.multipleSeparator) == "," && KEY.COMMA:
+	                        case KEY.TAB:
+	                        case KEY.RETURN:
+	                            if (selectCurrent()) {
+	                                // stop default to prevent a form submit, Opera needs special handling
+	                                event.preventDefault();
+	                                blockSubmit = true;
+	                                return false;
+	                            }
+	                            break;
+
+	                        case KEY.ESC:
+	                            select.hide();
+	                            break;
+
+	                        default:
+	                            clearTimeout(timeout);
+	                            timeout = setTimeout(onChange, options.delay);
+	                            break;
+	                    }
+	                }).focus(function () {
+	                    // track whether the field has focus, we shouldn't process any
+	                    // results if the field no longer has focus
+	                    hasFocus++;
+	                }).blur(function () {
+	                    hasFocus = 0;
+	                    if (!config.mouseDownOnSelect) {
+	                        hideResults();
+	                    }
+	                }).click(function () {
+	                    // show select when clicking in a focused field
+	                    if (hasFocus++ > 1 && !select.visible()) {
+	                        onChange(0, true);
+	                    }
+	                }).bind("search", function () {
+	                    // TODO why not just specifying both arguments?
+	                    var fn = (arguments.length > 1) ? arguments[1] : null;
+	                    function findValueCallback(q, data) {
+	                        var result;
+	                        if (data && data.length) {
+	                            for (var i = 0; i < data.length; i++) {
+	                                if (data[i].result.toLowerCase() == q.toLowerCase()) {
+	                                    result = data[i];
+	                                    break;
+	                                }
+	                            }
+	                        }
+	                        if (typeof fn == "function") fn(result);
+	                        else $input.trigger("result", result && [result.data, result.value]);
+	                    }
+	                    $.each(trimWords($input.val()), function (i, value) {
+	                        request(value, findValueCallback, findValueCallback);
+	                    });
+	                }).bind("flushCache", function () {
+	                    cache.flush();
+	                }).bind("setOptions", function () {
+	                    $.extend(options, arguments[1]);
+	                    // if we've updated the data, repopulate
+	                    if ("data" in arguments[1])
+	                        cache.populate();
+	                }).bind("unautocomplete", function () {
+	                    select.unbind();
+	                    $input.unbind();
+	                    $(input.form).unbind(".autocomplete");
+	                });
+
+
+	                function selectCurrent() {
+	                    var selected = select.selected();
+	                    if (!selected)
+	                        return false;
+
+	                    var v = selected.result;
+	                    previousValue = v;
+
+	                    if (options.multiple) {
+	                        var words = trimWords($input.val());
+	                        if (words.length > 1) {
+	                            var seperator = options.multipleSeparator.length;
+	                            var cursorAt = $(input).selection().start;
+	                            var wordAt, progress = 0;
+	                            $.each(words, function (i, word) {
+	                                progress += word.length;
+	                                if (cursorAt <= progress) {
+	                                    wordAt = i;
+	                                    return false;
+	                                }
+	                                progress += seperator;
+	                            });
+	                            words[wordAt] = v;
+	                            // TODO this should set the cursor to the right position, but it gets overriden somewhere
+	                            //$.Autocompleter.Selection(input, progress + seperator, progress + seperator);
+	                            v = words.join(options.multipleSeparator);
+	                        }
+	                        v += options.multipleSeparator;
+	                    }
+
+	                    $input.val(v);
+	                    hideResultsNow();
+	                    $input.trigger("result", [selected.data, selected.value]);
+	                    return true;
+	                }
+
+	                function onChange(crap, skipPrevCheck) {
+	                    if (lastKeyPressCode == KEY.DEL) {
+	                        select.hide();
+	                        return;
+	                    }
+
+	                    var currentValue = $input.val();
+
+	                    if (!skipPrevCheck && currentValue == previousValue)
+	                        return;
+
+	                    previousValue = currentValue;
+
+	                    currentValue = lastWord(currentValue);
+	                    if (currentValue.length >= options.minChars) {
+	                        $input.addClass(options.loadingClass);
+	                        if (!options.matchCase)
+	                            currentValue = currentValue.toLowerCase();
+	                        request(currentValue, receiveData, hideResultsNow);
+	                    } else {
+	                        stopLoading();
+	                        select.hide();
+	                    }
+	                };
+
+	                function trimWords(value) {
+	                    if (!value)
+	                        return [""];
+	                    if (!options.multiple)
+	                        return [$.trim(value)];
+	                    return $.map(value.split(options.multipleSeparator), function (word) {
+	                        return $.trim(value).length ? $.trim(word) : null;
+	                    });
+	                }
+
+	                function lastWord(value) {
+	                    if (!options.multiple)
+	                        return value;
+	                    var words = trimWords(value);
+	                    if (words.length == 1)
+	                        return words[0];
+	                    var cursorAt = $(input).selection().start;
+	                    if (cursorAt == value.length) {
+	                        words = trimWords(value)
+	                    } else {
+	                        words = trimWords(value.replace(value.substring(cursorAt), ""));
+	                    }
+	                    return words[words.length - 1];
+	                }
+
+	                // fills in the input box w/the first match (assumed to be the best match)
+	                // q: the term entered
+	                // sValue: the first matching result
+	                function autoFill(q, sValue) {
+	                    // autofill in the complete box w/the first match as long as the user hasn't entered in more data
+	                    // if the last user key pressed was backspace, don't autofill
+	                    if (options.autoFill && (lastWord($input.val()).toLowerCase() == q.toLowerCase()) && lastKeyPressCode != KEY.BACKSPACE) {
+	                        // fill in the value (keep the case the user has typed)
+	                        $input.val($input.val() + sValue.substring(lastWord(previousValue).length));
+	                        // select the portion of the value not typed by the user (so the next character will erase)
+	                        $(input).selection(previousValue.length, previousValue.length + sValue.length);
+	                    }
+	                };
+
+	                function hideResults() {
+	                    clearTimeout(timeout);
+	                    timeout = setTimeout(hideResultsNow, 200);
+	                };
+
+	                function hideResultsNow() {
+	                    var wasVisible = select.visible();
+	                    select.hide();
+	                    clearTimeout(timeout);
+	                    stopLoading();
+	                    if (options.mustMatch) {
+	                        // call search and run callback
+	                        $input.search(
+	                            function (result) {
+	                                // if no value found, clear the input box
+	                                if (!result) {
+	                                    if (options.multiple) {
+	                                        var words = trimWords($input.val()).slice(0, -1);
+	                                        $input.val(words.join(options.multipleSeparator) + (words.length ? options.multipleSeparator : ""));
+	                                    }
+	                                    else {
+	                                        $input.val("");
+	                                        $input.trigger("result", null);
+	                                    }
+	                                }
+	                            }
+	                        );
+	                    }
+	                };
+
+	                function receiveData(q, data) {
+	                    if (data && data.length && hasFocus) {
+	                        stopLoading();
+	                        select.display(data, q);
+	                        autoFill(q, data[0].value);
+	                        select.show();
+	                    } else {
+	                        hideResultsNow();
+	                    }
+	                };
+
+	                function request(term, success, failure) {
+	                    if (!options.matchCase)
+	                        term = term.toLowerCase();
+	                    var data = cache.load(term);
+	                    // recieve the cached data
+	                    if (data && data.length) {
+	                        success(term, data);
+	                        // if an AJAX url has been supplied, try loading the data now
+	                    } else if ((typeof options.url == "string") && (options.url.length > 0)) {
+
+	                        var extraParams = {
+	                            timestamp: +new Date()
+	                        };
+	                        $.each(options.extraParams, function (key, param) {
+	                            extraParams[key] = typeof param == "function" ? param() : param;
+	                        });
+
+	                        $.ajax({
+	                            // try to leverage ajaxQueue plugin to abort previous requests
+	                            mode: "abort",
+	                            // limit abortion to this input
+	                            port: "autocomplete" + input.name,
+	                            dataType: options.dataType,
+	                            url: options.url,
+	                            data: $.extend({
+	                                q: lastWord(term),
+	                                limit: options.max
+	                            }, extraParams),
+	                            success: function (data) {
+	                                var parsed = options.parse && options.parse(data) || parse(data);
+	                                cache.add(term, parsed);
+	                                success(term, parsed);
+	                            }
+	                        });
+	                    } else {
+	                        // if we have a failure, we need to empty the list -- this prevents the the [TAB] key from selecting the last successful match
+	                        select.emptyList();
+	                        failure(term);
+	                    }
+	                };
+
+	                function parse(data) {
+	                    var parsed = [];
+	                    var rows = data.split("\n");
+	                    for (var i = 0; i < rows.length; i++) {
+	                        var row = $.trim(rows[i]);
+	                        if (row) {
+	                            row = row.split("|");
+	                            parsed[parsed.length] = {
+	                                data: row,
+	                                value: row[0],
+	                                result: options.formatResult && options.formatResult(row, row[0]) || row[0]
+	                            };
+	                        }
+	                    }
+	                    return parsed;
+	                };
+
+	                function stopLoading() {
+	                    $input.removeClass(options.loadingClass);
+	                };
+
+	            };
+
+	            $.Autocompleter.defaults = {
+	                inputClass: "ac_input",
+	                resultsClass: "ac_results",
+	                loadingClass: "ac_loading",
+	                minChars: 1,
+	                delay: 400,
+	                matchCase: false,
+	                matchSubset: true,
+	                matchContains: false,
+	                cacheLength: 10,
+	                max: 100,
+	                mustMatch: false,
+	                extraParams: {},
+	                selectFirst: true,
+	                formatItem: function (row) { return row[0]; },
+	                formatMatch: null,
+	                autoFill: false,
+	                width: 0,
+	                multiple: false,
+	                multipleSeparator: ", ",
+	                highlight: function (value, term) {
+	                    return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
+	                },
+	                scroll: true,
+	                scrollHeight: 180
+	            };
+
+	            $.Autocompleter.Cache = function (options) {
+
+	                var data = {};
+	                var length = 0;
+
+	                function matchSubset(s, sub) {
+	                    if (!options.matchCase)
+	                        s = s.toLowerCase();
+	                    var i = s.indexOf(sub);
+	                    if (options.matchContains == "word") {
+	                        i = s.toLowerCase().search("\\b" + sub.toLowerCase());
+	                    }
+	                    if (i == -1) return false;
+	                    return i == 0 || options.matchContains;
+	                };
+
+	                function add(q, value) {
+	                    if (length > options.cacheLength) {
+	                        flush();
+	                    }
+	                    if (!data[q]) {
+	                        length++;
+	                    }
+	                    data[q] = value;
+	                }
+
+	                function populate() {
+	                    if (!options.data) return false;
+	                    // track the matches
+	                    var stMatchSets = {},
+	                        nullData = 0;
+
+	                    // no url was specified, we need to adjust the cache length to make sure it fits the local data store
+	                    if (!options.url) options.cacheLength = 1;
+
+	                    // track all options for minChars = 0
+	                    stMatchSets[""] = [];
+
+	                    // loop through the array and create a lookup structure
+	                    for (var i = 0, ol = options.data.length; i < ol; i++) {
+	                        var rawValue = options.data[i];
+	                        // if rawValue is a string, make an array otherwise just reference the array
+	                        rawValue = (typeof rawValue == "string") ? [rawValue] : rawValue;
+
+	                        var value = options.formatMatch(rawValue, i + 1, options.data.length);
+	                        if (value === false)
+	                            continue;
+
+	                        var firstChar = value.charAt(0).toLowerCase();
+	                        // if no lookup array for this character exists, look it up now
+	                        if (!stMatchSets[firstChar])
+	                            stMatchSets[firstChar] = [];
+
+	                        // if the match is a string
+	                        var row = {
+	                            value: value,
+	                            data: rawValue,
+	                            result: options.formatResult && options.formatResult(rawValue) || value
+	                        };
+
+	                        // push the current match into the set list
+	                        stMatchSets[firstChar].push(row);
+
+	                        // keep track of minChars zero items
+	                        if (nullData++ < options.max) {
+	                            stMatchSets[""].push(row);
+	                        }
+	                    };
+
+	                    // add the data items to the cache
+	                    $.each(stMatchSets, function (i, value) {
+	                        // increase the cache size
+	                        options.cacheLength++;
+	                        // add to the cache
+	                        add(i, value);
+	                    });
+	                }
+
+	                // populate any existing data
+	                setTimeout(populate, 25);
+
+	                function flush() {
+	                    data = {};
+	                    length = 0;
+	                }
+
+	                return {
+	                    flush: flush,
+	                    add: add,
+	                    populate: populate,
+	                    load: function (q) {
+	                        if (!options.cacheLength || !length)
+	                            return null;
+	                        /* 
+	                         * if dealing w/local data and matchContains than we must make sure
+	                         * to loop through all the data collections looking for matches
+	                         */
+	                        if (!options.url && options.matchContains) {
+	                            // track all matches
+	                            var csub = [];
+	                            // loop through all the data grids for matches
+	                            for (var k in data) {
+	                                // don't search through the stMatchSets[""] (minChars: 0) cache
+	                                // this prevents duplicates
+	                                if (k.length > 0) {
+	                                    var c = data[k];
+	                                    $.each(c, function (i, x) {
+	                                        // if we've got a match, add it to the array
+	                                        if (matchSubset(x.value, q)) {
+	                                            csub.push(x);
+	                                        }
+	                                    });
+	                                }
+	                            }
+	                            return csub;
+	                        } else
+	                            // if the exact item exists, use it
+	                            if (data[q]) {
+	                                return data[q];
+	                            } else
+	                                if (options.matchSubset) {
+	                                    for (var i = q.length - 1; i >= options.minChars; i--) {
+	                                        var c = data[q.substr(0, i)];
+	                                        if (c) {
+	                                            var csub = [];
+	                                            $.each(c, function (i, x) {
+	                                                if (matchSubset(x.value, q)) {
+	                                                    csub[csub.length] = x;
+	                                                }
+	                                            });
+	                                            return csub;
+	                                        }
+	                                    }
+	                                }
+	                        return null;
+	                    }
+	                };
+	            };
+
+	            $.Autocompleter.Select = function (options, input, select, config) {
+	                var CLASSES = {
+	                    ACTIVE: "ac_over"
+	                };
+
+	                var listItems,
+	                    active = -1,
+	                    data,
+	                    term = "",
+	                    needsInit = true,
+	                    element,
+	                    list;
+
+	                // Create results
+	                function init() {
+	                    if (!needsInit)
+	                        return;
+	                    element = $("<div/>")
+	                    .hide()
+	                    .addClass(options.resultsClass)
+	                    .css("position", "absolute")
+	                    .appendTo(document.body);
+
+	                    list = $("<ul/>").appendTo(element).mouseover(function (event) {
+	                        if (target(event).nodeName && target(event).nodeName.toUpperCase() == 'LI') {
+	                            active = $("li", list).removeClass(CLASSES.ACTIVE).index(target(event));
+	                            $(target(event)).addClass(CLASSES.ACTIVE);
+	                        }
+	                    }).click(function (event) {
+	                        $(target(event)).addClass(CLASSES.ACTIVE);
+	                        select();
+	                        // TODO provide option to avoid setting focus again after selection? useful for cleanup-on-focus
+	                        input.focus();
+	                        return false;
+	                    }).mousedown(function () {
+	                        config.mouseDownOnSelect = true;
+	                    }).mouseup(function () {
+	                        config.mouseDownOnSelect = false;
+	                    });
+
+	                    if (options.width > 0)
+	                        element.css("width", options.width);
+
+	                    needsInit = false;
+	                }
+
+	                function target(event) {
+	                    var element = event.target;
+	                    while (element && element.tagName != "LI")
+	                        element = element.parentNode;
+	                    // more fun with IE, sometimes event.target is empty, just ignore it then
+	                    if (!element)
+	                        return [];
+	                    return element;
+	                }
+
+	                function moveSelect(step) {
+	                    listItems.slice(active, active + 1).removeClass(CLASSES.ACTIVE);
+	                    movePosition(step);
+	                    var activeItem = listItems.slice(active, active + 1).addClass(CLASSES.ACTIVE);
+	                    if (options.scroll) {
+	                        var offset = 0;
+	                        listItems.slice(0, active).each(function () {
+	                            offset += this.offsetHeight;
+	                        });
+	                        if ((offset + activeItem[0].offsetHeight - list.scrollTop()) > list[0].clientHeight) {
+	                            list.scrollTop(offset + activeItem[0].offsetHeight - list.innerHeight());
+	                        } else if (offset < list.scrollTop()) {
+	                            list.scrollTop(offset);
+	                        }
+	                    }
+	                };
+
+	                function movePosition(step) {
+	                    active += step;
+	                    if (active < 0) {
+	                        active = listItems.size() - 1;
+	                    } else if (active >= listItems.size()) {
+	                        active = 0;
+	                    }
+	                }
+
+	                function limitNumberOfItems(available) {
+	                    return options.max && options.max < available
+	                        ? options.max
+	                        : available;
+	                }
+
+	                function fillList() {
+	                    list.empty();
+	                    var max = limitNumberOfItems(data.length);
+	                    for (var i = 0; i < max; i++) {
+	                        if (!data[i])
+	                            continue;
+	                        var formatted = options.formatItem(data[i].data, i + 1, max, data[i].value, term);
+	                        if (formatted === false)
+	                            continue;
+	                        var li = $("<li/>").html(options.highlight(formatted, term)).addClass(i % 2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
+	                        $.data(li, "ac_data", data[i]);
+	                    }
+	                    listItems = list.find("li");
+	                    if (options.selectFirst) {
+	                        listItems.slice(0, 1).addClass(CLASSES.ACTIVE);
+	                        active = 0;
+	                    }
+	                    // apply bgiframe if available
+	                    if ($.fn.bgiframe)
+	                        list.bgiframe();
+	                }
+
+	                return {
+	                    display: function (d, q) {
+	                        init();
+	                        data = d;
+	                        term = q;
+	                        fillList();
+	                    },
+	                    next: function () {
+	                        moveSelect(1);
+	                    },
+	                    prev: function () {
+	                        moveSelect(-1);
+	                    },
+	                    pageUp: function () {
+	                        if (active != 0 && active - 8 < 0) {
+	                            moveSelect(-active);
+	                        } else {
+	                            moveSelect(-8);
+	                        }
+	                    },
+	                    pageDown: function () {
+	                        if (active != listItems.size() - 1 && active + 8 > listItems.size()) {
+	                            moveSelect(listItems.size() - 1 - active);
+	                        } else {
+	                            moveSelect(8);
+	                        }
+	                    },
+	                    hide: function () {
+	                        element && element.hide();
+	                        listItems && listItems.removeClass(CLASSES.ACTIVE);
+	                        active = -1;
+	                    },
+	                    visible: function () {
+	                        return element && element.is(":visible");
+	                    },
+	                    current: function () {
+	                        return this.visible() && (listItems.filter("." + CLASSES.ACTIVE)[0] || options.selectFirst && listItems[0]);
+	                    },
+	                    show: function () {
+	                        var offset = $(input).offset();
+	                        element.css({
+	                            width: typeof options.width == "string" || options.width > 0 ? options.width : $(input).width(),
+	                            top: offset.top + input.offsetHeight,
+	                            left: offset.left
+	                        }).show();
+	                        if (options.scroll) {
+	                            list.scrollTop(0);
+	                            list.css({
+	                                maxHeight: options.scrollHeight,
+	                                overflow: 'auto'
+	                            });
+
+	                            if ($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
+	                                var listHeight = 0;
+	                                listItems.each(function () {
+	                                    listHeight += this.offsetHeight;
+	                                });
+	                                var scrollbarsVisible = listHeight > options.scrollHeight;
+	                                list.css('height', scrollbarsVisible ? options.scrollHeight : listHeight);
+	                                if (!scrollbarsVisible) {
+	                                    // IE doesn't recalculate width when scrollbar disappears
+	                                    listItems.width(list.width() - parseInt(listItems.css("padding-left")) - parseInt(listItems.css("padding-right")));
+	                                }
+	                            }
+
+	                        }
+	                    },
+	                    selected: function () {
+	                        var selected = listItems && listItems.filter("." + CLASSES.ACTIVE).removeClass(CLASSES.ACTIVE);
+	                        return selected && selected.length && $.data(selected[0], "ac_data");
+	                    },
+	                    emptyList: function () {
+	                        list && list.empty();
+	                    },
+	                    unbind: function () {
+	                        element && element.remove();
+	                    }
+	                };
+	            };
+
+	            $.fn.selection = function (start, end) {
+	                if (start !== undefined) {
+	                    return this.each(function () {
+	                        if (this.createTextRange) {
+	                            var selRange = this.createTextRange();
+	                            if (end === undefined || start == end) {
+	                                selRange.move("character", start);
+	                                selRange.select();
+	                            } else {
+	                                selRange.collapse(true);
+	                                selRange.moveStart("character", start);
+	                                selRange.moveEnd("character", end);
+	                                selRange.select();
+	                            }
+	                        } else if (this.setSelectionRange) {
+	                            this.setSelectionRange(start, end);
+	                        } else if (this.selectionStart) {
+	                            this.selectionStart = start;
+	                            this.selectionEnd = end;
+	                        }
+	                    });
+	                }
+	                var field = this[0];
+	                if (field.createTextRange) {
+	                    var range = document.selection.createRange(),
+	                        orig = field.value,
+	                        teststring = "<->",
+	                        textLength = range.text.length;
+	                    range.text = teststring;
+	                    var caretAt = field.value.indexOf(teststring);
+	                    field.value = orig;
+	                    this.selection(caretAt, caretAt + textLength);
+	                    return {
+	                        start: caretAt,
+	                        end: caretAt + textLength
+	                    }
+	                } else if (field.selectionStart !== undefined) {
+	                    return {
+	                        start: field.selectionStart,
+	                        end: field.selectionEnd
+	                    }
+	                }
+	            };
+
+	        })(jQuery);
+	    }
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
+
+/***/ },
 /* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//här sätts alla pluggin och jquery.ready starters 
+	var $ = __webpack_require__(3);
+	__webpack_require__(5);
+	var appsettings = __webpack_require__(1);
+	var ServiceHandler = __webpack_require__(7);
+	var jsboottbl = __webpack_require__(10);
+	var jsjquerytbl = __webpack_require__(11);
+
+	module.exports = {
+	    jqueryMainPluginEVENTS: function (userid, currpageType) {
+
+	        $(function () {
+	            menyIsActive();
+	            validateform();
+
+
+	            jsboottbl.bootTableInit();
+	            jsjquerytbl.jqueryTableInit();    
+	           
+
+	            if (currpageType == "kk_aj_diarieView") {
+	         
+	                ServiceHandler.injectdiarietable("all", "0", function (datajson) {
+	                
+	                    $('#diarieTable').DataTable({
+	                        "processing": true,
+	                        "stateSave": true,
+	                        "paging": true,
+	                        "lengthChange": true,
+	                        "searching": true,
+	                        "ordering": true,
+	                        "info": true,
+	                        "autoWidth": false,
+	                        "language": {
+	                            "decimal": "",
+	                            "emptyTable": "Det finns inget att visa",
+	                            "info": "Visar _START_ av _END_ totalt _TOTAL_ ",
+	                            "infoEmpty": "Visar 0 av 0 totalt 0",
+	                            "infoFiltered": "(Filtrerat från totalt _MAX_ poster)",
+	                            "infoPostFix": "",
+	                            "thousands": ",",
+	                            "lengthMenu": "Visa _MENU_",
+	                            "loadingRecords": "Laddar...",
+	                            "processing": "Jobbar...",
+	                            "search": "Sök:",
+	                            "zeroRecords": "Inget hittades",
+	                            "paginate": {
+	                                "first": "Först",
+	                                "last": "Sist",
+	                                "next": "Nästa",
+	                                "previous": "Föregående"
+	                            },
+	                            "aria": {
+	                                "sortAscending": ": activate to sort column ascending",
+	                                "sortDescending": ": activate to sort column descending"
+	                            }
+	                        },
+	                        "data": datajson.kk_aj_admin.Logitemlist,
+	                        "columns": [
+	                            { "data": "Arrid", "render": function (data, type, row, meta) {
+	                                if (type === 'display') {
+	                                    data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
+	                                }
+
+	                                return data;
+	                            },
+	                                "width": "5%"
+	                            },
+	                            { "data": "Datum" },
+	                            { "data": "Arrrubrik", "render": function (data, type, row, meta) {
+	                                if (type === 'display') {
+	                                    data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
+	                                }
+
+	                                return data;
+	                            },
+	                                "width": "30%"
+	                            },
+	                            { "data": "Statustypid" },
+	                            { "data": "ArrutovareID" },                       
+	                            { "data": "Arrutovare",
+	                                "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {
+	                                        data = '<a href="' + appsettings.basepageUri + '/katalogenutovarevy?utovarid=' + row.ArrutovareID + '">' + data + '</a>';
+	                                    }
+
+	                                    return data;
+	                                }, "width": "20%"
+	                            },
+	                            { "data": "Beskrivning", "width": "35%" },
+	                            { "data": "ChangebyUsernamn", "width": "5%" },
+	                        
+	                            {
+	                                "data": "Statustyp",
+	                                "width": "5%",
+	                                "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {                                                                     
+	                                        var statuscolor = "";
+	                                        switch (row.Statustypid) {
+	                                            case 1:
+	                                                statuscolor = '<span class="label label-primary">';
+	                                                break;
+	                                            case 2:
+	                                                statuscolor = '<span class="label label-warning">';
+	                                                break;
+	                                            case 3:
+	                                                statuscolor = '<span class="label label-success">';
+	                                                break;
+	                                            case 4:
+	                                                statuscolor = '<span class="label label-danger">';
+	                                                break;
+	                                            case 5:
+	                                                statuscolor = '<span class="label label-info">';
+	                                                break;
+	                                            case 6:
+	                                                statuscolor = '<span class="label label-success">';
+	                                                break;
+	                                            case 7:
+	                                                statuscolor = '<span class="label label-warning">';
+	                                                break;
+	                                            case 8:
+	                                                statuscolor = '<span class="label label">';
+	                                                break;
+	                                            case 9:
+	                                                statuscolor = '<span class="label label-default">';
+	                                                break;
+	                                            case 10:
+	                                                statuscolor = '<span class="label label-danger">';
+	                                                break;
+	                                            default:
+	                                                statuscolor = '<span class="label label-default">';
+	                                                break;
+	                                        }
+	                                                 
+	                                        data = statuscolor + data + '</span>';
+	                                    }
+
+	                                    return data;
+	                                }
+	                            }
+	                        ],
+	                        "columnDefs": [                       
+	                            {
+	                                "targets": [3],
+	                                "visible": false,
+	                                "searchable": false
+	                            },
+	                            {
+	                                "targets": [4],
+	                                "visible": false,
+	                                "searchable": false
+	                            }
+	                        ]
+	                    }
+	                );
+	               
+	            });
+	        }; 
+	       
+	/// REMOVE FROM HERE jsGRID ////////////////////////////////////////////////////////////////////////////////////
+	            if (currpageType == "kk_aj_utovareView") {
+	            };
+	           
+	          
+
+
+	        });//ready function end 
+	      
+
+	        var menyIsActive = function () {
+	            var pageType = $('.kk_aj_CurrentPageType').html();
+	            $('.sidebar-menu li').removeClass('active');
+
+	            switch (pageType) {
+	                case "kk_aj_startView":
+	                    $('.menystart').addClass('active');
+	                    break;
+	                case "kk_aj_ansokningarView":
+	                    $('.menyansokningar').addClass('active');
+	                    break;
+	                case "kk_aj_diarieView":
+	                    $('.menydiarielog').addClass('active');
+	                    break;
+	                case "kk_aj_detailView":
+	                    $('.menyansokningar').addClass('active');
+	                    break;
+	                default:
+	                    $('.menystart').addClass('active');
+	                    break;
+	            };
+	        }
+
+	        var validateform = function () {
+
+	        };
+	    }
+	}
+
+/***/ },
+/* 10 */
 /***/ function(module, exports) {
 
 	        /*! DataTables Bootstrap 3 integration
@@ -30959,7 +31895,7 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.7
@@ -30996,7 +31932,7 @@
 
 	                if (true) {
 	                    // Define as an AMD module if possible
-	                    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(4)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	                    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	                }
 	                else if (typeof exports === 'object') {
 	                    // Node/CommonJS

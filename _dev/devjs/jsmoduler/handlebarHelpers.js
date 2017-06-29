@@ -195,3 +195,49 @@ Handlebars.registerHelper('contenttext', function (text) {
 
     return new Handlebars.SafeString(text);
 });
+
+// kollar om ansökningar har bilaga eller ej
+Handlebars.registerHelper('ifMedia', function (media) {
+    var rethtml = "";
+   
+    switch (media.MediaTyp) {
+        case "1":
+            rethtml = "<li><span class='mailbox-attachment-icon has-img'><img alt='"+media.MediaAlt+"' src='"+media.MediaUrl+"' /></span>";
+            rethtml += "<div class='mailbox-attachment-info'><a href='"+ media.MediaUrl +"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename +"</a>";
+            rethtml += "<span class='mailbox-attachment-size'>";
+            rethtml += media.MediaSize + "<a href='"+ media.MediaUrl +"' class='btn btn-default btn-xs pull-right'><i class='fa fa-cloud-download'></i></a>";
+            rethtml += "</span></div></li>";
+            break;
+        case "2":
+            rethtml = "<li><span class='has-img'>";
+            rethtml += "<iframe width='198' height='131' src='"+ media.MediaUrl+"' frameborder='0' allowfullscreen></iframe>";
+            rethtml += "</span><div class='mailbox-attachment-info'>";
+            rethtml += "<a href='"+ media.MediaUrl+"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename+"</a>";
+            rethtml += "<span class='mailbox-attachment-size'>"+ media.MediaSize+"<a href='"+ media.MediaUrl+"' class='btn btn-default btn-xs pull-right'>";
+            rethtml += "<i class='fa fa-cloud-download'></i></a></span></div></li>";
+            break;        
+    }
+    
+    return rethtml;
+});
+// kollar om ansökningar har bilaga eller ej
+Handlebars.registerHelper('ifEditMedia', function (mediatyp, mediaurl,mediaalt) {
+    var rethtml = "";
+
+    switch (mediatyp) {
+        case "1":
+            rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' />";
+            break;
+        case "2":
+            rethtml = "<iframe width='198' height='131' src='" + mediaurl + "' frameborder='0' allowfullscreen></iframe>";
+            
+            break;
+    }
+
+    return rethtml;
+});
+window.Handlebars.registerHelper('select', function (value, options) {
+    var $el = $('<select />').html(options.fn(this));
+    $el.find('[value="' + value + '"]').attr({ 'selected': 'selected' });
+    return $el.html();
+});

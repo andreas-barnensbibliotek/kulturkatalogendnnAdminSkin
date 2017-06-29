@@ -9,56 +9,68 @@
 	<!-- utovarDetalj start--> 
 <!-- /.box-header -->
 <div class="box-body table-responsive ">
-{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningutovare}}
     <form role="form">
         <!-- text input -->
 		<div class="form-group col-md-12 kk_aj_arrdate">
-		<span class="mailbox-read-time ">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>       
+			<span class="mailbox-read-time ">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>       
 		</div>
-        <div class="form-group col-md-1 kk_aj_arrid">
-            <label>Arrid</label>
-            <input type="text" class="form-control" value="1" disabled>
+		<div class="row">
+        <div class="form-group col-sm-3 col-md-2  kk_aj_arrid">
+            <label>Arrid</label>			
+            <input type="text" class="form-control " value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid}}" disabled>
         </div>
-        <div class="form-group  col-md-12 kk_aj_arrkonstform">
-            <label>Utövare:</label>
-            <select class="form-control">
-                <option>Backa teatern</option>
-                <option selected="selected">Kultur i Väst</option>
-                <option>Depeche Mode</option>
-            </select>
-            <span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
-        </div>
-        <div class="form-group  col-md-12 kk_aj_arrkonstform">
-            <label>Publicerad</label>
-            <div class="radio">
-                <label>
-                    <input name="optionsRadios" id="optionsRadios1" value="ja" checked="" type="radio">
-                    ja
+		<div class="form-group  col-md-9 kk_aj_arrkonstform">          
+            <div class="pull-right"><label>Publicerad: </label>
+			<span class="radio">
+                <label>                    
+                    <input name="optionsRadios" id="optionsRadios1" value="ja" checked="" type="radio">Ja
                 </label>
-            </div>
-            <div class="radio">
+            
                 <label>
                     <input name="optionsRadios" id="optionsRadios2" value="Nej" type="radio">
                     Nej
                 </label>
-            </div>
-        </div>                                  
+            </span>
+			</div>
+        </div>                   
+        </div>
+		
+                       
                                    
         <div class="form-group  col-md-6 kk_aj_arrkonstform">
             <label>Konstform</label>
-            <select class="form-control">
-                <option>dans</option>
-                <option selected="selected">teater</option>
-                <option>film</option>
+			
+            <select id="kk_aj_konstform" class="form-control">
+                {{#select kk_aj_admin.ansokningarlista.ansokningar.0.ansokningkonstform}}
+				<option value="Arkitektur och design">Arkitektur och design</option> 
+				<option value="Dans">Dans</option>
+				<option value="Film och media">Film och media</option>
+				<option value="Konst, form och design">Konst, form och design</option>
+				<option value="Litteratur, berättande, skrivande">Litteratur, berättande, skrivande</option>
+				<option value="Musik">Musik</option>
+				<option value="Natur- och  kulturarv">Natur- och  kulturarv</option>
+				<option value="Nycirkus/cirkus">Nycirkus/cirkus</option>
+				<option value="Slöjd">Slöjd</option>
+				<option value="Teater">Teater</option> 
+				<option value="Teknik och multimedia">Teknik och multimedia</option>
+				<option value="Annan scenkonst">Annan scenkonst</option>
+				{{/select}}
             </select>
             <span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
         </div>
         <div class="form-group  col-md-6 kk_aj_arrkonstform">
             <label>Arangemangstyp</label>
-            <select class="form-control">
-                <option>Föreställning på tuné</option>
-                <option selected="selected">Föreställning på fast scen</option>
-                <option>Författarbesök</option>
+            <select id="kk_aj_arrtyp" class="form-control">
+                {{#select kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtyp}}
+					<option value="Föreställning på tuné">Föreställning på tuné</option> 
+					<option value="Föreställning på fast scen">Föreställning på fast scen</option>
+					<option value="Författarbesök">Författarbesök</option>
+					<option value="Kulturpedagogiska projekt">Kulturpedagogiska projekt</option>
+					<option value="Fortbildningar">Fortbildningar</option>
+					<option value="Museilådor">Museilådor</option>
+					<option value="Resmålsbesök">Resmålsbesök</option>
+					<option value="Skolbio">Skolbio</option>
+				{{/select}}
             </select>
             <span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
         </div>
@@ -78,65 +90,49 @@
             <textarea class="form-control" rows="8" >{{#contenttext kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}{{/contenttext}}</textarea>
             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
         </div>
-                                    
+           <hr>                         
         <div class="form-group col-md-12 kk_aj_arrimages">
             <div>
                 <span>
-                    <button type="button" class="btn btn-default">Lägg till media</button>
+                    <button type="button" class="btn btn-default kk_aj_nymediabutton ">Lägg till media</button>
                 </span>
             </div>
-            </div>
-            <div class="form-group col-md-12 kk_aj_arrimages">
+        </div>
+        <div class="form-group col-md-12 kk_aj_arrimages">
                 <ul class="mailbox-attachments clearfix">
-                    <li class="mailbox-attachment-info">
+				{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMedialist}}
+		
+					<li class="mailbox-attachment-info kk_aj_arrmediablock" data="{{this.MediaID}}>
                         <span class="mailbox-attachment-icon has-img mailbox-attachment-info">
-                            <img src="../../dist/img/kulturkatalogen/mustang_h.jpg">
+                            {{#ifEditMedia this.MediaTyp this.MediaUrl this.MediaAlt}}{{/ifEditMedia}}
                         </span>
                         <div class="mailbox-attachment-info">
                             <label>Url till fil</label>
-                            <input type="text" class="form-control" value="../../dist/img/kulturkatalogen/mustang_h.jpg">
+                            <input type="text" class="form-control kk_aj_mediaurl kk_aj_mediaid" value="{{this.MediaUrl}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <div class="form-group"></div>
                             <label>Alt text</label>
-                            <input type="text" class="form-control" value="mustang">
+                            <input type="text" class="form-control kk_aj_mediaalt" value="{{this.MediaAlt}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <label>Filnamn</label>
-                            <input type="text" class="form-control" value="mustang.jpg">
+                            <input type="text" class="form-control kk_aj_mediafilename" value="{{this.MediaFilename}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
-                            <label>storlek</label>
-                            <input type="text" class="form-control" value="1.9 MB">
+                            <label>Storlek</label>
+                            <input type="text" class="form-control kk_aj_mediasize" value="{{this.MediaSize}}">
+                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
+							<label>Skapare</label>
+                            <input type="text" class="form-control kk_aj_mediafoto" value="{{this.MediaFoto}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                         </div>
                         <div class="form-group pull-right">
-                            <button type="submit" class="btn btn-success">Ändra</button>
-                            <button type="button" class="btn btn-danger">Ta bort</button>
+                            <button type="button" class="btn btn-success">Ändra</button>
+                            <button type="button" class="btn btn-danger kk_aj_btnTabort">Ta bort</button>
                         </div>
                     </li>
-                    <li class="mailbox-attachment-info">
-                        <span class="mailbox-attachment-icon has-img mailbox-attachment-info">
-                            <img src="../../dist/img/kulturkatalogen/Youtube.jpg">
-                        </span>
-                        <div class="mailbox-attachment-info">
-                            <label>Url till fil</label>
-                            <input type="text" class="form-control" value="../../dist/img/kulturkatalogen/mustang_h.jpg">
-                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
-                            <div class="form-group"></div>
-                            <label>Alt text</label>
-                            <input type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaAlt}}">
-                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
-                            <label>Filnamn</label>
-                            <input type="text" class="form-control" value="mustang.jpg">
-                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
-                            <label>storlek</label>
-                            <input type="text" class="form-control" value="3:03 min">
-                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
-                        </div>
-                        <div class="form-group pull-right">
-                            <button type="submit" class="btn btn-success">Ändra</button>
-                            <button type="button" class="btn btn-danger">Ta bort</button>
-                        </div>
-                    </li>
-                    <li class="mailbox-attachment-info">
+
+				{{/each}}  
+                   
+                    <li class="mailbox-attachment-info kk_aj_nymediabox" style="display:none;">
 						<h4>Lägg till media</h4>
                         <div class="mailbox-attachment-info ">													
 						<label>Mediatyp:</label>
@@ -169,13 +165,13 @@
                         </div>
                         <div class="form-group pull-right ">
                             <button type="submit" class="btn btn-success">Lägg till</button>
-                            <button type="button" class="btn btn-default">Avbryt</button>
+                            <button type="button" class="btn btn-default kk_aj_Avbrytnymediabox">Avbryt</button>
                         </div>
                     </li>
                 </ul>
 
             </div>
-                                    
+           <hr>                         
 		<div class="form-group col-md-12 kk_aj_arrimages">
             <h3>FAKTA</h3>
 				<!-- /.box-header -->												
@@ -186,12 +182,61 @@
 							<th></th>														
 						</tr>
 						{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
-						<tr>
+						<tr class="kk_aj_faktablock" data="{{this.Faktaid}}">
+							<td width="25%">
+								<label>{{this.Faktarubrik}}: </label>
+							</td>
+							<td>
+								<input type="text" class="form-control" value="{{this.FaktaValue}}">
+								<span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
+							</td>    
+							<td width="15%">
+								<button type="button" class="btn btn-default btn-sm label-success" title="ändra">
+									<i class="fa fa-check" aria-hidden="true"></i>
+								</button>
+								<button type="button" class="btn btn-default btn-sm label-danger" title="tabort">
+									<i class="fa fa-remove" aria-hidden="true"></i>
+								</button>
+							</td>    														
+						</tr>		
+						{{/each}} 							
+						<tr class="kk_aj_addfaktablock" style="display:none;">
 							<td>
 								<select class="form-control">
-									<option>dans</option>
-									<option selected="selected">{{this.Faktarubrik}}</option>
-									<option>film</option>
+									<option value="1">Arrangörsstöd</option> 
+									<option value="2">Antal medverkande</option>
+									<option value="3">Medverkande</option>
+									<option value="4">Period</option>
+									<option value="5">Bokningsbar t.om</option>
+									<option value="6">Max publik</option>
+									<option value="7">Från ålder</option>
+									<option value="8">Till ålder</option>
+									<option value="9">Föreställningar per dag</option>
+									<option value="10">Byggtid</option> 
+									<option value="11">Rivtid</option>
+									<option value="12">Bredd på scen</option>
+									<option value="13">Djup på scen</option>
+									<option value="14">Takhöjd över scen</option>
+									<option value="15">Ljus</option>
+									<option value="16">Bärhjälp behövs</option>
+									<option value="17">El</option>
+									<option value="18">Övriga lokalkrav</option>
+									<option value="19">Kostnad första arrangemanget</option>
+									<option value="20">Kostnad andra arrangemanget</option>
+									<option value="21">Resor ingår/tillkommer</option>
+									<option value="22">Logi ingår/tillkommer</option>
+									<option value="23">Logi</option>
+									<option value="24">Traktamente ingår/tillkommer</option>
+									<option value="25">Lärarhandledning</option>
+									<option value="32">Speltid (min)</option>
+									<option value="33">Mörkläggning krävs</option>
+									<option value="34">Ljud</option>
+									<option value="35">Kostnad paket</option>
+									<option value="36">Övrigt om kostnad</option>
+									<option value="37">Resor</option>
+									<option value="38">Traktamente</option>
+									<option value="39">Övrigt</option>
+									<option value="40">Kostnad tredje arrangemanget</option>
 								</select>
 								<span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
 							</td>
@@ -203,18 +248,48 @@
 								<button type="button" class="btn btn-default btn-sm label-success" title="ändra">
 									<i class="fa fa-check" aria-hidden="true"></i>
 								</button>
-								<button type="button" class="btn btn-default btn-sm label-danger" title="tabort">
+								<button type="button" class="btn btn-default btn-sm label-danger kk_aj_btnremovenewfakta" title="tabort">
 									<i class="fa fa-remove" aria-hidden="true"></i>
 								</button>
 							</td>    														
 						</tr>		
-						{{/each}} 							
 					</table>
 					<div class="form-group ">
-					<button type="button" class="btn btn-default btn-sm label-default"><i class="fa fa-plus"> Lägg till </i></button>
+					<button type="button" class="btn btn-default kk_aj_btnaddfakta">Lägg till fakta</button>
 					</div>
 				<!-- /.box -->
             </div>
+			<hr>
+			<div class="row">
+		<div class="form-group  col-sm-6 kk_aj_arrkonstform">
+            <label>Utövare:</label>
+			<input type="text" id="testauto" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Organisation}}">           
+            <span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
+
+        </div>
+		</div>
+		<div class="form-group  col-sm-6 kk_aj_arrUtovareblock">
+            <label>Organisation:</label>
+			<span class="kk_aj_kontaktorganisation">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Organisation}}</span></br>			
+			<label>Kontakt:</label>
+			<span class="kk_aj_kontaktnamn">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Fornamn}} {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Efternamn}}</span></br>
+			<label>Adress:</label>
+			<div class="kk_aj_kontaktadress">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Adress}} </div>			
+			<span class="kk_aj_kontaktpostnrort">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Postnr}} {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Ort}}</span></br>
+			<label>Kommun:</label>
+			<span class="kk_aj_kontaktkommun">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Kommun}} </span></br>
+			<a href="">Ändra i utövaruppgifter</a>	
+		</div>
+		<div class="form-group  col-sm-6 kk_aj_arrUtovareblock">
+            <label>Telefon:</label>
+			<span class="kk_aj_kontaktTelefon">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Telefon}}</span></br>
+			<label>E-post:</label>
+			<span class="kk_aj_kontaktEpost">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Epost}} </span></br>
+			<label>Hemsida</label>
+			<span class="kk_aj_kontaktHemsida">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Weburl}}</span></br>
+				 
+		</div>
+		<hr>
             <div class="pull-left">
                 <button type="submit" class="btn btn-success">Spara ändringar</button>
                 <button type="button" class="btn btn-default">Avbryt</button>

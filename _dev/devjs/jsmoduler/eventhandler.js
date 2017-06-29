@@ -1,10 +1,11 @@
 ﻿
 var $ = require("jquery");
+require('jquery-ui-dist/jquery-ui.js');
 var appsettings = require("./appSettings.js");
 var loadpageHandler = require("./pageloadhandler.js");
 
 var _desktopmoduleURL = "/KatalogenAnsokningar"; //"/KulturkatalogenAdmin/KatalogenAnsokningar"
-
+var jsautocomplete = require("./externalplugin/autocomplete.js");
 module.exports = {
     jqueryEVENTS: function (userid) {
         var sortobj;
@@ -270,7 +271,67 @@ module.exports = {
         $('body').on('keydown', '.motivering', function (event) {
             $('.motivering').removeClass('markborderRed');
         });
-        //detaljvy event END
+        //detaljvy event END---------------------------------------------------------------------------
+        //Detaljvy EDIT event START---------------------------------------------------------------------
+        
+        $('body').on('click', '.kk_aj_nymediabutton', function (event) {
+            $(".kk_aj_nymediabox").show();
+            return false;
+        });
+        $('body').on('click', '.kk_aj_Avbrytnymediabox', function (event) {
+            $(".kk_aj_nymediabox").hide();
+            return false;
+        });
+        $('body').on('click', '.kk_aj_btnaddfakta', function (event) {
+            $(".kk_aj_addfaktablock").show();
+            return false;
+        });
+        $('body').on('click', '.kk_aj_btnremovenewfakta', function (event) {
+            $(".kk_aj_addfaktablock").hide();
+            return false;
+        });
+        
+        $('body').on('keydown', '#testauto', function (event) {
+           
+
+            $(this).autocomplete({
+                //source: "http://localhost:60485/Api/helper/autocomplete/val/bio/devkey/alf?type=json&callback=testar",
+                source: function (request, response) {
+                    $.ajax({
+                        url: "http://localhost:60485/Api/helper/autocomplete/val/"+request.term+"/devkey/alf?type=json&callback=testar",
+                        dataType: "json",                        
+                        success: function (data) {
+                            response(data.kk_aj_admin.Utovarelist);
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function (event, ui) {                    
+                    $('#testauto').val(ui.item.Organisation);
+                    $('.kk_aj_kontaktnamn').html(ui.item.Fornamn + " " + ui.item.Efternamn);
+                    $('.kk_aj_kontaktadress').html(ui.item.Adress);
+                    $('.kk_aj_kontaktpostnrort').html(ui.item.Postnr + " " + ui.item.Ort);
+                    $('.kk_aj_kontaktkommun').html(ui.item.Kommun);
+
+                    $('.kk_aj_kontaktorganisation').html(ui.item.Organisation);
+                    $('.kk_aj_kontaktTelefon').html(ui.item.Telefon);
+                    $('.kk_aj_kontaktEpost').html(ui.item.Epost);
+                    $('.kk_aj_kontaktHemsida').html(ui.item.Weburl);
+                    return false;
+                }
+            }).autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                  .append("<div>" + item.Organisation + " - kontakt: "+ item.Fornamn + " " + item.Efternamn +  "</div>")
+                  .appendTo(ul);
+            };
+
+            ;
+
+
+        });
+        
+        
+        //Detaljvy EDIT event END-----------------------------------------------------------------------
 
         $(window).on('popstate', function (e) {
             var match,

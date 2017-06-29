@@ -111,13 +111,7 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
           
             //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
-            if (!(value.templatename == "detailEditTmpl")) {
-                console.log("funkar detta är inte detailEditTmpl ");
-            } else {
-                console.log("detta är detailEditTmpl ");
-            }
-
-            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl")) {
+           if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl")) {
                 if (value.templatename != "StartSenasteListTmpl") {
                     if (value.templatename != "DiareTmpl") {
                         if (data.kk_aj_admin.ansokningarlista) {
