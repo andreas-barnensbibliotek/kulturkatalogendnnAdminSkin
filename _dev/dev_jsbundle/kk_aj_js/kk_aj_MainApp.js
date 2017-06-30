@@ -49,7 +49,7 @@
 	var handlebarshelpers = __webpack_require__(2);
 	var loadpageHandler = __webpack_require__(6);
 	var registerJqueryEvents = __webpack_require__(4);
-	var registerJqueryMainPluginEvents = __webpack_require__(9);
+	var registerJqueryMainPluginEvents = __webpack_require__(10);
 
 	var $ = __webpack_require__(3);
 	__webpack_require__(5);
@@ -10901,6 +10901,8 @@
 
 	var _desktopmoduleURL = "/KatalogenAnsokningar"; //"/KulturkatalogenAdmin/KatalogenAnsokningar"
 	var jsautocomplete = __webpack_require__(8);
+	var detailCrudHandler = __webpack_require__(9);
+
 	module.exports = {
 	    jqueryEVENTS: function (userid) {
 	        var sortobj;
@@ -10940,8 +10942,11 @@
 	            history.pushState('4', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_archiveansokningarView');
 	            return false;
 	        });
-	                
+	        
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //ansökningsidor Pager EVENT ---------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+
 	        $('body').on('click', '.kk_aj_listannonsnext', function () {
 	            var searchpagetyp = $('.kk_aj_box-title').attr('rel');
 	            var setting = appsettings.pagerHandler;
@@ -10973,7 +10978,11 @@
 	            }
 	            return false;
 	        });
-	        // Edit Detailvy
+
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // Edit Detailvy ------------------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+
 	        $('body').on('click', '.kk_aj_detailbackfromEdit', function () {
 	            console.log("testar detta: " +userid)
 	            loadlistView("kk_aj_detailView");
@@ -10987,7 +10996,10 @@
 
 	            return false;
 	        });
+
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //ansökningsidor EVENT ---------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
 	            var curpage = $('.kk_aj_box-title').attr('rel');            
 	            loadlistView(curpage);            
@@ -11132,7 +11144,10 @@
 	           
 	        });
 	        
-	        //detaljvy event
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        //detaljvy event -------------------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+
 	        $('body').on('click', '.kk_aj_addmotivering', function (event) {
 	            $('.motiveringEditblock').toggle();
 	        })
@@ -11166,14 +11181,18 @@
 	        $('body').on('keydown', '.motivering', function (event) {
 	            $('.motivering').removeClass('markborderRed');
 	        });
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //detaljvy event END---------------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //Detaljvy EDIT event START---------------------------------------------------------------------
-	        
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        $('body').on('click', '.kk_aj_nymediabutton', function (event) {
 	            $(".kk_aj_nymediabox").show();
 	            return false;
 	        });
-	        $('body').on('click', '.kk_aj_Avbrytnymediabox', function (event) {
+	        $('body').on('click', '#kk_aj_mediaBtnAvbryt', function (event) {
 	            $(".kk_aj_nymediabox").hide();
 	            return false;
 	        });
@@ -11187,8 +11206,6 @@
 	        });
 	        
 	        $('body').on('keydown', '#testauto', function (event) {
-	           
-
 	            $(this).autocomplete({
 	                //source: "http://localhost:60485/Api/helper/autocomplete/val/bio/devkey/alf?type=json&callback=testar",
 	                source: function (request, response) {
@@ -11203,6 +11220,8 @@
 	                minLength: 2,
 	                select: function (event, ui) {                    
 	                    $('#testauto').val(ui.item.Organisation);
+	                    $('.kk_aj_arrUtovareblock').attr("data", ui.item.UtovarID);
+	                    
 	                    $('.kk_aj_kontaktnamn').html(ui.item.Fornamn + " " + ui.item.Efternamn);
 	                    $('.kk_aj_kontaktadress').html(ui.item.Adress);
 	                    $('.kk_aj_kontaktpostnrort').html(ui.item.Postnr + " " + ui.item.Ort);
@@ -11218,15 +11237,12 @@
 	                return $("<li>")
 	                  .append("<div>" + item.Organisation + " - kontakt: "+ item.Fornamn + " " + item.Efternamn +  "</div>")
 	                  .appendTo(ul);
-	            };
-
-	            ;
-
-
+	            };         
 	        });
 	        
-	        
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //Detaljvy EDIT event END-----------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
 	        $(window).on('popstate', function (e) {
 	            var match,
@@ -11266,7 +11282,25 @@
 	                }
 	            }
 	        });
-	        
+
+
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // DETAILCRUD START ////////////////////////////////////////////////////////////////////////////////////////////////
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // DETAILCRUD END ////////////////////////////////////////////////////////////////////////////////////////////////
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 	    },
 	    laddanysida: function (sidvy) {
 	        loadlistView(sidvy);
@@ -31480,13 +31514,41 @@
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var $ = __webpack_require__(3);
+	var appsettings = __webpack_require__(1);
+	module.exports = {
+	    detailEditMainContent: function (msg) {
+	        alert(msg);
+	    },
+	    detailArchiveArrangemang: function (arrid, userid,optionalmotivering) {
+	        alert(msg);
+	    },
+	    detailEditMedia: function (editmediatyp,editurl,editalt,editfilename,editlangd) {
+
+	    },
+	    detailEditFakta: function (editfaktaid,editfaktatext) {
+
+	    },
+	    detailDeleteMedia: function (delmediaid) {
+
+	    },
+	    detailDeleteFakta: function (delfaktaid) {
+
+	    }
+
+	};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
 	//här sätts alla pluggin och jquery.ready starters 
 	var $ = __webpack_require__(3);
 	__webpack_require__(5);
 	var appsettings = __webpack_require__(1);
 	var ServiceHandler = __webpack_require__(7);
-	var jsboottbl = __webpack_require__(10);
-	var jsjquerytbl = __webpack_require__(11);
+	var jsboottbl = __webpack_require__(11);
+	var jsjquerytbl = __webpack_require__(12);
 
 	module.exports = {
 	    jqueryMainPluginEVENTS: function (userid, currpageType) {
@@ -31679,7 +31741,7 @@
 	}
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	        /*! DataTables Bootstrap 3 integration
@@ -31895,7 +31957,7 @@
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.7

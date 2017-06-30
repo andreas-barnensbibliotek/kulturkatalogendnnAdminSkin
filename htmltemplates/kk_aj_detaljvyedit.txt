@@ -15,19 +15,19 @@
 			<span class="mailbox-read-time ">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>       
 		</div>
 		<div class="row">
-        <div class="form-group col-sm-3 col-md-2  kk_aj_arrid">
+        <div class="form-group col-sm-3 col-md-2 kk_aj_arrid">
             <label>Arrid</label>			
-            <input type="text" class="form-control " value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid}}" disabled>
+            <input id="kk_aj_arridtxt" type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid}}" disabled>
         </div>
 		<div class="form-group  col-md-9 kk_aj_arrkonstform">          
             <div class="pull-right"><label>Publicerad: </label>
 			<span class="radio">
                 <label>                    
-                    <input name="optionsRadios" id="optionsRadios1" value="ja" checked="" type="radio">Ja
+                    <input name="optionsRadios" id="kk_aj_publiceradradioJa" value="ja" checked="" type="radio">Ja
                 </label>
             
                 <label>
-                    <input name="optionsRadios" id="optionsRadios2" value="Nej" type="radio">
+                    <input name="optionsRadios" id="kk_aj_publiceradradioNej" value="Nej" type="radio">
                     Nej
                 </label>
             </span>
@@ -74,20 +74,20 @@
             </select>
             <span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
         </div>
-        <div class="form-group  col-md-12 kk_aj_arrrubrik">
+        <div class="form-group col-md-12 kk_aj_arrrubrik">
             <label>Rubrik</label>
-            <input type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}">
+            <input id="kk_aj_rubriktext" type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}">
             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
         </div>
         <div class="form-group col-md-12 kk_aj_arrunderrubrik">
             <label>Underrubrik</label>
-            <input type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}">
+            <input id="kk_aj_underrubriktext" type="text" class="form-control"  value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}">
             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
         </div>
             <!-- textarea -->
         <div class="form-group col-md-12 kk_aj_arrcontent">
             <label>Innehåll</label>
-            <textarea class="form-control" rows="8" >{{#contenttext kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}{{/contenttext}}</textarea>
+            <textarea id="kk_aj_contenttext" class="form-control" rows="8" >{{#contenttext kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}{{/contenttext}}</textarea>
             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
         </div>
            <hr>                         
@@ -108,25 +108,25 @@
                         </span>
                         <div class="mailbox-attachment-info">
                             <label>Url till fil</label>
-                            <input type="text" class="form-control kk_aj_mediaurl kk_aj_mediaid" value="{{this.MediaUrl}}">
+                            <input id="kk_aj_mediaurl" type="text" class="form-control"  value="{{this.MediaUrl}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <div class="form-group"></div>
                             <label>Alt text</label>
-                            <input type="text" class="form-control kk_aj_mediaalt" value="{{this.MediaAlt}}">
+                            <input id="kk_aj_mediaalt" type="text" class="form-control" value="{{this.MediaAlt}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <label>Filnamn</label>
-                            <input type="text" class="form-control kk_aj_mediafilename" value="{{this.MediaFilename}}">
+                            <input id="kk_aj_mediafilename" type="text" class="form-control" value="{{this.MediaFilename}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <label>Storlek</label>
-                            <input type="text" class="form-control kk_aj_mediasize" value="{{this.MediaSize}}">
+                            <input id="kk_aj_mediasize"  type="text" class="form-control"value="{{this.MediaSize}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
 							<label>Skapare</label>
-                            <input type="text" class="form-control kk_aj_mediafoto" value="{{this.MediaFoto}}">
+                            <input id="kk_aj_mediafoto" type="text" class="form-control"  value="{{this.MediaFoto}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                         </div>
                         <div class="form-group pull-right">
-                            <button type="button" class="btn btn-success">Ändra</button>
-                            <button type="button" class="btn btn-danger kk_aj_btnTabort">Ta bort</button>
+                            <button id="kk_aj_mediaBtnEdit" type="button" class="btn btn-success">Ändra</button>
+                            <button id="kk_aj_mediaBtnTabort" type="button" class="btn btn-danger" >Ta bort</button>
                         </div>
                     </li>
 
@@ -138,34 +138,40 @@
 						<label>Mediatyp:</label>
 							<div class="radio">
 								<label>
-									<input name="optionsRadios" id="optionsRadios1" value="ja" checked="" type="radio">
-									bild
+									<input name="optionsRadios" id="kk_aj_mediaTypeBild" value="ja" checked="" type="radio">
+									Bild
 								</label>
 							</div>
 							<div class="radio">
 								<label>
-									<input name="optionsRadios" id="optionsRadios2" value="Nej" type="radio">
-									film
+									<input name="optionsRadios" id="kk_aj_mediaTypeFilm" value="Nej" type="radio">
+									Film
+								</label>
+							</div>
+							<div class="radio">
+								<label>
+									<input name="optionsRadios" id="kk_aj_mediaTypeLjud" value="Nej" type="radio">
+									Ljud
 								</label>
 							</div>
 							<span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
 							<label>Url till fil</label>
-                            <input type="text" class="form-control">
+                            <input id="kk_aj_mediaUrl" type="text" class="form-control">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <div class="form-group"></div>
                             <label>Alt text</label>
-                            <input type="text" class="form-control">
+                            <input id="kk_aj_mediaAlt" type="text" class="form-control">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <label>Filnamn</label>
-                            <input type="text" class="form-control">
+                            <input id="kk_aj_mediafilnamn" type="text" class="form-control">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <label>Längd</label>
-                            <input type="text" class="form-control">
+                            <input id="kk_aj_mediaLangd type="text" class="form-control">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                         </div>
                         <div class="form-group pull-right ">
-                            <button type="submit" class="btn btn-success">Lägg till</button>
-                            <button type="button" class="btn btn-default kk_aj_Avbrytnymediabox">Avbryt</button>
+                            <button id="kk_aj_mediaBtnAdd" type="button" class="btn btn-success">Lägg till</button>
+                            <button id="kk_aj_mediaBtnAvbryt" type="button" class="btn btn-default">Avbryt</button>
                         </div>
                     </li>
                 </ul>
@@ -182,19 +188,19 @@
 							<th></th>														
 						</tr>
 						{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
-						<tr class="kk_aj_faktablock" data="{{this.Faktaid}}">
+						<tr class="kk_aj_faktablockID" >
 							<td width="25%">
 								<label>{{this.Faktarubrik}}: </label>
 							</td>
 							<td>
-								<input type="text" class="form-control" value="{{this.FaktaValue}}">
+								<input id="kk_aj_faktaEditValue" type="text" data="{{this.Faktaid}}" class="form-control" value="{{this.FaktaValue}}">
 								<span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
 							</td>    
 							<td width="15%">
-								<button type="button" class="btn btn-default btn-sm label-success" title="ändra">
+								<button id="kk_aj_faktaBtnEdit" type="button" class="btn btn-default btn-sm label-success" title="ändra">
 									<i class="fa fa-check" aria-hidden="true"></i>
 								</button>
-								<button type="button" class="btn btn-default btn-sm label-danger" title="tabort">
+								<button id="kk_aj_faktaBtnDel" type="button" class="btn btn-default btn-sm label-danger" title="tabort">
 									<i class="fa fa-remove" aria-hidden="true"></i>
 								</button>
 							</td>    														
@@ -241,14 +247,14 @@
 								<span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
 							</td>
 							<td>
-								<input type="text" class="form-control" value="{{this.FaktaValue}}">
+								<input id="kk_aj_faktaAddValue" type="text" class="form-control" value="{{this.FaktaValue}}">
 								<span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
 							</td>    
 							<td>
-								<button type="button" class="btn btn-default btn-sm label-success" title="ändra">
+								<button id="kk_aj_faktaBtnAdd" type="button" class="btn btn-default btn-sm label-success" title="Lägg till">
 									<i class="fa fa-check" aria-hidden="true"></i>
 								</button>
-								<button type="button" class="btn btn-default btn-sm label-danger kk_aj_btnremovenewfakta" title="tabort">
+								<button id="kk_aj_faktaBtnRemove" type="button" class="btn btn-default btn-sm label-danger kk_aj_btnremovenewfakta" title="tabort">
 									<i class="fa fa-remove" aria-hidden="true"></i>
 								</button>
 							</td>    														
@@ -261,14 +267,14 @@
             </div>
 			<hr>
 			<div class="row">
-		<div class="form-group  col-sm-6 kk_aj_arrkonstform">
+		<div class="form-group  col-sm-6">
             <label>Utövare:</label>
 			<input type="text" id="testauto" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Organisation}}">           
             <span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
 
         </div>
 		</div>
-		<div class="form-group  col-sm-6 kk_aj_arrUtovareblock">
+		<div class="form-group col-sm-6 kk_aj_arrUtovareblock" data="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.UtovarID}}">
             <label>Organisation:</label>
 			<span class="kk_aj_kontaktorganisation">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovardata.Organisation}}</span></br>			
 			<label>Kontakt:</label>
@@ -291,8 +297,8 @@
 		</div>
 		<hr>
             <div class="pull-left">
-                <button type="submit" class="btn btn-success">Spara ändringar</button>
-                <button type="button" class="btn btn-default">Avbryt</button>
+                <button type="button" class="btn btn-success kk_aj_SparaDetailEdit">Spara ändringar</button>
+                <button type="button" class="btn btn-default kk_aj_detailbackfromEdit">Avbryt</button>
             </div>
             <!-- /.btn-group -->
 		</form>

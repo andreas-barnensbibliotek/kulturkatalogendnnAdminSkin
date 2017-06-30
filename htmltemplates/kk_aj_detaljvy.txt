@@ -13,7 +13,7 @@
 			<button type="button" class="btn btn-default kk_aj_detailedit" >
 				<i class="fa fa-cog" aria-hidden="true"></i> Ändra
 			</button>                                
-			<button type="button" class="btn btn-default" data-toggle="tooltip" title="Print">                                        
+			<button type="button" class="btn btn-default"  title="Print">                                        
 					<i class="fa fa-print"></i> Skriv ut
 			</button>    			
 		</div>
