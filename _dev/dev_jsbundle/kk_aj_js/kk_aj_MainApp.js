@@ -222,6 +222,9 @@
 	//var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
 	//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
+	var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
+	   
+
 	//devkey
 	var _devkeysnippet = "alf?type=json&callback=testar";
 
@@ -390,6 +393,7 @@
 	module.exports = {  
 	    localOrServerURL: _localOrServerURL,
 	    htmltemplateURL: _htmltemplateURL,
+	    detailediturl: _detailediturl,
 	    currentUserid: window.currentuserid,
 	    topnavtemplate: window.kk_aj_kk_aj_topNavView,
 	    starttemplate: window.kk_aj_startView,
@@ -660,6 +664,16 @@
 	    var $el = $('<select />').html(options.fn(this));
 	    $el.find('[value="' + value + '"]').attr({ 'selected': 'selected' });
 	    return $el.html();
+	});
+
+	// kollar om ansökningar har bilaga eller ej
+
+	Handlebars.registerHelper("setChecked", function (value, currentValue) {
+	    if (value == currentValue) {
+	        return "checked='checked'"
+	    } else {
+	        return "";
+	    }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
@@ -11240,6 +11254,164 @@
 	            };         
 	        });
 	        
+	        // MainCONTENT HANDLERS START---------------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        
+	        $('body').on('click', '.kk_aj_SparaDetailEdit', function () {
+	            var arrid = $('#kk_aj_arridtxt').val();
+	            var contentid = $('#kk_aj_arrcontentid').attr("data");
+	                        
+	            var rubriktext = $('#kk_aj_rubriktext').val();
+	            var underrubriktext = $('#kk_aj_underrubriktext').val();
+	            var contenttext = $('#kk_aj_contenttext').val();
+	            var konstform = $('#kk_aj_konstform').val();
+	            var arrtyp = $('#kk_aj_arrtyp').val();
+	            var arrUtovareid = $('.kk_aj_arrUtovareblock').attr("data");
+	            var pub = $('input[name=optionsRadiospub]:checked').val();
+	           
+	            detailCrudHandler.detailEditMainContent(arrid, contentid, rubriktext, underrubriktext, contenttext, konstform, arrtyp, arrUtovareid, pub, function (data) {
+	                $("#dialog-message_sparat").dialog({
+	                    modal: true,
+	                    buttons: {
+	                        Ok: function () { loadlistView("kk_aj_detailView");
+	                            $(this).dialog("close");
+	                        }
+	                    }
+	                });
+	                //appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	               
+	                //loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	            });
+
+	            return false;
+	        });
+
+	        // MainCONTENT HANDLERS STOPP---------------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // FAKTA HANDLERS START---------------------------------------------------------------------------
+	        $('body').on('click', '.kk_aj_faktaBtnEdit', function () {
+	            var arrid = $('#kk_aj_arridtxt').val();
+	            var faktaid = $(this).attr("data");
+	            var editval = $('.kk_aj_faktaEditValue[data=' + faktaid + ']').val();
+
+	            detailCrudHandler.detailEditFakta(arrid, faktaid, editval, function (data) {
+	                console.log("Detail Edit är skickat och värdena skall uppdaterasrid");
+	                appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+
+	                loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	            });
+
+	            return false;
+	        });
+
+	        $('body').on('click', '#kk_aj_faktaBtnAdd', function () {
+	            var arrid = $('#kk_aj_arridtxt').val();
+	            var faktatypid = $('#kk_aj_faktatypid').val();
+	            var faktavalue = $('#kk_aj_faktaAddValue').val();
+	            
+	            detailCrudHandler.detailAddFakta(arrid, faktatypid, faktavalue, function (data) {
+
+	                appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+
+	                loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	            });
+
+	            return false;
+	        });
+
+	        $('body').on('click', '.kk_aj_faktaBtnDel', function () {
+	            var arrid = $('#kk_aj_arridtxt').val();
+	            var faktaid = $(this).attr("data");
+
+	            $("#dialog-confirm").dialog({
+	                resizable: false,
+	                height: "auto",
+	                width: 400,
+	                modal: true,
+	                buttons: {
+	                    "Ta bort": function () {
+	                        detailCrudHandler.detailDeleteFakta(arrid, faktaid, function (data) {
+	                            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	                            loadlistView("kk_aj_detailEditView", "", userid);
+	                            
+	                        });
+	                        $(this).dialog("close");
+	                    },
+	                    Avbryt: function () {
+	                        $(this).dialog("close");
+	                    }
+	                }
+	            });            
+	            return false;
+	        });
+	        // FAKTA HANDLERS STOPP---------------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // MEDIA HANDLERS START---------------------------------------------------------------------------
+	        $('body').on('click', '.kk_aj_mediaBtnEdit', function () {
+	            
+	            var arrid = $('#kk_aj_arridtxt').val();
+	            var mediaid = $(this).attr("data");
+	            var mediaalt = $('.kk_aj_mediaalt[data=' + mediaid + ']').val();
+	            var mediafilename = $('.kk_aj_mediafilename[data=' + mediaid + ']').val();
+	            var mediafoto = $('.kk_aj_mediafoto[data=' + mediaid + ']').val();
+	            var mediaurl = $('.kk_aj_mediaurl[data=' + mediaid + ']').val();
+	            var mediasize = $('.kk_aj_mediasize[data=' + mediaid + ']').val();
+	            var mediatyp = $('.kk_aj_mediatyp[data=' + mediaid + ']').val();
+	            var mediavald = "";
+	            
+	            detailCrudHandler.detailEditMedia(arrid, mediaid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {
+	                appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	                loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	            });
+
+	            return false;
+	        });
+
+	        $('body').on('click', '#kk_aj_mediaBtnAdd', function () {
+	            var arrid = $('#kk_aj_arridtxt').val();           
+	            var mediaalt = $('#kk_aj_mediaAlt').val();
+	            var mediafilename = $('#kk_aj_mediafilnamn').val();
+	            var mediafoto = $('#kk_aj_foto').val();
+	            var mediaurl = $('#kk_aj_mediaUrl').val();
+	            var mediasize = $('#kk_aj_mediasize').val();
+	            var mediavald = "";
+	            var mediatyp = $('input[name=optionsRadios]:checked').val();
+
+	            detailCrudHandler.detailAddMedia(arrid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {                                                                                       
+	                appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	                loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	            });
+
+	            return false;
+	        });
+	        $('body').on('click', '.kk_aj_mediaBtnTabort', function () {
+	            var arrid = $('#kk_aj_arridtxt').val();
+	            var mediaid = $(this).attr("data");
+
+	            $("#dialog-confirm_media").dialog({
+	                resizable: false,
+	                height: "auto",
+	                width: 400,
+	                modal: true,
+	                buttons: {
+	                    "Ta bort": function () {
+	                        detailCrudHandler.detailDeleteMedia(arrid, mediaid, function (data) {
+	                            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	                            loadlistView("kk_aj_detailEditView", "", userid);
+
+	                        });
+	                        $(this).dialog("close");
+	                    },
+	                    Avbryt: function () {
+	                        $(this).dialog("close");
+	                    }
+	                }
+	            });
+	            return false;
+	        });
+	        // MEDIA HANDLERS STOPP---------------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //Detaljvy EDIT event END-----------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30664,7 +30836,7 @@
 	            },
 	            error: function (xhr, ajaxOptions, thrownError) {
 	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel med debugdatan!");
+	                alert("Kulturkatalogen API säger: Servicen är inte startad!");
 	            }
 	        });
 
@@ -31516,27 +31688,166 @@
 
 	var $ = __webpack_require__(3);
 	var appsettings = __webpack_require__(1);
+
+	var _requesteddata = {};
+	// Edit parametrar
+	//{
+	//    "arrid": "",
+	//    "contentid": "",
+	//    "rubrik": "",
+	//    "underrubrik": "",
+	//    "innehall": "",
+	//    "konstformid": "",
+	//    "arrangemangtypid": "",
+	//    "utovareid": "",
+	//    "publicerad": "",
+	//    "faktaid": "",
+	//    "faktaval": "",
+	//    "mediaid": "",
+	//    "mediaalt": "",
+	//    "mediafilename": "",
+	//    "mediafoto": "",
+	//    "mediasize": "",
+	//    "mediaurl": "",
+	//    "mediavald": "",
+	//    "mediatyp": ""
+	//}
+
 	module.exports = {
-	    detailEditMainContent: function (msg) {
-	        alert(msg);
+	    detailEditMainContent: function (arrid, contentid, rubrik, underrubrik, innehall, konstformid, arrangemangtypid, utovareid,publicerad, callback) {
+	        var reqUrl = urlhelper("editcontent");
+
+	        _requesteddata.arrid = arrid;
+	        _requesteddata.contentid = contentid;
+	        _requesteddata.rubrik = rubrik;
+	        _requesteddata.underrubrik = underrubrik;
+	        _requesteddata.innehall = innehall;
+	        _requesteddata.konstformid = konstformid;
+	        _requesteddata.arrangemangtypid = arrangemangtypid;
+	        _requesteddata.utovareid = utovareid;
+	        _requesteddata.publicerad = publicerad;
+
+	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+
+	            callback(data);
+	        });
 	    },
 	    detailArchiveArrangemang: function (arrid, userid,optionalmotivering) {
 	        alert(msg);
 	    },
-	    detailEditMedia: function (editmediatyp,editurl,editalt,editfilename,editlangd) {
+	    detailAddMedia: function (arrid, editalt, editfilename, mediafoto, editurl, editvald, editmediatyp, editmediasize, callback) {
+	        var reqUrl = urlhelper("addmedia");
 
+	        _requesteddata.arrid = arrid;        
+	        _requesteddata.mediaalt = editalt;
+	        _requesteddata.mediafilename = editfilename;
+	        _requesteddata.mediafoto = mediafoto;
+	        _requesteddata.mediaurl = editurl;
+	        _requesteddata.mediavald = editvald;
+	        _requesteddata.mediatyp = editmediatyp;
+	        _requesteddata.mediasize = editmediasize;      
+
+	        
+	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+
+	            callback(data);
+	        });
 	    },
-	    detailEditFakta: function (editfaktaid,editfaktatext) {
+	    detailAddFakta: function (arrid, editfaktaid, editfaktatext, callback) {
+	        var reqUrl = urlhelper("addfakta");
 
+	        _requesteddata.arrid = arrid;
+	        _requesteddata.faktaid = editfaktaid;
+	        _requesteddata.faktaval = editfaktatext;
+	                
+	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+
+	            callback(data);
+	        });
 	    },
-	    detailDeleteMedia: function (delmediaid) {
+	    detailEditMedia: function (arrid, mediaid, editalt, editfilename, mediafoto, editurl, editvald,editmediatyp, editmediasize, callback) {
+	        var reqUrl = urlhelper("editmedia");
 
+	        _requesteddata.arrid = arrid;
+	        _requesteddata.mediaid = mediaid;
+	        _requesteddata.mediaalt = editalt;
+	        _requesteddata.mediafilename = editfilename;
+	        _requesteddata.mediafoto = mediafoto;
+	        _requesteddata.mediaurl = editurl;        
+	        _requesteddata.mediavald = editvald;
+	        _requesteddata.mediatyp = editmediatyp;
+	        _requesteddata.mediasize = editmediasize;
+
+	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+
+	            callback(data);
+	        });
 	    },
-	    detailDeleteFakta: function (delfaktaid) {
+	    detailEditFakta: function (arrid, editfaktaid, editfaktatext, callback) {
+	        var reqUrl = urlhelper("editfakta");
 
+	        _requesteddata.arrid = arrid;
+	        _requesteddata.faktaid = editfaktaid;
+	        _requesteddata.faktaval = editfaktatext;
+	                
+	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+
+	            callback(data);
+	        });
+	    },
+	    detailDeleteMedia: function (arrid, mediaid, callback) {
+	        var reqUrl = urlhelper("delmedia");
+
+	        _requesteddata.arrid = arrid;
+	        _requesteddata.mediaid = mediaid;
+
+	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+
+	            callback(data);
+	        });
+	    },
+	    detailDeleteFakta: function (arrid, faktaid,callback) {
+	        var reqUrl = urlhelper("delfakta");
+
+	        _requesteddata.arrid = arrid;
+	        _requesteddata.faktaid = faktaid;
+
+	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+
+	            callback(data);
+	        });
 	    }
 
 	};
+
+
+	var apiajaxRequest = function (currurl, dataarr, callback) {
+
+	    //console.log("2. servicen hämtar data");
+	    $.ajax({
+	        async: true,
+	        type: "POST",
+	        url: currurl,
+	        dataType: "json",
+	        data:dataarr,
+	        success: function (data) {
+	            console.log("Edit fakta updaterad: ");
+	            callback(data);
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	            //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	            alert("Nått blev fel vid uppdatering av parametrarna!");
+	        }
+	    });
+
+	}
+
+	var urlhelper = function (cmd) {
+
+	    return appsettings.detailediturl + "/" + cmd + "/val/" + appsettings.currentUserid + "/devkey/" + appsettings.devkeysnippet;
+
+	};
+
 
 /***/ },
 /* 10 */

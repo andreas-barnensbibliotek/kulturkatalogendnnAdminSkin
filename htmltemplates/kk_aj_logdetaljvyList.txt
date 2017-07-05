@@ -43,6 +43,7 @@
 				<th>Datum</th>
 				<th>Status</th>
 				<th>Motivering</th>
+				<th>Ändrat</th>
 			</tr>
 		<!-- item loop START -->	
 		{{#each kk_aj_admin.Logitemlist}}
@@ -50,6 +51,7 @@
 				<td>{{Datum}}</td>
 				<td>{{#fixstatuscolor Statustypid}} {{/fixstatuscolor}}</td>
 				<td>{{Beskrivning}}</td>
+				<td>{{ChangebyUsernamn}}</td>
 			</tr>                                        
 		{{/each}}
 		</table>

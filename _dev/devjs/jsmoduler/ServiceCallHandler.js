@@ -225,7 +225,7 @@ module.exports = {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-                alert("Nått blev fel med debugdatan!");
+                alert("Kulturkatalogen API säger: Servicen är inte startad!");
             }
         });
 

@@ -9,6 +9,9 @@ var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/
 //var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
 //var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 
+var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
+   
+
 //devkey
 var _devkeysnippet = "alf?type=json&callback=testar";
 
@@ -177,6 +180,7 @@ window.kk_aj_pagerHandler =
 module.exports = {  
     localOrServerURL: _localOrServerURL,
     htmltemplateURL: _htmltemplateURL,
+    detailediturl: _detailediturl,
     currentUserid: window.currentuserid,
     topnavtemplate: window.kk_aj_kk_aj_topNavView,
     starttemplate: window.kk_aj_startView,

@@ -241,3 +241,13 @@ window.Handlebars.registerHelper('select', function (value, options) {
     $el.find('[value="' + value + '"]').attr({ 'selected': 'selected' });
     return $el.html();
 });
+
+// kollar om ansökningar har bilaga eller ej
+
+Handlebars.registerHelper("setChecked", function (value, currentValue) {
+    if (value == currentValue) {
+        return "checked='checked'"
+    } else {
+        return "";
+    }
+});

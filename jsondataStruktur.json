@@ -971,6 +971,34 @@ url DELETE http://localhost:60485/Api_v2/arrangemang/0/del/56/devkey/alf
 server DELETE url: http://kulturkatalog.kivdev.se:8080/Api_v2/arrangemang/0/del/18/devkey/alf
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// JSON EDIT ArrangemangDETAILS PostTo SERVER API VALUES//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+Anrop POST:
+url: http://localhost:60485/Api_v3/arrangemang/{cmd}/val/{userid}/devkey/alf
+exempel: http://localhost:60485/Api_v3/arrangemang/fakta/val/2/devkey/alf
+Content-Type: application/json
+
+{
+	"arrid": "23",
+	"rubrik": "rubriktext",
+	"underrubrik": "underrubrik",
+	"innehall": "massa text",
+	"konstformid": "2",
+	"arrangemangtypid": "1",
+	"utovareid": "3",
+	"publicerad": "nej",
+	"faktaid": "1",
+	"faktaval": "Brett ska de vara",
+	"mediaid": "1",
+	"mediaalt": "finbild med banan",
+	"mediafilename": "bildnummer1.jpg",
+	"mediafoto": "andreas Josefsson",
+	"mediasize": "300kb",
+	"mediaurl": "s-media-cache-ak0.pinimg.com/originals/a1/3d/7f/a13d7f89a80cad02f76830f87a7eaf52.jpg",
+	"mediavald": "nej",
+	"mediatyp": "1"
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 // JSON Update Arrangemang status till(ny, godkänd, nekad, arkiv) /////////////////////////////////////
@@ -985,8 +1013,6 @@ server DELETE url: http://kulturkatalog.kivdev.se:8080/Api_v2/arrangemang/0/del/
 	"Logbeskrivning": "Nekad för att beskivande text varför",
 	"UpdValue": "3"
 }
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
