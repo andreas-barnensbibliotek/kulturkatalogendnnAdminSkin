@@ -11470,18 +11470,36 @@
 
 
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
-	        // DETAILCRUD START ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // UtovareEVENT START ////////////////////////////////////////////////////////////////////////////////////////////////
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
+	        
 
+	        $('body').on('click', '.kk_aj_editUtovareDetail', function () {
+	            var utovareid = $(this).attr("data");
 
+	            $('.kk_aj_utovaredetalj').show();
+	            $('.kk_aj_utovarelist').hide();
+	            //detailCrudHandler.detailAddMedia(arrid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {
+	            //    appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	            //    loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	            //});
 
+	            return false;
+	        });
+	        $('body').on('click', '.kk_aj_utovaredetailback', function () {
+	            
+	            $('.kk_aj_utovaredetalj').hide();
+	            $('.kk_aj_utovarelist').show();
+	        });
+
+	        
 
 
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
-	        // DETAILCRUD END ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // UtovareEVENT END ////////////////////////////////////////////////////////////////////////////////////////////////
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
-
+	       
 
 
 
@@ -30728,7 +30746,6 @@
 	    },
 	    injectdiarietable: function (callTyp, Utovarid, callback) {        
 
-	        var devkeysnippet = "alf?type=json&callback=testar";
 	        var currurl = "";
 	        switch (callTyp) {
 	            case "bylogid":
@@ -30741,7 +30758,7 @@
 	                break;
 	            default:
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
-	                currurl = appsettings.localOrServerURL + "/log/" + callTyp + "/id/" + Utovarid + "/devkey/" + devkeysnippet;
+	                currurl = appsettings.localOrServerURL + "/log/" + callTyp + "/id/" + Utovarid + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	        }
 
@@ -30753,6 +30770,41 @@
 	            dataType: "json",
 	            success: function (data) {
 	                console.log("LOGG datan är hämta  " + callTyp);
+	                callback(data);
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel vid uppdatering av parametrarna!");
+	            }
+	        });
+	    },
+	    injectutovaretable: function (callTyp, Utovarid, callback) {
+
+	        var currurl = "";
+	        switch (callTyp) {
+	            case "bylogid":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                break;
+	            case "bylogStatus":
+	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+	                break;
+	            default:
+	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
+	                currurl = appsettings.ServerApiURL + "/Api_v3/utovare/" + callTyp + "/user/"+ appsettings.currentUserid +"/val/" + Utovarid + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	        }
+	      
+
+	        //console.log("2. servicen hämtar data");
+	        $.ajax({
+	            async: true,
+	            type: "GET",
+	            url: currurl,
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("utövare datan är hämta  " + callTyp);
 	                callback(data);
 	            },
 	            error: function (xhr, ajaxOptions, thrownError) {
@@ -32032,7 +32084,7 @@
 	       
 	/// UTÖVARE VY MED DATATABELL STARTAR HÄR ////////////////////////////////////////////////////////////////////////////////////
 	            if (currpageType == "kk_aj_utovareView") {
-	                ServiceHandler.injectdiarietable("all", "0", function (datajson) {
+	                ServiceHandler.injectutovaretable("list", "0", function (datajson) {
 
 	                    $('#utovareTable').DataTable({
 	                        "processing": true,
@@ -32067,105 +32119,48 @@
 	                                "sortDescending": ": activate to sort column descending"
 	                            }
 	                        },
-	                        "data": datajson.kk_aj_admin.Logitemlist,
+	                        "data": datajson.kk_aj_admin.Utovarelist,
 	                        "columns": [
 	                            {
-	                                "data": "Arrid", "render": function (data, type, row, meta) {
+	                                "data": "UtovarID", "render": function (data, type, row, meta) {
 	                                    if (type === 'display') {
-	                                        data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
+	                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '">' + data + '</a>';
 	                                    }
-
 	                                    return data;
 	                                },
-	                                "width": "5%"
-	                            },
-	                            { "data": "Datum" },
+	                                "width": "7%"
+	                            },                           
 	                            {
-	                                "data": "Arrrubrik", "render": function (data, type, row, meta) {
+	                                "data": "Organisation", "render": function (data, type, row, meta) {
 	                                    if (type === 'display') {
-	                                        data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
+	                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '">' + data + '</a>';
 	                                    }
-
 	                                    return data;
 	                                },
-	                                "width": "30%"
+	                                "width": "15%"
 	                            },
-	                            { "data": "Statustypid" },
-	                            { "data": "ArrutovareID" },
 	                            {
-	                                "data": "Arrutovare",
-	                                "render": function (data, type, row, meta) {
+	                                "data": "Fornamn", "render": function (data, type, row, meta) {
 	                                    if (type === 'display') {
-	                                        data = '<a href="' + appsettings.basepageUri + '/katalogenutovarevy?utovarid=' + row.ArrutovareID + '">' + data + '</a>';
+	                                        data = row.Fornamn + ' ' + row.Efternamn;
 	                                    }
-
 	                                    return data;
-	                                }, "width": "20%"
+	                                },
+	                                "width": "15%"
 	                            },
-	                            { "data": "Beskrivning", "width": "35%" },
-	                            { "data": "ChangebyUsernamn", "width": "5%" },
-
-	                            {
-	                                "data": "Statustyp",
-	                                "width": "5%",
-	                                "render": function (data, type, row, meta) {
-	                                    if (type === 'display') {
-	                                        var statuscolor = "";
-	                                        switch (row.Statustypid) {
-	                                            case 1:
-	                                                statuscolor = '<span class="label label-primary">';
-	                                                break;
-	                                            case 2:
-	                                                statuscolor = '<span class="label label-warning">';
-	                                                break;
-	                                            case 3:
-	                                                statuscolor = '<span class="label label-success">';
-	                                                break;
-	                                            case 4:
-	                                                statuscolor = '<span class="label label-danger">';
-	                                                break;
-	                                            case 5:
-	                                                statuscolor = '<span class="label label-info">';
-	                                                break;
-	                                            case 6:
-	                                                statuscolor = '<span class="label label-success">';
-	                                                break;
-	                                            case 7:
-	                                                statuscolor = '<span class="label label-warning">';
-	                                                break;
-	                                            case 8:
-	                                                statuscolor = '<span class="label label">';
-	                                                break;
-	                                            case 9:
-	                                                statuscolor = '<span class="label label-default">';
-	                                                break;
-	                                            case 10:
-	                                                statuscolor = '<span class="label label-danger">';
-	                                                break;
-	                                            default:
-	                                                statuscolor = '<span class="label label-default">';
-	                                                break;
-	                                        }
-
-	                                        data = statuscolor + data + '</span>';
-	                                    }
-
-	                                    return data;
+	                            { "data": "Telefon", "width": "10%" },                            
+	                            { "data": "Epost" },
+	                            { "data": "Epost", "render": function (data, type, row, meta) {
+	                                if (type === 'display') {
+	                                    data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '"><i class="fa fa-edit"></i> Ändra</a>';
 	                                }
+	                                    return data;
+	                                },
+	                                "width": "10%"
 	                            }
-	                        ],
-	                        "columnDefs": [
-	                            {
-	                                "targets": [3],
-	                                "visible": false,
-	                                "searchable": false
-	                            },
-	                            {
-	                                "targets": [4],
-	                                "visible": false,
-	                                "searchable": false
-	                            }
-	                        ]
+	                          ]
+	                        
+
 	                    }
 	                );
 

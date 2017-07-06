@@ -99,7 +99,6 @@ module.exports = {
     },
     injectdiarietable: function (callTyp, Utovarid, callback) {        
 
-        var devkeysnippet = "alf?type=json&callback=testar";
         var currurl = "";
         switch (callTyp) {
             case "bylogid":
@@ -112,7 +111,7 @@ module.exports = {
                 break;
             default:
                 //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
-                currurl = appsettings.localOrServerURL + "/log/" + callTyp + "/id/" + Utovarid + "/devkey/" + devkeysnippet;
+                currurl = appsettings.localOrServerURL + "/log/" + callTyp + "/id/" + Utovarid + "/devkey/" + appsettings.devkeysnippet;
                 break;
         }
 
@@ -124,6 +123,41 @@ module.exports = {
             dataType: "json",
             success: function (data) {
                 console.log("LOGG datan är hämta  " + callTyp);
+                callback(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+                alert("Nått blev fel vid uppdatering av parametrarna!");
+            }
+        });
+    },
+    injectutovaretable: function (callTyp, Utovarid, callback) {
+
+        var currurl = "";
+        switch (callTyp) {
+            case "bylogid":
+                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+                //currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+                break;
+            case "bylogStatus":
+                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
+                //currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
+                break;
+            default:
+                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
+                currurl = appsettings.ServerApiURL + "/Api_v3/utovare/" + callTyp + "/user/"+ appsettings.currentUserid +"/val/" + Utovarid + "/devkey/" + appsettings.devkeysnippet;
+                break;
+        }
+      
+
+        //console.log("2. servicen hämtar data");
+        $.ajax({
+            async: true,
+            type: "GET",
+            url: currurl,
+            dataType: "json",
+            success: function (data) {
+                console.log("utövare datan är hämta  " + callTyp);
                 callback(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
