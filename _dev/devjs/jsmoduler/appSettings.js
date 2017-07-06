@@ -1,16 +1,18 @@
-﻿// object
-//var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
+﻿//var _localOrServerURL = "http://localhost:60485/Api_v2";
+//var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 //lokalafiler----------------------kommentera ut dessa på servern
-var _localOrServerURL = "http://localhost:60485/Api_v2";
-var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+var _apiserver = "http://localhost:60485";
+var _dnnURL = "http://dnndev.me";
 
 //Serverfiler---------------------- kommentera ut dessa lokalt
-//var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
-//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
-
-var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
-   
+//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+//var _dnnURL = "http://kulturkatalog.kivdev.se";
+// 
+var _localOrServerURL = _apiserver + "/Api_v2";
+var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+var _detailediturl = _apiserver + "/Api_v3/updatearrangemang";
 
 //devkey
 var _devkeysnippet = "alf?type=json&callback=testar";
@@ -121,6 +123,15 @@ window.kk_aj_DiarieView =[
         filename: "kk_aj_diarieTable.txt"
     }
 ];
+window.kk_aj_utovareView = [
+    {
+        templatename: "utovareTmpl",
+        templatedata: "kk_aj_utovarejson",
+        targetdiv: ".kk_aj_utovaretbl",
+        filename: "kk_aj_utovareTable.txt"
+    }
+];
+
 window.kk_aj_detailView = [
     {
         templatename: "detailTmpl",
@@ -180,6 +191,8 @@ window.kk_aj_pagerHandler =
 module.exports = {  
     localOrServerURL: _localOrServerURL,
     htmltemplateURL: _htmltemplateURL,
+    ServerApiURL: _apiserver,
+    DnnURL: _dnnURL,
     detailediturl: _detailediturl,
     currentUserid: window.currentuserid,
     topnavtemplate: window.kk_aj_kk_aj_topNavView,
@@ -196,6 +209,7 @@ module.exports = {
         archive: kk_aj_search_archiveansokningarView
     }, 
     diarietemplate: window.kk_aj_DiarieView,
+    utovaretemplate: window.kk_aj_utovareView,
     detailetemplate: window.kk_aj_detailView,
     detailEdittemplate: window.kk_aj_detailEditView,
     detaillogtemplate: window.kk_aj_detaillogView,

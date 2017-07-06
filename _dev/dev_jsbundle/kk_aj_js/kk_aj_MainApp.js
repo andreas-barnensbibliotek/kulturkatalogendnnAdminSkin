@@ -211,19 +211,21 @@
 /* 1 */
 /***/ function(module, exports) {
 
-	// object
-	//var _localOrServerURL = "http://www.barnensbibliotek.se/DesktopModules/barnensbiblService/bokemonApi";
+	//var _localOrServerURL = "http://localhost:60485/Api_v2";
+	//var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	var _localOrServerURL = "http://localhost:60485/Api_v2";
-	var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+	var _apiserver = "http://localhost:60485";
+	var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	//var _localOrServerURL = "http://kulturkatalog.kivdev.se:8080/Api_v2";
-	//var _htmltemplateURL = "http://kulturkatalog.kivdev.se/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
-
-	var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
-	   
+	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	//var _dnnURL = "http://kulturkatalog.kivdev.se";
+	// 
+	var _localOrServerURL = _apiserver + "/Api_v2";
+	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
+	var _detailediturl = _apiserver + "/Api_v3/updatearrangemang";
 
 	//devkey
 	var _devkeysnippet = "alf?type=json&callback=testar";
@@ -334,6 +336,15 @@
 	        filename: "kk_aj_diarieTable.txt"
 	    }
 	];
+	window.kk_aj_utovareView = [
+	    {
+	        templatename: "utovareTmpl",
+	        templatedata: "kk_aj_utovarejson",
+	        targetdiv: ".kk_aj_utovaretbl",
+	        filename: "kk_aj_utovareTable.txt"
+	    }
+	];
+
 	window.kk_aj_detailView = [
 	    {
 	        templatename: "detailTmpl",
@@ -393,6 +404,8 @@
 	module.exports = {  
 	    localOrServerURL: _localOrServerURL,
 	    htmltemplateURL: _htmltemplateURL,
+	    ServerApiURL: _apiserver,
+	    DnnURL: _dnnURL,
 	    detailediturl: _detailediturl,
 	    currentUserid: window.currentuserid,
 	    topnavtemplate: window.kk_aj_kk_aj_topNavView,
@@ -409,6 +422,7 @@
 	        archive: kk_aj_search_archiveansokningarView
 	    }, 
 	    diarietemplate: window.kk_aj_DiarieView,
+	    utovaretemplate: window.kk_aj_utovareView,
 	    detailetemplate: window.kk_aj_detailView,
 	    detailEdittemplate: window.kk_aj_detailEditView,
 	    detaillogtemplate: window.kk_aj_detaillogView,
@@ -11220,11 +11234,10 @@
 	        });
 	        
 	        $('body').on('keydown', '#testauto', function (event) {
-	            $(this).autocomplete({
-	                //source: "http://localhost:60485/Api/helper/autocomplete/val/bio/devkey/alf?type=json&callback=testar",
+	            $(this).autocomplete({                
 	                source: function (request, response) {
 	                    $.ajax({
-	                        url: "http://localhost:60485/Api/helper/autocomplete/val/"+request.term+"/devkey/alf?type=json&callback=testar",
+	                        url: appsettings.ServerApiURL + "/Api/helper/autocomplete/val/" + request.term + "/devkey/" + appsettings.devkeysnippet,
 	                        dataType: "json",                        
 	                        success: function (data) {
 	                            response(data.kk_aj_admin.Utovarelist);
@@ -30357,6 +30370,11 @@
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
 	                loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, "all");
 	                break;
+	            case " kk_aj_utovareView":
+	                // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
+	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	                loadtemplateTypes(appsettings.utovaretemplate, appsettings.currentUserid, sortobj, "all");
+	                break;
 	            case "kk_aj_detailView":
 	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
@@ -32012,8 +32030,147 @@
 	            });
 	        }; 
 	       
-	/// REMOVE FROM HERE jsGRID ////////////////////////////////////////////////////////////////////////////////////
+	/// UTÖVARE VY MED DATATABELL STARTAR HÄR ////////////////////////////////////////////////////////////////////////////////////
 	            if (currpageType == "kk_aj_utovareView") {
+	                ServiceHandler.injectdiarietable("all", "0", function (datajson) {
+
+	                    $('#utovareTable').DataTable({
+	                        "processing": true,
+	                        "stateSave": true,
+	                        "paging": true,
+	                        "lengthChange": true,
+	                        "searching": true,
+	                        "ordering": true,
+	                        "info": true,
+	                        "autoWidth": false,
+	                        "language": {
+	                            "decimal": "",
+	                            "emptyTable": "Det finns inget att visa",
+	                            "info": "Visar _START_ av _END_ totalt _TOTAL_ ",
+	                            "infoEmpty": "Visar 0 av 0 totalt 0",
+	                            "infoFiltered": "(Filtrerat från totalt _MAX_ poster)",
+	                            "infoPostFix": "",
+	                            "thousands": ",",
+	                            "lengthMenu": "Visa _MENU_",
+	                            "loadingRecords": "Laddar...",
+	                            "processing": "Jobbar...",
+	                            "search": "Sök:",
+	                            "zeroRecords": "Inget hittades",
+	                            "paginate": {
+	                                "first": "Först",
+	                                "last": "Sist",
+	                                "next": "Nästa",
+	                                "previous": "Föregående"
+	                            },
+	                            "aria": {
+	                                "sortAscending": ": activate to sort column ascending",
+	                                "sortDescending": ": activate to sort column descending"
+	                            }
+	                        },
+	                        "data": datajson.kk_aj_admin.Logitemlist,
+	                        "columns": [
+	                            {
+	                                "data": "Arrid", "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {
+	                                        data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
+	                                    }
+
+	                                    return data;
+	                                },
+	                                "width": "5%"
+	                            },
+	                            { "data": "Datum" },
+	                            {
+	                                "data": "Arrrubrik", "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {
+	                                        data = '<a href="' + appsettings.basepageUri + '/katalogendetaljvy?id=' + row.Arrid + '">' + data + '</a>';
+	                                    }
+
+	                                    return data;
+	                                },
+	                                "width": "30%"
+	                            },
+	                            { "data": "Statustypid" },
+	                            { "data": "ArrutovareID" },
+	                            {
+	                                "data": "Arrutovare",
+	                                "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {
+	                                        data = '<a href="' + appsettings.basepageUri + '/katalogenutovarevy?utovarid=' + row.ArrutovareID + '">' + data + '</a>';
+	                                    }
+
+	                                    return data;
+	                                }, "width": "20%"
+	                            },
+	                            { "data": "Beskrivning", "width": "35%" },
+	                            { "data": "ChangebyUsernamn", "width": "5%" },
+
+	                            {
+	                                "data": "Statustyp",
+	                                "width": "5%",
+	                                "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {
+	                                        var statuscolor = "";
+	                                        switch (row.Statustypid) {
+	                                            case 1:
+	                                                statuscolor = '<span class="label label-primary">';
+	                                                break;
+	                                            case 2:
+	                                                statuscolor = '<span class="label label-warning">';
+	                                                break;
+	                                            case 3:
+	                                                statuscolor = '<span class="label label-success">';
+	                                                break;
+	                                            case 4:
+	                                                statuscolor = '<span class="label label-danger">';
+	                                                break;
+	                                            case 5:
+	                                                statuscolor = '<span class="label label-info">';
+	                                                break;
+	                                            case 6:
+	                                                statuscolor = '<span class="label label-success">';
+	                                                break;
+	                                            case 7:
+	                                                statuscolor = '<span class="label label-warning">';
+	                                                break;
+	                                            case 8:
+	                                                statuscolor = '<span class="label label">';
+	                                                break;
+	                                            case 9:
+	                                                statuscolor = '<span class="label label-default">';
+	                                                break;
+	                                            case 10:
+	                                                statuscolor = '<span class="label label-danger">';
+	                                                break;
+	                                            default:
+	                                                statuscolor = '<span class="label label-default">';
+	                                                break;
+	                                        }
+
+	                                        data = statuscolor + data + '</span>';
+	                                    }
+
+	                                    return data;
+	                                }
+	                            }
+	                        ],
+	                        "columnDefs": [
+	                            {
+	                                "targets": [3],
+	                                "visible": false,
+	                                "searchable": false
+	                            },
+	                            {
+	                                "targets": [4],
+	                                "visible": false,
+	                                "searchable": false
+	                            }
+	                        ]
+	                    }
+	                );
+
+	                });
+
 	            };
 	           
 	          
@@ -32038,6 +32195,9 @@
 	                    break;
 	                case "kk_aj_detailView":
 	                    $('.menyansokningar').addClass('active');
+	                    break;
+	                case "kk_aj_utovareView":
+	                    $('.menyutovare').addClass('active');
 	                    break;
 	                default:
 	                    $('.menystart').addClass('active');

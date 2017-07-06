@@ -311,11 +311,10 @@ module.exports = {
         });
         
         $('body').on('keydown', '#testauto', function (event) {
-            $(this).autocomplete({
-                //source: "http://localhost:60485/Api/helper/autocomplete/val/bio/devkey/alf?type=json&callback=testar",
+            $(this).autocomplete({                
                 source: function (request, response) {
                     $.ajax({
-                        url: "http://localhost:60485/Api/helper/autocomplete/val/"+request.term+"/devkey/alf?type=json&callback=testar",
+                        url: appsettings.ServerApiURL + "/Api/helper/autocomplete/val/" + request.term + "/devkey/" + appsettings.devkeysnippet,
                         dataType: "json",                        
                         success: function (data) {
                             response(data.kk_aj_admin.Utovarelist);

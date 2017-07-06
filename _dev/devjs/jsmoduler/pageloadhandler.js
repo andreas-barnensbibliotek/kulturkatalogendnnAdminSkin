@@ -40,6 +40,11 @@ module.exports = {
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, "all");
                 break;
+            case " kk_aj_utovareView":
+                // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+                loadtemplateTypes(appsettings.utovaretemplate, appsettings.currentUserid, sortobj, "all");
+                break;
             case "kk_aj_detailView":
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
