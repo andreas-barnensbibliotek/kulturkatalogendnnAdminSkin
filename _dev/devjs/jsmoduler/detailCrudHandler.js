@@ -128,6 +128,37 @@ module.exports = {
 
             callback(data);
         });
+    },
+    utovareEdit: function (editdata, callback) {
+        var reqUrl = appsettings.ServerApiURL + "/Api_v3/utovare/editutovare/user/" + appsettings.currentUserid + "/devkey/" + appsettings.devkeysnippet;
+        var formdatan = new FormData();
+
+        formdatan.append("UtovarID", editdata.UtovarID);
+        formdatan.append("Organisation", editdata.Organisation);
+        formdatan.append("Fornamn", editdata.Fornamn);
+        formdatan.append("Efternamn", editdata.Efternamn);
+        formdatan.append("Telefon", editdata.Telefon);
+        formdatan.append("Adress", editdata.Adress);
+        formdatan.append("Postnr", editdata.Postnr);
+        formdatan.append("Ort", editdata.Ort);
+        formdatan.append("Epost", editdata.Epost);
+        formdatan.append("Kommun", editdata.Kommun);
+        formdatan.append("Weburl", editdata.Weburl);
+        formdatan.append("Beskrivning", editdata.Beskrivning);
+
+
+        //var files = $("#kk_aj_utovareBildFile")[0].files;
+        // Add the uploaded image content to the form data collection
+        if (editdata.Bild.length > 0) {
+            formdatan.append("Bild", editdata.Bild[0]);
+        } else {
+            formdatan.append("Bild", "");
+        }
+
+        apiajaxRequest(reqUrl, formdatan, function (data) {
+
+            callback(data);
+        });
     }
 
 };
@@ -141,7 +172,10 @@ var apiajaxRequest = function (currurl, dataarr, callback) {
         type: "POST",
         url: currurl,
         dataType: "json",
-        data:dataarr,
+        data: dataarr,
+        cache: false,
+        contentType: false,
+        processData: false,
         success: function (data) {
             console.log("Edit fakta updaterad: ");
             callback(data);

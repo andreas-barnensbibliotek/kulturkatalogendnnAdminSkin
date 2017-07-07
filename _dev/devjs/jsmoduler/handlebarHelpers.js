@@ -251,3 +251,10 @@ Handlebars.registerHelper("setChecked", function (value, currentValue) {
         return "";
     }
 });
+Handlebars.registerHelper("ifimgempty", function (imgsrc) {
+    if(!imgsrc || 0 === imgsrc.length){
+        return "/Portals/_default/Skins/kk_Admin_Acklay/img/userDefaultIcon.png";
+    } else {
+        return imgsrc;
+    }
+});

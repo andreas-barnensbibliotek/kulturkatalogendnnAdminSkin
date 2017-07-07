@@ -555,21 +555,60 @@ module.exports = {
         $('body').on('click', '.kk_aj_editUtovareDetail', function () {
             var utovareid = $(this).attr("data");
 
+            history.pushState('', '', appsettings.basepageUri + '/katalogenUtovare?uid=' + utovareid + '');
+
+            appsettings.utovaredetailtemplate.detailid = utovareid;
+            loadpageHandler.pageloader("kk_aj_utovareView","",utovareid);            
+
             $('.kk_aj_utovaredetalj').show();
             $('.kk_aj_utovarelist').hide();
-            //detailCrudHandler.detailAddMedia(arrid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {
-            //    appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
-            //    loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
-            //});
-
+           
             return false;
         });
-        $('body').on('click', '.kk_aj_utovaredetailback', function () {
-            
+        $('body').on('click', '.kk_aj_utovaredetailback', function () {            
+            history.back();
             $('.kk_aj_utovaredetalj').hide();
             $('.kk_aj_utovarelist').show();
         });
 
+
+        $('body').on('click', '#kk_aj_utovareSave', function () {           
+            var editdata = {
+                "UtovarID": $("#kk_aj_utovareid").val(),
+                "Organisation": $("#kk_aj_utovareOrganisation").val(),
+                "Fornamn": $("#kk_aj_utovarefornamn").val(),
+                "Efternamn": $("#kk_aj_utovareefternamn").val(),
+                "Telefon": $("#kk_aj_utovaretelefon").val(),
+                "Adress": $("#kk_aj_utovareadress").val(),
+                "Postnr":$("#kk_aj_utovarepostnr").val(),
+                "Ort": $("#kk_aj_utovareort").val(),
+                "Epost":  $("#kk_aj_utovareepost").val(),
+                "Kommun": $("#kk_aj_utovarekommun").val(),
+                "Weburl": $("#kk_aj_utovareHemsida").val(),
+                "Bild": $("#kk_aj_utovareBildFile")[0].files,
+                "Beskrivning": $("#kk_aj_utovareBeskrivning").val()
+            }; 
+            var utovareid = editdata.UtovarID;
+
+            if (validate(editdata)){
+                
+                detailCrudHandler.utovareEdit(editdata, function (data) {
+                    appsettings.utovaredetailtemplate.detailid = utovareid;
+                                loadpageHandler.pageloader("kk_aj_utovareView", "", utovareid);
+                    $("#dialog-message_sparat").dialog({
+                        modal: true,
+                        buttons: {
+                            Ok: function () {
+                                
+                                $(this).dialog("close");
+                            }
+                        }
+                    });                    
+                });
+            };      
+                        
+            return false;
+        });
         
 
 
@@ -584,6 +623,9 @@ module.exports = {
     },
     laddanysida: function (sidvy) {
         loadlistView(sidvy);
+    },
+    laddautovaresida: function (uid) {
+        utovarehandler(uid);
     },
     updatacontentheader: function (listview, options) {
         updateansokHeaderjquery(listview, options);
@@ -706,3 +748,76 @@ var updateArrangemangMotivering = function (NyArrStatus, callback) {
     
 }
 
+var validate= function(editdata){
+    var ret= 0;
+    if(!editdata.Organisation|| 0 === editdata.Organisation.length){
+        $(".kk_aj_utovareOrganisation span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovareOrganisation span").hide();        
+    };
+    if(!editdata.Fornamn|| 0 === editdata.Fornamn.length){
+        $(".kk_aj_utovarefornamn span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovarefornamn span").hide();
+    };
+    if(!editdata.Efternamn|| 0 === editdata.Efternamn.length){
+        $(".kk_aj_utovareefternamn span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovareefternamn span").hide();
+    };
+    if(!editdata.Telefon|| 0 === editdata.Telefon.length){
+        $(".kk_aj_utovaretelefon span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovaretelefon span").hide();
+    };
+    if(!editdata.Adress|| 0 === editdata.Adress.length){
+        $(".kk_aj_utovareadress span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovareadress span").hide();
+    };
+    if(!editdata.Postnr|| 0 === editdata.Postnr.length){
+        $(".kk_aj_utovarepostnr span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovarepostnr span").hide();
+    };
+    if(!editdata.Ort|| 0 === editdata.Ort.length){
+        $(".kk_aj_utovareort span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovareort span").hide();
+    };
+    if(!editdata.Epost|| 0 === editdata.Epost.length){
+        $(".kk_aj_utovareepost span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovareepost span").hide();
+    };
+    if(!editdata.Kommun|| 0 === editdata.Kommun.length){
+        $(".kk_aj_utovarekommun span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovarekommun span").hide();
+    };
+
+    if(!editdata.Beskrivning|| 0 === editdata.Beskrivning.length){
+        $(".kk_aj_utovareBeskrivning span").show().focus();
+        ret += 1;
+    }else{
+        $(".kk_aj_utovareBeskrivning span").hide();
+    };
+
+    if (ret > 0) {
+        $(".kk_aj_utovareSave span").show();        
+        return false;
+    } else {
+        $(".kk_aj_utovareSave span").hide();
+        return true;
+    };
+
+};

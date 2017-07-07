@@ -19,7 +19,7 @@
 		</div>
 		<span class="mailbox-read-time ">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>       
 		<h3>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}: <b>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}</b></h3>
-		<h5>Utövare: {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningutovare}}</h5>
+		<h5>Utövare: <a href="/KulturkatalogenAdmin/katalogenUtovare?uid={{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovarid}}">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningutovare}}</a></h5>
 	</div>
 		<!-- /.mailbox-read-info -->
     

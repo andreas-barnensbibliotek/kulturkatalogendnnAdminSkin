@@ -94,6 +94,10 @@
 	            if (index > 0) {
 	                urlParams.id = sPageURL[index + 1];
 	            };
+	            var index = sPageURL.indexOf("uid");
+	            if (index > 0) {
+	                urlParams.id = sPageURL[index + 1];
+	            };
 	            var index = sPageURL.indexOf("search");
 	            if (index > 0) {
 	                urlParams.search = sPageURL[index + 1];
@@ -115,7 +119,10 @@
 	        if (_url_id) {
 	            appsettings.detailetemplate.detailid = _url_id;
 	            appsettings.detaillogtemplate.arrid = _url_id;
-	        }        
+	        }
+	        if (_pageType == "kk_aj_utovareView") {
+	            appsettings.utovaredetailtemplate.detailid = urlParams.uid;
+	        }
 
 	        
 	       
@@ -216,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	var _apiserver = "http://localhost:60485";
-	var _dnnURL = "http://dnndev.me";
+	//var _apiserver = "http://localhost:60485";
+	//var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	//var _dnnURL = "http://kulturkatalog.kivdev.se";
+	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	var _dnnURL = "http://kulturkatalog.kivdev.se";
 	// 
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -341,7 +348,17 @@
 	        templatename: "utovareTmpl",
 	        templatedata: "kk_aj_utovarejson",
 	        targetdiv: ".kk_aj_utovaretbl",
-	        filename: "kk_aj_utovareTable.txt"
+	        filename: "kk_aj_utovareTable.txt",
+	        detailid: window.detailuid
+	    }
+	];
+	window.kk_aj_utovareDetailView = [
+	    {
+	        templatename: "utovareDetailTmpl",
+	        templatedata: "kk_aj_utovareDetailjson",
+	        targetdiv: ".kk_aj_utovaredetalj",
+	        filename: "kk_aj_utovaredetaljvy.txt",
+	        detailid: window.detailuid
 	    }
 	];
 
@@ -423,6 +440,7 @@
 	    }, 
 	    diarietemplate: window.kk_aj_DiarieView,
 	    utovaretemplate: window.kk_aj_utovareView,
+	    utovaredetailtemplate:kk_aj_utovareDetailView,
 	    detailetemplate: window.kk_aj_detailView,
 	    detailEdittemplate: window.kk_aj_detailEditView,
 	    detaillogtemplate: window.kk_aj_detaillogView,
@@ -689,6 +707,14 @@
 	        return "";
 	    }
 	});
+	Handlebars.registerHelper("ifimgempty", function (imgsrc) {
+	    if(!imgsrc || 0 === imgsrc.length){
+	        return "/Portals/_default/Skins/kk_Admin_Acklay/img/userDefaultIcon.png";
+	    } else {
+	        return imgsrc;
+	    }
+	});
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
@@ -11478,21 +11504,60 @@
 	        $('body').on('click', '.kk_aj_editUtovareDetail', function () {
 	            var utovareid = $(this).attr("data");
 
+	            history.pushState('', '', appsettings.basepageUri + '/katalogenUtovare?uid=' + utovareid + '');
+
+	            appsettings.utovaredetailtemplate.detailid = utovareid;
+	            loadpageHandler.pageloader("kk_aj_utovareView","",utovareid);            
+
 	            $('.kk_aj_utovaredetalj').show();
 	            $('.kk_aj_utovarelist').hide();
-	            //detailCrudHandler.detailAddMedia(arrid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {
-	            //    appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
-	            //    loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
-	            //});
-
+	           
 	            return false;
 	        });
-	        $('body').on('click', '.kk_aj_utovaredetailback', function () {
-	            
+	        $('body').on('click', '.kk_aj_utovaredetailback', function () {            
+	            history.back();
 	            $('.kk_aj_utovaredetalj').hide();
 	            $('.kk_aj_utovarelist').show();
 	        });
 
+
+	        $('body').on('click', '#kk_aj_utovareSave', function () {           
+	            var editdata = {
+	                "UtovarID": $("#kk_aj_utovareid").val(),
+	                "Organisation": $("#kk_aj_utovareOrganisation").val(),
+	                "Fornamn": $("#kk_aj_utovarefornamn").val(),
+	                "Efternamn": $("#kk_aj_utovareefternamn").val(),
+	                "Telefon": $("#kk_aj_utovaretelefon").val(),
+	                "Adress": $("#kk_aj_utovareadress").val(),
+	                "Postnr":$("#kk_aj_utovarepostnr").val(),
+	                "Ort": $("#kk_aj_utovareort").val(),
+	                "Epost":  $("#kk_aj_utovareepost").val(),
+	                "Kommun": $("#kk_aj_utovarekommun").val(),
+	                "Weburl": $("#kk_aj_utovareHemsida").val(),
+	                "Bild": $("#kk_aj_utovareBildFile")[0].files,
+	                "Beskrivning": $("#kk_aj_utovareBeskrivning").val()
+	            }; 
+	            var utovareid = editdata.UtovarID;
+
+	            if (validate(editdata)){
+	                
+	                detailCrudHandler.utovareEdit(editdata, function (data) {
+	                    appsettings.utovaredetailtemplate.detailid = utovareid;
+	                                loadpageHandler.pageloader("kk_aj_utovareView", "", utovareid);
+	                    $("#dialog-message_sparat").dialog({
+	                        modal: true,
+	                        buttons: {
+	                            Ok: function () {
+	                                
+	                                $(this).dialog("close");
+	                            }
+	                        }
+	                    });                    
+	                });
+	            };      
+	                        
+	            return false;
+	        });
 	        
 
 
@@ -11507,6 +11572,9 @@
 	    },
 	    laddanysida: function (sidvy) {
 	        loadlistView(sidvy);
+	    },
+	    laddautovaresida: function (uid) {
+	        utovarehandler(uid);
 	    },
 	    updatacontentheader: function (listview, options) {
 	        updateansokHeaderjquery(listview, options);
@@ -11629,6 +11697,79 @@
 	    
 	}
 
+	var validate= function(editdata){
+	    var ret= 0;
+	    if(!editdata.Organisation|| 0 === editdata.Organisation.length){
+	        $(".kk_aj_utovareOrganisation span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovareOrganisation span").hide();        
+	    };
+	    if(!editdata.Fornamn|| 0 === editdata.Fornamn.length){
+	        $(".kk_aj_utovarefornamn span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovarefornamn span").hide();
+	    };
+	    if(!editdata.Efternamn|| 0 === editdata.Efternamn.length){
+	        $(".kk_aj_utovareefternamn span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovareefternamn span").hide();
+	    };
+	    if(!editdata.Telefon|| 0 === editdata.Telefon.length){
+	        $(".kk_aj_utovaretelefon span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovaretelefon span").hide();
+	    };
+	    if(!editdata.Adress|| 0 === editdata.Adress.length){
+	        $(".kk_aj_utovareadress span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovareadress span").hide();
+	    };
+	    if(!editdata.Postnr|| 0 === editdata.Postnr.length){
+	        $(".kk_aj_utovarepostnr span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovarepostnr span").hide();
+	    };
+	    if(!editdata.Ort|| 0 === editdata.Ort.length){
+	        $(".kk_aj_utovareort span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovareort span").hide();
+	    };
+	    if(!editdata.Epost|| 0 === editdata.Epost.length){
+	        $(".kk_aj_utovareepost span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovareepost span").hide();
+	    };
+	    if(!editdata.Kommun|| 0 === editdata.Kommun.length){
+	        $(".kk_aj_utovarekommun span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovarekommun span").hide();
+	    };
+
+	    if(!editdata.Beskrivning|| 0 === editdata.Beskrivning.length){
+	        $(".kk_aj_utovareBeskrivning span").show().focus();
+	        ret += 1;
+	    }else{
+	        $(".kk_aj_utovareBeskrivning span").hide();
+	    };
+
+	    if (ret > 0) {
+	        $(".kk_aj_utovareSave span").show();        
+	        return false;
+	    } else {
+	        $(".kk_aj_utovareSave span").hide();
+	        return true;
+	    };
+
+	};
 
 
 /***/ },
@@ -30388,10 +30529,16 @@
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
 	                loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, "all");
 	                break;
-	            case " kk_aj_utovareView":
+	            case "kk_aj_utovareView":
 	                // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-	                loadtemplateTypes(appsettings.utovaretemplate, appsettings.currentUserid, sortobj, "all");
+	                //loadtemplateTypes(appsettings.utovaretemplate, appsettings.currentUserid, sortobj, "all");
+	                var uid = appsettings.utovaredetailtemplate.detailid
+	                if (uid > 0) {
+	                    loadtemplateTypes(appsettings.utovaredetailtemplate, appsettings.currentUserid, sortobj, uid);                    
+	                    $('.kk_aj_utovaredetalj').show();
+	                    $('.kk_aj_utovarelist').hide();
+	                };
 	                break;
 	            case "kk_aj_detailView":
 	                //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
@@ -30464,7 +30611,7 @@
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
 	          
 	            //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
-	           if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl")) {
+	            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl" || value.templatename == "utovareDetailTmpl")) {
 	                if (value.templatename != "StartSenasteListTmpl") {
 	                    if (value.templatename != "DiareTmpl") {
 	                        if (data.kk_aj_admin.ansokningarlista) {
@@ -30610,6 +30757,7 @@
 	                "ansokningtitle": b[i]['ansokningtitle'],
 	                "ansokningsubtitle": b[i]['ansokningsubtitle'],
 	                "ansokningutovare": b[i]['ansokningutovare'],
+	                "ansokningutovareid": b[i]['ansokningUtovarid'],
 	                "ansokningurl": b[i]['ansokningurl'],
 	                "ansokningbilaga": b[i]['ansokningbilaga'],
 	                "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
@@ -30886,6 +31034,10 @@
 	            case "kk_aj_UpdateLookedAt":
 	                //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
 	                currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + val + "/uid/" + usrid + "/val/ja/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "kk_aj_utovareDetailjson":
+	                // /Api_v3/utovare/detail/user/2/val/1/devkey/alf?type=json
+	                currurl = appsettings.ServerApiURL + "/Api_v3/utovare/detail/user/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
 	                break;
 	            default:
 	                // resultat är en empty json response
@@ -31886,6 +32038,37 @@
 
 	            callback(data);
 	        });
+	    },
+	    utovareEdit: function (editdata, callback) {
+	        var reqUrl = appsettings.ServerApiURL + "/Api_v3/utovare/editutovare/user/" + appsettings.currentUserid + "/devkey/" + appsettings.devkeysnippet;
+	        var formdatan = new FormData();
+
+	        formdatan.append("UtovarID", editdata.UtovarID);
+	        formdatan.append("Organisation", editdata.Organisation);
+	        formdatan.append("Fornamn", editdata.Fornamn);
+	        formdatan.append("Efternamn", editdata.Efternamn);
+	        formdatan.append("Telefon", editdata.Telefon);
+	        formdatan.append("Adress", editdata.Adress);
+	        formdatan.append("Postnr", editdata.Postnr);
+	        formdatan.append("Ort", editdata.Ort);
+	        formdatan.append("Epost", editdata.Epost);
+	        formdatan.append("Kommun", editdata.Kommun);
+	        formdatan.append("Weburl", editdata.Weburl);
+	        formdatan.append("Beskrivning", editdata.Beskrivning);
+
+
+	        //var files = $("#kk_aj_utovareBildFile")[0].files;
+	        // Add the uploaded image content to the form data collection
+	        if (editdata.Bild.length > 0) {
+	            formdatan.append("Bild", editdata.Bild[0]);
+	        } else {
+	            formdatan.append("Bild", "");
+	        }
+
+	        apiajaxRequest(reqUrl, formdatan, function (data) {
+
+	            callback(data);
+	        });
 	    }
 
 	};
@@ -31899,7 +32082,10 @@
 	        type: "POST",
 	        url: currurl,
 	        dataType: "json",
-	        data:dataarr,
+	        data: dataarr,
+	        cache: false,
+	        contentType: false,
+	        processData: false,
 	        success: function (data) {
 	            console.log("Edit fakta updaterad: ");
 	            callback(data);
@@ -31941,7 +32127,7 @@
 
 	            jsboottbl.bootTableInit();
 	            jsjquerytbl.jqueryTableInit();    
-	           
+	         
 
 	            if (currpageType == "kk_aj_diarieView") {
 	         
@@ -32006,7 +32192,7 @@
 	                            { "data": "Arrutovare",
 	                                "render": function (data, type, row, meta) {
 	                                    if (type === 'display') {
-	                                        data = '<a href="' + appsettings.basepageUri + '/katalogenutovarevy?utovarid=' + row.ArrutovareID + '">' + data + '</a>';
+	                                        data = '<a href="' + appsettings.basepageUri + '/katalogenUtovare?uid=' + row.ArrutovareID + '">' + data + '</a>';
 	                                    }
 
 	                                    return data;
@@ -32124,7 +32310,7 @@
 	                            {
 	                                "data": "UtovarID", "render": function (data, type, row, meta) {
 	                                    if (type === 'display') {
-	                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '">' + data + '</a>';
+	                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '>' + data + '</a>';
 	                                    }
 	                                    return data;
 	                                },
@@ -32133,7 +32319,7 @@
 	                            {
 	                                "data": "Organisation", "render": function (data, type, row, meta) {
 	                                    if (type === 'display') {
-	                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '">' + data + '</a>';
+	                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '>' + data + '</a>';
 	                                    }
 	                                    return data;
 	                                },
@@ -32151,8 +32337,8 @@
 	                            { "data": "Telefon", "width": "10%" },                            
 	                            { "data": "Epost" },
 	                            { "data": "Epost", "render": function (data, type, row, meta) {
-	                                if (type === 'display') {
-	                                    data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '"><i class="fa fa-edit"></i> Ändra</a>';
+	                                if (type === 'display') {                                    
+	                                    data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '><i class="fa fa-edit"></i> Ändra</a>';
 	                                }
 	                                    return data;
 	                                },

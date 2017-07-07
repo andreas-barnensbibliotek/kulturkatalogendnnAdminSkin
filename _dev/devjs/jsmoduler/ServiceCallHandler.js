@@ -240,6 +240,10 @@ module.exports = {
                 //currurl = "/updatearrangemang/lookedat/id/2/uid/2/val/ja/devkey/alf?type=json&callback=testar;
                 currurl = appsettings.localOrServerURL + "/updatearrangemang/lookedat/id/" + val + "/uid/" + usrid + "/val/ja/devkey/" + appsettings.devkeysnippet;
                 break;
+            case "kk_aj_utovareDetailjson":
+                // /Api_v3/utovare/detail/user/2/val/1/devkey/alf?type=json
+                currurl = appsettings.ServerApiURL + "/Api_v3/utovare/detail/user/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
+                break;
             default:
                 // resultat är en empty json response
                 currurl =""

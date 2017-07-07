@@ -3,12 +3,12 @@
 //var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 //lokalafiler----------------------kommentera ut dessa på servern
-var _apiserver = "http://localhost:60485";
-var _dnnURL = "http://dnndev.me";
+//var _apiserver = "http://localhost:60485";
+//var _dnnURL = "http://dnndev.me";
 
 //Serverfiler---------------------- kommentera ut dessa lokalt
-//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-//var _dnnURL = "http://kulturkatalog.kivdev.se";
+var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+var _dnnURL = "http://kulturkatalog.kivdev.se";
 // 
 var _localOrServerURL = _apiserver + "/Api_v2";
 var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -128,7 +128,17 @@ window.kk_aj_utovareView = [
         templatename: "utovareTmpl",
         templatedata: "kk_aj_utovarejson",
         targetdiv: ".kk_aj_utovaretbl",
-        filename: "kk_aj_utovareTable.txt"
+        filename: "kk_aj_utovareTable.txt",
+        detailid: window.detailuid
+    }
+];
+window.kk_aj_utovareDetailView = [
+    {
+        templatename: "utovareDetailTmpl",
+        templatedata: "kk_aj_utovareDetailjson",
+        targetdiv: ".kk_aj_utovaredetalj",
+        filename: "kk_aj_utovaredetaljvy.txt",
+        detailid: window.detailuid
     }
 ];
 
@@ -210,6 +220,7 @@ module.exports = {
     }, 
     diarietemplate: window.kk_aj_DiarieView,
     utovaretemplate: window.kk_aj_utovareView,
+    utovaredetailtemplate:kk_aj_utovareDetailView,
     detailetemplate: window.kk_aj_detailView,
     detailEdittemplate: window.kk_aj_detailEditView,
     detaillogtemplate: window.kk_aj_detaillogView,

@@ -48,6 +48,10 @@ $(function () {
             if (index > 0) {
                 urlParams.id = sPageURL[index + 1];
             };
+            var index = sPageURL.indexOf("uid");
+            if (index > 0) {
+                urlParams.id = sPageURL[index + 1];
+            };
             var index = sPageURL.indexOf("search");
             if (index > 0) {
                 urlParams.search = sPageURL[index + 1];
@@ -69,7 +73,10 @@ $(function () {
         if (_url_id) {
             appsettings.detailetemplate.detailid = _url_id;
             appsettings.detaillogtemplate.arrid = _url_id;
-        }        
+        }
+        if (_pageType == "kk_aj_utovareView") {
+            appsettings.utovaredetailtemplate.detailid = urlParams.uid;
+        }
 
         
        

@@ -40,10 +40,16 @@ module.exports = {
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.diarietemplate, appsettings.currentUserid, sortobj, "all");
                 break;
-            case " kk_aj_utovareView":
+            case "kk_aj_utovareView":
                 // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
-                loadtemplateTypes(appsettings.utovaretemplate, appsettings.currentUserid, sortobj, "all");
+                //loadtemplateTypes(appsettings.utovaretemplate, appsettings.currentUserid, sortobj, "all");
+                var uid = appsettings.utovaredetailtemplate.detailid
+                if (uid > 0) {
+                    loadtemplateTypes(appsettings.utovaredetailtemplate, appsettings.currentUserid, sortobj, uid);                    
+                    $('.kk_aj_utovaredetalj').show();
+                    $('.kk_aj_utovarelist').hide();
+                };
                 break;
             case "kk_aj_detailView":
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_detailView");
@@ -116,7 +122,7 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
           
             //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
-           if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl")) {
+            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl" || value.templatename == "utovareDetailTmpl")) {
                 if (value.templatename != "StartSenasteListTmpl") {
                     if (value.templatename != "DiareTmpl") {
                         if (data.kk_aj_admin.ansokningarlista) {
@@ -262,6 +268,7 @@ var datapager = function(datat,sta,limit) {
                 "ansokningtitle": b[i]['ansokningtitle'],
                 "ansokningsubtitle": b[i]['ansokningsubtitle'],
                 "ansokningutovare": b[i]['ansokningutovare'],
+                "ansokningutovareid": b[i]['ansokningUtovarid'],
                 "ansokningurl": b[i]['ansokningurl'],
                 "ansokningbilaga": b[i]['ansokningbilaga'],
                 "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],

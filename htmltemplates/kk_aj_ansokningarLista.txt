@@ -1,5 +1,6 @@
 ﻿<!-- item loop START -->
 	 {{#each kk_aj_admin.ansokningarlista.ansokningar}}
+	
 	<tr>
 		<td><input type="checkbox" name="kk_aj_chkAnnons" class="kk_aj_chkboxAnnons" ></td>
 		<td class="mailbox-star" rel="{{ansokningid}}">
@@ -12,11 +13,11 @@
 		<td class="mailbox-subject">
 			<a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}} <br/><b>{{ansokningsubtitle}}</b></a>
 		</td>
-		<td class="mailbox-name"><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningutovare}}</a></td>
+		<td class="mailbox-name"><a href="/KulturkatalogenAdmin/katalogenUtovare?uid={{ansokningutovareid}}" rel="{{ansokningid}}">{{ansokningutovare}}</a></td>
 		<td class="mailbox-attachment">
 			{{ansokningkonstform}}
 		</td>        
-		<td class="mailbox-date">{{ansokningdate}}</td>       
+		<td class="mailbox-date">{{ansokningdate}} </td>       
 		
 	</tr>
 	{{/each}}

@@ -16,7 +16,7 @@ module.exports = {
 
             jsboottbl.bootTableInit();
             jsjquerytbl.jqueryTableInit();    
-           
+         
 
             if (currpageType == "kk_aj_diarieView") {
          
@@ -81,7 +81,7 @@ module.exports = {
                             { "data": "Arrutovare",
                                 "render": function (data, type, row, meta) {
                                     if (type === 'display') {
-                                        data = '<a href="' + appsettings.basepageUri + '/katalogenutovarevy?utovarid=' + row.ArrutovareID + '">' + data + '</a>';
+                                        data = '<a href="' + appsettings.basepageUri + '/katalogenUtovare?uid=' + row.ArrutovareID + '">' + data + '</a>';
                                     }
 
                                     return data;
@@ -199,7 +199,7 @@ module.exports = {
                             {
                                 "data": "UtovarID", "render": function (data, type, row, meta) {
                                     if (type === 'display') {
-                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '">' + data + '</a>';
+                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '>' + data + '</a>';
                                     }
                                     return data;
                                 },
@@ -208,7 +208,7 @@ module.exports = {
                             {
                                 "data": "Organisation", "render": function (data, type, row, meta) {
                                     if (type === 'display') {
-                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '">' + data + '</a>';
+                                        data = '<a href="#" class="kk_aj_editUtovareDetail" data=' + row.UtovarID + '>' + data + '</a>';
                                     }
                                     return data;
                                 },
@@ -226,8 +226,8 @@ module.exports = {
                             { "data": "Telefon", "width": "10%" },                            
                             { "data": "Epost" },
                             { "data": "Epost", "render": function (data, type, row, meta) {
-                                if (type === 'display') {
-                                    data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '"><i class="fa fa-edit"></i> Ändra</a>';
+                                if (type === 'display') {                                    
+                                    data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '><i class="fa fa-edit"></i> Ändra</a>';
                                 }
                                     return data;
                                 },
