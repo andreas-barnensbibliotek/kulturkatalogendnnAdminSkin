@@ -155,7 +155,7 @@ module.exports = {
             formdatan.append("Bild", "");
         }
 
-        apiajaxRequest(reqUrl, formdatan, function (data) {
+        apiajaxRequestUtovare(reqUrl, formdatan, function (data) {
 
             callback(data);
         });
@@ -164,7 +164,7 @@ module.exports = {
 };
 
 
-var apiajaxRequest = function (currurl, dataarr, callback) {
+var apiajaxRequestUtovare = function (currurl, dataarr, callback) {
 
     //console.log("2. servicen hämtar data");
     $.ajax({
@@ -176,6 +176,26 @@ var apiajaxRequest = function (currurl, dataarr, callback) {
         cache: false,
         contentType: false,
         processData: false,
+        success: function (data) {
+            console.log("Edit fakta updaterad: ");
+            callback(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+            alert("Nått blev fel vid uppdatering av parametrarna!");
+        }
+    });
+
+}
+
+var apiajaxRequest = function (currurl, dataarr, callback) {
+
+    //console.log("2. servicen hämtar data");
+    $.ajax({
+        async: true,
+        type: "POST",
+        url: currurl,
+        data: dataarr,
         success: function (data) {
             console.log("Edit fakta updaterad: ");
             callback(data);

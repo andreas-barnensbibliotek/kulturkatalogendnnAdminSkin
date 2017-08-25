@@ -223,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	//var _apiserver = "http://localhost:60485";
-	//var _dnnURL = "http://dnndev.me";
+	var _apiserver = "http://localhost:60485";
+	var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	var _dnnURL = "http://kulturkatalog.kivdev.se";
+	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	//var _dnnURL = "http://kulturkatalog.kivdev.se";
 	// 
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -32065,7 +32065,7 @@
 	            formdatan.append("Bild", "");
 	        }
 
-	        apiajaxRequest(reqUrl, formdatan, function (data) {
+	        apiajaxRequestUtovare(reqUrl, formdatan, function (data) {
 
 	            callback(data);
 	        });
@@ -32074,7 +32074,7 @@
 	};
 
 
-	var apiajaxRequest = function (currurl, dataarr, callback) {
+	var apiajaxRequestUtovare = function (currurl, dataarr, callback) {
 
 	    //console.log("2. servicen hämtar data");
 	    $.ajax({
@@ -32086,6 +32086,26 @@
 	        cache: false,
 	        contentType: false,
 	        processData: false,
+	        success: function (data) {
+	            console.log("Edit fakta updaterad: ");
+	            callback(data);
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	            //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	            alert("Nått blev fel vid uppdatering av parametrarna!");
+	        }
+	    });
+
+	}
+
+	var apiajaxRequest = function (currurl, dataarr, callback) {
+
+	    //console.log("2. servicen hämtar data");
+	    $.ajax({
+	        async: true,
+	        type: "POST",
+	        url: currurl,
+	        data: dataarr,
 	        success: function (data) {
 	            console.log("Edit fakta updaterad: ");
 	            callback(data);

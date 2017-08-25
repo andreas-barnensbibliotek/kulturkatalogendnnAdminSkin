@@ -981,6 +981,7 @@ Content-Type: application/json
 
 {
 	"arrid": "23",
+    "contentid": "1",
 	"rubrik": "rubriktext",
 	"underrubrik": "underrubrik",
 	"innehall": "massa text",
@@ -1238,6 +1239,7 @@ STARTADE TESTEN med arrid 16
 		"MediaSize": "49.40 min",
 		"MediaUrl": "https://www.youtube.com/embed/ejBkOjEG6F0"
 	},
+	"Arrgruppid":"0",
 	"utovare": "0",
 	"UtovareData": {
 		"Adress": "viskaholm 135",
@@ -1272,4 +1274,82 @@ STARTADE TESTEN med arrid 16
 			"FaktaValue": "Kostnad för andra arrangemanget gäller vid samma spelplats samma dag."
 		}
 	]
+}
+
+// add arrangemang med förnyande och befinglig utövare 
+// http://localhost:60485/Api_v2/arrangemang/add/devkey/alf
+// POST Content-Type: application/json
+{
+	"Arrangemangtyp": "1",
+	"rubrik": "Buffla och båga steg3",
+	"underrubrik": "Kurs i mordern politik",
+	"innehall": "Politiskpropaganda och dyrlikt är ounbärligt. massa nytt att lära detta år",
+	"konstform": "4",
+	"mainImage": {
+		"MediaAlt": "Kultur i Väst",
+		"MediaFilename": "karta.jpg",
+		"MediaFoto": "någon på kultur i väst",
+		"MediaSize": "1 mb",
+		"MediaUrl": "http://www.kulturivast.se/sites/default/files/karta.jpg"
+	},
+	"MediaClip": {
+		"MediaAlt": "Dansexpressen goes museum",
+		"MediaFilename": "https://youtu.be/yrUPcLr32JU",
+		"MediaFoto": "Tony Alicea",
+		"MediaSize": "49.40 min",
+		"MediaUrl": "https://www.youtube.com/embed/yrUPcLr32JU"
+	},
+	"Arrgruppid":"30",
+	"utovare": "50",
+	"UtovareData": {
+		"Adress": "",
+		"Efternamn": "",
+		"Epost": "",
+		"Fornamn": "",
+		"Kommun": "",
+		"Organisation": "",
+		"Ort": "",
+		"Postnr": "",
+		"Telefon": "",
+		"Weburl": ""
+	},
+	"Faktalist": [{
+			"FaktaTypID": "19",
+			"FaktaValue": "32700 kr"
+		},
+		{
+			"FaktaTypID": "37",
+			"FaktaValue": "1220 kr/mil"
+		},
+		{
+			"FaktaTypID": "25",
+			"FaktaValue": "Ingår ej"
+		},
+		{
+			"FaktaTypID": "35",
+			"FaktaValue": "Enligt överenskommelse. kr"
+		},
+		{
+			"FaktaTypID": "36",
+			"FaktaValue": "Kostnad för andra arrangemanget gäller vid samma spelplats samma dag."
+		}
+	]
+}
+
+///UTÖVARE/////////////////////////////
+//POST ///////////////////////////////
+
+{
+	"UtovarID" : 6,
+	"Organisation" : "UBAB",
+	"Fornamn" : "Gösta",
+	"Efternamn" : "sandin",
+	"Telefon" : "0321-12310",
+	"Adress" : "jönköpingsvägen 15",
+	"Postnr" : "52350",
+	"Ort" : "Timmele",
+	"Epost" : "sandin@test.se",
+	"Kommun" : "Ulricehamn",
+	"Weburl" : "www.ubab.se",
+	"Bild" : null
 }
