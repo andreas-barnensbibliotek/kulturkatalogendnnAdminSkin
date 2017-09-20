@@ -294,13 +294,18 @@ module.exports = {
         //Detaljvy EDIT event START---------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
         $('body').on('click', '.kk_aj_nymediabutton', function (event) {
-            $(".kk_aj_nymediabox").show();
+            $(".kk_aj_nymediabox").toggle(500);
             return false;
         });
         $('body').on('click', '#kk_aj_mediaBtnAvbryt', function (event) {
             $(".kk_aj_nymediabox").hide();
             return false;
         });
+        $('body').on('click', '#kk_aj_mediaBtnNewCancel', function (event) {
+            $(".kk_aj_nymediabox").hide(500);
+            return false;
+        });                
+
         $('body').on('click', '.kk_aj_btnaddfakta', function (event) {
             $(".kk_aj_addfaktablock").show();
             return false;
@@ -344,37 +349,91 @@ module.exports = {
             };         
         });
         
-        // MainCONTENT HANDLERS START---------------------------------------------------------------------------
-        ////////////////////////////////////////////////////////////////////////////////////////////////
+        $('body').on('click', '.kk_aj_showpressentationsbild', function (event) {
+            $('.kk_aj_pressentationsbildblock').toggle(500);
+            return false;
+        });
         
+
         $('body').on('click', '.kk_aj_SparaDetailEdit', function () {
+            var data = new FormData();
+
             var arrid = $('#kk_aj_arridtxt').val();
             var contentid = $('#kk_aj_arrcontentid').attr("data");
-                        
-            var rubriktext = $('#kk_aj_rubriktext').val();
-            var underrubriktext = $('#kk_aj_underrubriktext').val();
-            var contenttext = $('#kk_aj_contenttext').val();
-            var konstform = $('#kk_aj_konstform').val();
-            var arrtyp = $('#kk_aj_arrtyp').val();
-            var arrUtovareid = $('.kk_aj_arrUtovareblock').attr("data");
-            var pub = $('input[name=optionsRadiospub]:checked').val();
-           
-            detailCrudHandler.detailEditMainContent(arrid, contentid, rubriktext, underrubriktext, contenttext, konstform, arrtyp, arrUtovareid, pub, function (data) {
-                $("#dialog-message_sparat").dialog({
-                    modal: true,
-                    buttons: {
-                        Ok: function () { loadlistView("kk_aj_detailView");
-                            $(this).dialog("close");
-                        }
-                    }
-                });
-                //appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
-               
-                //loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+            var uploadedfiles = $("#arr_UploadedImage").get(0).files;
+            var filnamnet;
+
+            data.append("arrid", arrid);
+            data.append("contentid", contentid);
+            data.append("cmd", "editcontent");
+            data.append("userid", appsettings.currentUserid);
+            
+            data.append("rubrik", $('#kk_aj_rubriktext').val());
+            data.append("underrubrik", $('#kk_aj_underrubriktext').val());          
+            data.append("innehall", $('#kk_aj_contenttext').val());
+            data.append("konstformid", $('#kk_aj_konstform').val());
+            data.append("arrangemangtypid", $('#kk_aj_arrtyp').val());
+            data.append("utovareid", $('.kk_aj_arrUtovareblock').attr("data"));
+            data.append("publicerad", $('input[name=optionsRadiospub]:checked').val());                      
+            data.append("arralt", $('#arr_altfoto').val());
+            data.append("arrsize", $('#arr_sizefoto').val());
+            data.append("arrfoto", $('#arr_fotograf').val());
+
+            // Add the uploaded image content to the form data collection
+            if (uploadedfiles.length > 0) {
+                data.append("UploadedImage", uploadedfiles[0]);
+
+                // skapa tmpfilnamn för imagelänken så att den kan visas direkt måste skickas med så att det visar när detailImageEdit skickar tillbaka sin callback
+                filnamnet = arrid + "_" + uploadedfiles[0].name;
+                //Ladda upp bilden
+
+            } else {
+                data.append("mediaimgageUrl", $('#kk_aj_currbild').attr("src"));
+            };
+
+            detailCrudHandler.detailImageEdit(data, filnamnet, function (filnamn) {
+                if (filnamn) {
+                    var imgnewurl = appsettings.detailmainimgurl + '/' + filnamn;
+                    $('#kk_aj_currbild').attr("src", imgnewurl);
+                };
+                console.log("bilduppladdad: " + imgnewurl);
             });
 
             return false;
         });
+
+        // MainCONTENT HANDLERS START---------------------------------------------------------------------------
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        //// den gamla sparaknapp rutinen sparar inte bilder vid klickning
+        //$('body').on('click', '.kk_aj_SparaDetailEdit', function () {
+        //    var arrid = $('#kk_aj_arridtxt').val();
+        //    var contentid = $('#kk_aj_arrcontentid').attr("data");
+                        
+        //    var rubriktext = $('#kk_aj_rubriktext').val();
+        //    var underrubriktext = $('#kk_aj_underrubriktext').val();
+        //    var contenttext = $('#kk_aj_contenttext').val();
+        //    var konstform = $('#kk_aj_konstform').val();
+        //    var arrtyp = $('#kk_aj_arrtyp').val();
+        //    var arrUtovareid = $('.kk_aj_arrUtovareblock').attr("data");
+        //    var pub = $('input[name=optionsRadiospub]:checked').val();
+           
+        //    detailCrudHandler.detailEditMainContent(arrid, contentid, rubriktext, underrubriktext, contenttext, konstform, arrtyp, arrUtovareid, pub, function (data) {
+        //        $("#dialog-message_sparat").dialog({
+        //            modal: true,
+        //            buttons: {
+        //                Ok: function () { loadlistView("kk_aj_detailView");
+        //                    $(this).dialog("close");
+        //                }
+        //            }
+        //        });
+        //        //appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+               
+        //        //loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+        //    });
+
+        //    return false;
+        //});
 
         // MainCONTENT HANDLERS STOPP---------------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -438,36 +497,52 @@ module.exports = {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // MEDIA HANDLERS START---------------------------------------------------------------------------
         $('body').on('click', '.kk_aj_mediaBtnEdit', function () {
-            
-            var arrid = $('#kk_aj_arridtxt').val();
             var mediaid = $(this).attr("data");
-            var mediaalt = $('.kk_aj_mediaalt[data=' + mediaid + ']').val();
-            var mediafilename = $('.kk_aj_mediafilename[data=' + mediaid + ']').val();
-            var mediafoto = $('.kk_aj_mediafoto[data=' + mediaid + ']').val();
-            var mediaurl = $('.kk_aj_mediaurl[data=' + mediaid + ']').val();
-            var mediasize = $('.kk_aj_mediasize[data=' + mediaid + ']').val();
-            var mediatyp = $('.kk_aj_mediatyp[data=' + mediaid + ']').val();
-            var mediavald = "";
-            
-            detailCrudHandler.detailEditMedia(arrid, mediaid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {
-                appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
-                loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+            var _requesteddata = {};            
+            _requesteddata.arrid = $('#kk_aj_arridtxt').val();
+            _requesteddata.mediaid = mediaid;
+            _requesteddata.mediaalt = $('.kk_aj_mediaalt[data=' + mediaid + ']').val();
+            _requesteddata.mediafilename = $('.kk_aj_mediafilename[data=' + mediaid + ']').val();
+            _requesteddata.mediafoto = $('.kk_aj_mediafoto[data=' + mediaid + ']').val();
+            _requesteddata.mediaurl = $('.kk_aj_mediaurl[data=' + mediaid + ']').val();
+            _requesteddata.mediasize = $('.kk_aj_mediasize[data=' + mediaid + ']').val();           
+            _requesteddata.mediatyp = $('.kk_aj_mediatyp[data=' + mediaid + ']').val();
+            _requesteddata.mediaTitle = $('.kk_aj_mediatitel[data=' + mediaid + ']').val();
+            _requesteddata.mediaBeskrivning = $('.kk_aj_mediabeskrivning[data=' + mediaid + ']').val();
+            _requesteddata.mediaLink = $('.kk_aj_medialink[data=' + mediaid + ']').val();
+            _requesteddata.mediavald = "";
+
+            detailCrudHandler.detailEditMedia(_requesteddata, function (data) {
+                $("#dialog-message_sparat").dialog({
+                    modal: true,
+                    buttons: {
+                        Ok: function () { loadlistView("kk_aj_detailView");
+                            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+                            loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+                            $(this).dialog("close");
+                        }
+                    }
+                });                
             });
 
             return false;
         });
 
         $('body').on('click', '#kk_aj_mediaBtnAdd', function () {
-            var arrid = $('#kk_aj_arridtxt').val();           
-            var mediaalt = $('#kk_aj_mediaAlt').val();
-            var mediafilename = $('#kk_aj_mediafilnamn').val();
-            var mediafoto = $('#kk_aj_foto').val();
-            var mediaurl = $('#kk_aj_mediaUrl').val();
-            var mediasize = $('#kk_aj_mediasize').val();
-            var mediavald = "";
-            var mediatyp = $('input[name=optionsRadios]:checked').val();
+            var _requesteddata = {};
+            _requesteddata.arrid = $('#kk_aj_arridtxt').val();           
+            _requesteddata.mediaalt = $('#kk_aj_nymediaAlt').val();
+            _requesteddata.mediafilename = $('#kk_aj_nymediafilnamn').val();
+            _requesteddata.mediafoto = $('#kk_aj_nymediafoto').val();
+            _requesteddata.mediaurl = $('#kk_aj_nymediaUrl').val();
+            _requesteddata.mediasize = $('#kk_aj_nymediasize').val();            
+            _requesteddata.mediatyp = $('input[name=nyoptionsRadios]:checked').val();
+            _requesteddata.mediaTitle = $('.kk_aj_nymediatitel').val();
+            _requesteddata.mediaBeskrivning = $('.kk_aj_nymediabeskrivning').val();
+            _requesteddata.mediaLink = $('.kk_aj_nymedialink').val();
+            _requesteddata.mediavald = "";
 
-            detailCrudHandler.detailAddMedia(arrid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {                                                                                       
+            detailCrudHandler.detailAddMedia(_requesteddata, function (data) {
                 appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
                 loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
             });

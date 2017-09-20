@@ -47,20 +47,10 @@ module.exports = {
     detailArchiveArrangemang: function (arrid, userid,optionalmotivering) {
         alert(msg);
     },
-    detailAddMedia: function (arrid, editalt, editfilename, mediafoto, editurl, editvald, editmediatyp, editmediasize, callback) {
+    detailAddMedia: function (requesteddata, callback) {
         var reqUrl = urlhelper("addmedia");
-
-        _requesteddata.arrid = arrid;        
-        _requesteddata.mediaalt = editalt;
-        _requesteddata.mediafilename = editfilename;
-        _requesteddata.mediafoto = mediafoto;
-        _requesteddata.mediaurl = editurl;
-        _requesteddata.mediavald = editvald;
-        _requesteddata.mediatyp = editmediatyp;
-        _requesteddata.mediasize = editmediasize;      
-
         
-        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+        apiajaxRequest(reqUrl, requesteddata, function (data) {
 
             callback(data);
         });
@@ -77,20 +67,10 @@ module.exports = {
             callback(data);
         });
     },
-    detailEditMedia: function (arrid, mediaid, editalt, editfilename, mediafoto, editurl, editvald,editmediatyp, editmediasize, callback) {
-        var reqUrl = urlhelper("editmedia");
+    detailEditMedia: function (requesteddataObj, callback) {
+        var reqUrl = urlhelper("editmedia");             
 
-        _requesteddata.arrid = arrid;
-        _requesteddata.mediaid = mediaid;
-        _requesteddata.mediaalt = editalt;
-        _requesteddata.mediafilename = editfilename;
-        _requesteddata.mediafoto = mediafoto;
-        _requesteddata.mediaurl = editurl;        
-        _requesteddata.mediavald = editvald;
-        _requesteddata.mediatyp = editmediatyp;
-        _requesteddata.mediasize = editmediasize;
-
-        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+        apiajaxRequest(reqUrl, requesteddataObj, function (data) {
 
             callback(data);
         });
@@ -159,6 +139,22 @@ module.exports = {
 
             callback(data);
         });
+    },
+    detailImageEdit: function (imgdata,filnamn, callback) {
+
+        // Make Ajax request with the contentType = false, and procesDate = false
+        var ajaxRequest = $.ajax({
+            type: "POST",
+            url: appsettings.ServerApiURL + "/Api/uploadmedia/devkey/alf",
+            contentType: false,
+            processData: false,
+            data: imgdata
+        });
+
+        ajaxRequest.done(function (xhr, textStatus) {
+            callback(filnamn);
+        });
+
     }
 
 };

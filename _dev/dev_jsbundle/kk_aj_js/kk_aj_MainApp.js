@@ -233,7 +233,7 @@
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 	var _detailediturl = _apiserver + "/Api_v3/updatearrangemang";
-
+	var _detailMainImgURL = _dnnURL+ "/Portals/0/kulturkatalogenArrImages";
 	//devkey
 	var _devkeysnippet = "alf?type=json&callback=testar";
 
@@ -447,7 +447,8 @@
 	    motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
 	    basepageUri: "/KulturkatalogenAdmin",
 	    pagerHandler: window.kk_aj_pagerHandler,
-	    devkeysnippet: _devkeysnippet
+	    devkeysnippet: _devkeysnippet,
+	    detailmainimgurl: _detailMainImgURL
 	}
 
 /***/ },
@@ -658,19 +659,24 @@
 	   
 	    switch (media.MediaTyp) {
 	        case "1":
-	            rethtml = "<li><span class='mailbox-attachment-icon has-img'><img alt='"+media.MediaAlt+"' src='"+media.MediaUrl+"' /></span>";
-	            rethtml += "<div class='mailbox-attachment-info'><a href='"+ media.MediaUrl +"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename +"</a>";
-	            rethtml += "<span class='mailbox-attachment-size'>";
-	            rethtml += media.MediaSize + "<a href='"+ media.MediaUrl +"' class='btn btn-default btn-xs pull-right'><i class='fa fa-cloud-download'></i></a>";
-	            rethtml += "</span></div></li>";
+	            rethtml = "<hr><li class='row col-sm-12' style='padding-bottom: 2rem;'><div class='col-sm-12 col-md-2 mailbox-attachment-icon has-img'><img alt='" + media.MediaAlt + "' src='" + media.MediaUrl + "' style='max-width:100%;'/></div>";
+	            rethtml += "<div class='col-sm-12 col-md-10 '><a href='" + media.mediaLink + "' class='mailbox-attachment-name'> " + media.mediaTitle + "</a>";
+	            rethtml += "<div class='mailbox-attachment-size'>" + media.mediaBeskrivning + "</div></li>";
+
+	            //rethtml += "<span class='mailbox-attachment-size'>";
+	            //rethtml += media.MediaSize + "<a href='"+ media.MediaUrl +"' class='btn btn-default btn-xs pull-right'><i class='fa fa-cloud-download'></i></a>";
+	            //rethtml += "</span></div></li>";
 	            break;
 	        case "2":
-	            rethtml = "<li><span class='has-img'>";
-	            rethtml += "<iframe width='198' height='131' src='"+ media.MediaUrl+"' frameborder='0' allowfullscreen></iframe>";
-	            rethtml += "</span><div class='mailbox-attachment-info'>";
-	            rethtml += "<a href='"+ media.MediaUrl+"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename+"</a>";
-	            rethtml += "<span class='mailbox-attachment-size'>"+ media.MediaSize+"<a href='"+ media.MediaUrl+"' class='btn btn-default btn-xs pull-right'>";
-	            rethtml += "<i class='fa fa-cloud-download'></i></a></span></div></li>";
+
+	            rethtml = "<hr><li class='row col-sm-12' ><div class='col-sm-12 col-md-2 mailbox-attachment-icon has-img'>";
+	            rethtml += "<iframe width='100%'  src='"+ media.MediaUrl+"' frameborder='0' allowfullscreen></iframe></div>";
+	            rethtml += "<div class='col-sm-12 col-md-10 '><a href='" + media.mediaLink + "' class='mailbox-attachment-name'> " + media.mediaTitle + "</a>";
+	            rethtml += "<div class='mailbox-attachment-size'>" + media.mediaBeskrivning + "</div></li>";
+
+	            //rethtml += "<a href='"+ media.MediaUrl+"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename+"</a>";
+	            //rethtml += "<span class='mailbox-attachment-size'>"+ media.MediaSize+"<a href='"+ media.MediaUrl+"' class='btn btn-default btn-xs pull-right'>";
+	            //rethtml += "<i class='fa fa-cloud-download'></i></a></span></div></li>";
 	            break;        
 	    }
 	    
@@ -682,7 +688,7 @@
 
 	    switch (mediatyp) {
 	        case "1":
-	            rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' />";
+	            rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' style='max-width:200px;'/>";
 	            break;
 	        case "2":
 	            rethtml = "<iframe width='198' height='131' src='" + mediaurl + "' frameborder='0' allowfullscreen></iframe>";
@@ -11243,13 +11249,18 @@
 	        //Detaljvy EDIT event START---------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        $('body').on('click', '.kk_aj_nymediabutton', function (event) {
-	            $(".kk_aj_nymediabox").show();
+	            $(".kk_aj_nymediabox").toggle(500);
 	            return false;
 	        });
 	        $('body').on('click', '#kk_aj_mediaBtnAvbryt', function (event) {
 	            $(".kk_aj_nymediabox").hide();
 	            return false;
 	        });
+	        $('body').on('click', '#kk_aj_mediaBtnNewCancel', function (event) {
+	            $(".kk_aj_nymediabox").hide(500);
+	            return false;
+	        });                
+
 	        $('body').on('click', '.kk_aj_btnaddfakta', function (event) {
 	            $(".kk_aj_addfaktablock").show();
 	            return false;
@@ -11293,37 +11304,91 @@
 	            };         
 	        });
 	        
-	        // MainCONTENT HANDLERS START---------------------------------------------------------------------------
-	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        $('body').on('click', '.kk_aj_showpressentationsbild', function (event) {
+	            $('.kk_aj_pressentationsbildblock').toggle(500);
+	            return false;
+	        });
 	        
+
 	        $('body').on('click', '.kk_aj_SparaDetailEdit', function () {
+	            var data = new FormData();
+
 	            var arrid = $('#kk_aj_arridtxt').val();
 	            var contentid = $('#kk_aj_arrcontentid').attr("data");
-	                        
-	            var rubriktext = $('#kk_aj_rubriktext').val();
-	            var underrubriktext = $('#kk_aj_underrubriktext').val();
-	            var contenttext = $('#kk_aj_contenttext').val();
-	            var konstform = $('#kk_aj_konstform').val();
-	            var arrtyp = $('#kk_aj_arrtyp').val();
-	            var arrUtovareid = $('.kk_aj_arrUtovareblock').attr("data");
-	            var pub = $('input[name=optionsRadiospub]:checked').val();
-	           
-	            detailCrudHandler.detailEditMainContent(arrid, contentid, rubriktext, underrubriktext, contenttext, konstform, arrtyp, arrUtovareid, pub, function (data) {
-	                $("#dialog-message_sparat").dialog({
-	                    modal: true,
-	                    buttons: {
-	                        Ok: function () { loadlistView("kk_aj_detailView");
-	                            $(this).dialog("close");
-	                        }
-	                    }
-	                });
-	                //appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
-	               
-	                //loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	            var uploadedfiles = $("#arr_UploadedImage").get(0).files;
+	            var filnamnet;
+
+	            data.append("arrid", arrid);
+	            data.append("contentid", contentid);
+	            data.append("cmd", "editcontent");
+	            data.append("userid", appsettings.currentUserid);
+	            
+	            data.append("rubrik", $('#kk_aj_rubriktext').val());
+	            data.append("underrubrik", $('#kk_aj_underrubriktext').val());          
+	            data.append("innehall", $('#kk_aj_contenttext').val());
+	            data.append("konstformid", $('#kk_aj_konstform').val());
+	            data.append("arrangemangtypid", $('#kk_aj_arrtyp').val());
+	            data.append("utovareid", $('.kk_aj_arrUtovareblock').attr("data"));
+	            data.append("publicerad", $('input[name=optionsRadiospub]:checked').val());                      
+	            data.append("arralt", $('#arr_altfoto').val());
+	            data.append("arrsize", $('#arr_sizefoto').val());
+	            data.append("arrfoto", $('#arr_fotograf').val());
+
+	            // Add the uploaded image content to the form data collection
+	            if (uploadedfiles.length > 0) {
+	                data.append("UploadedImage", uploadedfiles[0]);
+
+	                // skapa tmpfilnamn för imagelänken så att den kan visas direkt måste skickas med så att det visar när detailImageEdit skickar tillbaka sin callback
+	                filnamnet = arrid + "_" + uploadedfiles[0].name;
+	                //Ladda upp bilden
+
+	            } else {
+	                data.append("mediaimgageUrl", $('#kk_aj_currbild').attr("src"));
+	            };
+
+	            detailCrudHandler.detailImageEdit(data, filnamnet, function (filnamn) {
+	                if (filnamn) {
+	                    var imgnewurl = appsettings.detailmainimgurl + '/' + filnamn;
+	                    $('#kk_aj_currbild').attr("src", imgnewurl);
+	                };
+	                console.log("bilduppladdad: " + imgnewurl);
 	            });
 
 	            return false;
 	        });
+
+	        // MainCONTENT HANDLERS START---------------------------------------------------------------------------
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        
+	        //// den gamla sparaknapp rutinen sparar inte bilder vid klickning
+	        //$('body').on('click', '.kk_aj_SparaDetailEdit', function () {
+	        //    var arrid = $('#kk_aj_arridtxt').val();
+	        //    var contentid = $('#kk_aj_arrcontentid').attr("data");
+	                        
+	        //    var rubriktext = $('#kk_aj_rubriktext').val();
+	        //    var underrubriktext = $('#kk_aj_underrubriktext').val();
+	        //    var contenttext = $('#kk_aj_contenttext').val();
+	        //    var konstform = $('#kk_aj_konstform').val();
+	        //    var arrtyp = $('#kk_aj_arrtyp').val();
+	        //    var arrUtovareid = $('.kk_aj_arrUtovareblock').attr("data");
+	        //    var pub = $('input[name=optionsRadiospub]:checked').val();
+	           
+	        //    detailCrudHandler.detailEditMainContent(arrid, contentid, rubriktext, underrubriktext, contenttext, konstform, arrtyp, arrUtovareid, pub, function (data) {
+	        //        $("#dialog-message_sparat").dialog({
+	        //            modal: true,
+	        //            buttons: {
+	        //                Ok: function () { loadlistView("kk_aj_detailView");
+	        //                    $(this).dialog("close");
+	        //                }
+	        //            }
+	        //        });
+	        //        //appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	               
+	        //        //loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	        //    });
+
+	        //    return false;
+	        //});
 
 	        // MainCONTENT HANDLERS STOPP---------------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11387,36 +11452,52 @@
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        // MEDIA HANDLERS START---------------------------------------------------------------------------
 	        $('body').on('click', '.kk_aj_mediaBtnEdit', function () {
-	            
-	            var arrid = $('#kk_aj_arridtxt').val();
 	            var mediaid = $(this).attr("data");
-	            var mediaalt = $('.kk_aj_mediaalt[data=' + mediaid + ']').val();
-	            var mediafilename = $('.kk_aj_mediafilename[data=' + mediaid + ']').val();
-	            var mediafoto = $('.kk_aj_mediafoto[data=' + mediaid + ']').val();
-	            var mediaurl = $('.kk_aj_mediaurl[data=' + mediaid + ']').val();
-	            var mediasize = $('.kk_aj_mediasize[data=' + mediaid + ']').val();
-	            var mediatyp = $('.kk_aj_mediatyp[data=' + mediaid + ']').val();
-	            var mediavald = "";
-	            
-	            detailCrudHandler.detailEditMedia(arrid, mediaid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {
-	                appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
-	                loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	            var _requesteddata = {};            
+	            _requesteddata.arrid = $('#kk_aj_arridtxt').val();
+	            _requesteddata.mediaid = mediaid;
+	            _requesteddata.mediaalt = $('.kk_aj_mediaalt[data=' + mediaid + ']').val();
+	            _requesteddata.mediafilename = $('.kk_aj_mediafilename[data=' + mediaid + ']').val();
+	            _requesteddata.mediafoto = $('.kk_aj_mediafoto[data=' + mediaid + ']').val();
+	            _requesteddata.mediaurl = $('.kk_aj_mediaurl[data=' + mediaid + ']').val();
+	            _requesteddata.mediasize = $('.kk_aj_mediasize[data=' + mediaid + ']').val();           
+	            _requesteddata.mediatyp = $('.kk_aj_mediatyp[data=' + mediaid + ']').val();
+	            _requesteddata.mediaTitle = $('.kk_aj_mediatitel[data=' + mediaid + ']').val();
+	            _requesteddata.mediaBeskrivning = $('.kk_aj_mediabeskrivning[data=' + mediaid + ']').val();
+	            _requesteddata.mediaLink = $('.kk_aj_medialink[data=' + mediaid + ']').val();
+	            _requesteddata.mediavald = "";
+
+	            detailCrudHandler.detailEditMedia(_requesteddata, function (data) {
+	                $("#dialog-message_sparat").dialog({
+	                    modal: true,
+	                    buttons: {
+	                        Ok: function () { loadlistView("kk_aj_detailView");
+	                            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	                            loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
+	                            $(this).dialog("close");
+	                        }
+	                    }
+	                });                
 	            });
 
 	            return false;
 	        });
 
 	        $('body').on('click', '#kk_aj_mediaBtnAdd', function () {
-	            var arrid = $('#kk_aj_arridtxt').val();           
-	            var mediaalt = $('#kk_aj_mediaAlt').val();
-	            var mediafilename = $('#kk_aj_mediafilnamn').val();
-	            var mediafoto = $('#kk_aj_foto').val();
-	            var mediaurl = $('#kk_aj_mediaUrl').val();
-	            var mediasize = $('#kk_aj_mediasize').val();
-	            var mediavald = "";
-	            var mediatyp = $('input[name=optionsRadios]:checked').val();
+	            var _requesteddata = {};
+	            _requesteddata.arrid = $('#kk_aj_arridtxt').val();           
+	            _requesteddata.mediaalt = $('#kk_aj_nymediaAlt').val();
+	            _requesteddata.mediafilename = $('#kk_aj_nymediafilnamn').val();
+	            _requesteddata.mediafoto = $('#kk_aj_nymediafoto').val();
+	            _requesteddata.mediaurl = $('#kk_aj_nymediaUrl').val();
+	            _requesteddata.mediasize = $('#kk_aj_nymediasize').val();            
+	            _requesteddata.mediatyp = $('input[name=nyoptionsRadios]:checked').val();
+	            _requesteddata.mediaTitle = $('.kk_aj_nymediatitel').val();
+	            _requesteddata.mediaBeskrivning = $('.kk_aj_nymediabeskrivning').val();
+	            _requesteddata.mediaLink = $('.kk_aj_nymedialink').val();
+	            _requesteddata.mediavald = "";
 
-	            detailCrudHandler.detailAddMedia(arrid, mediaalt, mediafilename, mediafoto, mediaurl, mediavald, mediatyp, mediasize, function (data) {                                                                                       
+	            detailCrudHandler.detailAddMedia(_requesteddata, function (data) {
 	                appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
 	                loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
 	            });
@@ -31957,20 +32038,10 @@
 	    detailArchiveArrangemang: function (arrid, userid,optionalmotivering) {
 	        alert(msg);
 	    },
-	    detailAddMedia: function (arrid, editalt, editfilename, mediafoto, editurl, editvald, editmediatyp, editmediasize, callback) {
+	    detailAddMedia: function (requesteddata, callback) {
 	        var reqUrl = urlhelper("addmedia");
-
-	        _requesteddata.arrid = arrid;        
-	        _requesteddata.mediaalt = editalt;
-	        _requesteddata.mediafilename = editfilename;
-	        _requesteddata.mediafoto = mediafoto;
-	        _requesteddata.mediaurl = editurl;
-	        _requesteddata.mediavald = editvald;
-	        _requesteddata.mediatyp = editmediatyp;
-	        _requesteddata.mediasize = editmediasize;      
-
 	        
-	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+	        apiajaxRequest(reqUrl, requesteddata, function (data) {
 
 	            callback(data);
 	        });
@@ -31987,20 +32058,10 @@
 	            callback(data);
 	        });
 	    },
-	    detailEditMedia: function (arrid, mediaid, editalt, editfilename, mediafoto, editurl, editvald,editmediatyp, editmediasize, callback) {
-	        var reqUrl = urlhelper("editmedia");
+	    detailEditMedia: function (requesteddataObj, callback) {
+	        var reqUrl = urlhelper("editmedia");             
 
-	        _requesteddata.arrid = arrid;
-	        _requesteddata.mediaid = mediaid;
-	        _requesteddata.mediaalt = editalt;
-	        _requesteddata.mediafilename = editfilename;
-	        _requesteddata.mediafoto = mediafoto;
-	        _requesteddata.mediaurl = editurl;        
-	        _requesteddata.mediavald = editvald;
-	        _requesteddata.mediatyp = editmediatyp;
-	        _requesteddata.mediasize = editmediasize;
-
-	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
+	        apiajaxRequest(reqUrl, requesteddataObj, function (data) {
 
 	            callback(data);
 	        });
@@ -32069,6 +32130,22 @@
 
 	            callback(data);
 	        });
+	    },
+	    detailImageEdit: function (imgdata,filnamn, callback) {
+
+	        // Make Ajax request with the contentType = false, and procesDate = false
+	        var ajaxRequest = $.ajax({
+	            type: "POST",
+	            url: appsettings.ServerApiURL + "/Api/uploadmedia/devkey/alf",
+	            contentType: false,
+	            processData: false,
+	            data: imgdata
+	        });
+
+	        ajaxRequest.done(function (xhr, textStatus) {
+	            callback(filnamn);
+	        });
+
 	    }
 
 	};

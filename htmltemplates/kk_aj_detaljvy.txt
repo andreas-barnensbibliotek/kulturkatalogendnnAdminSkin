@@ -26,6 +26,9 @@
 	<!-- /.mailbox-controls -->
 	<div class="mailbox-read-message">                                                                                              
 		<p>
+		<img src="http://kulturkatalog.kivdev.se/Portals/0/kulturkatalogenArrImages/tmp/_{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" width="30%"  />	
+		</p>
+		<p>
 		{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}
 		</p>		
 		<hr />                               
@@ -40,7 +43,8 @@
 </div>
 <!-- /.box-body -->
 <div class="box-footer">
-    <ul class="mailbox-attachments clearfix">
+	<h3>Exempel</h3>
+    <ul class="col-md-12 exempellistning clearfix">	
 	{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMedialist}}
 		{{#ifMedia this}}{{/ifMedia}}
 	{{/each}}  

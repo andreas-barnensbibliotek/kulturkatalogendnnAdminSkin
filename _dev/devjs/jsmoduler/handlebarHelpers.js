@@ -202,19 +202,24 @@ Handlebars.registerHelper('ifMedia', function (media) {
    
     switch (media.MediaTyp) {
         case "1":
-            rethtml = "<li><span class='mailbox-attachment-icon has-img'><img alt='"+media.MediaAlt+"' src='"+media.MediaUrl+"' /></span>";
-            rethtml += "<div class='mailbox-attachment-info'><a href='"+ media.MediaUrl +"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename +"</a>";
-            rethtml += "<span class='mailbox-attachment-size'>";
-            rethtml += media.MediaSize + "<a href='"+ media.MediaUrl +"' class='btn btn-default btn-xs pull-right'><i class='fa fa-cloud-download'></i></a>";
-            rethtml += "</span></div></li>";
+            rethtml = "<hr><li class='row col-sm-12' style='padding-bottom: 2rem;'><div class='col-sm-12 col-md-2 mailbox-attachment-icon has-img'><img alt='" + media.MediaAlt + "' src='" + media.MediaUrl + "' style='max-width:100%;'/></div>";
+            rethtml += "<div class='col-sm-12 col-md-10 '><a href='" + media.mediaLink + "' class='mailbox-attachment-name'> " + media.mediaTitle + "</a>";
+            rethtml += "<div class='mailbox-attachment-size'>" + media.mediaBeskrivning + "</div></li>";
+
+            //rethtml += "<span class='mailbox-attachment-size'>";
+            //rethtml += media.MediaSize + "<a href='"+ media.MediaUrl +"' class='btn btn-default btn-xs pull-right'><i class='fa fa-cloud-download'></i></a>";
+            //rethtml += "</span></div></li>";
             break;
         case "2":
-            rethtml = "<li><span class='has-img'>";
-            rethtml += "<iframe width='198' height='131' src='"+ media.MediaUrl+"' frameborder='0' allowfullscreen></iframe>";
-            rethtml += "</span><div class='mailbox-attachment-info'>";
-            rethtml += "<a href='"+ media.MediaUrl+"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename+"</a>";
-            rethtml += "<span class='mailbox-attachment-size'>"+ media.MediaSize+"<a href='"+ media.MediaUrl+"' class='btn btn-default btn-xs pull-right'>";
-            rethtml += "<i class='fa fa-cloud-download'></i></a></span></div></li>";
+
+            rethtml = "<hr><li class='row col-sm-12' ><div class='col-sm-12 col-md-2 mailbox-attachment-icon has-img'>";
+            rethtml += "<iframe width='100%'  src='"+ media.MediaUrl+"' frameborder='0' allowfullscreen></iframe></div>";
+            rethtml += "<div class='col-sm-12 col-md-10 '><a href='" + media.mediaLink + "' class='mailbox-attachment-name'> " + media.mediaTitle + "</a>";
+            rethtml += "<div class='mailbox-attachment-size'>" + media.mediaBeskrivning + "</div></li>";
+
+            //rethtml += "<a href='"+ media.MediaUrl+"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename+"</a>";
+            //rethtml += "<span class='mailbox-attachment-size'>"+ media.MediaSize+"<a href='"+ media.MediaUrl+"' class='btn btn-default btn-xs pull-right'>";
+            //rethtml += "<i class='fa fa-cloud-download'></i></a></span></div></li>";
             break;        
     }
     
@@ -226,7 +231,7 @@ Handlebars.registerHelper('ifEditMedia', function (mediatyp, mediaurl,mediaalt) 
 
     switch (mediatyp) {
         case "1":
-            rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' />";
+            rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' style='max-width:200px;'/>";
             break;
         case "2":
             rethtml = "<iframe width='198' height='131' src='" + mediaurl + "' frameborder='0' allowfullscreen></iframe>";

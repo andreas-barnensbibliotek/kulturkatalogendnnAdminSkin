@@ -13,7 +13,7 @@ var _dnnURL = "http://dnndev.me";
 var _localOrServerURL = _apiserver + "/Api_v2";
 var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
 var _detailediturl = _apiserver + "/Api_v3/updatearrangemang";
-
+var _detailMainImgURL = _dnnURL+ "/Portals/0/kulturkatalogenArrImages";
 //devkey
 var _devkeysnippet = "alf?type=json&callback=testar";
 
@@ -227,5 +227,6 @@ module.exports = {
     motiveringloggtemplate: window.kk_aj_detailmotiveringloggView,
     basepageUri: "/KulturkatalogenAdmin",
     pagerHandler: window.kk_aj_pagerHandler,
-    devkeysnippet: _devkeysnippet
+    devkeysnippet: _devkeysnippet,
+    detailmainimgurl: _detailMainImgURL
 }

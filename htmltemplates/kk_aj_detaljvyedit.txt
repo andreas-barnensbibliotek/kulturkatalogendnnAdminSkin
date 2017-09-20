@@ -70,6 +70,7 @@
             </select>
             <span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
         </div>
+		 
         <div class="form-group col-md-12 kk_aj_arrrubrik">
             <label>Rubrik</label>
             <input id="kk_aj_rubriktext" type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}">
@@ -80,6 +81,29 @@
             <input id="kk_aj_underrubriktext" type="text" class="form-control"  value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}">
             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
         </div>
+		<!-- mainbildblock -->
+		<div class="form-group col-md-3 kk_aj_arrbild"><div><label>Presentationsbild</label> </div>                        
+            <a href="" class="kk_aj_showpressentationsbild" title="Klicka för att ändra bild" name="Klicka för att ändra bild"><img id="kk_aj_currbild" src="http://kulturkatalog.kivdev.se/Portals/0/kulturkatalogenArrImages/tmp/_{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" width="100%" /></a>
+               
+        </div>
+        <div class="form-group col-md-7 kk_aj_arrbildInfo">			
+			<div class="kk_aj_pressentationsbildblock">
+			<label>Url</label>
+			<input id="arr_UploadedImage" type="file"  />
+            <span class="help-block hlp_arr_UploadedImage" style="display:none;">Du måste fylla i ett gilltigt postnummer.</span>            
+            <label>Alternativtext</label>
+            <input id="arr_altfoto" type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaAlt}}"/>
+			<span class="help-block" style="display:none;">Du måste fylla i alternativ text till bilden.</span>                        
+            <label>Filstorlek</label>
+			<input id="arr_sizefoto" type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaSize}}"/>
+			<span class="help-block" style="display:none;">Du måste fylla storleken på bilden.</span>
+            <label>Fotograf</label>			
+			<input id="arr_fotograf" type="text" class="form-control" value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaFoto}}"/>                                      
+			</div>
+        </div>
+		<div class="form-group col-md-2 kk_aj_arrbild">                                    
+        </div>
+		
             <!-- textarea -->
         <div class="form-group col-md-12 kk_aj_arrcontent">
             <label>Innehåll</label>
@@ -217,94 +241,128 @@
 					</div>
 		                <hr>
 						
-        <div class="form-group col-md-12 kk_aj_arrimages">
-		<h3>MEDIA</h3>
+        <div class="form-group col-md-12 kk_aj_arrEditimages">
+			<h3>Exempel</h3>
             <div>
                 <span>
-                    <button type="button" class="btn btn-default kk_aj_nymediabutton ">Lägg till media</button>
+                    <button type="button" class="btn btn-default kk_aj_Editmediabutton" data-toggle="collapse" data-target="#kk_aj_visaexempel" >Visa/Dölj exempel</button>
                 </span>
             </div>
         </div>
-        <div class="form-group col-md-12 kk_aj_arrimages">
-                <ul class="mailbox-attachments clearfix">
+		
+        <div id="kk_aj_visaexempel" class="collapse form-group col-md-12 kk_aj_arrimages">
+			
+            <ul class="col-md-12 clearfix">
+				
+
 				{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMedialist}}
 		
 					<li class="mailbox-attachment-info kk_aj_arrmediablock" >
-                        <span class="mailbox-attachment-icon has-img mailbox-attachment-info">
+                        <div class="col-md-3 has-img mailbox-attachment-info">
                             {{#ifEditMedia this.MediaTyp this.MediaUrl this.MediaAlt}}{{/ifEditMedia}}
-                        </span>
-                        <div class="mailbox-attachment-info" >
-                            <label>Url till fil</label>
+							<label>Url till fil</label>
                             <input type="text" class="form-control kk_aj_mediaurl" data="{{this.MediaID}}"  value="{{this.MediaUrl}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <div class="form-group"></div>
                             <label>Alt text</label>
                             <input type="text" class="form-control kk_aj_mediaalt" data="{{this.MediaID}}" value="{{this.MediaAlt}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
-                            <label>Filnamn</label>
-                            <input type="text" class="form-control kk_aj_mediafilename"  data="{{this.MediaID}}" value="{{this.MediaFilename}}">
-                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
+                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <label>Storlek</label>
                             <input  type="text" class="form-control kk_aj_mediasize"  data="{{this.MediaID}}" value="{{this.MediaSize}}">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
 							<label>Skapare</label>
                             <input type="text" class="form-control kk_aj_mediafoto"  data="{{this.MediaID}}" value="{{this.MediaFoto}}">
-                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
-							<span   data="{{this.MediaID}}" style="display:none;"></span>
+                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>							
 							<input class="kk_aj_mediatyp" type="hidden" data="{{this.MediaID}}" value="{{this.MediaTyp}}">
+                        </div>
+                        <div class="col-md-9 mailbox-attachment-info" >
+                            <label>Titel</label>
+                            <input type="text" class="form-control kk_aj_mediatitel" data="{{this.MediaID}}"  value="{{this.mediaTitle}}">
+                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
+                            <div class="form-group"></div>
+                            <label>Beskrivning</label>
+                            <textarea rows="6" cols="10" class="form-control kk_aj_mediabeskrivning" data="{{this.MediaID}}">{{this.mediaBeskrivning}}
+							</textarea>
+							<span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
+                            <label>Länk</label>
+                            <input type="text" class="form-control kk_aj_medialink"  data="{{this.MediaID}}" value="{{this.mediaLink}}">
+                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>                           
                         </div>
                         <div class="form-group pull-right">
                             <button id="kk_aj_mediaBtnEdit" type="button" data="{{this.MediaID}}" class="btn btn-success kk_aj_mediaBtnEdit">Ändra</button>
                             <button id="kk_aj_mediaBtnTabort" type="button" data="{{this.MediaID}}" class="btn btn-danger kk_aj_mediaBtnTabort" >Ta bort</button>
                         </div>
+						<hr />
                     </li>
 
 				{{/each}}  
-                   
+                   <div class="form-group col-md-12">		
+				<div>
+					<span>
+						<button type="button" class="btn btn-default  kk_aj_nymediabutton"><i class="fa fa-plus"></i> Nytt exempel</button>
+					</span>
+				</div>
+			</div>
                     <li class="mailbox-attachment-info kk_aj_nymediabox" style="display:none;">
 						<h4>Lägg till media</h4>
-                        <div class="mailbox-attachment-info ">													
-						<label>Mediatyp:</label>
+                        <div class="col-md-3 has-img mailbox-attachment-info">
+                            <label>Mediatyp:</label>
 							<div class="radio">
 								<label>
-									<input name="optionsRadios" id="kk_aj_mediaTypeBild" value="1" type="radio">
+									<input name="nyoptionsRadios" id="kk_aj_nymediaTypeBild" value="1" type="radio">
 									Bild
 								</label>
 							</div>
 							<div class="radio">
 								<label>
-									<input name="optionsRadios" id="kk_aj_mediaTypeFilm" value="2" type="radio">
+									<input name="nyoptionsRadios" id="kk_aj_nymediaTypeFilm" value="2" type="radio">
 									Film
 								</label>
 							</div>
 							<div class="radio">
 								<label>
-									<input name="optionsRadios" id="kk_aj_mediaTypeLjud" value="3" type="radio">
+									<input name="nyoptionsRadios" id="kk_aj_nymediaTypeLjud" value="3" type="radio">
 									Ljud
 								</label>
 							</div>
 							<span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
 							<label>Url till fil</label>
-                            <input id="kk_aj_mediaUrl" type="text" class="form-control">
+                            <input id="kk_aj_nymediaUrl" type="text" class="form-control">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <div class="form-group"></div>
                             <label>Alt text</label>
-                            <input id="kk_aj_mediaAlt" type="text" class="form-control">
+                            <input id="kk_aj_nymediaAlt" type="text" class="form-control">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <label>Filnamn</label>
-                            <input id="kk_aj_mediafilnamn" type="text" class="form-control">
+                            <input id="kk_aj_nymediafilnamn" type="text" class="form-control" >
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
 							<label>Skapare</label>
-                            <input id="kk_aj_foto" type="text" class="form-control">
+                            <input id="kk_aj_nymediafoto" type="text" class="form-control">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                             <label>Storlek</label>
-                            <input id="kk_aj_mediasize" type="text" class="form-control">
+                            <input id="kk_aj_nymediasize" type="text" class="form-control">
                             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
                         </div>
-                        <div class="form-group pull-right ">
-                            <button id="kk_aj_mediaBtnAdd" type="button" class="btn btn-success">Lägg till</button>
-                            <button id="kk_aj_mediaBtnAvbryt" type="button" class="btn btn-default">Avbryt</button>
+
+                        <div class="col-md-9 mailbox-attachment-info" >
+                            <label>Titel</label>
+                            <input id="kk_aj_nymediatitel" type="text" class="form-control kk_aj_nymediatitel" >
+                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
+                            <div class="form-group"></div>
+                            <label>Beskrivning</label>
+                            <textarea id="kk_aj_nymediabeskrivning" rows="6" cols="10" class="form-control kk_aj_nymediabeskrivning" >
+							</textarea>
+							<span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
+                            <label>Länk</label>
+                            <input id="kk_aj_nymedialink" type="text" class="form-control kk_aj_nymedialink" >
+                            <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>                           
                         </div>
+                        <div class="form-group pull-right">
+                            <button id="kk_aj_mediaBtnAdd" type="button" class="btn btn-success kk_aj_mediaBtnNewadd">Lägg till</button>
+                            <button id="kk_aj_mediaBtnNewCancel" type="button"  class="btn btn-danger kk_aj_mediaBtnNewCancel" >Avbryt</button>
+                        </div>
+						<hr />
                     </li>
                 </ul>
 
