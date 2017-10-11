@@ -26,7 +26,7 @@
 	<!-- /.mailbox-controls -->
 	<div class="mailbox-read-message">                                                                                              
 		<p>
-		<img src="http://kulturkatalog.kivdev.se/Portals/0/kulturkatalogenArrImages/tmp/_{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" width="30%"  />	
+		<img src="/Portals/0/kulturkatalogenArrImages/{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid}}_{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" width="30%"  />	
 		</p>
 		<p>
 		{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}

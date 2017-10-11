@@ -37,7 +37,7 @@
             <label>Konstform</label>
 			
             <select id="kk_aj_konstform" class="form-control">
-                {{#select kk_aj_admin.ansokningarlista.ansokningar.0.ansokningkonstform}}
+                {{#select kk_aj_admin.ansokningarlista.ansokningar.0.ansokningkonstformid}}
 				<option value="1">Arkitektur och design</option> 
 				<option value="2">Dans</option>
 				<option value="3">Film och media</option>
@@ -57,7 +57,7 @@
         <div class="form-group  col-md-6 kk_aj_arrkonstform">
             <label>Arangemangstyp</label>
             <select id="kk_aj_arrtyp" class="form-control">
-                {{#select kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtyp}}
+                {{#select kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtypid}}
 					<option value="1">Föreställning på tuné</option> 
 					<option value="2">Föreställning på fast scen</option>
 					<option value="3">Författarbesök</option>
@@ -83,7 +83,7 @@
         </div>
 		<!-- mainbildblock -->
 		<div class="form-group col-md-3 kk_aj_arrbild"><div><label>Presentationsbild</label> </div>                        
-            <a href="" class="kk_aj_showpressentationsbild" title="Klicka för att ändra bild" name="Klicka för att ändra bild"><img id="kk_aj_currbild" src="http://kulturkatalog.kivdev.se/Portals/0/kulturkatalogenArrImages/tmp/_{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" width="100%" /></a>
+            <a href="" class="kk_aj_showpressentationsbild" title="Klicka för att ändra bild" name="Klicka för att ändra bild"><img id="kk_aj_currbild" src="/Portals/0/kulturkatalogenArrImages/{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid}}_{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" width="100%" rel="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}"/></a>
                
         </div>
         <div class="form-group col-md-7 kk_aj_arrbildInfo">			

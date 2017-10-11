@@ -388,15 +388,23 @@ module.exports = {
                 //Ladda upp bilden
 
             } else {
-                data.append("mediaimgageUrl", $('#kk_aj_currbild').attr("src"));
+                data.append("mediaimgageUrl", $('#kk_aj_currbild').attr("rel"));
             };
 
             detailCrudHandler.detailImageEdit(data, filnamnet, function (filnamn) {
                 if (filnamn) {
-                    var imgnewurl = appsettings.detailmainimgurl + '/' + filnamn;
+                    var imgnewurl =  filnamn;
                     $('#kk_aj_currbild').attr("src", imgnewurl);
                 };
                 console.log("bilduppladdad: " + imgnewurl);
+                $("#dialog-message_sparat").dialog({
+                    modal: true,
+                    buttons: {
+                        Ok: function () { loadlistView("kk_aj_detailView");
+                            $(this).dialog("close");
+                        }
+                    }
+                });
             });
 
             return false;
