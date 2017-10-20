@@ -1,4 +1,5 @@
-﻿var registerJqueryEvents = require("./eventhandler.js");
+﻿var appsettings = require("./appSettings.js");
+var registerJqueryEvents = require("./eventhandler.js");
 module.exports = {
     inithelper: ""
 
@@ -264,3 +265,27 @@ Handlebars.registerHelper("ifimgempty", function (imgsrc) {
         return imgsrc;
     }
 });
+
+
+
+
+//används för att klippa in templates i en redan befintlig template hämtar templaten som sedan kan användas i registerpartial
+Handlebars.getTemplate = function (templatefilenamn) {
+    if (Handlebars.templates === undefined || Handlebars.templates[templatefilenamn] === undefined) {
+        $.ajax({
+            url: appsettings.htmltemplateURL +'/'+ templatefilenamn,
+            success: function (data) {
+                if (Handlebars.templates === undefined) {
+                    Handlebars.templates = {};
+                }
+                Handlebars.templates[templatefilenamn] = Handlebars.compile(data);
+            },
+            async: false
+        });
+    }
+    return Handlebars.templates[templatefilenamn];
+};
+
+Handlebars.registerPartial("deletefaktaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletefakta.txt'));
+Handlebars.registerPartial("deletemediaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletemedia.txt'));
+Handlebars.registerPartial("standardmotiveringarAlert", Handlebars.getTemplate('kk_aj_helper_standardmotiveringar.txt'));

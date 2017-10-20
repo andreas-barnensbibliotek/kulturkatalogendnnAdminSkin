@@ -223,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	var _apiserver = "http://localhost:60485";
-	var _dnnURL = "http://dnndev.me";
+	//var _apiserver = "http://localhost:60485";
+	//var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	//var _dnnURL = "http://kulturkatalog.kivdev.se";
+	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	var _dnnURL = "http://kulturkatalog.kivdev.se";
 	// 
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -455,7 +455,8 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {var registerJqueryEvents = __webpack_require__(4);
+	/* WEBPACK VAR INJECTION */(function($) {var appsettings = __webpack_require__(1);
+	var registerJqueryEvents = __webpack_require__(4);
 	module.exports = {
 	    inithelper: ""
 
@@ -721,6 +722,30 @@
 	        return imgsrc;
 	    }
 	});
+
+
+
+
+	//används för att klippa in templates i en redan befintlig template hämtar templaten som sedan kan användas i registerpartial
+	Handlebars.getTemplate = function (templatefilenamn) {
+	    if (Handlebars.templates === undefined || Handlebars.templates[templatefilenamn] === undefined) {
+	        $.ajax({
+	            url: appsettings.htmltemplateURL +'/'+ templatefilenamn,
+	            success: function (data) {
+	                if (Handlebars.templates === undefined) {
+	                    Handlebars.templates = {};
+	                }
+	                Handlebars.templates[templatefilenamn] = Handlebars.compile(data);
+	            },
+	            async: false
+	        });
+	    }
+	    return Handlebars.templates[templatefilenamn];
+	};
+
+	Handlebars.registerPartial("deletefaktaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletefakta.txt'));
+	Handlebars.registerPartial("deletemediaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletemedia.txt'));
+	Handlebars.registerPartial("standardmotiveringarAlert", Handlebars.getTemplate('kk_aj_helper_standardmotiveringar.txt'));
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
@@ -11210,18 +11235,52 @@
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
 	        $('body').on('click', '.kk_aj_addmotivering', function (event) {
+	            if ($('#faktatypid_1').length) {
+	                $('#kk_aj_arrangorstod').attr('disabled', 'disabled');
+	                $('#kk_aj_arrangorstod').attr('style', "background-color:#ccc;");
+
+	            } else {
+	                $('#kk_aj_arrangorstod').attr('disabled', false);
+	                $('#kk_aj_arrangorstod').attr('style', "background-color:transparent");
+	            }
 	            $('.motiveringEditblock').toggle();
 	        })
 	        
 	        $('body').on('click', '.kk_aj_detailapproved', function (event) {
 	            var motiveringbox = $(".motivering");
+	            var arrstordbox = $("#kk_aj_arrangorstod");
+	            var arrid = $('.motiveringEditblock').attr('rel');
 	            var checktext = motiveringbox.val();           
+	            var faktavalue = $("#kk_aj_arrangorstod :selected").text();
 	            if (checktext != "") {
-	                updateArrangemangMotivering("2", function () {
-	                    location.href = appsettings.basepageUri + _desktopmoduleURL + "?sida=kk_aj_approvedansokningarView";
+
+	                updateArrangemangMotivering("2", function () {                    
+	                    var faktatypid = "1"
+	                    
+	                    if (faktavalue != "") {
+
+	                        detailCrudHandler.detailAddFakta(arrid, faktatypid, faktavalue, function (data) {
+	                            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
+	                            location.href = appsettings.basepageUri + _desktopmoduleURL + "?sida=kk_aj_approvedansokningarView";
+	                            arrstordbox.removeClass('markborderRed');
+	                        });
+	                    } else {
+	                        arrstordbox.addClass('markborderRed');
+	                    }
+	                   
 	                });               
 	            } else {
-	                motiveringbox.addClass('markborderRed');
+	                
+	                if (checktext == "") {
+	                    motiveringbox.addClass('markborderRed');
+	                } else {
+	                    motiveringbox.removeClass('markborderRed');
+	                }
+	                if (faktavalue == "") {
+	                    arrstordbox.addClass('markborderRed');
+	                } else {
+	                    arrstordbox.removeClass('markborderRed');
+	                }
 	            };
 	            return false;
 	        });
@@ -11365,40 +11424,12 @@
 
 	            return false;
 	        });
-
-	        // MainCONTENT HANDLERS START---------------------------------------------------------------------------
-	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        
-	        //// den gamla sparaknapp rutinen sparar inte bilder vid klickning
-	        //$('body').on('click', '.kk_aj_SparaDetailEdit', function () {
-	        //    var arrid = $('#kk_aj_arridtxt').val();
-	        //    var contentid = $('#kk_aj_arrcontentid').attr("data");
-	                        
-	        //    var rubriktext = $('#kk_aj_rubriktext').val();
-	        //    var underrubriktext = $('#kk_aj_underrubriktext').val();
-	        //    var contenttext = $('#kk_aj_contenttext').val();
-	        //    var konstform = $('#kk_aj_konstform').val();
-	        //    var arrtyp = $('#kk_aj_arrtyp').val();
-	        //    var arrUtovareid = $('.kk_aj_arrUtovareblock').attr("data");
-	        //    var pub = $('input[name=optionsRadiospub]:checked').val();
-	           
-	        //    detailCrudHandler.detailEditMainContent(arrid, contentid, rubriktext, underrubriktext, contenttext, konstform, arrtyp, arrUtovareid, pub, function (data) {
-	        //        $("#dialog-message_sparat").dialog({
-	        //            modal: true,
-	        //            buttons: {
-	        //                Ok: function () { loadlistView("kk_aj_detailView");
-	        //                    $(this).dialog("close");
-	        //                }
-	        //            }
-	        //        });
-	        //        //appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
-	               
-	        //        //loadlistView("kk_aj_detailEditView", "", appsettings.currentUserid);
-	        //    });
-
-	        //    return false;
-	        //});
-
+	        $('body').on('click', '.stdmottext', function (e) {           
+	            $("#Motivering").val($(this).text());
+	            return false;
+	        })
+	        
 	        // MainCONTENT HANDLERS STOPP---------------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        // FAKTA HANDLERS START---------------------------------------------------------------------------

@@ -1,0 +1,3 @@
+﻿<div id="dialog-confirm" style="display:none;" title="Ta bort fakta?">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Är du säker på att du vill ta bort dessa fakta?</p>
+</div>

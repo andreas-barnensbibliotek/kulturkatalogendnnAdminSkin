@@ -1,0 +1,28 @@
+﻿<div id="dialog-confirm_standardmotivering" style="display:none; max-width:500px;" title="Välj motivering?">
+	<div class="container" style=" max-width:500px;">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- Nav tabs -->
+				<div class="card">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#approve" aria-controls="home" role="tab" data-toggle="tab">Godkänn</a></li>
+						<li role="presentation"><a href="#neka" aria-controls="profile" role="tab" data-toggle="tab">Neka</a></li>
+						<li role="presentation"><a href="#ovrigt" aria-controls="messages" role="tab" data-toggle="tab">Övrigt</a></li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="approve">
+							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+						</div>
+						<div role="tabpanel" class="tab-pane" id="neka">
+							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+						</div>
+						<div role="tabpanel" class="tab-pane" id="ovrigt">
+							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

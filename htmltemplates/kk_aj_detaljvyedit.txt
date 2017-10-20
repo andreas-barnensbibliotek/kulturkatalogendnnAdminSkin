@@ -377,16 +377,27 @@
 	</div><!-- /.box-body -->
 	<!-- utovarDetalj stopp-->
 
-<!-- Dialogboxar -->
-<div id="dialog-confirm" style="display:none;" title="Ta bort fakta?">
-  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Är du säker på att du vill ta bort dessa fakta?</p>
-</div>
-<div id="dialog-confirm_media" style="display:none;" title="Ta bort mediafil?">
-  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Är du säker på att du vill ta bort mediafilen?</p>
-</div>
+<!-- Dialogboxar partials -->
+{{> deletefaktaAlert}}
+{{> deletemediaAlert}}
+{{> standardmotiveringarAlert}}
 <div id="dialog-message_sparat" title="Sparat" style="display:none;">
   <p class="lead text-green">
     Uppgifterna är sparade!
-  </p>
-  
+  </p> 
 </div>
+<script>
+$(function() {
+	var onint = function () {
+            if ($('#faktatypid_1').length) {
+                $('#kk_aj_arrangorstod').attr('disabled', 'disabled');
+				$('#kk_aj_arrangorstod').attr('style', "background-color:#ccc;");
+
+            }else{
+				$('#kk_aj_arrangorstod').attr('disabled', false);
+				$('#kk_aj_arrangorstod').attr('style', "background-color:transparent");
+			}
+        };
+    onint();
+});
+</script>

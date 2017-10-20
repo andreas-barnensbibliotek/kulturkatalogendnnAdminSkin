@@ -1,0 +1,9 @@
+/* line 1, _dev/devsass/komponenter/_base.scss */
+body {
+  background: #eee; }
+
+/* line 4, _dev/devsass/komponenter/_base.scss */
+#mainapp {
+  height: 100px;
+  width: 100px;
+  background: #000; }

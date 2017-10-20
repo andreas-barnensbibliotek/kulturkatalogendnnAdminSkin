@@ -34,7 +34,7 @@
 		<hr />                               
 		<h3>Fakta</h3>
 		{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
-		<p>		
+		<p id="faktatypid_{{this.FaktaTypID}}">		
 			<b>{{this.Faktarubrik}} : </b> {{this.FaktaValue}}
 		</p>
 		{{/each}}       

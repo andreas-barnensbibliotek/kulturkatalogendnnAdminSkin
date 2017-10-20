@@ -1,5 +1,5 @@
 ﻿<span class="motiveringEditblock">
-	<h4>Motivering *</h4>
+	<h4>Motivering2 *</h4>
 	<textarea id="Motivering" class="motivering" style="width:100%;"></textarea>
 	<button type="button" class="btn btn-default kk_aj_detailapprove" title="Godkänn">
 		<i class="fa fa-check" aria-hidden="true"></i>Godkänn</button>

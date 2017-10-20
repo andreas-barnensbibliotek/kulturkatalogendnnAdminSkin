@@ -46,7 +46,7 @@ gulp.task('SassToCssSrcPub', function () {
 		}).on('error', sass.logError))
 	.pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // pass the file through autoprefixer 
 	.pipe(rename({ suffix: '.min' }))
-    .pipe(cleanCSS())
+    //.pipe(cleanCSS())
 	.pipe(gulp.dest(srcPath.publik + '/css/'));
     
 });

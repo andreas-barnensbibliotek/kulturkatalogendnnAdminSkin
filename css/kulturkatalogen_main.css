@@ -73,3 +73,5 @@ min-height:40px !important;
 {margin-left:0;
 padding-left: 0px;  }
 .exempellistning img{float:left;}
+.kk_aj_stdmotivering li > a{padding:2px 4px;}
+label[for=kk_aj_stdmotivering]{margin-left:2rem;}
