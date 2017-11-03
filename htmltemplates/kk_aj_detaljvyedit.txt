@@ -163,7 +163,7 @@
 							<th></th>														
 						</tr>
 						{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
-						<tr class="kk_aj_faktablockID" >
+						<tr class="kk_aj_faktablockID" rel="{{this.FaktaTypID}}" >
 							<td width="25%">
 								<label>{{this.Faktarubrik}}: </label>
 							</td>

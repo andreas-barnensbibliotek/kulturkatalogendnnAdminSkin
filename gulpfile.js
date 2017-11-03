@@ -17,7 +17,8 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
 	sourcemaps = require('gulp-sourcemaps'),
     webpack = require('webpack-stream'),
-	path = require('path');
+    uglify = require('gulp-uglify'),   
+    path = require('path');
 
 	/*
 	sÃ¤tter sÃ¶kvÃ¤gar till mapptrÃ¤det
@@ -65,6 +66,14 @@ gulp.task('jsconcatfiles', ['webpackjs'], function () {
       .pipe(gulp.dest(srcPath.publik + '/js/'));
 });
 
+gulp.task('jspublicera', ['webpackjs'], function () {
+    return gulp.src(srcPath.jsbundle + '/**/*.js')
+        .pipe(uglify())
+        //.pipe(sourcemaps.init())
+        .pipe(concat('kk_aj_bundle.js'))
+        //.pipe(sourcemaps.write())
+      .pipe(gulp.dest(srcPath.publik + '/js/'));
+});
 //Watch task
 gulp.task('default',function() {
     //gulp.watch('_dev/devsass/**/*.scss', ['SassToCssSrc']); 
@@ -73,5 +82,6 @@ gulp.task('default',function() {
 });
 
 gulp.task('publicera',function() {
-    gulp.watch(srcPath.scss +'/**/*.scss', ['SassToCssSrcPub']);   
+    //gulp.watch(srcPath.scss + '/**/*.scss', ['SassToCssSrcPub']);
+    gulp.watch('_dev/devjs/**/*.js', ['jspublicera']);
 });

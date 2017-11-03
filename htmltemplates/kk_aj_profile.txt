@@ -5,7 +5,7 @@
 					<h3 class="profile-username text-center">{{kk_aj_admin.userinfo.username}}</h3>
 					<p class="text-muted text-center">{{kk_aj_admin.userinfo.userinfoheader}}</p>
 					<ul class="list-group list-group-unbordered">
-						<li class="list-group-item"><b>E-post:</b> <a title="{{kk_aj_admin.userinfo.userepost}}" class="pull-right dotlongtext">{{kk_aj_admin.userinfo.userepost}}</a> </li>
+						<li class="list-group-item ellipses dont-break-out"><b>E-post:</b> <a title="{{kk_aj_admin.userinfo.userepost}}" class="pull-right dotlongtext">{{kk_aj_admin.userinfo.userepost}}</a> </li>
 						<li class="list-group-item"><b>Tel:</b> <a class="pull-right">{{kk_aj_admin.userinfo.usertel}}</a> </li>
 						<li class="list-group-item kk_aj_rolllist"><b>Roller:</b> 
 							<div class="pull-right"><ul class="kk_aj_rolllist_ul">

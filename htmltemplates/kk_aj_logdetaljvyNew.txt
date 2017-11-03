@@ -5,5 +5,7 @@
 		<i class="fa fa-check" aria-hidden="true"></i>Godkänn</button>
 	<button type="button" class="btn btn-default kk_aj_detaildenie" title="Neka">
 	<i class="fa fa-times" aria-hidden="true"></i> Neka</button>
+	<button type="button" class="btn btn-info pull-right kk_aj_detailgranska " title="Kommentar">
+	<i class="fa fa-times" aria-hidden="true"></i> Granska</button> vad
 	<!-- /.box-footer -->
 </span>

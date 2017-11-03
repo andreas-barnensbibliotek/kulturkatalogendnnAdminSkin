@@ -29,6 +29,8 @@
 		<i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
 	<button type="button" class="btn btn-default kk_aj_detaildenied label-danger" title="Neka">
 	<i class="fa fa-times" aria-hidden="true"></i> Neka</button>
+	<button type="button" class="btn btn-default pull-right kk_aj_detailkommentar label-warning" title="Kommentar">
+	<i class="fa fa-check" aria-hidden="true"></i> Kommentar</button> 
 <!-- /.box-footer -->
 </span>
 {{/ifdetailstatus}}
@@ -98,6 +100,8 @@
 			<i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
 			<button type="submit" class="btn btn-default kk_aj_detaildenied label-danger" title="Neka">
 			<i class="fa fa-times" aria-hidden="true"></i> Neka</button>
+			<button type="button" class="btn btn-default pull-right kk_aj_detailkommentar label-warning" title="Kommentar">
+			<i class="fa fa-check" aria-hidden="true"></i> Kommentar</button> 
 		</div>
 	</div>
 <!-- /.box-footer -->

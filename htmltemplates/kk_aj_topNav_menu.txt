@@ -12,7 +12,7 @@
                         <!-- start message -->
                         <a href="#">                            
                             <!-- Message title and timestamp -->
-                            <h4>{{Title}} <small><i class="fa fa-clock-o"></i>{{Datum}}</small> </h4>
+                            <i class="fa fa-envelope-o"></i> {{Title}} <!--<small> - {{Datum}}</small> -->
                             <!-- The message -->
                             <p></p>
                         </a></li>
@@ -21,7 +21,7 @@
                 </ul>
                 <!-- /.menu -->
             </li>
-            <li class="footer"><a href="#">See All Messages</a></li>
+            <!-- <li class="footer"><a href="#">See All Messages</a></li>-->
         </ul>
     </li>
     <!-- /.messages-menu -->
@@ -37,13 +37,13 @@
 					{{#each kk_aj_admin.topnotification}}
 						<li>
 							<!-- start notification -->
-							<a href="#"><i class="fa fa-users text-aqua"></i>{{Title}} </a>
+							<a href="#"><i class="fa fa-bell-o text-aqua"></i> {{Title}} </a>
 						</li>
 					{{/each}}                    
                     <!-- end notification -->
                 </ul>
             </li>
-            <li class="footer"><a href="#">View all</a></li>
+            <!-- <li class="footer"><a href="#">View all</a></li>-->
         </ul>
     </li>
     <!-- Tasks Menu -->
@@ -58,7 +58,7 @@
 				{{#each kk_aj_admin.toptask}}
 						<li>
 							<!-- start notification -->
-							<a href="#"><i class="fa fa-users text-aqua"></i>{{Title}} </a>
+							<a href="#"><i class="fa fa-flag-o text-aqua"></i> {{Title}} </a>
 						</li>
 					{{/each}}               
 
@@ -66,7 +66,7 @@
                         
                 </ul>
             </li>
-            <li class="footer"><a href="#">View all tasks</a> </li>
+            <!-- <li class="footer"><a href="#">View all tasks</a> </li> -->
         </ul>
     </li>
     <!-- User Account Menu -->
@@ -86,8 +86,8 @@
             
             <!-- Menu Footer-->
             <li class="user-footer">
-                <div class="pull-left"><a href="http://dnndev.me/ActivityFeed/userId/{{kk_aj_admin.userinfo.userid}}" class="btn btn-default btn-flat">Profile</a> </div>
-                <div class="pull-right"><a href="/KulturkatalogenAdmin/ctl/Logoff" class="btn btn-default btn-flat">Sign out</a> </div>
+                <div class="pull-left"><a href="/ActivityFeed/userId/{{kk_aj_admin.userinfo.userid}}" class="btn btn-default btn-flat">Ändra uppgifter</a> </div>
+                <div class="pull-right"><a href="/KulturkatalogenAdmin/ctl/Logoff" class="btn btn-default btn-flat">Logga ut</a> </div>
             </li>
         </ul>
     </li>

@@ -1371,3 +1371,106 @@ STARTADE TESTEN med arrid 16
 	"Weburl" : "www.ubab.se",
 	"Bild" : null
 }
+
+
+///////////////////////////////////////////////
+// Sök publika fromuläret
+///////////////////////////////////////////////
+http://kulturkatalog.kivdev.se:8080/Api_v2/search/mainsearch/devkey/alf?type=json&callback=testar
+http://localhost:60485/Api_v2/search/mainsearch/devkey/alf?type=json&callback=testar
+commando :	mainsearch - för sökning i arrangörstyp, konstart, ålder
+			freesearch - för fritextsökning
+
+User-Agent: Fiddler
+Host: localhost:60485
+Content-Type: application/json
+Content-Length: 140
+
+{
+	"arrtypid": "",
+	"cmdtyp": "",
+	"konstartid": "4",
+	"publiceradJaNej": "",
+	"searchstr": "",
+	"startyear": "",
+	"stopyear": ""	
+}
+
+Reslultat visa alla. Dessa värden skall vara "0" :("arrtypid": "0", "konstartid": "0","startyear": "0",) 
+exempel:
+{
+	"arrtypid": "0",
+	"cmdtyp": "",
+	"konstartid": "0",
+	"publiceradJaNej": "",
+	"searchstr": "",
+	"startyear": "0",
+	"stopyear": ""	
+}
+
+///////////return json //////////////////////
+{
+	"kk_aj_admin": {
+		"Ansokningstyp": "0",
+		"ansokningarlista": {
+			"ansokningarcount": "1",
+			"ansokningar": [{
+				"ansokningid": 119,
+				"ansokningdate": "2017-10-11 13:10:48",
+				"ansokningcontentid": "0",
+				"ansokningtitle": "test",
+				"ansokningsubtitle": "test",
+				"ansokningContent": "",
+				"ansokningutovare": "dev Kulturkatalogen",
+				"ansokningurl": "",
+				"ansokningbilaga": "",
+				"ansokningpublicerad": "ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "",
+				"ansokningtypid": "4",
+				"ansokningkonstformid": "4",
+				"ansokningtyp": "",
+				"ansokningkonstform": "Konst, form och design",
+				"ansokningFaktalist": [],
+				"ansokningMedialist": [],
+				"ansokningUsername": "",
+				"ansokningMediaImage": {
+					"MediaID": 0,
+					"MediaUrl": "filnamn.png",
+					"MediaFilename": "",
+					"MediaSize": "",
+					"MediaAlt": "",
+					"MediaFoto": "",
+					"MediaTyp": "",
+					"MediaVald": "nej",
+					"mediaTitle": "",
+					"mediaBeskrivning": "",
+					"mediaLink": "",
+					"sortering": "0"
+				},
+				"ansokningUtovarid": 78,
+				"ansokningUtovardata": {
+					"UtovarID": 0,
+					"Organisation": "",
+					"Fornamn": "",
+					"Efternamn": "",
+					"Telefon": "",
+					"Adress": "",
+					"Postnr": null,
+					"Ort": "",
+					"Epost": "",
+					"Kommun": "",
+					"Weburl": ""
+				},
+				"ansokningAgespan": "6- 12"
+			}]
+		},
+		"Ansokningarlistacount": 1,
+		"Ansokningarlistacurrentpage": 0,
+		"Ansokningarlistatotalpages": 0,
+		"nyaansokningarcount": 0,
+		"approvedansokningarcount": 0,
+		"deniedansokningarcount": 0,
+		"status": "Sökningen på detta: arrtyp: 0, konstartid: 4 age: 0- 0 searchstr:  är gjord."
+	}
+}

@@ -83,7 +83,9 @@ module.exports = {
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.searchansokningartemplate.archive, appsettings.currentUserid, sortobj, val);
                 break;
-
+            case "updatelogView":
+                loadtemplateTypes(appsettings.detaillogtemplate, appsettings.currentUserid, "", appsettings.detailetemplate.detailid);
+                break;
             default:
                // console.log("3. servicen hämtar debug Templaten: kk_aj_startView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
