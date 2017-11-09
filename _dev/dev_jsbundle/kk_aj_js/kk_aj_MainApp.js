@@ -223,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	//var _apiserver = "http://localhost:60485";
-	//var _dnnURL = "http://dnndev.me";
+	var _apiserver = "http://localhost:60485";
+	var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	var _dnnURL = "http://kulturkatalog.kivdev.se";
+	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	//var _dnnURL = "http://kulturkatalog.kivdev.se";
 	// 
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -10994,7 +10994,12 @@
 	        var sortobj;
 	        // sätt upp alla kontroller här så att searchload minimeras
 	        //var _arrid_kontroll = $('#kk_aj_arridtxt');
-
+	        $('.kk_aj_markall').hide();
+	        $('.kk_aj_denieannons').hide();
+	        $('.kk_aj_approveannons').hide();
+	        $('.kk_aj_chkboxAnnons').hide();
+	       
+	        
 	        $('body').on('click', '.kk_aj_nyadansokningar', function () {
 	            //console.log('1-1. .kk_aj_nyadansokningar'); 
 	            resetsearchformdata();
@@ -11003,7 +11008,7 @@
 
 	            //history.pushState('1', '', appsettings.basepageUri + '/KatalogenAnsokningar?sida=kk_aj_ansokningarView');
 	            history.pushState('1', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_ansokningarView');
-
+	          
 	            return false;
 	        });
 
@@ -11011,7 +11016,8 @@
 	            //console.log('1-1. .kk_aj_approvedansokningar');   
 	            resetsearchformdata();
 	            loadlistView("kk_aj_approvedansokningarView");
-	            history.pushState('2', '', appsettings.basepageUri + _desktopmoduleURL+ '?sida=kk_aj_approvedansokningarView');
+	            history.pushState('2', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_approvedansokningarView');
+	            $('.kk_aj_approveannons').hide();
 	            return false;
 	        });
 
@@ -11020,6 +11026,7 @@
 	            //console.log('1-1. .kk_aj_deniedansokningar');
 	            loadlistView("kk_aj_deniedansokningarView");
 	            history.pushState('3', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_deniedansokningarView');
+	                    
 	            return false;
 	        });
 
@@ -11028,6 +11035,7 @@
 	            //console.log('1-1. .kk_aj_archiveansokningar');
 	            loadlistView("kk_aj_archiveansokningarView");
 	            history.pushState('4', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_archiveansokningarView');
+	           
 	            return false;
 	        });
 	        
@@ -11253,7 +11261,8 @@
 	            var arrstodalredyexistsedit = 0;
 	            var motiveringbox = $(".motivering");
 	            var arrstordbox = $("#kk_aj_arrangorstod");
-	            var arrid = $('.motiveringEditblock').attr('rel');
+	            //var arrid = $('.motiveringEditblock').attr('rel');
+	            var arrid = appsettings.detailetemplate.detailid;
 	            var checktext = motiveringbox.val();           
 	            var faktavalue = $("#kk_aj_arrangorstod :selected").text();
 
@@ -11774,6 +11783,7 @@
 	            headertext = "Nekade - Sökresultat";
 	            activeclass = ".kk_aj_deniedansokanmenu";
 	            searchtyp = "denied";
+	         
 	            break;
 	        case "kk_aj_search_archiveansokningarView":
 	            classname = "";
@@ -11822,11 +11832,12 @@
 
 	var updateArrangemangMotivering = function (NyArrStatus, callback) {
 	    var tmpstatusid = parseInt(NyArrStatus) + 1;
-
+	   
 	    var postjson = {
 	        CmdTyp:"arrstat",
 	        Userid: appsettings.currentUserid,
-	        Arrid: $('.motiveringEditblock').attr('rel'),
+	        //Arrid: $('.motiveringEditblock').attr('rel'),
+	        Arrid: appsettings.detailetemplate.detailid,
 	        Logtypid:"1",
 	        Logstatusid: tmpstatusid,
 	        Logbeskrivning: $('.motivering').val(),          
@@ -30915,6 +30926,7 @@
 	                "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
 	                "ansokninglast": b[i]['ansokninglast'],
 	                "ansokningkonstform": b[i]['ansokningkonstform'],
+	                "ansokningpublicerad": b[i]['ansokningpublicerad'],
 	                "ansokningstatus": b[i]['ansokningstatus']
 	            };
 

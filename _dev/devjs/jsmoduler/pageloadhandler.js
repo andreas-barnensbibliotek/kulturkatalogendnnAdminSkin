@@ -276,6 +276,7 @@ var datapager = function(datat,sta,limit) {
                 "ansokningbilagaUrl": b[i]['ansokningbilagaUrl'],
                 "ansokninglast": b[i]['ansokninglast'],
                 "ansokningkonstform": b[i]['ansokningkonstform'],
+                "ansokningpublicerad": b[i]['ansokningpublicerad'],
                 "ansokningstatus": b[i]['ansokningstatus']
             };
 
