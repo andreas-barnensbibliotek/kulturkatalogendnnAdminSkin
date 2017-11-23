@@ -10,9 +10,9 @@ module.exports = {
 // kollar om ansökningar är lästa eller ej
 Handlebars.registerHelper('ifLast', function (object) {        
     if (object === "nej") {
-        return '<i class="fa fa-star text-yellow" title="Ej läst"></i>';
+        return '<i class="fa fa-star text-yellow last"></i>';
     } else {
-        return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
+        return '<i class="fa fa-star-o text-yellow ejlast"></i>';
     }    
 });
 Handlebars.registerHelper('getFlag', function (read, pub, typ) {
@@ -20,30 +20,30 @@ Handlebars.registerHelper('getFlag', function (read, pub, typ) {
     switch (typ) {
         case "Ny":
             if (read === "nej") {
-                return '<i class="fa fa-star text-yellow" title="Ej läst"></i>';
+                return '<i class="fa fa-star text-yellow last"></i>';
             } else {
-                return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
+                return '<i class="fa fa-star-o text-yellow ejlast"></i>';
             }
             break;
         case "Nekad":
             if (read === "nej") {
-                return '<i class="fa fa-star text-yellow" title="Nekad, ej läst"></i>';
+                return '<i class="fa fa-star text-yellow" ></i>';
             } else {
-                return '<i class="fa fa-exclamation text-red" aria-hidden="true" title="Nekad, ej publicerad"></i>';
+                return '<i class="fa fa-exclamation text-red" aria-hidden="true" ></i>';
             }
             break;
         case "Arkiv":          
-            return '<i class="fa fa-lock text-black" title="Arkiverad"></i>';
+            return '<i class="fa fa-lock text-black" ></i>';
             break;
 
         default:
             if (read === "nej") {
-                return '<i class="fa fa-star text-yellow" title="Publicerad, ej läst"></i>';
+                return '<i class="fa fa-star text-yellow" ></i>';
             } else {
                 if (pub === "nej") {
-                    return '<i class="fa fa-exclamation text-red" title="Ej publicerad"></i>';
+                    return '<i class="fa fa-exclamation text-red" ></i>';
                 } else {
-                    return '<i class="fa fa-flag-o text-green" title="Publicerad"></i>';
+                    return '<i class="fa fa-flag-o text-green" ></i>';
                 }
             }
     };
@@ -154,7 +154,7 @@ Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
     var statuscolorClass = "";
     switch (tmpstatus) {
         case "godkänd":
-            statuscolorClass = '<span class="label label-primary">Ny</span>'; //'text-green';
+            statuscolorClass = '<span class="label label-success">Godkänd</span>'; //'text-green';
             break;
         case "nekad":
             statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
@@ -214,7 +214,7 @@ Handlebars.registerHelper('ifMedia', function (media) {
         case "2":
 
             rethtml = "<hr><li class='row col-sm-12' ><div class='col-sm-12 col-md-2 mailbox-attachment-icon has-img'>";
-            rethtml += "<iframe width='100%'  src='"+ media.MediaUrl+"' frameborder='0' allowfullscreen></iframe></div>";
+            rethtml += "<iframe width='100%'  src='" + appsettings.youtubelink + media.MediaUrl + "' frameborder='0' allowfullscreen></iframe></div>";
             rethtml += "<div class='col-sm-12 col-md-10 '><a href='" + media.mediaLink + "' class='mailbox-attachment-name'> " + media.mediaTitle + "</a>";
             rethtml += "<div class='mailbox-attachment-size'>" + media.mediaBeskrivning + "</div></li>";
 
@@ -235,7 +235,7 @@ Handlebars.registerHelper('ifEditMedia', function (mediatyp, mediaurl,mediaalt) 
             rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' style='max-width:200px;'/>";
             break;
         case "2":
-            rethtml = "<iframe width='198' height='131' src='" + mediaurl + "' frameborder='0' allowfullscreen></iframe>";
+            rethtml = "<iframe width='198' height='131' src='" + appsettings.youtubelink + mediaurl + "' frameborder='0' allowfullscreen></iframe>";
             
             break;
     }

@@ -223,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	var _apiserver = "http://localhost:60485";
-	var _dnnURL = "http://dnndev.me";
+	//var _apiserver = "http://localhost:60485";
+	//var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	//var _dnnURL = "http://kulturkatalog.kivdev.se";
+	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	var _dnnURL = "http://kulturkatalog.kivdev.se";
 	// 
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -448,7 +448,9 @@
 	    basepageUri: "/KulturkatalogenAdmin",
 	    pagerHandler: window.kk_aj_pagerHandler,
 	    devkeysnippet: _devkeysnippet,
-	    detailmainimgurl: _detailMainImgURL
+	    detailmainimgurl: _detailMainImgURL,
+	    youtubelink: "https://www.youtube.com/embed/"
+
 	}
 
 /***/ },
@@ -467,9 +469,9 @@
 	// kollar om ansökningar är lästa eller ej
 	Handlebars.registerHelper('ifLast', function (object) {        
 	    if (object === "nej") {
-	        return '<i class="fa fa-star text-yellow" title="Ej läst"></i>';
+	        return '<i class="fa fa-star text-yellow last"></i>';
 	    } else {
-	        return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
+	        return '<i class="fa fa-star-o text-yellow ejlast"></i>';
 	    }    
 	});
 	Handlebars.registerHelper('getFlag', function (read, pub, typ) {
@@ -477,30 +479,30 @@
 	    switch (typ) {
 	        case "Ny":
 	            if (read === "nej") {
-	                return '<i class="fa fa-star text-yellow" title="Ej läst"></i>';
+	                return '<i class="fa fa-star text-yellow last"></i>';
 	            } else {
-	                return '<i class="fa fa-star-o text-yellow" title="Läst"></i>';
+	                return '<i class="fa fa-star-o text-yellow ejlast"></i>';
 	            }
 	            break;
 	        case "Nekad":
 	            if (read === "nej") {
-	                return '<i class="fa fa-star text-yellow" title="Nekad, ej läst"></i>';
+	                return '<i class="fa fa-star text-yellow" ></i>';
 	            } else {
-	                return '<i class="fa fa-exclamation text-red" aria-hidden="true" title="Nekad, ej publicerad"></i>';
+	                return '<i class="fa fa-exclamation text-red" aria-hidden="true" ></i>';
 	            }
 	            break;
 	        case "Arkiv":          
-	            return '<i class="fa fa-lock text-black" title="Arkiverad"></i>';
+	            return '<i class="fa fa-lock text-black" ></i>';
 	            break;
 
 	        default:
 	            if (read === "nej") {
-	                return '<i class="fa fa-star text-yellow" title="Publicerad, ej läst"></i>';
+	                return '<i class="fa fa-star text-yellow" ></i>';
 	            } else {
 	                if (pub === "nej") {
-	                    return '<i class="fa fa-exclamation text-red" title="Ej publicerad"></i>';
+	                    return '<i class="fa fa-exclamation text-red" ></i>';
 	                } else {
-	                    return '<i class="fa fa-flag-o text-green" title="Publicerad"></i>';
+	                    return '<i class="fa fa-flag-o text-green" ></i>';
 	                }
 	            }
 	    };
@@ -611,7 +613,7 @@
 	    var statuscolorClass = "";
 	    switch (tmpstatus) {
 	        case "godkänd":
-	            statuscolorClass = '<span class="label label-primary">Ny</span>'; //'text-green';
+	            statuscolorClass = '<span class="label label-success">Godkänd</span>'; //'text-green';
 	            break;
 	        case "nekad":
 	            statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
@@ -671,7 +673,7 @@
 	        case "2":
 
 	            rethtml = "<hr><li class='row col-sm-12' ><div class='col-sm-12 col-md-2 mailbox-attachment-icon has-img'>";
-	            rethtml += "<iframe width='100%'  src='"+ media.MediaUrl+"' frameborder='0' allowfullscreen></iframe></div>";
+	            rethtml += "<iframe width='100%'  src='" + appsettings.youtubelink + media.MediaUrl + "' frameborder='0' allowfullscreen></iframe></div>";
 	            rethtml += "<div class='col-sm-12 col-md-10 '><a href='" + media.mediaLink + "' class='mailbox-attachment-name'> " + media.mediaTitle + "</a>";
 	            rethtml += "<div class='mailbox-attachment-size'>" + media.mediaBeskrivning + "</div></li>";
 
@@ -692,7 +694,7 @@
 	            rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' style='max-width:200px;'/>";
 	            break;
 	        case "2":
-	            rethtml = "<iframe width='198' height='131' src='" + mediaurl + "' frameborder='0' allowfullscreen></iframe>";
+	            rethtml = "<iframe width='198' height='131' src='" + appsettings.youtubelink + mediaurl + "' frameborder='0' allowfullscreen></iframe>";
 	            
 	            break;
 	    }
@@ -11530,7 +11532,7 @@
 	            _requesteddata.mediaalt = $('.kk_aj_mediaalt[data=' + mediaid + ']').val();
 	            _requesteddata.mediafilename = $('.kk_aj_mediafilename[data=' + mediaid + ']').val();
 	            _requesteddata.mediafoto = $('.kk_aj_mediafoto[data=' + mediaid + ']').val();
-	            _requesteddata.mediaurl = $('.kk_aj_mediaurl[data=' + mediaid + ']').val();
+	            _requesteddata.mediaurl = fixmediaurl($('.kk_aj_mediaurl[data=' + mediaid + ']').val());                
 	            _requesteddata.mediasize = $('.kk_aj_mediasize[data=' + mediaid + ']').val();           
 	            _requesteddata.mediatyp = $('.kk_aj_mediatyp[data=' + mediaid + ']').val();
 	            _requesteddata.mediaTitle = $('.kk_aj_mediatitel[data=' + mediaid + ']').val();
@@ -11553,6 +11555,10 @@
 
 	            return false;
 	        });
+
+	        var fixmediaurl = function (urltofix) {           
+	            return urltofix.replace("https://youtu.be/", "");            
+	        }
 
 	        $('body').on('click', '#kk_aj_mediaBtnAdd', function () {
 	            var _requesteddata = {};
@@ -30785,7 +30791,7 @@
 	                                // 2=ansokningtitle, 4= ansokningutovare                     
 	                                sortorder = sortera.order;
 	                                sortobjtosearch = sortera.tosort;
-	                            }
+	                           
 
 	                            //"tosort": "title", "order": "down"
 	                            data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
@@ -30805,6 +30811,7 @@
 	                                        return 1;
 	                                }
 	                            });
+	                            }
 	                            var test = data;
 	                            appsettings.pagerHandler.page_currentdataset = test;
 

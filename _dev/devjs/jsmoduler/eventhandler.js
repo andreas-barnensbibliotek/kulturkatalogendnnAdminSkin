@@ -549,7 +549,7 @@ module.exports = {
             _requesteddata.mediaalt = $('.kk_aj_mediaalt[data=' + mediaid + ']').val();
             _requesteddata.mediafilename = $('.kk_aj_mediafilename[data=' + mediaid + ']').val();
             _requesteddata.mediafoto = $('.kk_aj_mediafoto[data=' + mediaid + ']').val();
-            _requesteddata.mediaurl = $('.kk_aj_mediaurl[data=' + mediaid + ']').val();
+            _requesteddata.mediaurl = fixmediaurl($('.kk_aj_mediaurl[data=' + mediaid + ']').val());                
             _requesteddata.mediasize = $('.kk_aj_mediasize[data=' + mediaid + ']').val();           
             _requesteddata.mediatyp = $('.kk_aj_mediatyp[data=' + mediaid + ']').val();
             _requesteddata.mediaTitle = $('.kk_aj_mediatitel[data=' + mediaid + ']').val();
@@ -572,6 +572,10 @@ module.exports = {
 
             return false;
         });
+
+        var fixmediaurl = function (urltofix) {           
+            return urltofix.replace("https://youtu.be/", "");            
+        }
 
         $('body').on('click', '#kk_aj_mediaBtnAdd', function () {
             var _requesteddata = {};

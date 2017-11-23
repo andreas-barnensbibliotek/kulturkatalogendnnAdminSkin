@@ -135,7 +135,7 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
                                 // 2=ansokningtitle, 4= ansokningutovare                     
                                 sortorder = sortera.order;
                                 sortobjtosearch = sortera.tosort;
-                            }
+                           
 
                             //"tosort": "title", "order": "down"
                             data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
@@ -155,6 +155,7 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
                                         return 1;
                                 }
                             });
+                            }
                             var test = data;
                             appsettings.pagerHandler.page_currentdataset = test;
 
