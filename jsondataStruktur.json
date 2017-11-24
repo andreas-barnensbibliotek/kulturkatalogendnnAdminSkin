@@ -1474,3 +1474,75 @@ exempel:
 		"status": "Sökningen på detta: arrtyp: 0, konstartid: 4 age: 0- 0 searchstr:  är gjord."
 	}
 }
+
+
+///////////////Söksvar Json publika sök med filtervärden///////////////////////
+{
+	"kk_aj_admin": {
+		"Ansokningstyp": "0",
+		"ansokningarlista": {
+			"ansokningarcount": "1",
+			"ansokningar": [{
+				"ansokningid": 119,
+				"ansokningdate": "2017-10-11 13:10:48",
+				"ansokningcontentid": "0",
+				"ansokningtitle": "test",
+				"ansokningsubtitle": "test",
+				"ansokningContent": "",
+				"ansokningutovare": "dev Kulturkatalogen",
+				"ansokningurl": "",
+				"ansokningbilaga": "",
+				"ansokningpublicerad": "ja",
+				"ansokninglast": "nej",
+				"ansokningstatus": "",
+				"ansokningtypid": "4",
+				"ansokningkonstformid": "4",
+				"ansokningtyp": "",
+				"ansokningkonstform": "Konst, form och design",
+				"ansokningFaktalist": [],
+				"ansokningMedialist": [],
+				"ansokningUsername": "",
+				"ansokningMediaImage": {
+					"MediaID": 0,
+					"MediaUrl": "filnamn.png",
+					"MediaFilename": "",
+					"MediaSize": "",
+					"MediaAlt": "",
+					"MediaFoto": "",
+					"MediaTyp": "",
+					"MediaVald": "nej",
+					"mediaTitle": "",
+					"mediaBeskrivning": "",
+					"mediaLink": "",
+					"sortering": "0"
+				},
+				"ansokningUtovarid": 78,
+				"ansokningUtovardata": {
+					"UtovarID": 0,
+					"Organisation": "",
+					"Fornamn": "",
+					"Efternamn": "",
+					"Telefon": "",
+					"Adress": "",
+					"Postnr": null,
+					"Ort": "",
+					"Epost": "",
+					"Kommun": "",
+					"Weburl": ""
+				},
+				"ansokningAgespan": "6- 12",
+				"ansokningbokningsbar":"p1-4", 
+				"ansokningmorklaggning":"1-3",
+				"ansokningtakhojd":"2-5", 
+				"ansokningspeltid":"90"
+			}]
+		},
+		"Ansokningarlistacount": 1,
+		"Ansokningarlistacurrentpage": 0,
+		"Ansokningarlistatotalpages": 0,
+		"nyaansokningarcount": 0,
+		"approvedansokningarcount": 0,
+		"deniedansokningarcount": 0,
+		"status": "Sökningen på detta: arrtyp: 0, konstartid: 4 age: 0- 0 searchstr:  är gjord."
+	}
+}
