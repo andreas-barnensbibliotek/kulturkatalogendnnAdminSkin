@@ -107,7 +107,7 @@
             <!-- textarea -->
         <div class="form-group col-md-12 kk_aj_arrcontent">
             <label>Innehåll</label>
-            <textarea id="kk_aj_contenttext" class="form-control" rows="8" >{{#contenttext kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}{{/contenttext}}</textarea>
+            <textarea id="kk_aj_contenttext" class="form-control" rows="8" >{{#htmlencode kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}{{/htmlencode}}</textarea>
             <span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
         </div>
          	<div class="row">

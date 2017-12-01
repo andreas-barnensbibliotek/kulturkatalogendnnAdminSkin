@@ -266,7 +266,12 @@ Handlebars.registerHelper("ifimgempty", function (imgsrc) {
     }
 });
 
-
+Handlebars.registerHelper("htmldecode", function (htmlval) {
+    return $('<div/>').html(htmlval).text();
+});
+Handlebars.registerHelper("htmlencode", function (htmlval) {
+    return $('<div/>').html(htmlval).html();
+});
 
 
 //används för att klippa in templates i en redan befintlig template hämtar templaten som sedan kan användas i registerpartial
@@ -289,3 +294,4 @@ Handlebars.getTemplate = function (templatefilenamn) {
 Handlebars.registerPartial("deletefaktaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletefakta.txt'));
 Handlebars.registerPartial("deletemediaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletemedia.txt'));
 Handlebars.registerPartial("standardmotiveringarAlert", Handlebars.getTemplate('kk_aj_helper_standardmotiveringar.txt'));
+

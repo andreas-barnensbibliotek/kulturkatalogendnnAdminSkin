@@ -223,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	//var _apiserver = "http://localhost:60485";
-	//var _dnnURL = "http://dnndev.me";
+	var _apiserver = "http://localhost:60485";
+	var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	var _dnnURL = "http://kulturkatalog.kivdev.se";
+	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	//var _dnnURL = "http://kulturkatalog.kivdev.se";
 	// 
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -725,7 +725,12 @@
 	    }
 	});
 
-
+	Handlebars.registerHelper("htmldecode", function (htmlval) {
+	    return $('<div/>').html(htmlval).text();
+	});
+	Handlebars.registerHelper("htmlencode", function (htmlval) {
+	    return $('<div/>').html(htmlval).html();
+	});
 
 
 	//används för att klippa in templates i en redan befintlig template hämtar templaten som sedan kan användas i registerpartial
@@ -748,6 +753,7 @@
 	Handlebars.registerPartial("deletefaktaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletefakta.txt'));
 	Handlebars.registerPartial("deletemediaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletemedia.txt'));
 	Handlebars.registerPartial("standardmotiveringarAlert", Handlebars.getTemplate('kk_aj_helper_standardmotiveringar.txt'));
+
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
@@ -11418,7 +11424,7 @@
 	            
 	            data.append("rubrik", $('#kk_aj_rubriktext').val());
 	            data.append("underrubrik", $('#kk_aj_underrubriktext').val());          
-	            data.append("innehall", $('#kk_aj_contenttext').val());
+	            data.append("innehall", htmlEncode($('#kk_aj_contenttext').val()));
 	            data.append("konstformid", $('#kk_aj_konstform').val());
 	            data.append("arrangemangtypid", $('#kk_aj_arrtyp').val());
 	            data.append("utovareid", $('.kk_aj_arrUtovareblock').attr("data"));
@@ -11936,6 +11942,12 @@
 	        return true;
 	    };
 
+	};
+
+	var htmlEncode = function (value) {
+	    //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+	    //then grab the encoded contents back out.  The div never exists on the page.
+	    return $('<div/>').text(value).html();
 	};
 
 

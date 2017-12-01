@@ -435,7 +435,7 @@ module.exports = {
             
             data.append("rubrik", $('#kk_aj_rubriktext').val());
             data.append("underrubrik", $('#kk_aj_underrubriktext').val());          
-            data.append("innehall", $('#kk_aj_contenttext').val());
+            data.append("innehall", htmlEncode($('#kk_aj_contenttext').val()));
             data.append("konstformid", $('#kk_aj_konstform').val());
             data.append("arrangemangtypid", $('#kk_aj_arrtyp').val());
             data.append("utovareid", $('.kk_aj_arrUtovareblock').attr("data"));
@@ -953,4 +953,10 @@ var validate= function(editdata){
         return true;
     };
 
+};
+
+var htmlEncode = function (value) {
+    //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+    //then grab the encoded contents back out.  The div never exists on the page.
+    return $('<div/>').text(value).html();
 };
