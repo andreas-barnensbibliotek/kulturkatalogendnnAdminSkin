@@ -443,7 +443,10 @@ module.exports = {
             data.append("arralt", $('#arr_altfoto').val());
             data.append("arrsize", $('#arr_sizefoto').val());
             data.append("arrfoto", $('#arr_fotograf').val());
-
+            data.append("Kontaktfornamn", $('#kk_aj_ansokningKontaktfornamn').val())
+            data.append("KontaktEfternamn", $('#kk_aj_ansokningKontaktEfternamn').val())
+            data.append("KontaktTelefon", $('#kk_aj_ansokningKontaktTelefon').val())
+            data.append("KontaktEpost", $('#kk_aj_ansokningKontaktEpost').val())
             // Add the uploaded image content to the form data collection
             if (uploadedfiles.length > 0) {
                 data.append("UploadedImage", uploadedfiles[0]);

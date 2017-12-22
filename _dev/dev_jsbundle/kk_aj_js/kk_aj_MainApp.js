@@ -223,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	var _apiserver = "http://localhost:60485";
-	var _dnnURL = "http://dnndev.me";
+	//var _apiserver = "http://localhost:60485";
+	//var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	//var _dnnURL = "http://kulturkatalog.kivdev.se";
+	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	var _dnnURL = "http://kulturkatalog.kivdev.se";
 	// 
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -11432,7 +11432,10 @@
 	            data.append("arralt", $('#arr_altfoto').val());
 	            data.append("arrsize", $('#arr_sizefoto').val());
 	            data.append("arrfoto", $('#arr_fotograf').val());
-
+	            data.append("Kontaktfornamn", $('#kk_aj_ansokningKontaktfornamn').val())
+	            data.append("KontaktEfternamn", $('#kk_aj_ansokningKontaktEfternamn').val())
+	            data.append("KontaktTelefon", $('#kk_aj_ansokningKontaktTelefon').val())
+	            data.append("KontaktEpost", $('#kk_aj_ansokningKontaktEpost').val())
 	            // Add the uploaded image content to the form data collection
 	            if (uploadedfiles.length > 0) {
 	                data.append("UploadedImage", uploadedfiles[0]);
