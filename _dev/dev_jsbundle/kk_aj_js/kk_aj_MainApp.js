@@ -223,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	//var _apiserver = "http://localhost:60485";
-	//var _dnnURL = "http://dnndev.me";
+	var _apiserver = "http://localhost:60485";
+	var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	var _dnnURL = "http://kulturkatalog.kivdev.se";
+	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	//var _dnnURL = "http://kulturkatalog.kivdev.se";
 	// 
 	var _localOrServerURL = _apiserver + "/Api_v2";
 	var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -506,10 +506,6 @@
 	                }
 	            }
 	    };
-
-
-
-	    
 	});
 	// kollar om ansökningar har bilaga eller ej
 	Handlebars.registerHelper('ifBilaga', function (bilagaobj, bilagaurl) {
@@ -592,6 +588,14 @@
 	    }
 	    
 	    return statuscolor;
+	});
+
+	// kollar om bilden är ny eller redan finns
+	Handlebars.registerHelper('imgfix', function (id, imgfile) {
+	    if (imgfile.indexOf(id) == -1) {
+	        imgfile = id + "_" + imgfile;
+	    }
+	    return imgfile;
 	});
 
 	Handlebars.registerHelper('ifdetailstatus', function (currarrstatus, options) {
@@ -32133,8 +32137,7 @@
 	        _requesteddata.konstformid = konstformid;
 	        _requesteddata.arrangemangtypid = arrangemangtypid;
 	        _requesteddata.utovareid = utovareid;
-	        _requesteddata.publicerad = publicerad;
-
+	        _requesteddata.publicerad = publicerad;        
 	        apiajaxRequest(reqUrl, _requesteddata, function (data) {
 
 	            callback(data);

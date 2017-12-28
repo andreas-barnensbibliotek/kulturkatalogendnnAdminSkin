@@ -37,8 +37,7 @@ module.exports = {
         _requesteddata.konstformid = konstformid;
         _requesteddata.arrangemangtypid = arrangemangtypid;
         _requesteddata.utovareid = utovareid;
-        _requesteddata.publicerad = publicerad;
-
+        _requesteddata.publicerad = publicerad;        
         apiajaxRequest(reqUrl, _requesteddata, function (data) {
 
             callback(data);

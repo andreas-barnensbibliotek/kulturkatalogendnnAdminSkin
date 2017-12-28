@@ -3,12 +3,12 @@
 //var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 //lokalafiler----------------------kommentera ut dessa på servern
-//var _apiserver = "http://localhost:60485";
-//var _dnnURL = "http://dnndev.me";
+var _apiserver = "http://localhost:60485";
+var _dnnURL = "http://dnndev.me";
 
 //Serverfiler---------------------- kommentera ut dessa lokalt
-var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-var _dnnURL = "http://kulturkatalog.kivdev.se";
+//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+//var _dnnURL = "http://kulturkatalog.kivdev.se";
 // 
 var _localOrServerURL = _apiserver + "/Api_v2";
 var _htmltemplateURL = _dnnURL+ "/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";

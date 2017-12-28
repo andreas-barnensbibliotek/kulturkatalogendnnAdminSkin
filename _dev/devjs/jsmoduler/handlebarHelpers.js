@@ -47,10 +47,6 @@ Handlebars.registerHelper('getFlag', function (read, pub, typ) {
                 }
             }
     };
-
-
-
-    
 });
 // kollar om ansökningar har bilaga eller ej
 Handlebars.registerHelper('ifBilaga', function (bilagaobj, bilagaurl) {
@@ -133,6 +129,14 @@ Handlebars.registerHelper('fixstatuscolor', function (Statustypid) {
     }
     
     return statuscolor;
+});
+
+// kollar om bilden är ny eller redan finns
+Handlebars.registerHelper('imgfix', function (id, imgfile) {
+    if (imgfile.indexOf(id) == -1) {
+        imgfile = id + "_" + imgfile;
+    }
+    return imgfile;
 });
 
 Handlebars.registerHelper('ifdetailstatus', function (currarrstatus, options) {
