@@ -299,3 +299,32 @@ Handlebars.registerPartial("deletefaktaAlert", Handlebars.getTemplate('kk_aj_hel
 Handlebars.registerPartial("deletemediaAlert", Handlebars.getTemplate('kk_aj_helper_alert_deletemedia.txt'));
 Handlebars.registerPartial("standardmotiveringarAlert", Handlebars.getTemplate('kk_aj_helper_standardmotiveringar.txt'));
 
+// kollar om uppgifterna är fakta uppgifter eller underlag för bedömning
+Handlebars.registerHelper('faktalist', function (fid, frub,fval) {    
+    let rettext = "";
+    if (fid <= 36) {
+        rettext = "<p id='faktatypid" + fid + "'><b>" + frub + " : </b>" + fval + "</p>";
+        if (fid == 25) {
+            rettext += "<p><b>" + frub + "</b> : <a href='" + fval + "'>Ladda ner </a></p>";
+        };
+    };   
+    return rettext;
+});
+
+// kollar om uppgifterna är faktabedomninglist uppgifter eller underlag för bedömning
+Handlebars.registerHelper('listbedomningsfakta', function (arrid, listan) {
+    var rettext = "";
+    for (var itm in listan) {
+        if (listan[itm].FaktaTypID >= 37 && listan[itm].FaktaTypID <= 42) {            
+            if (listan[itm].FaktaTypID == 37) {
+                rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='" + appsettings.detailmainimgurl + "/" + arrid + "_" + listan[itm].FaktaValue + "'>Ladda ner </a></p>";
+            } else {
+                rettext += "<p id='faktatypid" + listan[itm].FaktaTypID + "'><b>" + listan[itm].Faktarubrik + " : </b>" + listan[itm].FaktaValue + "</p>";
+            };
+        };        
+    }
+    if (rettext == "") {
+        rettext = "<p>Det finns inget underlag för bedömning registrerat</p>";
+    };
+    return rettext;
+});

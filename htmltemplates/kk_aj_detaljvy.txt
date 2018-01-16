@@ -36,12 +36,11 @@
 		<div class="row">			
 				
 				<div class="form-group col-md-6 " >            
-				<h3>Fakta</h3>
-		{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
-		<p id="faktatypid_{{this.FaktaTypID}}">		
-			<b>{{this.Faktarubrik}} : </b> {{this.FaktaValue}}
-		</p>
-		{{/each}}       	
+					<h3>Fakta</h3>
+					{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
+						{{#faktalist this.FaktaTypID this.Faktarubrik this.FaktaValue }}
+						{{/faktalist}}
+					{{/each}}       	
 				</div>
 				<div class="form-group col-md-6 ">
 					<h3>Kontaktuppgifter </h3>
@@ -51,11 +50,21 @@
 				</div>
 			
 		</div>
-		<hr>
+		<hr />   
+		<div class="row">			
+			<div class="form-group col-md-12" >            
+				<h3>Underlag för bedömning</h3>
+				{{#listbedomningsfakta kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
+				{{/listbedomningsfakta}}
+								
+			</div>				
+		</div>
 		
 	</div>
 <!-- /.mailbox-read-message -->
 </div>
+
+
 <!-- /.box-body -->
 <div class="box-footer">
 	<h3>Exempel</h3>
