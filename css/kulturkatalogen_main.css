@@ -104,3 +104,8 @@ label[for=kk_aj_stdmotivering]{margin-left:2rem;}
 .kk_aj_chkboxAnnons{
     display:none;
 }
+@media print {
+    .main-footer, .main-sidebar, .notforprint, .main-header, .kk_aj_ansokanboxheader, .content-header, .btn, .motiveringListblock, .kk_aj_CurrentUserid, #kk_aj_conf {
+        display: none;
+    }
+}
