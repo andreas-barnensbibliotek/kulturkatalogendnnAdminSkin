@@ -351,6 +351,11 @@ module.exports = {
         $('body').on('keydown', '.motivering', function (event) {
             $('.motivering').removeClass('markborderRed');
         });
+
+        $('body').on('click', '.kk_aj_detailPrint', function () {
+            window.print();
+            return false;
+        });
         ////////////////////////////////////////////////////////////////////////////////////////////////
         //detaljvy event END---------------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -742,9 +747,49 @@ module.exports = {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // UtovareEVENT END ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////
-       
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // MainAdminEVENT START ////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
+        $('body').on('click', '#kk_aj_Breakpoint', function () {
+            var period = new Date();
+            if (confirm("Är du säker på att du vill köra en brytpunkt?\n Period " + period.getFullYear() + "\n OK or Cancel.")) {
+                detailCrudHandler.adminbreakpoint("breakpoint", "1", getnowdate(), function (data) {
+                    alert("Nu har brytpunkt för perioden: " + period.getFullYear() + " körts!");
+                });
+            };
+            return false;
+        });
+        $('body').on('click', '#kk_aj_MainBreakpoint', function () {
+            let period = new Date();
+            if (confirm("Är du säker på att du vill köra en Huvudbrytpunkt?\n Period " + period.getFullYear() + "\n OK or Cancel.")) {
+                detailCrudHandler.adminbreakpoint("Mainbreakpoint", "1", getnowdate(), function (data) {
+                    alert("Nu har Huvudbrytpunkt för perioden: " + period.getFullYear() + " körts!");
+                });
+            };
+            return false;
+        });
+
+        $('body').on('click', '#kk_aj_Deletearrangemang', function () {
+            if (confirm("Är du säker på att du vill tabort ett arrangemang?\n Detta går inte att ångra!\n OK or Cancel.")) {
+
+                var arrid = prompt("Ange arrangemangets id:", "");
+                if (arrid == null || arrid == "") {
+                    alert("Du har inte anget arrid! \n Inget arrangemang har tagits bort!");
+                } else {
+                    detailCrudHandler.adminArrDELETE(arrid, appsettings.currentUserid, function (data) {
+                        alert("Nu har arrangemanget med arrid: " + arrid + " tagits bort! ");
+                    });
+                };
+            };
+            
+            return false;
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // MainAdminEVENT END ////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     },
@@ -962,4 +1007,28 @@ var htmlEncode = function (value) {
     //create a in-memory div, set it's inner text(which jQuery automatically encodes)
     //then grab the encoded contents back out.  The div never exists on the page.
     return $('<div/>').text(value).html();
+};
+
+var getnowdate = function () {
+    // Return today's date and time
+    let currentTime = new Date()
+
+    // returns the month (from 0 to 11)
+    let month = currentTime.getMonth() + 1
+
+    // returns the day of the month (from 1 to 31)
+    let day = currentTime.getDate()
+
+    // returns the year (four digits)
+    let year = currentTime.getFullYear()
+
+    if (month < 10) {
+        month = 0 + month;
+    };
+    if (day < 10) {
+        day = 0 + day;
+    };
+
+    let datumet = year + "-" + month + "-" + day;
+    return datumet;
 };

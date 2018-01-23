@@ -154,6 +154,38 @@ module.exports = {
             callback(filnamn);
         });
 
+    },
+    adminbreakpoint: function (calltyp, urid, dateval, callback) {
+        let currurl = appsettings.localOrServerURL + "/updatearrangemang";        
+        switch (calltyp) {
+            case "breakpoint":
+                currurl += "/pubbrytpunkt/id/1/uid/1/val/" + dateval + "/devkey/" + appsettings.devkeysnippet;
+                break;
+            case "Mainbreakpoint":
+                currurl += "/pubhuvudbrytpunkt/id/1/uid/1/val/" + dateval + "/devkey/" + appsettings.devkeysnippet;
+                break;
+        }
+        $.ajax({
+            async: true,
+            type: "GET",
+            url: currurl,
+            dataType: "json",
+            success: function (data) {
+                console.log("Brytpunkt körs! typ: " + calltyp);
+                callback(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+                alert("Nått blev fel vid uppdatering av parametrarna!");
+            }
+        });
+
+    },
+    adminArrDELETE: function (arrid, userid, callback) {
+        let currurl = appsettings.ServerApiURL + "/Api_v2/arrangemang/1/del/"+arrid+"/devkey/alf?type=json&callback=testar"
+        apiajaxDELETE(currurl, function (data) {
+            callback(data);
+        });
     }
 
 };
@@ -191,6 +223,25 @@ var apiajaxRequest = function (currurl, dataarr, callback) {
         type: "POST",
         url: currurl,
         data: dataarr,
+        success: function (data) {
+            console.log("Edit fakta updaterad: ");
+            callback(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+            alert("Nått blev fel vid uppdatering av parametrarna!");
+        }
+    });
+
+}
+
+var apiajaxDELETE = function (currurl, callback) {
+
+    //console.log("2. servicen hämtar data");
+    $.ajax({
+        async: true,
+        type: "DELETE",
+        url: currurl,        
         success: function (data) {
             console.log("Edit fakta updaterad: ");
             callback(data);

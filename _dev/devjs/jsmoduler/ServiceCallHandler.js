@@ -25,21 +25,24 @@ module.exports = {
                 break;
         }
 
-        //console.log("2. servicen hämtar data");
-        $.ajax({
-            async: true,
-            type: "GET",            
-            url: currurl,
-            dataType: "json",
-            success: function (data) {
-                console.log("Parameter updaterad: " + callTyp);
-                callback(data);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-                alert("Nått blev fel vid uppdatering av parametrarna!");
-            }
+        servicecall(currurl, function (data) {
+            callback(data);
         });
+        //console.log("2. servicen hämtar data");
+        //$.ajax({
+        //    async: true,
+        //    type: "GET",            
+        //    url: currurl,
+        //    dataType: "json",
+        //    success: function (data) {
+        //        console.log("Parameter updaterad: " + callTyp);
+        //        callback(data);
+        //    },
+        //    error: function (xhr, ajaxOptions, thrownError) {
+        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+        //        alert("Nått blev fel vid uppdatering av parametrarna!");
+        //    }
+        //});
        
     },
     updatePostparam: function (postjson, callback) {
@@ -80,21 +83,24 @@ module.exports = {
                 break;
         }
 
-        //console.log("2. servicen hämtar data");
-        $.ajax({
-            async: true,
-            type: "GET",            
-            url: currurl,
-            dataType: "json",
-            success: function (data) {
-                console.log("Parameter updaterad: " + callTyp);
-                callback(data);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-                alert("Nått blev fel vid uppdatering av parametrarna!");
-            }
+        servicecall(currurl, function (data) {
+            callback(data);
         });
+        //console.log("2. servicen hämtar data");
+        //$.ajax({
+        //    async: true,
+        //    type: "GET",            
+        //    url: currurl,
+        //    dataType: "json",
+        //    success: function (data) {
+        //        console.log("Parameter updaterad: " + callTyp);
+        //        callback(data);
+        //    },
+        //    error: function (xhr, ajaxOptions, thrownError) {
+        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+        //        alert("Nått blev fel vid uppdatering av parametrarna!");
+        //    }
+        //});
        
     },
     injectdiarietable: function (callTyp, Utovarid, callback) {        
@@ -115,21 +121,24 @@ module.exports = {
                 break;
         }
 
-        //console.log("2. servicen hämtar data");
-        $.ajax({
-            async: true,
-            type: "GET",
-            url: currurl,
-            dataType: "json",
-            success: function (data) {
-                console.log("LOGG datan är hämta  " + callTyp);
-                callback(data);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-                alert("Nått blev fel vid uppdatering av parametrarna!");
-            }
+        servicecall(currurl, function (data) {
+            callback(data);
         });
+        //console.log("2. servicen hämtar data");
+        //$.ajax({
+        //    async: true,
+        //    type: "GET",
+        //    url: currurl,
+        //    dataType: "json",
+        //    success: function (data) {
+        //        console.log("LOGG datan är hämta  " + callTyp);
+        //        callback(data);
+        //    },
+        //    error: function (xhr, ajaxOptions, thrownError) {
+        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+        //        alert("Nått blev fel vid uppdatering av parametrarna!");
+        //    }
+        //});
     },
     injectutovaretable: function (callTyp, Utovarid, callback) {
 
@@ -149,22 +158,24 @@ module.exports = {
                 break;
         }
       
-
-        //console.log("2. servicen hämtar data");
-        $.ajax({
-            async: true,
-            type: "GET",
-            url: currurl,
-            dataType: "json",
-            success: function (data) {
-                console.log("utövare datan är hämta  " + callTyp);
-                callback(data);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-                alert("Nått blev fel vid uppdatering av parametrarna!");
-            }
+        servicecall(currurl, function (data) {
+            callback(data);
         });
+        //console.log("2. servicen hämtar data");
+        //$.ajax({
+        //    async: true,
+        //    type: "GET",
+        //    url: currurl,
+        //    dataType: "json",
+        //    success: function (data) {
+        //        console.log("utövare datan är hämta  " + callTyp);
+        //        callback(data);
+        //    },
+        //    error: function (xhr, ajaxOptions, thrownError) {
+        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+        //        alert("Nått blev fel vid uppdatering av parametrarna!");
+        //    }
+        //});
     },
     injecttemplateDebug: function (callTyp, usrid, val, callback) {
         //console.log("4. servicen hämtar debug data ----->>> " + usrid);
@@ -274,3 +285,19 @@ module.exports = {
     }
 }
 
+var servicecall = function (currurl, callback) {
+    $.ajax({
+        async: true,
+        type: "GET",
+        url: currurl,
+        dataType: "json",
+        success: function (data) {
+            console.log("utövare datan är hämta  " );
+            callback(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+            alert("Nått blev fel vid uppdatering av parametrarna!");
+        }
+    });
+}

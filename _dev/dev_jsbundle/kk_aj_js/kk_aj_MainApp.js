@@ -11373,6 +11373,11 @@
 	        $('body').on('keydown', '.motivering', function (event) {
 	            $('.motivering').removeClass('markborderRed');
 	        });
+
+	        $('body').on('click', '.kk_aj_detailPrint', function () {
+	            window.print();
+	            return false;
+	        });
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //detaljvy event END---------------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11764,9 +11769,49 @@
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        // UtovareEVENT END ////////////////////////////////////////////////////////////////////////////////////////////////
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
-	       
 
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // MainAdminEVENT START ////////////////////////////////////////////////////////////////////////////////////////////////
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
+	        $('body').on('click', '#kk_aj_Breakpoint', function () {
+	            var period = new Date();
+	            if (confirm("Är du säker på att du vill köra en brytpunkt?\n Period " + period.getFullYear() + "\n OK or Cancel.")) {
+	                detailCrudHandler.adminbreakpoint("breakpoint", "1", getnowdate(), function (data) {
+	                    alert("Nu har brytpunkt för perioden: " + period.getFullYear() + " körts!");
+	                });
+	            };
+	            return false;
+	        });
+	        $('body').on('click', '#kk_aj_MainBreakpoint', function () {
+	            let period = new Date();
+	            if (confirm("Är du säker på att du vill köra en Huvudbrytpunkt?\n Period " + period.getFullYear() + "\n OK or Cancel.")) {
+	                detailCrudHandler.adminbreakpoint("Mainbreakpoint", "1", getnowdate(), function (data) {
+	                    alert("Nu har Huvudbrytpunkt för perioden: " + period.getFullYear() + " körts!");
+	                });
+	            };
+	            return false;
+	        });
+
+	        $('body').on('click', '#kk_aj_Deletearrangemang', function () {
+	            if (confirm("Är du säker på att du vill tabort ett arrangemang?\n Detta går inte att ångra!\n OK or Cancel.")) {
+
+	                var arrid = prompt("Ange arrangemangets id:", "");
+	                if (arrid == null || arrid == "") {
+	                    alert("Du har inte anget arrid! \n Inget arrangemang har tagits bort!");
+	                } else {
+	                    detailCrudHandler.adminArrDELETE(arrid, appsettings.currentUserid, function (data) {
+	                        alert("Nu har arrangemanget med arrid: " + arrid + " tagits bort! ");
+	                    });
+	                };
+	            };
+	            
+	            return false;
+	        });
+
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
+	        // MainAdminEVENT END ////////////////////////////////////////////////////////////////////////////////////////////////
+	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	    },
@@ -11986,6 +12031,29 @@
 	    return $('<div/>').text(value).html();
 	};
 
+	var getnowdate = function () {
+	    // Return today's date and time
+	    let currentTime = new Date()
+
+	    // returns the month (from 0 to 11)
+	    let month = currentTime.getMonth() + 1
+
+	    // returns the day of the month (from 1 to 31)
+	    let day = currentTime.getDate()
+
+	    // returns the year (four digits)
+	    let year = currentTime.getFullYear()
+
+	    if (month < 10) {
+	        month = 0 + month;
+	    };
+	    if (day < 10) {
+	        day = 0 + day;
+	    };
+
+	    let datumet = year + "-" + month + "-" + day;
+	    return datumet;
+	};
 
 /***/ },
 /* 5 */
@@ -31039,21 +31107,24 @@
 	                break;
 	        }
 
-	        //console.log("2. servicen hämtar data");
-	        $.ajax({
-	            async: true,
-	            type: "GET",            
-	            url: currurl,
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("Parameter updaterad: " + callTyp);
-	                callback(data);
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel vid uppdatering av parametrarna!");
-	            }
+	        servicecall(currurl, function (data) {
+	            callback(data);
 	        });
+	        //console.log("2. servicen hämtar data");
+	        //$.ajax({
+	        //    async: true,
+	        //    type: "GET",            
+	        //    url: currurl,
+	        //    dataType: "json",
+	        //    success: function (data) {
+	        //        console.log("Parameter updaterad: " + callTyp);
+	        //        callback(data);
+	        //    },
+	        //    error: function (xhr, ajaxOptions, thrownError) {
+	        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	        //        alert("Nått blev fel vid uppdatering av parametrarna!");
+	        //    }
+	        //});
 	       
 	    },
 	    updatePostparam: function (postjson, callback) {
@@ -31094,21 +31165,24 @@
 	                break;
 	        }
 
-	        //console.log("2. servicen hämtar data");
-	        $.ajax({
-	            async: true,
-	            type: "GET",            
-	            url: currurl,
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("Parameter updaterad: " + callTyp);
-	                callback(data);
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel vid uppdatering av parametrarna!");
-	            }
+	        servicecall(currurl, function (data) {
+	            callback(data);
 	        });
+	        //console.log("2. servicen hämtar data");
+	        //$.ajax({
+	        //    async: true,
+	        //    type: "GET",            
+	        //    url: currurl,
+	        //    dataType: "json",
+	        //    success: function (data) {
+	        //        console.log("Parameter updaterad: " + callTyp);
+	        //        callback(data);
+	        //    },
+	        //    error: function (xhr, ajaxOptions, thrownError) {
+	        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	        //        alert("Nått blev fel vid uppdatering av parametrarna!");
+	        //    }
+	        //});
 	       
 	    },
 	    injectdiarietable: function (callTyp, Utovarid, callback) {        
@@ -31129,21 +31203,24 @@
 	                break;
 	        }
 
-	        //console.log("2. servicen hämtar data");
-	        $.ajax({
-	            async: true,
-	            type: "GET",
-	            url: currurl,
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("LOGG datan är hämta  " + callTyp);
-	                callback(data);
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel vid uppdatering av parametrarna!");
-	            }
+	        servicecall(currurl, function (data) {
+	            callback(data);
 	        });
+	        //console.log("2. servicen hämtar data");
+	        //$.ajax({
+	        //    async: true,
+	        //    type: "GET",
+	        //    url: currurl,
+	        //    dataType: "json",
+	        //    success: function (data) {
+	        //        console.log("LOGG datan är hämta  " + callTyp);
+	        //        callback(data);
+	        //    },
+	        //    error: function (xhr, ajaxOptions, thrownError) {
+	        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	        //        alert("Nått blev fel vid uppdatering av parametrarna!");
+	        //    }
+	        //});
 	    },
 	    injectutovaretable: function (callTyp, Utovarid, callback) {
 
@@ -31163,22 +31240,24 @@
 	                break;
 	        }
 	      
-
-	        //console.log("2. servicen hämtar data");
-	        $.ajax({
-	            async: true,
-	            type: "GET",
-	            url: currurl,
-	            dataType: "json",
-	            success: function (data) {
-	                console.log("utövare datan är hämta  " + callTyp);
-	                callback(data);
-	            },
-	            error: function (xhr, ajaxOptions, thrownError) {
-	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	                alert("Nått blev fel vid uppdatering av parametrarna!");
-	            }
+	        servicecall(currurl, function (data) {
+	            callback(data);
 	        });
+	        //console.log("2. servicen hämtar data");
+	        //$.ajax({
+	        //    async: true,
+	        //    type: "GET",
+	        //    url: currurl,
+	        //    dataType: "json",
+	        //    success: function (data) {
+	        //        console.log("utövare datan är hämta  " + callTyp);
+	        //        callback(data);
+	        //    },
+	        //    error: function (xhr, ajaxOptions, thrownError) {
+	        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	        //        alert("Nått blev fel vid uppdatering av parametrarna!");
+	        //    }
+	        //});
 	    },
 	    injecttemplateDebug: function (callTyp, usrid, val, callback) {
 	        //console.log("4. servicen hämtar debug data ----->>> " + usrid);
@@ -31288,7 +31367,22 @@
 	    }
 	}
 
-
+	var servicecall = function (currurl, callback) {
+	    $.ajax({
+	        async: true,
+	        type: "GET",
+	        url: currurl,
+	        dataType: "json",
+	        success: function (data) {
+	            console.log("utövare datan är hämta  " );
+	            callback(data);
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	            //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	            alert("Nått blev fel vid uppdatering av parametrarna!");
+	        }
+	    });
+	}
 
 /***/ },
 /* 8 */
@@ -32283,6 +32377,38 @@
 	            callback(filnamn);
 	        });
 
+	    },
+	    adminbreakpoint: function (calltyp, urid, dateval, callback) {
+	        let currurl = appsettings.localOrServerURL + "/updatearrangemang";        
+	        switch (calltyp) {
+	            case "breakpoint":
+	                currurl += "/pubbrytpunkt/id/1/uid/1/val/" + dateval + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	            case "Mainbreakpoint":
+	                currurl += "/pubhuvudbrytpunkt/id/1/uid/1/val/" + dateval + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	        }
+	        $.ajax({
+	            async: true,
+	            type: "GET",
+	            url: currurl,
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("Brytpunkt körs! typ: " + calltyp);
+	                callback(data);
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel vid uppdatering av parametrarna!");
+	            }
+	        });
+
+	    },
+	    adminArrDELETE: function (arrid, userid, callback) {
+	        let currurl = appsettings.ServerApiURL + "/Api_v2/arrangemang/1/del/"+arrid+"/devkey/alf?type=json&callback=testar"
+	        apiajaxDELETE(currurl, function (data) {
+	            callback(data);
+	        });
 	    }
 
 	};
@@ -32320,6 +32446,25 @@
 	        type: "POST",
 	        url: currurl,
 	        data: dataarr,
+	        success: function (data) {
+	            console.log("Edit fakta updaterad: ");
+	            callback(data);
+	        },
+	        error: function (xhr, ajaxOptions, thrownError) {
+	            //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	            alert("Nått blev fel vid uppdatering av parametrarna!");
+	        }
+	    });
+
+	}
+
+	var apiajaxDELETE = function (currurl, callback) {
+
+	    //console.log("2. servicen hämtar data");
+	    $.ajax({
+	        async: true,
+	        type: "DELETE",
+	        url: currurl,        
 	        success: function (data) {
 	            console.log("Edit fakta updaterad: ");
 	            callback(data);
