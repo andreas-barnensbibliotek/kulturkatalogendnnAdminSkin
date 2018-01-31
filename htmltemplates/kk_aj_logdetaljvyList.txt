@@ -70,23 +70,23 @@
 				<li class=" dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Godkänn <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#" class="stdmottext">Detta var bra det!</li>
-						<li><a href="#"class="stdmottext">Efter konstens alla regler</a></li>
-						<li><a href="#"class="stdmottext">BARA BRA!</a></li>                        
+						<li><a href="#" class="stdmottext">Detta var bra det! </li>
+						<li><a href="#"class="stdmottext">Efter konstens alla regler </a></li>
+						<li><a href="#"class="stdmottext">BARA BRA! </a></li>                        
 					</ul>
 				</li>
 				<li><a href="#" data-toggle="dropdown">Neka <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#"class="stdmottext">Uppfyller inte konstartstandarden</li>
-						<li><a href="#"class="stdmottext">Neee inte så bra!</a></li>
-						<li><a href="#"class="stdmottext">Gör om gör rätt!</a></li>                        
+						<li><a href="#"class="stdmottext">Uppfyller inte konstartstandarden </li>
+						<li><a href="#"class="stdmottext">Neee inte så bra! </a></li>
+						<li><a href="#"class="stdmottext">Gör om gör rätt! </a></li>                        
 					</ul>
 				</li>
 				<li><a href="#" data-toggle="dropdown">Övrigt <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#"class="stdmottext">Saknar information!</a></li>
-						<li><a href="#"class="stdmottext">Skicka en tårta!</a></li>
-						<li><a href="#"class="stdmottext">Säg det med några rader!</a></li>                        
+						<li><a href="#"class="stdmottext">Saknar information! </a></li>
+						<li><a href="#"class="stdmottext">Skicka en tårta! </a></li>
+						<li><a href="#"class="stdmottext">Säg det med några rader! </a></li>                        
 					</ul>
 				</li>
 			</ul>

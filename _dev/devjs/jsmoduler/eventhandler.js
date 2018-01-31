@@ -483,9 +483,13 @@ module.exports = {
             return false;
         });
         
-        $('body').on('click', '.stdmottext', function (e) {           
-            $("#Motivering").val($(this).text());
-            e.preventDefault();
+        $('body').on('click', '.stdmottext', function (e) {
+            let motiveringsinput = $("#Motivering");
+            let motiveringstext = motiveringsinput.val() + " " + $(this).text();
+                       
+            motiveringsinput.val(motiveringstext);
+            //e.preventDefault();
+            return false;
         })
         
         // MainCONTENT HANDLERS STOPP---------------------------------------------------------------------------

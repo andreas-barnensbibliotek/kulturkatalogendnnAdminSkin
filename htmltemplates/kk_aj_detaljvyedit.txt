@@ -58,13 +58,9 @@
             <label>Arangemangstyp</label>
             <select id="kk_aj_arrtyp" class="form-control">
                 {{#select kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtypid}}
-					<option value="1">Föreställning på tuné</option> 
-					<option value="2">Föreställning på fast scen</option>
-					<option value="3">Författarbesök</option>
-					<option value="4">Kulturpedagogiska projekt</option>
-					<option value="5">Fortbildningar</option>
-					<option value="6">Museilådor</option>
-					<option value="7">Resmålsbesök</option>
+					<option value="1">Föreställning på turné</option> 					
+					<option value="4">Workshops/ProjektKulturpedagogiska projekt</option><!-- Kulturpedagogiska projekt-->					
+					<option value="7">Besöksmål med resestöd</option>
 					<option value="8">Skolbio</option>
 				{{/select}}
             </select>
