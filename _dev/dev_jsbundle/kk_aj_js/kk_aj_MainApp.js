@@ -223,8 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	var _apiserver = "http://localhost:60485";
-	var _dnnURL = "http://dnndev.me";
+	//var _apiserver = "http://localhost:60485";
+	//var _dnnURL = "http://dnndev.me";
+
+	//Serverfiler---------------------- kommentera ut dessa lokalt
+	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	var _dnnURL = "http://www.kulturkatalogenvast.org";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
 	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
@@ -761,7 +765,7 @@
 	// kollar om uppgifterna är fakta uppgifter eller underlag för bedömning
 	Handlebars.registerHelper('faktalist', function (fid, frub,fval) {    
 	    let rettext = "";
-	    if (fid <= 36) {
+	    if (fid <= 36 || fid >= 43) {
 	        rettext = "<p id='faktatypid" + fid + "'><b>" + frub + " : </b>" + fval + "</p>";
 	        if (fid == 25) {
 	            rettext += "<p><b>" + frub + "</b> : <a href='" + fval + "'>Ladda ner </a></p>";

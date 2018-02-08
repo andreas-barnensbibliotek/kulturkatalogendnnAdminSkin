@@ -6,7 +6,7 @@
         <span class="username"><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}}</a><a href="#"></a><a href="#" class="pull-right btn-box-tool">{{ansokningdate}}</a> </span><span class="description">{{ansokningsubtitle}}</span></div>
     <!-- /.user-block -->
     <h5>Annonstext:</h5>
-    <p>{{ansokningContent}}</p>
+    <p>{{#htmldecode ansokningContent}}{{/htmldecode}}</p>
     <ul class="list-inline">
         <li><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i>Gå till arrangemang</a></li>
     </ul>

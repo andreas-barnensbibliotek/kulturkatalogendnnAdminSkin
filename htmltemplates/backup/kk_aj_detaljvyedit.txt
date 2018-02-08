@@ -58,13 +58,9 @@
             <label>Arangemangstyp</label>
             <select id="kk_aj_arrtyp" class="form-control">
                 {{#select kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtypid}}
-					<option value="1">Föreställning på tuné</option> 
-					<option value="2">Föreställning på fast scen</option>
-					<option value="3">Författarbesök</option>
-					<option value="4">Kulturpedagogiska projekt</option>
-					<option value="5">Fortbildningar</option>
-					<option value="6">Museilådor</option>
-					<option value="7">Resmålsbesök</option>
+					<option value="1">Föreställning på turné</option> 					
+					<option value="4">Workshops/ProjektKulturpedagogiska projekt</option><!-- Kulturpedagogiska projekt-->					
+					<option value="7">Besöksmål med resestöd</option>
 					<option value="8">Skolbio</option>
 				{{/select}}
             </select>
@@ -83,7 +79,7 @@
         </div>
 		<!-- mainbildblock -->
 		<div class="form-group col-md-3 kk_aj_arrbild"><div><label>Presentationsbild</label> </div>                        
-            <a href="" class="kk_aj_showpressentationsbild" title="Klicka för att ändra bild" name="Klicka för att ändra bild"><img id="kk_aj_currbild" src="/Portals/0/kulturkatalogenArrImages/{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid}}_{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}" width="100%" rel="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}"/></a>
+            <a href="" class="kk_aj_showpressentationsbild" title="Klicka för att ändra bild" name="Klicka för att ändra bild"><img id="kk_aj_currbild" src="/Portals/0/kulturkatalogenArrImages/{{#imgfix kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}{{/imgfix}}" width="100%" rel="{{#imgfix kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}{{/imgfix}}"/></a>
                
         </div>
         <div class="form-group col-md-7 kk_aj_arrbildInfo">			
@@ -115,13 +111,10 @@
 				<div class="form-group col-md-12 ">
 					<h4>kontaktperson </h4>
 				</div>
-				<div class="form-group col-md-6 kk_aj_arrkonstform" >
-            
+				<div class="form-group col-md-6 kk_aj_arrkonstform" >            
 					<label>Förnamn</label>
 					<input id="kk_aj_ansokningKontaktfornamn" type="text" class="form-control"  value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktfornamn}}">
 					<span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
-			
-			
 					<label>E-post</label>
 					<input id="kk_aj_ansokningKontaktEpost" type="text" class="form-control"  value="{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktEpost}}">
 					<span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
