@@ -168,6 +168,8 @@
 <dnn:JQUERY ID="dnnjQuery" runat="server" />
 
 <fortyfingers:STYLEHELPER ID="Bootstrap_js" AddJsFile="bootstrap/js/bootstrap.min.js" runat="server" />
+<fortyfingers:STYLEHELPER ID="STYLEHELPER6" AddJsFile="public/js/ckeditor.js" runat="server" />
+<fortyfingers:STYLEHELPER ID="STYLEHELPER7" AddJsFile="public/js/bootstrap3-wysihtml5.all.min.js" runat="server" />
 <fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="public/js/kk_aj_bundle.js" runat="server" />
 
 

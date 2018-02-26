@@ -408,6 +408,7 @@
     Uppgifterna är sparade!
   </p> 
 </div>
+
 <script>
 $(function() {
 	var onint = function () {
@@ -418,8 +419,10 @@ $(function() {
             }else{
 				$('#kk_aj_arrangorstod').attr('disabled', false);
 				$('#kk_aj_arrangorstod').attr('style', "background-color:transparent");
-			}
+			};
+			$("#kk_aj_contenttext").wysihtml5();
         };
     onint();
+	
 });
 </script>
