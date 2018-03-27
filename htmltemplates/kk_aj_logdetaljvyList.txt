@@ -7,20 +7,17 @@
     <li class=" dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Godkänn <span class="caret"></span></a>
       <ul class="dropdown-menu">
-        <li><a href="#">Detta var bra det!</li>
-        <li><a href="#">Efter konstens alla regler</a></li>
-        <li><a href="#">BARA BRA!</a></li>                        
+        <li><a href="#">Arrangemanget är godkänt. Motivering finns dokumenterad på denna plats:</li>
+        <li><a href="#">Tidigare godkänt</a></li>                
       </ul>
     </li>
     <li><a href="#" data-toggle="dropdown">Neka</a><ul class="dropdown-menu">
-        <li><a href="#">Uppfyller inte konstartstandarden</li>
-        <li><a href="#">Neee inte så bra!</a></li>
-        <li><a href="#">Gör om gör rätt!</a></li>                        
+        <li><a href="#">Arrangemanget är nekat. Motivering finns dokumenterad på denna plats:</li>
+        <li><a href="#">Tidigare nekat</a></li>
+       
       </ul></li>
     <li><a href="#" data-toggle="dropdown">Övrigt</a><ul class="dropdown-menu">
-        <li><a href="#">Saknar information!</a></li>
-        <li><a href="#">Skicka en tårta!</a></li>
-        <li><a href="#">Säg det med några rader!</a></li>                        
+        <li><a href="#">Saknar information!</a></li>                      
       </ul></li>
   </ul>
 	</div>
@@ -70,23 +67,19 @@
 				<li class=" dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Godkänn <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#" class="stdmottext">Detta var bra det! </li>
-						<li><a href="#"class="stdmottext">Efter konstens alla regler </a></li>
-						<li><a href="#"class="stdmottext">BARA BRA! </a></li>                        
+						<li><a href="#" class="stdmottext">Arrangemanget är godkänt. Motivering finns dokumenterad på denna plats:</li>
+						<li><a href="#"class="stdmottext">Tidigare godkänt </a></li>						                  
 					</ul>
 				</li>
 				<li><a href="#" data-toggle="dropdown">Neka <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#"class="stdmottext">Uppfyller inte konstartstandarden </li>
-						<li><a href="#"class="stdmottext">Neee inte så bra! </a></li>
-						<li><a href="#"class="stdmottext">Gör om gör rätt! </a></li>                        
+						<li><a href="#"class="stdmottext">Arrangemanget är nekat. Motivering finns dokumenterad på denna plats:</li>
+						<li><a href="#"class="stdmottext">Tidigare nekat </a></li>                       
 					</ul>
 				</li>
 				<li><a href="#" data-toggle="dropdown">Övrigt <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#"class="stdmottext">Saknar information! </a></li>
-						<li><a href="#"class="stdmottext">Skicka en tårta! </a></li>
-						<li><a href="#"class="stdmottext">Säg det med några rader! </a></li>                        
+						<li><a href="#"class="stdmottext">Saknar information! </a></li>                       
 					</ul>
 				</li>
 			</ul>

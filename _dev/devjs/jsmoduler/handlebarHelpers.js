@@ -317,7 +317,21 @@ Handlebars.registerHelper('listbedomningsfakta', function (arrid, listan) {
     for (var itm in listan) {
         if (listan[itm].FaktaTypID >= 37 && listan[itm].FaktaTypID <= 42) {            
             if (listan[itm].FaktaTypID == 37) {
-                rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='" + appsettings.detailmainimgurl + "/" + arrid + "_" + listan[itm].FaktaValue + "'>Ladda ner </a></p>";
+
+
+
+
+
+                if ((listan[itm].FaktaValue.indexOf("http://") != -1) || (listan[itm].FaktaValue.indexOf("https://") != -1)) {
+                    rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='" + listan[itm].FaktaValue + "' target='_blank' >Gå till </a></p>";
+                } else {
+                    if (listan[itm].FaktaValue.indexOf("www.") != -1) {
+                        rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='http://" + listan[itm].FaktaValue + "' target='_blank'>Gå till </a></p>";
+                    } else {                   
+                        rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='" + appsettings.detailmainimgurl + "/" + arrid + "_" + listan[itm].FaktaValue + "'target='_blank'>Ladda ner </a></p>";
+                    };
+                };
+
             } else {
                 rettext += "<p id='faktatypid" + listan[itm].FaktaTypID + "'><b>" + listan[itm].Faktarubrik + " : </b>" + listan[itm].FaktaValue + "</p>";
             };

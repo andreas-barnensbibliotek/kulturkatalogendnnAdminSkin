@@ -3,12 +3,12 @@
 //var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 //lokalafiler----------------------kommentera ut dessa på servern
-var _apiserver = "http://localhost:60485";
-var _dnnURL = "http://dnndev.me";
+//var _apiserver = "http://localhost:60485";
+//var _dnnURL = "http://dnndev.me";
 
 //Serverfiler---------------------- kommentera ut dessa lokalt
-//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-//var _dnnURL = "http://www.kulturkatalogenvast.org";
+var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+var _dnnURL = "http://www.kulturkatalogenvast.org";
 
 //Serverfiler---------------------- kommentera ut dessa lokalt
 //var _apiserver = "http://kulturkatalog.kivdev.se:8080";
@@ -194,7 +194,7 @@ window.kk_aj_pagerHandler =
     {       
         page_max_size : "",
         page_startitem : "0",
-        page_item_per_page: "5",
+        page_item_per_page: "20",
         page_currentlimit: "",
         page_currentdataset: [],
         page_currenttemplate: "",

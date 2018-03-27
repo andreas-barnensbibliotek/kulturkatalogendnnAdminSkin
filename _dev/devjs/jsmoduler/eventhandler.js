@@ -414,7 +414,7 @@ module.exports = {
                 }
             }).autocomplete("instance")._renderItem = function (ul, item) {
                 return $("<li>")
-                  .append("<div>" + item.Organisation + " - kontakt: "+ item.Fornamn + " " + item.Efternamn +  "</div>")
+                  .append("<div>" + item.Organisation + " - (" + item.UtovarID + ") " + item.Fornamn + " " + item.Efternamn + "</div>")
                   .appendTo(ul);
             };         
         });

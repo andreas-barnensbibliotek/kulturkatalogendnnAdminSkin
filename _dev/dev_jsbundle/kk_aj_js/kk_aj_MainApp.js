@@ -223,12 +223,12 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	var _apiserver = "http://localhost:60485";
-	var _dnnURL = "http://dnndev.me";
+	//var _apiserver = "http://localhost:60485";
+	//var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	//var _dnnURL = "http://www.kulturkatalogenvast.org";
+	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	var _dnnURL = "http://www.kulturkatalogenvast.org";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
 	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
@@ -414,7 +414,7 @@
 	    {       
 	        page_max_size : "",
 	        page_startitem : "0",
-	        page_item_per_page: "5",
+	        page_item_per_page: "20",
 	        page_currentlimit: "",
 	        page_currentdataset: [],
 	        page_currenttemplate: "",
@@ -780,7 +780,21 @@
 	    for (var itm in listan) {
 	        if (listan[itm].FaktaTypID >= 37 && listan[itm].FaktaTypID <= 42) {            
 	            if (listan[itm].FaktaTypID == 37) {
-	                rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='" + appsettings.detailmainimgurl + "/" + arrid + "_" + listan[itm].FaktaValue + "'>Ladda ner </a></p>";
+
+
+
+
+
+	                if ((listan[itm].FaktaValue.indexOf("http://") != -1) || (listan[itm].FaktaValue.indexOf("https://") != -1)) {
+	                    rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='" + listan[itm].FaktaValue + "' target='_blank' >Gå till </a></p>";
+	                } else {
+	                    if (listan[itm].FaktaValue.indexOf("www.") != -1) {
+	                        rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='http://" + listan[itm].FaktaValue + "' target='_blank'>Gå till </a></p>";
+	                    } else {                   
+	                        rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='" + appsettings.detailmainimgurl + "/" + arrid + "_" + listan[itm].FaktaValue + "'target='_blank'>Ladda ner </a></p>";
+	                    };
+	                };
+
 	            } else {
 	                rettext += "<p id='faktatypid" + listan[itm].FaktaTypID + "'><b>" + listan[itm].Faktarubrik + " : </b>" + listan[itm].FaktaValue + "</p>";
 	            };
@@ -11440,7 +11454,7 @@
 	                }
 	            }).autocomplete("instance")._renderItem = function (ul, item) {
 	                return $("<li>")
-	                  .append("<div>" + item.Organisation + " - kontakt: "+ item.Fornamn + " " + item.Efternamn +  "</div>")
+	                  .append("<div>" + item.Organisation + " - (" + item.UtovarID + ") " + item.Fornamn + " " + item.Efternamn + "</div>")
 	                  .appendTo(ul);
 	            };         
 	        });
