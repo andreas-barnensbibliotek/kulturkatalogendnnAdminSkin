@@ -223,12 +223,16 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	//var _apiserver = "http://localhost:60485";
-	//var _dnnURL = "http://dnndev.me";
+	var _apiserver = "http://localhost:60485";
+	var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
-	var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-	var _dnnURL = "http://www.kulturkatalogenvast.org";
+	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+	//var _dnnURL = "http://www.kulturkatalogenvast.org";
+
+	//Serverfiler---------------------- kommentera ut dessa lokalt --- är DEVSITEN PÅ SERVERN!
+	//var _apiserver = "http://dev.kulturkatalogenvast.org:8080";
+	//var _dnnURL = "http://dev.kulturkatalogenvast.org";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
 	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
@@ -674,20 +678,19 @@
 	            rethtml += "<div class='col-sm-12 col-md-10 '><a href='" + media.mediaLink + "' class='mailbox-attachment-name'> " + media.mediaTitle + "</a>";
 	            rethtml += "<div class='mailbox-attachment-size'>" + media.mediaBeskrivning + "</div></li>";
 
-	            //rethtml += "<span class='mailbox-attachment-size'>";
-	            //rethtml += media.MediaSize + "<a href='"+ media.MediaUrl +"' class='btn btn-default btn-xs pull-right'><i class='fa fa-cloud-download'></i></a>";
-	            //rethtml += "</span></div></li>";
 	            break;
 	        case "2":
+	            if (isNaN(media.MediaUrl)) {
+	                urltoMovie = "https://www.youtube.com/embed/" + media.MediaUrl;
+	            } else {                
+	                urltoMovie = "https://player.vimeo.com/video/" + media.MediaUrl;
+	            };
 
 	            rethtml = "<hr><li class='row col-sm-12' ><div class='col-sm-12 col-md-2 mailbox-attachment-icon has-img'>";
-	            rethtml += "<iframe width='100%'  src='" + appsettings.youtubelink + media.MediaUrl + "' frameborder='0' allowfullscreen></iframe></div>";
+	            rethtml += "<iframe width='100%'  src='" + urltoMovie + "' frameborder='0' allowfullscreen></iframe></div>";
 	            rethtml += "<div class='col-sm-12 col-md-10 '><a href='" + media.mediaLink + "' class='mailbox-attachment-name'> " + media.mediaTitle + "</a>";
 	            rethtml += "<div class='mailbox-attachment-size'>" + media.mediaBeskrivning + "</div></li>";
 
-	            //rethtml += "<a href='"+ media.MediaUrl+"' class='mailbox-attachment-name'><i class='fa fa-camera'></i> "+ media.MediaFilename+"</a>";
-	            //rethtml += "<span class='mailbox-attachment-size'>"+ media.MediaSize+"<a href='"+ media.MediaUrl+"' class='btn btn-default btn-xs pull-right'>";
-	            //rethtml += "<i class='fa fa-cloud-download'></i></a></span></div></li>";
 	            break;        
 	    }
 	    
@@ -702,7 +705,14 @@
 	            rethtml = "<img alt='" + mediaalt + "' src='" + mediaurl + "' style='max-width:200px;'/>";
 	            break;
 	        case "2":
-	            rethtml = "<iframe width='198' height='131' src='" + appsettings.youtubelink + mediaurl + "' frameborder='0' allowfullscreen></iframe>";
+
+	            if (isNaN(mediaurl)) {
+	                urltoMovie = "https://www.youtube.com/embed/" + mediaurl;
+	            } else {
+	                urltoMovie = "https://player.vimeo.com/video/" + mediaurl;
+	            };
+
+	            rethtml = "<iframe width='198' height='131' src='" + urltoMovie + "' frameborder='0' allowfullscreen></iframe>";
 	            
 	            break;
 	    }
@@ -780,11 +790,7 @@
 	    for (var itm in listan) {
 	        if (listan[itm].FaktaTypID >= 37 && listan[itm].FaktaTypID <= 42) {            
 	            if (listan[itm].FaktaTypID == 37) {
-
-
-
-
-
+	                
 	                if ((listan[itm].FaktaValue.indexOf("http://") != -1) || (listan[itm].FaktaValue.indexOf("https://") != -1)) {
 	                    rettext += "<p><b>" + listan[itm].Faktarubrik + "</b> : <a href='" + listan[itm].FaktaValue + "' target='_blank' >Gå till </a></p>";
 	                } else {
@@ -31410,7 +31416,7 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($, jQuery) {
+	/* WEBPACK VAR INJECTION */(function($, jQuery) {var appsettings = __webpack_require__(1);
 
 	/*
 	 * jQuery Autocomplete plugin 1.1
@@ -31429,7 +31435,7 @@
 	        
 	            $.ajax({
 	                type: "GET",
-	                url: "http://dnndev.me/desktopmodules/kk_aj_utovareView/katalogautosearch.html",
+	                url: appsettings.DnnURL + "/desktopmodules/kk_aj_utovareView/katalogautosearch.html",
 	                data: city = $(domID).value,
 	                success: function (data) {
 	                    var refinedlist = data.split(",");

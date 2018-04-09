@@ -39,7 +39,7 @@
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <fortyfingers:STYLEHELPER ID="IE_LEE9" IfBrowser="IE<9" AddJsFile="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js" runat="server" />
 <fortyfingers:STYLEHELPER ID="IE_LEE9_2" IfBrowser="IE<9" AddJsFile="https://oss.maxcdn.com/respond/1.4.2/respond.min.js" runat="server" />
-
+<div style="widht:100%; background:red;">DEV-site</div>
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -170,7 +170,7 @@
 <fortyfingers:STYLEHELPER ID="Bootstrap_js" AddJsFile="bootstrap/js/bootstrap.min.js" runat="server" />
 <fortyfingers:STYLEHELPER ID="STYLEHELPER6" AddJsFile="public/js/ckeditor.js" runat="server" />
 <fortyfingers:STYLEHELPER ID="STYLEHELPER7" AddJsFile="public/js/bootstrap3-wysihtml5.all.min.js" runat="server" />
-<fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="public/js/kk_aj_bundle.1.0.7.js" runat="server" />
+<fortyfingers:STYLEHELPER ID="STYLEHELPER1" AddJsFile="public/js/kk_aj_bundle.1.1.0.js" runat="server" />
 
 
 <script type="text/javascript">

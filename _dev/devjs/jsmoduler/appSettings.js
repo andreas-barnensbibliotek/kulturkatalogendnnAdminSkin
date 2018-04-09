@@ -3,12 +3,16 @@
 //var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 //lokalafiler----------------------kommentera ut dessa på servern
-//var _apiserver = "http://localhost:60485";
-//var _dnnURL = "http://dnndev.me";
+var _apiserver = "http://localhost:60485";
+var _dnnURL = "http://dnndev.me";
 
 //Serverfiler---------------------- kommentera ut dessa lokalt
-var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-var _dnnURL = "http://www.kulturkatalogenvast.org";
+//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
+//var _dnnURL = "http://www.kulturkatalogenvast.org";
+
+//Serverfiler---------------------- kommentera ut dessa lokalt --- är DEVSITEN PÅ SERVERN!
+//var _apiserver = "http://dev.kulturkatalogenvast.org:8080";
+//var _dnnURL = "http://dev.kulturkatalogenvast.org";
 
 //Serverfiler---------------------- kommentera ut dessa lokalt
 //var _apiserver = "http://kulturkatalog.kivdev.se:8080";

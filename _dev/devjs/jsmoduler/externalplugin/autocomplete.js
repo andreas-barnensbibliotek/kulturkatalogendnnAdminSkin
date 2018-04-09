@@ -1,4 +1,4 @@
-﻿
+﻿var appsettings = require("./../appSettings.js");
 
 /*
  * jQuery Autocomplete plugin 1.1
@@ -17,7 +17,7 @@ module.exports = {
         
             $.ajax({
                 type: "GET",
-                url: "http://dnndev.me/desktopmodules/kk_aj_utovareView/katalogautosearch.html",
+                url: appsettings.DnnURL + "/desktopmodules/kk_aj_utovareView/katalogautosearch.html",
                 data: city = $(domID).value,
                 success: function (data) {
                     var refinedlist = data.split(",");
