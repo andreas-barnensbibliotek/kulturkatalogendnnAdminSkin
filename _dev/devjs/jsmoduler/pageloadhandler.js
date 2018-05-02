@@ -1,4 +1,5 @@
 ﻿var $ = require("jquery");
+var jplists = require("./externalplugin/jplist_moduleexport.js");
 var appsettings = require("./appSettings.js");
 var ServiceHandler = require("./ServiceCallHandler.js");
 module.exports = {
@@ -6,30 +7,43 @@ module.exports = {
         alert(msg);
     },
     pageloader: function (pagetoload, sortobj, val) {
-       
+        jplists.init();
+
         switch(pagetoload) {
             case "kk_aj_startView":                  
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.starttemplate, appsettings.currentUserid, "", "top5");
                 break;
-            case "kk_aj_ansokningarView": //nya              
+            case "kk_aj_ansokningarView": //nya  
+                $('#kk_aj_ansokningMain').jplist({
+                    command: 'empty'
+                });
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.nyaansokningartemplate, appsettings.currentUserid, sortobj, val);
                 pagetotalblock();
                 break;
             case "kk_aj_approvedansokningarView": //godkända
+                $('#kk_aj_ansokningMain').jplist({
+                    command: 'empty'
+                });
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_approvedansokningarView ");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.approvedansokningartemplate, appsettings.currentUserid, sortobj, val);
                 pagetotalblock();
                 break;
             case "kk_aj_deniedansokningarView": //nekade
+                $('#kk_aj_ansokningMain').jplist({
+                    command: 'empty'
+                });
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_deniedansokningarView ");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.deniedansokningartemplate, appsettings.currentUserid, sortobj, val);
                 break;
                 pagetotalblock();
             case "kk_aj_archiveansokningarView": //arkiv
+                $('#kk_aj_ansokningMain').jplist({
+                    command: 'empty'
+                });
                 //console.log("3. servicen hämtar debug Templaten: kk_aj_archiveansokningarView ");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.archiveansokningartemplate, appsettings.currentUserid, sortobj, val);
@@ -97,7 +111,7 @@ module.exports = {
     pagechanger: function (currdata, currtemp, sta, limit) {
         partpageloadertemplates(currtemp, datapager(currdata,sta, limit), function (data) {
             if (data == "ja") {
-                //console.log("ansokningarpagerinfotemplate");
+                console.log("ansokningarpagerinfotemplate");
             }
         });
     },
@@ -127,47 +141,11 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
             if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl" || value.templatename == "utovareDetailTmpl")) {
                 if (value.templatename != "StartSenasteListTmpl") {
                     if (value.templatename != "DiareTmpl") {
+
                         if (data.kk_aj_admin.ansokningarlista) {
-                            var sortorder;
-                            var sortobjtosearch;
-
-                            if (sortera != undefined) {
-                                // 2=ansokningtitle, 4= ansokningutovare                     
-                                sortorder = sortera.order;
-                                sortobjtosearch = sortera.tosort;
                            
-
-                            //"tosort": "title", "order": "down"
-                            data.kk_aj_admin.ansokningarlista.ansokningar.sort(function (a, b) {
-                                if (sortorder == "down") {
-                                    if (a[sortobjtosearch] == b[sortobjtosearch])
-                                        return 0;
-                                    if (a[sortobjtosearch] < b[sortobjtosearch])
-                                        return -1;
-                                    if (a[sortobjtosearch] > b[sortobjtosearch])
-                                        return 1;
-                                } else {
-                                    if (a[sortobjtosearch] == b[sortobjtosearch])
-                                        return 0;
-                                    if (a[sortobjtosearch] > b[sortobjtosearch])
-                                        return -1;
-                                    if (a[sortobjtosearch] < b[sortobjtosearch])
-                                        return 1;
-                                }
-                            });
-                            }
-                            var test = data;
-                            appsettings.pagerHandler.page_currentdataset = test;
-
-                            appsettings.pagerHandler.page_currenttemplate = value;
-                            appsettings.pagerHandler.page_totalpages = Math.ceil(parseInt(data.kk_aj_admin.Ansokningarlistacount) / parseInt(appsettings.pagerHandler.page_item_per_page));
-                            data = datapager(data);
-
                             partpageloadertemplates(appsettings.ansokningarpagerinfotemplate[0], data, function (data) {
-                                if (data == "ja") {
-                                    pagetotalblock();
-                                    // console.log("ansokningarpagerinfotemplate");
-                                }
+                                                          
                             });
                         }
                     };
@@ -175,7 +153,16 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
             };
             loadpagetemplates(value, data, function (data) {
                 if (data == "ja") {
-                   // console.log("KLART");                    
+                    // console.log("KLART");  
+                   
+                    $('#kk_aj_ansokningMain').jplist({
+                        itemsBox: '#kk_aj_ansokningar',
+                        itemPath: '.kk_aj_ansokning_item',
+                        panelPath: '.jplist-panel',
+                        storage: 'localstorage',
+                        storageName: 'adminstorage',
+                        cookiesExpiration: -1
+                    });                
                 }
             });
         });

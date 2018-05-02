@@ -109,3 +109,9 @@ label[for=kk_aj_stdmotivering]{margin-left:2rem;}
         display: none;
     }
 }
+.kk_aj_typ{display:none;}
+.jplist-pagingprev,.jplist-label {margin-right:1rem;}
+.jplist-pagingnext{margin-left:1rem;}
+.jplist-pagingprev, .jplist-pagingmid, .jplist-pagingnext,.jplist-label{float:left;}
+
+.jplist-pagination{float:left;}

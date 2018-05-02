@@ -10,9 +10,9 @@ module.exports = {
 // kollar om ansökningar är lästa eller ej
 Handlebars.registerHelper('ifLast', function (object) {        
     if (object === "nej") {
-        return '<i class="fa fa-star text-yellow last"></i>';
+        return '<i class="fa fa-star text-yellow last"></i><span class="kk_aj_typ">1</span>';
     } else {
-        return '<i class="fa fa-star-o text-yellow ejlast"></i>';
+        return '<i class="fa fa-star-o text-yellow ejlast"></i><span class="kk_aj_typ">2</span>';
     }    
 });
 Handlebars.registerHelper('getFlag', function (read, pub, typ) {
@@ -20,30 +20,30 @@ Handlebars.registerHelper('getFlag', function (read, pub, typ) {
     switch (typ) {
         case "Ny":
             if (read === "nej") {
-                return '<i class="fa fa-star text-yellow last"></i>';
+                return '<i class="fa fa-star text-yellow last"></i><span class="kk_aj_typ">1</span>';
             } else {
-                return '<i class="fa fa-star-o text-yellow ejlast"></i>';
+                return '<i class="fa fa-star-o text-yellow ejlast"></i><span class="kk_aj_typ">2</span>';
             }
             break;
         case "Nekad":
             if (read === "nej") {
-                return '<i class="fa fa-star text-yellow" ></i>';
+                return '<i class="fa fa-star text-yellow" ></i><span class="kk_aj_typ">2</span>';
             } else {
-                return '<i class="fa fa-exclamation text-red" aria-hidden="true" ></i>';
+                return '<i class="fa fa-exclamation text-red" aria-hidden="true"></i><span class="kk_aj_typ">4</span>';
             }
             break;
         case "Arkiv":          
-            return '<i class="fa fa-lock text-black" ></i>';
+            return '<i class="fa fa-lock text-black"></i><span class="kk_aj_typ">6</span>';
             break;
 
         default:
             if (read === "nej") {
-                return '<i class="fa fa-star text-yellow" ></i>';
+                return '<i class="fa fa-star text-yellow" ></i><span class="kk_aj_typ">2</span>';
             } else {
                 if (pub === "nej") {
-                    return '<i class="fa fa-exclamation text-red" ></i>';
+                    return '<i class="fa fa-exclamation text-red" ></i><span class="kk_aj_typ">4</span>';
                 } else {
-                    return '<i class="fa fa-flag-o text-green" ></i>';
+                    return '<i class="fa fa-flag-o text-green"></i><span class="kk_aj_typ">5</span>';
                 }
             }
     };
