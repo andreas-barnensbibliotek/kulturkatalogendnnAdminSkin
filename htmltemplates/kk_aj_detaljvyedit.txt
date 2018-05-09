@@ -231,15 +231,26 @@
 									<option value="23">Logi</option>
 									<option value="24">Traktamente ingår/tillkommer</option>
 									<option value="25">Lärarhandledning</option>
-									<option value="32">Speltid (min)</option>
-									<option value="33">Mörkläggning krävs</option>
-									<option value="34">Ljud</option>
-									<option value="35">Kostnad paket</option>
-									<option value="36">Övrigt om kostnad</option>
-									<option value="37">Resor</option>
-									<option value="38">Traktamente</option>
-									<option value="39">Övrigt</option>
-									<option value="40">Kostnad tredje arrangemanget</option>
+									<option value="26">Speltid (min)</option>
+									<option value="27">Mörkläggning krävs</option>
+									<option value="28">Ljud</option>
+									<option value="29">Kostnad paket</option>
+									<option value="30">Övrigt om kostnad</option>
+									<option value="31">Resor</option>
+									<option value="32">Traktamente</option>
+									<option value="33">Övrigt</option>
+									<option value="34">Kostnad tredje arrangemanget</option>
+									<option value="35">Premiärdatum</option>
+									<option value="37">CV</option>
+									<option value="38">Bidrag/stöd</option>
+									<option value="39">Bidrag/stöd från</option>
+									<option value="40">F-skattsedel</option>
+									<option value="41">Medlem i centrumbildning</option>
+									<option value="42">Övrig information</option>
+									<option value="43">Utställningsperiod</option>
+									<option value="44">Pedagogisk verksamhet</option>
+									<option value="45">Marknadföring</option>
+									<option value="46">Yta</option>
 								</select>
 								<span class="help-block" style="display:none;">OBS ändrar du konstform till annat områden än det du ansvarar försvinner din möjlighet att ändra i arrangemanget</span>
 							</td>
