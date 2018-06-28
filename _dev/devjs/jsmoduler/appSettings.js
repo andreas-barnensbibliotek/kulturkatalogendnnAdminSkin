@@ -10,6 +10,10 @@
 var _apiserver = "http://kulturkatalog.kivdev.se:8080";
 var _dnnURL = "http://www.kulturkatalogenvast.org";
 
+//NYA Serverfiler---------------------- kommentera ut dessa lokalt --- är DEVSITEN PÅ SERVERN!
+//var _apiserver = "http://apidev.kulturkatalogenvast.org:8080";
+//var _dnnURL = "http://www2.kulturkatalogenvast.org";
+
 //Serverfiler---------------------- kommentera ut dessa lokalt --- är DEVSITEN PÅ SERVERN!
 //var _apiserver = "http://dev.kulturkatalogenvast.org:8080";
 //var _dnnURL = "http://dev.kulturkatalogenvast.org";

@@ -1,0 +1,118 @@
+förklaring/usage:
+JSON
+http://kulturkatalog.kivdev.se:8080/Api_v2/search/[command]/devkey/[Devkey]?type=json
+
+command :	mainsearch - för sökning i arrangörstyp, konstart, ålder
+			freesearch - för fritextsökning
+			redovisning - json för premium redovisningsfil
+-----------------------
+
+ANROP Json exempel hämta alla
+
+http:POST
+--------
+http://kulturkatalog.kivdev.se:8080/Api_v2/search/redovisning/devkey/alf?type=json
+Content-Type: application/json
+{
+	"arrtypid": "",
+	"cmdtyp": "",
+	"konstartid": "",
+	"publiceradJaNej": "",
+	"searchstr": "",
+	"startyear": "",
+	"stopyear": ""	
+}
+///////////return json exempel //////////////////////
+
+{
+	"kk_aj_admin" : {
+		"Ansokningstyp" : "0",
+		"ansokningarlista" : {
+			"ansokningarcount" : "508",
+			"ansokningar" : [{
+					"ansokningid" : 1228,
+					"ansokningdate" : "2018-04-26",
+					"ansokningcontentid" : "0",
+					"ansokningtitle" : "Skolbio - Mitt liv som  Zucchini",
+					"ansokningsubtitle" : "Rek. årskurs 3-6",
+					"ansokningContent" : "",
+					"ansokningutovare" : "Filmkonsulenterna",
+					"ansokningurl" : "",
+					"ansokningbilaga" : "",
+					"ansokningpublicerad" : "nej",
+					"ansokninglast" : "nej",
+					"ansokningstatus" : "",
+					"ansokningtypid" : "8",
+					"ansokningkonstformid" : "3",
+					"ansokningtyp" : "Skolbio",
+					"ansokningkonstform" : "Film och media",
+					"ansokningFaktalist" : [{
+							"Faktaid" : 0,
+							"FaktaTypID" : 1,
+							"Faktarubrik" : "Arrangörsstöd",
+							"FaktaValue" : "Arrangören betalar 50%"
+						}, {
+							"Faktaid" : 0,
+							"FaktaTypID" : 99,
+							"Faktarubrik" : "Visningsperiod",
+							"FaktaValue" : "2018"
+						}
+					],
+					"ansokningMedialist" : [],
+					"ansokningUsername" : "",
+					"ansokningMediaImage" : {
+						"MediaID" : 0,
+						"MediaUrl" : "",
+						"MediaFilename" : "",
+						"MediaSize" : "",
+						"MediaAlt" : "",
+						"MediaFoto" : "",
+						"MediaTyp" : "",
+						"MediaVald" : "nej",
+						"mediaTitle" : "",
+						"mediaBeskrivning" : "",
+						"mediaLink" : "",
+						"sortering" : "0"
+					},
+					"ansokningUtovarid" : 644,
+					"ansokningUtovardata" : {
+						"UtovarID" : 644,
+						"Organisation" : "Filmkonsulenterna",
+						"Fornamn" : "Pia-Marie",
+						"Efternamn" : "Wehrling",
+						"Telefon" : "+46738210002",
+						"Adress" : "Kultur i Väst",
+						"Postnr" : "40544",
+						"Ort" : "Göteborg",
+						"Epost" : "pia-mari.wehrling@kulturivast.se",
+						"Kommun" : "VGR",
+						"Weburl" : "kulturivast.se"
+					},
+					"ansokningAgespan" : "- ",
+					"ansokningFilterfakta" : {
+						"Bokningsbar" : "0",
+						"Morklaggning" : "0",
+						"Takhojd" : "0",
+						"Speltid" : "0",
+						"Kostnad" : "0"
+					},
+					"ansokningKonstform2" : "0",
+					"ansokningKonstform3" : "0",
+					"ansokningKontaktId" : "",
+					"ansokningKontaktfornamn" : "",
+					"ansokningKontaktEfternamn" : "",
+					"ansokningKontaktTelefon" : "",
+					"ansokningKontaktEpost" : ""
+				}, 
+				{... [arrangemangslistan fortsätter] ...}
+			]
+		},
+		"Ansokningarlistacount" : 508,
+		"Ansokningarlistacurrentpage" : 0,
+		"Ansokningarlistatotalpages" : 0,
+		"nyaansokningarcount" : 0,
+		"approvedansokningarcount" : 0,
+		"deniedansokningarcount" : 0,
+		"status" : "Sökningen på detta: arrtyp: 0, konstartid: 0 age: 0- 0 searchstr:  är gjord."
+	}
+}
