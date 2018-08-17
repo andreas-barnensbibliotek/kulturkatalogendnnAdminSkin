@@ -7,8 +7,8 @@
 //var _dnnURL = "http://dnndev.me";
 
 //Serverfiler---------------------- kommentera ut dessa lokalt
-var _apiserver = "http://kulturkatalog.kivdev.se:8080";
-var _dnnURL = "http://www.kulturkatalogenvast.org";
+var _apiserver = "https://api.kulturkatalogenvast.org:443";
+var _dnnURL = "https://www.kulturkatalogenvast.org";
 
 //NYA Serverfiler---------------------- kommentera ut dessa lokalt --- är DEVSITEN PÅ SERVERN!
 //var _apiserver = "http://apidev.kulturkatalogenvast.org:8080";
