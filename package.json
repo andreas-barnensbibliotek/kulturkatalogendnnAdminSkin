@@ -25,11 +25,11 @@
     "gulp-sass": "^3.2.1",
     "gulp-sourcemaps": "^1.12.1",
     "gulp-uglify": "^3.0.1",
-    "script-loader": "^0.7.0",
+    "script-loader": "^0.7.2",
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
-    "jquery": "^3.1.1",
+    "jquery": "^3.3.1",
     "jquery-ui-dist": "^1.12.1",
     "knockout": "^3.4.2"
   }
