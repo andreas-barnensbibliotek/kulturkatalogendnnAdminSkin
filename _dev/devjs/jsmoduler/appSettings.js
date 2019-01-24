@@ -143,6 +143,7 @@ window.kk_aj_utovareView = [
         filename: "kk_aj_utovareTable.txt",
         detailid: window.detailuid
     }
+
 ];
 window.kk_aj_utovareDetailView = [
     {
@@ -150,6 +151,13 @@ window.kk_aj_utovareDetailView = [
         templatedata: "kk_aj_utovareDetailjson",
         targetdiv: ".kk_aj_utovaredetalj",
         filename: "kk_aj_utovaredetaljvy.txt",
+        detailid: window.detailuid
+    },
+    {
+        templatename: "utovareDetailArrlistTmpl",
+        templatedata: "kk_aj_utovareDetailArrListjson",
+        targetdiv: ".kk_aj_utovareDetailArrListTbl",
+        filename: "kk_aj_utovareDetailArrListTable.txt",
         detailid: window.detailuid
     }
 ];

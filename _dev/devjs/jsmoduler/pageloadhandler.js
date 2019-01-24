@@ -9,6 +9,12 @@ module.exports = {
     pageloader: function (pagetoload, sortobj, val) {
         jplists.init();
 
+        /// DOM CACHE ///////////////////////////////////////////////////////////////////////////////////
+        let $dom_kk_aj_utovaredetalj = $('.kk_aj_utovaredetalj');
+        let $dom_kk_aj_utovarelist = $('.kk_aj_utovarelist');
+        let $dom_section_kk_aj_utovareDetailArrListTbl = $('#section_kk_aj_utovareDetailArrListTbl');
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+
         switch(pagetoload) {
             case "kk_aj_startView":                  
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
@@ -57,12 +63,15 @@ module.exports = {
             case "kk_aj_utovareView":
                 // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+               
                 //loadtemplateTypes(appsettings.utovaretemplate, appsettings.currentUserid, sortobj, "all");
                 var uid = appsettings.utovaredetailtemplate.detailid
                 if (uid > 0) {
-                    loadtemplateTypes(appsettings.utovaredetailtemplate, appsettings.currentUserid, sortobj, uid);                    
-                    $('.kk_aj_utovaredetalj').show();
-                    $('.kk_aj_utovarelist').hide();
+                    loadtemplateTypes(appsettings.utovaredetailtemplate, appsettings.currentUserid, sortobj, uid); 
+                    
+                    $dom_kk_aj_utovaredetalj.show();
+                    $dom_section_kk_aj_utovareDetailArrListTbl.show();
+                    $dom_kk_aj_utovarelist.hide();
                 };
                 break;
             case "kk_aj_detailView":
@@ -138,7 +147,7 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
         ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
           
             //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
-            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl" || value.templatename == "utovareDetailTmpl")) {
+            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl" || value.templatename == "utovareDetailTmpl" || value.templatename == "utovareDetailArrlistTmpl")) {
                 if (value.templatename != "StartSenasteListTmpl") {
                     if (value.templatename != "DiareTmpl") {
 
@@ -162,9 +171,11 @@ var loadtemplateTypes = function (pagetemplate, userid, sortera, val) {
                         storage: 'localstorage',
                         storageName: 'adminstorage',
                         cookiesExpiration: -1
-                    });                
+                    });      
+                    
                 }
             });
+            
         });
         //ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
         //    loadpagetemplates(pagetemplate[obj], data);
@@ -199,30 +210,34 @@ var partpageloadertemplates = function (template, currentdata, callback) {
 }
 
 var updatecountmenybox = function (data) {
-    
+    let $dom_kk_aj_newcount = $('.kk_aj_newcount');
+    let $dom_kk_aj_approvedcount = $('.kk_aj_approvedcount');
+    let $dom_kk_aj_deniedcount = $('.kk_aj_deniedcount');
+    let $dom_kk_aj_menyNamn = $('.kk_aj_menyNamn');
+
     if (data.kk_aj_admin.nyaansokningarcount != undefined) {       
         if (data.kk_aj_admin.nyaansokningarcount) {
-            $('.kk_aj_newcount').show();
-            $('.kk_aj_newcount').html(data.kk_aj_admin.nyaansokningarcount);
+            $dom_kk_aj_newcount.show();
+            $dom_kk_aj_newcount.html(data.kk_aj_admin.nyaansokningarcount);
         } else {            
-            $('.kk_aj_newcount').hide();
+            $dom_kk_aj_newcount.hide();
         }  
         if (data.kk_aj_admin.approvedansokningarcount) {
-            $('.kk_aj_approvedcount').show();
-            $('.kk_aj_approvedcount').html(data.kk_aj_admin.approvedansokningarcount);
+            $dom_kk_aj_approvedcount.show();
+            $dom_kk_aj_approvedcount.html(data.kk_aj_admin.approvedansokningarcount);
         } else {            
-            $('.kk_aj_approvedcount').hide();
+            $dom_kk_aj_approvedcount.hide();
         }  
         if (data.kk_aj_admin.deniedansokningarcount){
-            $('.kk_aj_deniedcount').show();
-            $('.kk_aj_deniedcount').html(data.kk_aj_admin.deniedansokningarcount);
+            $dom_kk_aj_deniedcount.show();
+            $dom_kk_aj_deniedcount.html(data.kk_aj_admin.deniedansokningarcount);
         } else {            
-            $('.kk_aj_deniedcount').hide();
+            $dom_kk_aj_deniedcount.hide();
         }                    
     }
     if (data.kk_aj_admin.userinfo != undefined) {
-        $('.kk_aj_menyNamn').html('<p>' + data.kk_aj_admin.userinfo.username + '</p>');
-        $('.kk_aj_menyNamn').append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
+        $dom_kk_aj_menyNamn.html('<p>' + data.kk_aj_admin.userinfo.username + '</p>');
+        $dom_kk_aj_menyNamn.append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
         $('.kk_aj_menyAvatar img').attr('src', data.kk_aj_admin.userinfo.useravatar)
     }
     //console.log("inne i test")

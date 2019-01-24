@@ -1,0 +1,77 @@
+﻿<!-- /.box-header -->
+{{#iftype kk_aj_admin.Ansokningstyp}}
+{{/iftype}}
+    <h3 class="box-title">Hantera ansökning</h3>
+    <div class="box-tools pull-right">
+        <button type="button" class="btn btn-block btn-default btn-sm kk_aj_detailback"><i class="fa fa-arrow-left"></i> Tillbaka</button>
+    </div>                       
+</div>
+	<!-- /.box-header -->
+	<div class="box-body no-padding">
+		<div class="mailbox-read-info"><div class="pull-right">                                
+			<!-- /.btn-group -->
+			<button type="button" class="btn btn-default kk_aj_detailedit" >
+				<i class="fa fa-cog" aria-hidden="true"></i> Ändra
+			</button>                                
+			<button type="button" class="btn btn-default kk_aj_detailPrint" title="Skriv ut">                                        
+					<i class="fa fa-print"></i> Skriv ut
+			</button>    			
+		</div>
+		<span class="mailbox-read-time ">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningdate}}</span>       
+		<h3>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningtitle}}: <b>{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningsubtitle}}</b></h3>
+		<h5>Utövare: <a href="/KulturkatalogenAdmin/katalogenUtovare?uid={{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningUtovarid}}">{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningutovare}}</a></h5>
+	</div>
+		<!-- /.mailbox-read-info -->
+    
+	<!-- /.mailbox-controls -->
+	<div class="mailbox-read-message">                                                                                              
+		<p>
+		<img src="/Portals/0/kulturkatalogenArrImages/{{#imgfix kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMediaImage.MediaUrl}}{{/imgfix}}" width="30%"  />	
+		</p>
+		<p>
+		{{#htmldecode kk_aj_admin.ansokningarlista.ansokningar.0.ansokningContent}}
+		{{/htmldecode}}
+		</p>		
+		<hr />                               
+		<div class="row">			
+				
+				<div class="form-group col-md-6 " >            
+					<h3>Fakta</h3>
+					{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
+						{{#faktalist this.FaktaTypID this.Faktarubrik this.FaktaValue }}
+						{{/faktalist}}
+					{{/each}}       	
+				</div>
+				<div class="form-group col-md-6 ">
+					<h3>Kontaktuppgifter </h3>
+					<b>Namn: </b> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktfornamn}} {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktEfternamn}}</br>
+					<b>Telefon: </b> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktTelefon}}</br>
+					<b>E-post: </b> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktEpost}}	
+				</div>
+			
+		</div>
+		<hr />   
+		<div class="row">			
+			<div class="form-group col-md-12" >            
+				<h3>Underlag för bedömning</h3>
+				{{#listbedomningsfakta kk_aj_admin.ansokningarlista.ansokningar.0.ansokningid kk_aj_admin.ansokningarlista.ansokningar.0.ansokningFaktalist}}
+				{{/listbedomningsfakta}}
+								
+			</div>				
+		</div>
+		
+	</div>
+<!-- /.mailbox-read-message -->
+</div>
+
+
+<!-- /.box-body -->
+<div class="box-footer">
+	<h3>Exempel</h3>
+    <ul class="col-md-12 exempellistning clearfix">	
+	{{#each kk_aj_admin.ansokningarlista.ansokningar.0.ansokningMedialist}}
+		{{#ifMedia this}}{{/ifMedia}}
+	{{/each}}  
+    </ul>
+</div>                        
+<!-- /.box-footer -->

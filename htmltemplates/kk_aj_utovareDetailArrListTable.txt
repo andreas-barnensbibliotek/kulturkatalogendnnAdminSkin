@@ -1,0 +1,12 @@
+﻿<!-- item loop START -->
+	{{#each kk_aj_admin.ansokningarlista.ansokningar}}
+		<tr>
+			<td>{{ansokningid}}</td>
+			<td>{{ansokningdate}}</td>
+			<td><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningtitle}}</td>
+			<td><a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}">{{ansokningsubtitle}}</a></td>                                        
+			<td>{{ansokningpublicerad}}</td>				
+			<td>{{#fixStatuscolorlabel ansokningstatus}}{{/fixStatuscolorlabel}}</td>
+		</tr>
+	{{/each}}
+<!-- item loop STOP -->

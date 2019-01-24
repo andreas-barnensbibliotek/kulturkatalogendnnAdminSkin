@@ -42,7 +42,7 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var appsettings = __webpack_require__(1);
 	//var msg = require("./jsmoduler/main.js");
@@ -214,9 +214,9 @@
 	});
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	//var _localOrServerURL = "http://localhost:60485/Api_v2";
 	//var _htmltemplateURL = "http://dnndev.me/Portals/_default/Skins/kk_Admin_Acklay/htmltemplates";
@@ -363,6 +363,7 @@
 	        filename: "kk_aj_utovareTable.txt",
 	        detailid: window.detailuid
 	    }
+
 	];
 	window.kk_aj_utovareDetailView = [
 	    {
@@ -370,6 +371,13 @@
 	        templatedata: "kk_aj_utovareDetailjson",
 	        targetdiv: ".kk_aj_utovaredetalj",
 	        filename: "kk_aj_utovaredetaljvy.txt",
+	        detailid: window.detailuid
+	    },
+	    {
+	        templatename: "utovareDetailArrlistTmpl",
+	        templatedata: "kk_aj_utovareDetailArrListjson",
+	        targetdiv: ".kk_aj_utovareDetailArrListTbl",
+	        filename: "kk_aj_utovareDetailArrListTable.txt",
 	        detailid: window.detailuid
 	    }
 	];
@@ -465,9 +473,9 @@
 
 	}
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {var appsettings = __webpack_require__(1);
 	var registerJqueryEvents = __webpack_require__(4);
@@ -634,6 +642,12 @@
 	        case "nekad":
 	            statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
 	            break;
+	        case "approved":
+	            statuscolorClass = '<span class="label label-success">Godkänd</span>'; //'text-green';
+	            break;
+	        case "nekad":
+	            statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
+	            break;
 	        case "ny":
 	            statuscolorClass = '<span class="label label-primary">Ny</span>'; // 'text-primary';
 	            break;
@@ -650,6 +664,9 @@
 	            statuscolorClass = '<span class="label label-warning">Granskas</span>'; // 'text-warning';
 	            break;
 	        case "arkiverad":
+	            statuscolorClass = '<span class="label label-info">Arkiverad</span>';//'text-info';
+	            break;
+	        case "arkiv":
 	            statuscolorClass = '<span class="label label-info">Arkiverad</span>';//'text-info';
 	            break;
 	        case "event":
@@ -818,9 +835,9 @@
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	 * jQuery JavaScript Library v3.1.1
@@ -11044,9 +11061,9 @@
 	} );
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	
 	var $ = __webpack_require__(3);
@@ -11058,9 +11075,18 @@
 	var jsautocomplete = __webpack_require__(9);
 	var detailCrudHandler = __webpack_require__(10);
 
-	module.exports = {
+	module.exports = {   
 	    jqueryEVENTS: function (userid) {
 	        var sortobj;
+
+	        /// DOM CACHE 
+	        let $dom_body = $('body');
+	        
+	        let $dom_kk_aj_utovaredetalj = $('.kk_aj_utovaredetalj');
+	        let $dom_kk_aj_utovarelist = $('.kk_aj_utovarelist');
+	        let $dom_section_kk_aj_utovareDetailArrListTbl = $('#section_kk_aj_utovareDetailArrListTbl');
+	        /////////////
+
 	        // sätt upp alla kontroller här så att searchload minimeras
 	        //var _arrid_kontroll = $('#kk_aj_arridtxt');
 	        $('.kk_aj_markall').hide();
@@ -11069,7 +11095,7 @@
 	        $('.kk_aj_chkboxAnnons').hide();
 	       
 	        
-	        $('body').on('click', '.kk_aj_nyadansokningar', function () {
+	        $dom_body.on('click', '.kk_aj_nyadansokningar', function () {
 	            //console.log('1-1. .kk_aj_nyadansokningar'); 
 	            resetsearchformdata();
 	            sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
@@ -11081,7 +11107,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_approvedansokningar', function () {
+	        $dom_body.on('click', '.kk_aj_approvedansokningar', function () {
 	            //console.log('1-1. .kk_aj_approvedansokningar');   
 	            resetsearchformdata();
 	            loadlistView("kk_aj_approvedansokningarView");
@@ -11090,7 +11116,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_deniedansokningar', function () {
+	        $dom_body.on('click', '.kk_aj_deniedansokningar', function () {
 	            resetsearchformdata();
 	            //console.log('1-1. .kk_aj_deniedansokningar');
 	            loadlistView("kk_aj_deniedansokningarView");
@@ -11099,7 +11125,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_archiveansokningar', function () {
+	        $dom_body.on('click', '.kk_aj_archiveansokningar', function () {
 	            resetsearchformdata();
 	            //console.log('1-1. .kk_aj_archiveansokningar');
 	            loadlistView("kk_aj_archiveansokningarView");
@@ -11112,7 +11138,7 @@
 	        //ansökningsidor Pager EVENT ---------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
-	        $('body').on('click', '.kk_aj_listannonsnext', function () {
+	        $dom_body.on('click', '.kk_aj_listannonsnext', function () {
 	            var searchpagetyp = $('.kk_aj_box-title').attr('rel');
 	            var setting = appsettings.pagerHandler;
 	           
@@ -11128,7 +11154,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_listannonsprev', function () {
+	        $dom_body.on('click', '.kk_aj_listannonsprev', function () {
 	            var searchpagetyp = $('.kk_aj_box-title').attr('rel');
 	            var setting = appsettings.pagerHandler;
 
@@ -11148,13 +11174,13 @@
 	        // Edit Detailvy ------------------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
-	        $('body').on('click', '.kk_aj_detailbackfromEdit', function () {
+	        $dom_body.on('click', '.kk_aj_detailbackfromEdit', function () {
 	            console.log("testar detta: " +userid)
 	            loadlistView("kk_aj_detailView");
 	            return false;
 	        });
 	       
-	        $('body').on('click', '.kk_aj_detailedit', function () {            
+	        $dom_body.on('click', '.kk_aj_detailedit', function () {            
 	            console.log("testar detta: " + userid);
 	            appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
 	            loadlistView("kk_aj_detailEditView", "", userid);
@@ -11165,13 +11191,13 @@
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //ansökningsidor EVENT ---------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
-	        $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
+	        $dom_body.on('click', '.kk_aj_uppdateraannonser', function () {            
 	            var curpage = $('.kk_aj_box-title').attr('rel');            
 	            loadlistView(curpage);            
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_markall', function (event) {                
+	        $dom_body.on('click', '.kk_aj_markall', function (event) {                
 	            // Iterate each checkbox
 	            $('.kk_aj_chkboxAnnons').each(function () {
 	                if (this.checked) {
@@ -11182,7 +11208,7 @@
 	            });           
 	        });
 
-	        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
+	        $dom_body.on('click', '.kk_aj_sortrubrik', function (event) {
 	            var curpage = $('.kk_aj_box-title').attr('rel');
 	            if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
 	                sortobj = { "tosort": "ansokningtitle", "order": "up"};
@@ -11196,7 +11222,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_sortutovare', function (event) {
+	        $dom_body.on('click', '.kk_aj_sortutovare', function (event) {
 	            var curpage = $('.kk_aj_box-title').attr('rel');
 	            if ($('.kk_aj_sortrubrik i').hasClass('fa-caret-down')) {
 	                sortobj = { "tosort": "ansokningutovare", "order": "up" };
@@ -11210,7 +11236,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_sortkonstform', function (event) {
+	        $dom_body.on('click', '.kk_aj_sortkonstform', function (event) {
 	            var curpage = $('.kk_aj_box-title').attr('rel');
 	            if ($('.kk_aj_sortkonstform i').hasClass('fa-caret-down')) {
 	                sortobj = { "tosort": "ansokningkonstform", "order": "up" };
@@ -11224,7 +11250,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_sortdatum', function (event) {
+	        $dom_body.on('click', '.kk_aj_sortdatum', function (event) {
 	            var curpage = $('.kk_aj_box-title').attr('rel');
 	            if ($('.kk_aj_sortdatum i').hasClass('fa-caret-down')) {
 	                sortobj = { "tosort": "ansokningdate", "order": "up" };
@@ -11238,12 +11264,32 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_detailback', function (event) {
+	        $dom_body.on('click', '.kk_aj_detailback', function (event) {
 	            history.back(-1);
 	            return false;
 	        });
-	       
-	        $('body').on('click', '.mailbox-name a', function (event) {
+
+	        $dom_body.on('click', '.mailbox-star a', function (event) {
+	            event.preventDefault();
+	            var arrid = $(this).attr('rel');
+	                        
+	            if (arrid === "0") { return false; };
+	            var $dom_starimage = $(this).find("i");
+
+	            var isNotRead = $dom_starimage.hasClass('fa-star');
+
+	            if (isNotRead) {
+	                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "ja", function () {
+	                    $dom_starimage.removeClass("fa-star").addClass("fa-star-o");
+	                });
+	            } else {
+	                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "nej", function () {
+	                    $dom_starimage.removeClass("fa-star-o").addClass("fa-star");
+	                });
+	            };
+	        });
+
+	        $dom_body.on('click', '.mailbox-name a', function (event) {
 	            var arrid = $(this).attr('rel');
 
 	            if (arrid === "0") { return false; };
@@ -11258,7 +11304,7 @@
 	            };            
 	        });
 
-	        $('body').on('click', '.mailbox-subject a', function (event) {
+	        $dom_body.on('click', '.mailbox-subject a', function (event) {
 	            var arrid = $(this).attr('rel');
 	            if (arrid === "0") { return false; };
 
@@ -11272,7 +11318,7 @@
 	            };            
 	        });
 
-	        $('body').on('click', '.kk_aj_ansoksearchformSubmit', function (event) {
+	        $dom_body.on('click', '.kk_aj_ansoksearchformSubmit', function (event) {
 	            var arrstat = $('.kk_aj_ansoksearchform').attr('rel');
 	            var searchtyp = $('.kk_aj_ansoksearchform').val();
 	            var convertarrstat = arrstat.toLowerCase();
@@ -11313,7 +11359,7 @@
 	        //detaljvy event -------------------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
-	        $('body').on('click', '.kk_aj_addmotivering', function (event) {
+	        $dom_body.on('click', '.kk_aj_addmotivering', function (event) {
 	            if ($('#faktatypid_1').length >0) {
 	                $('#kk_aj_arrangorstod').attr('disabled', 'disabled');
 	                $('#kk_aj_arrangorstod').attr('style', "background-color:#ccc;");
@@ -11325,7 +11371,7 @@
 	            $('.motiveringEditblock').toggle();
 	        })
 	        
-	        $('body').on('click', '.kk_aj_detailapproved', function (event) {
+	        $dom_body.on('click', '.kk_aj_detailapproved', function (event) {
 	            var arrstodalredyexists = $('#faktatypid_1').length;
 	            var arrstodalredyexistsedit = 0;
 	            var motiveringbox = $(".motivering");
@@ -11370,7 +11416,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_detaildenied', function (event) {            
+	        $dom_body.on('click', '.kk_aj_detaildenied', function (event) {            
 	                var motiveringbox = $(".motivering");
 	                var checktext = motiveringbox.val();
 	                if (checktext != "") {
@@ -11383,7 +11429,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_detailkommentar', function (event) {
+	        $dom_body.on('click', '.kk_aj_detailkommentar', function (event) {
 	            var motiveringbox = $(".motivering");
 	            var checktext = motiveringbox.val();
 	            if (checktext != "") {
@@ -11398,11 +11444,11 @@
 	        });
 
 
-	        $('body').on('keydown', '.motivering', function (event) {
+	        $dom_body.on('keydown', '.motivering', function (event) {
 	            $('.motivering').removeClass('markborderRed');
 	        });
 
-	        $('body').on('click', '.kk_aj_detailPrint', function () {
+	        $dom_body.on('click', '.kk_aj_detailPrint', function () {
 	            window.print();
 	            return false;
 	        });
@@ -11413,29 +11459,29 @@
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        //Detaljvy EDIT event START---------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
-	        $('body').on('click', '.kk_aj_nymediabutton', function (event) {
+	        $dom_body.on('click', '.kk_aj_nymediabutton', function (event) {
 	            $(".kk_aj_nymediabox").toggle(500);
 	            return false;
 	        });
-	        $('body').on('click', '#kk_aj_mediaBtnAvbryt', function (event) {
+	        $dom_body.on('click', '#kk_aj_mediaBtnAvbryt', function (event) {
 	            $(".kk_aj_nymediabox").hide();
 	            return false;
 	        });
-	        $('body').on('click', '#kk_aj_mediaBtnNewCancel', function (event) {
+	        $dom_body.on('click', '#kk_aj_mediaBtnNewCancel', function (event) {
 	            $(".kk_aj_nymediabox").hide(500);
 	            return false;
 	        });                
 
-	        $('body').on('click', '.kk_aj_btnaddfakta', function (event) {
+	        $dom_body.on('click', '.kk_aj_btnaddfakta', function (event) {
 	            $(".kk_aj_addfaktablock").show();
 	            return false;
 	        });
-	        $('body').on('click', '.kk_aj_btnremovenewfakta', function (event) {
+	        $dom_body.on('click', '.kk_aj_btnremovenewfakta', function (event) {
 	            $(".kk_aj_addfaktablock").hide();
 	            return false;
 	        });
 	        
-	        $('body').on('keydown', '#testauto', function (event) {
+	        $dom_body.on('keydown', '#testauto', function (event) {
 	            $(this).autocomplete({                
 	                source: function (request, response) {
 	                    $.ajax({
@@ -11469,13 +11515,13 @@
 	            };         
 	        });
 	        
-	        $('body').on('click', '.kk_aj_showpressentationsbild', function (event) {
+	        $dom_body.on('click', '.kk_aj_showpressentationsbild', function (event) {
 	            $('.kk_aj_pressentationsbildblock').toggle(500);
 	            return false;
 	        });
 	        
 
-	        $('body').on('click', '.kk_aj_SparaDetailEdit', function () {
+	        $dom_body.on('click', '.kk_aj_SparaDetailEdit', function () {
 	            var data = new FormData();
 
 	            var arrid = $('#kk_aj_arridtxt').val();
@@ -11533,7 +11579,7 @@
 	            return false;
 	        });
 	        
-	        $('body').on('click', '.stdmottext', function (e) {
+	        $dom_body.on('click', '.stdmottext', function (e) {
 	            let motiveringsinput = $("#Motivering");
 	            let motiveringstext = motiveringsinput.val() + " " + $(this).text();
 	                       
@@ -11545,7 +11591,7 @@
 	        // MainCONTENT HANDLERS STOPP---------------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        // FAKTA HANDLERS START---------------------------------------------------------------------------
-	        $('body').on('click', '.kk_aj_faktaBtnEdit', function () {
+	        $dom_body.on('click', '.kk_aj_faktaBtnEdit', function () {
 	            var arrid = $('#kk_aj_arridtxt').val();
 	            var faktaid = $(this).attr("data");
 	            var editval = $('.kk_aj_faktaEditValue[data=' + faktaid + ']').val();
@@ -11560,7 +11606,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '#kk_aj_faktaBtnAdd', function () {
+	        $dom_body.on('click', '#kk_aj_faktaBtnAdd', function () {
 	            var arrid = $('#kk_aj_arridtxt').val();
 	            var faktatypid = $('#kk_aj_faktatypid').val();
 	            var faktavalue = $('#kk_aj_faktaAddValue').val();
@@ -11575,7 +11621,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '.kk_aj_faktaBtnDel', function () {
+	        $dom_body.on('click', '.kk_aj_faktaBtnDel', function () {
 	            var arrid = $('#kk_aj_arridtxt').val();
 	            var faktaid = $(this).attr("data");
 
@@ -11603,7 +11649,7 @@
 	        // FAKTA HANDLERS STOPP---------------------------------------------------------------------------
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 	        // MEDIA HANDLERS START---------------------------------------------------------------------------
-	        $('body').on('click', '.kk_aj_mediaBtnEdit', function () {
+	        $dom_body.on('click', '.kk_aj_mediaBtnEdit', function () {
 	            var mediaid = $(this).attr("data");
 	            var _requesteddata = {};            
 	            _requesteddata.arrid = $('#kk_aj_arridtxt').val();
@@ -11639,7 +11685,7 @@
 	            return urltofix.replace("https://youtu.be/", "");            
 	        }
 
-	        $('body').on('click', '#kk_aj_mediaBtnAdd', function () {
+	        $dom_body.on('click', '#kk_aj_mediaBtnAdd', function () {
 	            var _requesteddata = {};
 	            _requesteddata.arrid = $('#kk_aj_arridtxt').val();           
 	            _requesteddata.mediaalt = $('#kk_aj_nymediaAlt').val();
@@ -11660,7 +11706,7 @@
 
 	            return false;
 	        });
-	        $('body').on('click', '.kk_aj_mediaBtnTabort', function () {
+	        $dom_body.on('click', '.kk_aj_mediaBtnTabort', function () {
 	            var arrid = $('#kk_aj_arridtxt').val();
 	            var mediaid = $(this).attr("data");
 
@@ -11738,7 +11784,7 @@
 
 	        
 
-	        $('body').on('click', '.kk_aj_editUtovareDetail', function () {
+	        $dom_body.on('click', '.kk_aj_editUtovareDetail', function () {
 	            var utovareid = $(this).attr("data");
 
 	            history.pushState('', '', appsettings.basepageUri + '/katalogenUtovare?uid=' + utovareid + '');
@@ -11746,19 +11792,21 @@
 	            appsettings.utovaredetailtemplate.detailid = utovareid;
 	            loadpageHandler.pageloader("kk_aj_utovareView","",utovareid);            
 
-	            $('.kk_aj_utovaredetalj').show();
-	            $('.kk_aj_utovarelist').hide();
-	           
+	            $dom_kk_aj_utovaredetalj.show();
+	            $dom_section_kk_aj_utovareDetailArrListTbl.show();
+	            $dom_kk_aj_utovarelist.hide();            
 	            return false;
 	        });
-	        $('body').on('click', '.kk_aj_utovaredetailback', function () {            
+
+	        $dom_body.on('click', '.kk_aj_utovaredetailback', function () {            
 	            history.back();
-	            $('.kk_aj_utovaredetalj').hide();
-	            $('.kk_aj_utovarelist').show();
+	            $dom_kk_aj_utovaredetalj.hide();
+	            $dom_section_kk_aj_utovareDetailArrListTbl.hide();
+	            $dom_kk_aj_utovarelist.show();
 	        });
 
 
-	        $('body').on('click', '#kk_aj_utovareSave', function () {           
+	        $dom_body.on('click', '#kk_aj_utovareSave', function () {           
 	            var editdata = {
 	                "UtovarID": $("#kk_aj_utovareid").val(),
 	                "Organisation": $("#kk_aj_utovareOrganisation").val(),
@@ -11806,7 +11854,7 @@
 	        // MainAdminEVENT START ////////////////////////////////////////////////////////////////////////////////////////////////
 	        ////////////////////////////////////////////////////////////////////////////////////////////////
 
-	        $('body').on('click', '#kk_aj_Breakpoint', function () {
+	        $dom_body.on('click', '#kk_aj_Breakpoint', function () {
 	            var period = new Date();
 	            if (confirm("Är du säker på att du vill köra en brytpunkt?\n Period " + period.getFullYear() + "\n OK or Cancel.")) {
 	                detailCrudHandler.adminbreakpoint("breakpoint", "1", getnowdate(), function (data) {
@@ -11815,7 +11863,7 @@
 	            };
 	            return false;
 	        });
-	        $('body').on('click', '#kk_aj_MainBreakpoint', function () {
+	        $dom_body.on('click', '#kk_aj_MainBreakpoint', function () {
 	            let period = new Date();
 	            if (confirm("Är du säker på att du vill köra en Huvudbrytpunkt?\n Period " + period.getFullYear() + "\n OK or Cancel.")) {
 	                detailCrudHandler.adminbreakpoint("Mainbreakpoint", "1", getnowdate(), function (data) {
@@ -11825,7 +11873,7 @@
 	            return false;
 	        });
 
-	        $('body').on('click', '#kk_aj_Deletearrangemang', function () {
+	        $dom_body.on('click', '#kk_aj_Deletearrangemang', function () {
 	            if (confirm("Är du säker på att du vill tabort ett arrangemang?\n Detta går inte att ångra!\n OK or Cancel.")) {
 
 	                var arrid = prompt("Ange arrangemangets id:", "");
@@ -11838,6 +11886,22 @@
 	                };
 	            };
 	            
+	            return false;
+	        });
+
+	        $dom_body.on('click', '#kk_aj_ArkiveraArangemang', function () {
+	            if (confirm("Är du säker på att du vill arkivera ett arrangemang?\n OK or Cancel.")) {
+
+	                var arrid = prompt("Ange arrangemangets id:", "");
+	                if (arrid == null || arrid == "") {
+	                    alert("Du har inte anget arrid! \n Inget arrangemang är inte arkiverat!");
+	                } else {
+	                    detailCrudHandler.adminArrArchive(arrid, appsettings.currentUserid, function (data) {
+	                        alert("Nu har arrangemanget med arrid: " + arrid + " arkiverats! ");
+	                    });
+	                };
+	            };
+
 	            return false;
 	        });
 
@@ -12087,9 +12151,9 @@
 	    return datumet;
 	};
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery UI - v1.12.1 - 2016-09-14
 	* http://jqueryui.com
@@ -30798,9 +30862,9 @@
 
 	}));
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {var $ = __webpack_require__(3);
 	var jplists = __webpack_require__(7);
@@ -30812,6 +30876,12 @@
 	    },
 	    pageloader: function (pagetoload, sortobj, val) {
 	        jplists.init();
+
+	        /// DOM CACHE ///////////////////////////////////////////////////////////////////////////////////
+	        let $dom_kk_aj_utovaredetalj = $('.kk_aj_utovaredetalj');
+	        let $dom_kk_aj_utovarelist = $('.kk_aj_utovarelist');
+	        let $dom_section_kk_aj_utovareDetailArrListTbl = $('#section_kk_aj_utovareDetailArrListTbl');
+	        /////////////////////////////////////////////////////////////////////////////////////////////////
 
 	        switch(pagetoload) {
 	            case "kk_aj_startView":                  
@@ -30861,12 +30931,15 @@
 	            case "kk_aj_utovareView":
 	                // console.log("3. servicen hämtar debug Templaten: kk_aj_diarieView");
 	                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+	               
 	                //loadtemplateTypes(appsettings.utovaretemplate, appsettings.currentUserid, sortobj, "all");
 	                var uid = appsettings.utovaredetailtemplate.detailid
 	                if (uid > 0) {
-	                    loadtemplateTypes(appsettings.utovaredetailtemplate, appsettings.currentUserid, sortobj, uid);                    
-	                    $('.kk_aj_utovaredetalj').show();
-	                    $('.kk_aj_utovarelist').hide();
+	                    loadtemplateTypes(appsettings.utovaredetailtemplate, appsettings.currentUserid, sortobj, uid); 
+	                    
+	                    $dom_kk_aj_utovaredetalj.show();
+	                    $dom_section_kk_aj_utovareDetailArrListTbl.show();
+	                    $dom_kk_aj_utovarelist.hide();
 	                };
 	                break;
 	            case "kk_aj_detailView":
@@ -30942,7 +31015,7 @@
 	        ServiceHandler.injecttemplateDebug(value.templatedata, userid, val, function (data) {
 	          
 	            //kolla om det är en detaljvy som efterfrågas om det är det behövs ingen sortering eller pager
-	            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl" || value.templatename == "utovareDetailTmpl")) {
+	            if (!(value.templatename == "detailTmpl" || value.templatename == "detailEditTmpl" || value.templatename == "utovareDetailTmpl" || value.templatename == "utovareDetailArrlistTmpl")) {
 	                if (value.templatename != "StartSenasteListTmpl") {
 	                    if (value.templatename != "DiareTmpl") {
 
@@ -30966,9 +31039,11 @@
 	                        storage: 'localstorage',
 	                        storageName: 'adminstorage',
 	                        cookiesExpiration: -1
-	                    });                
+	                    });      
+	                    
 	                }
 	            });
+	            
 	        });
 	        //ServiceHandler.injecttemplate(pagetemplate[obj].templatedata, userid, function (data) {
 	        //    loadpagetemplates(pagetemplate[obj], data);
@@ -31003,30 +31078,34 @@
 	}
 
 	var updatecountmenybox = function (data) {
-	    
+	    let $dom_kk_aj_newcount = $('.kk_aj_newcount');
+	    let $dom_kk_aj_approvedcount = $('.kk_aj_approvedcount');
+	    let $dom_kk_aj_deniedcount = $('.kk_aj_deniedcount');
+	    let $dom_kk_aj_menyNamn = $('.kk_aj_menyNamn');
+
 	    if (data.kk_aj_admin.nyaansokningarcount != undefined) {       
 	        if (data.kk_aj_admin.nyaansokningarcount) {
-	            $('.kk_aj_newcount').show();
-	            $('.kk_aj_newcount').html(data.kk_aj_admin.nyaansokningarcount);
+	            $dom_kk_aj_newcount.show();
+	            $dom_kk_aj_newcount.html(data.kk_aj_admin.nyaansokningarcount);
 	        } else {            
-	            $('.kk_aj_newcount').hide();
+	            $dom_kk_aj_newcount.hide();
 	        }  
 	        if (data.kk_aj_admin.approvedansokningarcount) {
-	            $('.kk_aj_approvedcount').show();
-	            $('.kk_aj_approvedcount').html(data.kk_aj_admin.approvedansokningarcount);
+	            $dom_kk_aj_approvedcount.show();
+	            $dom_kk_aj_approvedcount.html(data.kk_aj_admin.approvedansokningarcount);
 	        } else {            
-	            $('.kk_aj_approvedcount').hide();
+	            $dom_kk_aj_approvedcount.hide();
 	        }  
 	        if (data.kk_aj_admin.deniedansokningarcount){
-	            $('.kk_aj_deniedcount').show();
-	            $('.kk_aj_deniedcount').html(data.kk_aj_admin.deniedansokningarcount);
+	            $dom_kk_aj_deniedcount.show();
+	            $dom_kk_aj_deniedcount.html(data.kk_aj_admin.deniedansokningarcount);
 	        } else {            
-	            $('.kk_aj_deniedcount').hide();
+	            $dom_kk_aj_deniedcount.hide();
 	        }                    
 	    }
 	    if (data.kk_aj_admin.userinfo != undefined) {
-	        $('.kk_aj_menyNamn').html('<p>' + data.kk_aj_admin.userinfo.username + '</p>');
-	        $('.kk_aj_menyNamn').append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
+	        $dom_kk_aj_menyNamn.html('<p>' + data.kk_aj_admin.userinfo.username + '</p>');
+	        $dom_kk_aj_menyNamn.append('<p><a>'+ data.kk_aj_admin.userinfo.userinfoheader +'</a></p>');
 	        $('.kk_aj_menyAvatar img').attr('src', data.kk_aj_admin.userinfo.useravatar)
 	    }
 	    //console.log("inne i test")
@@ -31095,9 +31174,9 @@
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var jQuery = __webpack_require__(3);
 
@@ -31635,9 +31714,9 @@
 
 
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(3);
 	var appsettings = __webpack_require__(1);
@@ -31765,21 +31844,7 @@
 	        servicecall(currurl, function (data) {
 	            callback(data);
 	        });
-	        //console.log("2. servicen hämtar data");
-	        //$.ajax({
-	        //    async: true,
-	        //    type: "GET",
-	        //    url: currurl,
-	        //    dataType: "json",
-	        //    success: function (data) {
-	        //        console.log("LOGG datan är hämta  " + callTyp);
-	        //        callback(data);
-	        //    },
-	        //    error: function (xhr, ajaxOptions, thrownError) {
-	        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	        //        alert("Nått blev fel vid uppdatering av parametrarna!");
-	        //    }
-	        //});
+	        
 	    },
 	    injectutovaretable: function (callTyp, Utovarid, callback) {
 
@@ -31793,6 +31858,9 @@
 	                currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
 	                //currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
 	                break;
+	            case "byUtovareArrList":
+	                currurl = appsettings.localOrServerURL + "/Api_v2/arrangemang/byutovare/uid/" + usrid + "/typ/0/val/" + val + "/devkey/" + devkeysnippet;
+	                break;
 	            default:
 	                //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
 	                currurl = appsettings.ServerApiURL + "/Api_v3/utovare/" + callTyp + "/user/"+ appsettings.currentUserid +"/val/" + Utovarid + "/devkey/" + appsettings.devkeysnippet;
@@ -31802,21 +31870,7 @@
 	        servicecall(currurl, function (data) {
 	            callback(data);
 	        });
-	        //console.log("2. servicen hämtar data");
-	        //$.ajax({
-	        //    async: true,
-	        //    type: "GET",
-	        //    url: currurl,
-	        //    dataType: "json",
-	        //    success: function (data) {
-	        //        console.log("utövare datan är hämta  " + callTyp);
-	        //        callback(data);
-	        //    },
-	        //    error: function (xhr, ajaxOptions, thrownError) {
-	        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-	        //        alert("Nått blev fel vid uppdatering av parametrarna!");
-	        //    }
-	        //});
+	        
 	    },
 	    injecttemplateDebug: function (callTyp, usrid, val, callback) {
 	        //console.log("4. servicen hämtar debug data ----->>> " + usrid);
@@ -31896,6 +31950,11 @@
 	                // /Api_v3/utovare/detail/user/2/val/1/devkey/alf?type=json
 	                currurl = appsettings.ServerApiURL + "/Api_v3/utovare/detail/user/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
 	                break;
+	            case "kk_aj_utovareDetailArrListjson":
+	                // /Api_v3/utovare/detail/user/2/val/1/devkey/alf?type=json
+	                currurl = appsettings.localOrServerURL + "/arrangemang/byutovare/uid/" + usrid + "/typ/0/val/" + val + "/devkey/" + appsettings.devkeysnippet;
+	                break;
+	                
 	            default:
 	                // resultat är en empty json response
 	                currurl =""
@@ -31943,9 +32002,9 @@
 	    });
 	}
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, jQuery) {var appsettings = __webpack_require__(1);
 
@@ -32776,9 +32835,9 @@
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(3);
 	var appsettings = __webpack_require__(1);
@@ -32968,8 +33027,25 @@
 	        apiajaxDELETE(currurl, function (data) {
 	            callback(data);
 	        });
-	    }
+	    },
+	    adminArrArchive: function (arrid, userid, callback) {        
+	        let currurl = appsettings.ServerApiURL + "/Api_v2/updatearrangemang/arrstat/id/" + arrid + "/uid/"+userid+"/val/4/devkey/alf?type=json&callback=testar"
 
+	        $.ajax({
+	            async: true,
+	            type: "GET",
+	            url: currurl,
+	            dataType: "json",
+	            success: function (data) {
+	                console.log("Arkivering av arrangemang! typ: " + calltyp);
+	                callback(data);
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+	                alert("Nått blev fel vid uppdatering av parametrarna!");
+	            }
+	        });    
+	    }
 	};
 
 
@@ -33043,9 +33119,9 @@
 	};
 
 
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	//här sätts alla pluggin och jquery.ready starters 
 	var $ = __webpack_require__(3);
@@ -33204,7 +33280,7 @@
 	                );
 	               
 	            });
-	        }; 
+	            }; 
 	       
 	/// UTÖVARE VY MED DATATABELL STARTAR HÄR ////////////////////////////////////////////////////////////////////////////////////
 	            if (currpageType == "kk_aj_utovareView") {
@@ -33253,7 +33329,7 @@
 	                                    return data;
 	                                },
 	                                "width": "7%"
-	                            },                           
+	                            },
 	                            {
 	                                "data": "Organisation", "render": function (data, type, row, meta) {
 	                                    if (type === 'display') {
@@ -33272,29 +33348,31 @@
 	                                },
 	                                "width": "15%"
 	                            },
-	                            { "data": "Telefon", "width": "10%" },                            
+	                            { "data": "Telefon", "width": "10%" },
 	                            { "data": "Epost" },
-	                            { "data": "Epost", "render": function (data, type, row, meta) {
-	                                if (type === 'display') {                                    
-	                                    data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '><i class="fa fa-edit"></i> Ändra</a>';
-	                                }
+	                            {
+	                                "data": "Epost", "render": function (data, type, row, meta) {
+	                                    if (type === 'display') {
+	                                        data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '><i class="fa fa-edit"></i> Ändra</a>';
+	                                    }
 	                                    return data;
 	                                },
 	                                "width": "10%"
 	                            }
-	                          ]
-	                        
+	                        ]
 
-	                    }
-	                );
-
+	                    });                   
+	                    // TODO error när man clickar på sort då visar den och sorterar den en gammal lista som visades tidigare.. fel i init
+	                    //$('#kk_aj_utovareDetailArrListTbl').DataTable({
+	                    //    "retrieve": true,
+	                    //    "paging": false,
+	                    //    "searching": false,
+	                    //    "order": [[1, "desc"]]
+	                    //});
 	                });
-
+	                
 	            };
 	           
-	          
-
-
 	        });//ready function end 
 	      
 
@@ -33330,9 +33408,9 @@
 	    }
 	}
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	        /*! DataTables Bootstrap 3 integration
 	         * ©2011-2014 SpryMedia Ltd - datatables.net/license
@@ -33546,9 +33624,9 @@
 	    }
 	};
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! DataTables 1.10.7
 	 * ©2008-2014 SpryMedia Ltd - datatables.net/license
@@ -48148,5 +48226,5 @@
 	    }
 	}
 
-/***/ }
+/***/ })
 /******/ ]);

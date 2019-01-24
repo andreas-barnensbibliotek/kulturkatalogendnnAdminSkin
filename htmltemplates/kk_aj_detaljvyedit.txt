@@ -194,10 +194,10 @@
 								<span class="help-block" style="display:none;">Du måste fylla i dessa uppgifter</span>
 							</td>    
 							<td width="15%">
-								<button id="kk_aj_faktaBtnEdit" type="button" class="btn btn-default btn-sm label-success kk_aj_faktaBtnEdit" data="{{this.Faktaid}}" >
+								<button id="kk_aj_faktaBtnEdit" type="button" class="btn btn-default btn-sm label-success kk_aj_faktaBtnEdit" data="{{this.Faktaid}}" title="Spara faktauppgiften!" >
 									<i class="fa fa-check" aria-hidden="true"></i>
 								</button>
-								<button id="kk_aj_faktaBtnDel" type="button" class="btn btn-default btn-sm label-danger kk_aj_faktaBtnDel" data="{{this.Faktaid}}" >
+								<button id="kk_aj_faktaBtnDel" type="button" class="btn btn-default btn-sm label-danger kk_aj_faktaBtnDel" data="{{this.Faktaid}}" title="Radera faktauppgiften!" >
 									<i class="fa fa-remove" aria-hidden="true"></i>
 								</button>
 							</td>    														

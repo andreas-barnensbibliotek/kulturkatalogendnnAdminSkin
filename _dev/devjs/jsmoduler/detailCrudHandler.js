@@ -186,8 +186,25 @@ module.exports = {
         apiajaxDELETE(currurl, function (data) {
             callback(data);
         });
-    }
+    },
+    adminArrArchive: function (arrid, userid, callback) {        
+        let currurl = appsettings.ServerApiURL + "/Api_v2/updatearrangemang/arrstat/id/" + arrid + "/uid/"+userid+"/val/4/devkey/alf?type=json&callback=testar"
 
+        $.ajax({
+            async: true,
+            type: "GET",
+            url: currurl,
+            dataType: "json",
+            success: function (data) {
+                console.log("Arkivering av arrangemang! typ: " + calltyp);
+                callback(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
+                alert("Nått blev fel vid uppdatering av parametrarna!");
+            }
+        });    
+    }
 };
 
 

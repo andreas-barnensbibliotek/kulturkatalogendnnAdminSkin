@@ -8,9 +8,18 @@ var _desktopmoduleURL = "/KatalogenAnsokningar"; //"/KulturkatalogenAdmin/Katalo
 var jsautocomplete = require("./externalplugin/autocomplete.js");
 var detailCrudHandler = require("./detailCrudHandler.js");
 
-module.exports = {
+module.exports = {   
     jqueryEVENTS: function (userid) {
         var sortobj;
+
+        /// DOM CACHE 
+        let $dom_body = $('body');
+        
+        let $dom_kk_aj_utovaredetalj = $('.kk_aj_utovaredetalj');
+        let $dom_kk_aj_utovarelist = $('.kk_aj_utovarelist');
+        let $dom_section_kk_aj_utovareDetailArrListTbl = $('#section_kk_aj_utovareDetailArrListTbl');
+        /////////////
+
         // sätt upp alla kontroller här så att searchload minimeras
         //var _arrid_kontroll = $('#kk_aj_arridtxt');
         $('.kk_aj_markall').hide();
@@ -19,7 +28,7 @@ module.exports = {
         $('.kk_aj_chkboxAnnons').hide();
        
         
-        $('body').on('click', '.kk_aj_nyadansokningar', function () {
+        $dom_body.on('click', '.kk_aj_nyadansokningar', function () {
             //console.log('1-1. .kk_aj_nyadansokningar'); 
             resetsearchformdata();
             sortobj = { "tosort": "2", "order": "down", "status": "ansokningtitle" };                
@@ -31,7 +40,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_approvedansokningar', function () {
+        $dom_body.on('click', '.kk_aj_approvedansokningar', function () {
             //console.log('1-1. .kk_aj_approvedansokningar');   
             resetsearchformdata();
             loadlistView("kk_aj_approvedansokningarView");
@@ -40,7 +49,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_deniedansokningar', function () {
+        $dom_body.on('click', '.kk_aj_deniedansokningar', function () {
             resetsearchformdata();
             //console.log('1-1. .kk_aj_deniedansokningar');
             loadlistView("kk_aj_deniedansokningarView");
@@ -49,7 +58,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_archiveansokningar', function () {
+        $dom_body.on('click', '.kk_aj_archiveansokningar', function () {
             resetsearchformdata();
             //console.log('1-1. .kk_aj_archiveansokningar');
             loadlistView("kk_aj_archiveansokningarView");
@@ -62,7 +71,7 @@ module.exports = {
         //ansökningsidor Pager EVENT ---------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        $('body').on('click', '.kk_aj_listannonsnext', function () {
+        $dom_body.on('click', '.kk_aj_listannonsnext', function () {
             var searchpagetyp = $('.kk_aj_box-title').attr('rel');
             var setting = appsettings.pagerHandler;
            
@@ -78,7 +87,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_listannonsprev', function () {
+        $dom_body.on('click', '.kk_aj_listannonsprev', function () {
             var searchpagetyp = $('.kk_aj_box-title').attr('rel');
             var setting = appsettings.pagerHandler;
 
@@ -98,13 +107,13 @@ module.exports = {
         // Edit Detailvy ------------------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        $('body').on('click', '.kk_aj_detailbackfromEdit', function () {
+        $dom_body.on('click', '.kk_aj_detailbackfromEdit', function () {
             console.log("testar detta: " +userid)
             loadlistView("kk_aj_detailView");
             return false;
         });
        
-        $('body').on('click', '.kk_aj_detailedit', function () {            
+        $dom_body.on('click', '.kk_aj_detailedit', function () {            
             console.log("testar detta: " + userid);
             appsettings.detailEdittemplate.detailid = appsettings.detailetemplate.detailid
             loadlistView("kk_aj_detailEditView", "", userid);
@@ -115,13 +124,13 @@ module.exports = {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         //ansökningsidor EVENT ---------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        $('body').on('click', '.kk_aj_uppdateraannonser', function () {            
+        $dom_body.on('click', '.kk_aj_uppdateraannonser', function () {            
             var curpage = $('.kk_aj_box-title').attr('rel');            
             loadlistView(curpage);            
             return false;
         });
 
-        $('body').on('click', '.kk_aj_markall', function (event) {                
+        $dom_body.on('click', '.kk_aj_markall', function (event) {                
             // Iterate each checkbox
             $('.kk_aj_chkboxAnnons').each(function () {
                 if (this.checked) {
@@ -132,7 +141,7 @@ module.exports = {
             });           
         });
 
-        $('body').on('click', '.kk_aj_sortrubrik', function (event) {
+        $dom_body.on('click', '.kk_aj_sortrubrik', function (event) {
             var curpage = $('.kk_aj_box-title').attr('rel');
             if ($('.kk_aj_sortutovare i').hasClass('fa-caret-down')) {                
                 sortobj = { "tosort": "ansokningtitle", "order": "up"};
@@ -146,7 +155,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_sortutovare', function (event) {
+        $dom_body.on('click', '.kk_aj_sortutovare', function (event) {
             var curpage = $('.kk_aj_box-title').attr('rel');
             if ($('.kk_aj_sortrubrik i').hasClass('fa-caret-down')) {
                 sortobj = { "tosort": "ansokningutovare", "order": "up" };
@@ -160,7 +169,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_sortkonstform', function (event) {
+        $dom_body.on('click', '.kk_aj_sortkonstform', function (event) {
             var curpage = $('.kk_aj_box-title').attr('rel');
             if ($('.kk_aj_sortkonstform i').hasClass('fa-caret-down')) {
                 sortobj = { "tosort": "ansokningkonstform", "order": "up" };
@@ -174,7 +183,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_sortdatum', function (event) {
+        $dom_body.on('click', '.kk_aj_sortdatum', function (event) {
             var curpage = $('.kk_aj_box-title').attr('rel');
             if ($('.kk_aj_sortdatum i').hasClass('fa-caret-down')) {
                 sortobj = { "tosort": "ansokningdate", "order": "up" };
@@ -188,12 +197,32 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_detailback', function (event) {
+        $dom_body.on('click', '.kk_aj_detailback', function (event) {
             history.back(-1);
             return false;
         });
-       
-        $('body').on('click', '.mailbox-name a', function (event) {
+
+        $dom_body.on('click', '.mailbox-star a', function (event) {
+            event.preventDefault();
+            var arrid = $(this).attr('rel');
+                        
+            if (arrid === "0") { return false; };
+            var $dom_starimage = $(this).find("i");
+
+            var isNotRead = $dom_starimage.hasClass('fa-star');
+
+            if (isNotRead) {
+                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "ja", function () {
+                    $dom_starimage.removeClass("fa-star").addClass("fa-star-o");
+                });
+            } else {
+                loadpageHandler.pageParameterUpdater("UpdateLookedAtParam", appsettings.currentUserid, arrid, "nej", function () {
+                    $dom_starimage.removeClass("fa-star-o").addClass("fa-star");
+                });
+            };
+        });
+
+        $dom_body.on('click', '.mailbox-name a', function (event) {
             var arrid = $(this).attr('rel');
 
             if (arrid === "0") { return false; };
@@ -208,7 +237,7 @@ module.exports = {
             };            
         });
 
-        $('body').on('click', '.mailbox-subject a', function (event) {
+        $dom_body.on('click', '.mailbox-subject a', function (event) {
             var arrid = $(this).attr('rel');
             if (arrid === "0") { return false; };
 
@@ -222,7 +251,7 @@ module.exports = {
             };            
         });
 
-        $('body').on('click', '.kk_aj_ansoksearchformSubmit', function (event) {
+        $dom_body.on('click', '.kk_aj_ansoksearchformSubmit', function (event) {
             var arrstat = $('.kk_aj_ansoksearchform').attr('rel');
             var searchtyp = $('.kk_aj_ansoksearchform').val();
             var convertarrstat = arrstat.toLowerCase();
@@ -263,7 +292,7 @@ module.exports = {
         //detaljvy event -------------------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        $('body').on('click', '.kk_aj_addmotivering', function (event) {
+        $dom_body.on('click', '.kk_aj_addmotivering', function (event) {
             if ($('#faktatypid_1').length >0) {
                 $('#kk_aj_arrangorstod').attr('disabled', 'disabled');
                 $('#kk_aj_arrangorstod').attr('style', "background-color:#ccc;");
@@ -275,7 +304,7 @@ module.exports = {
             $('.motiveringEditblock').toggle();
         })
         
-        $('body').on('click', '.kk_aj_detailapproved', function (event) {
+        $dom_body.on('click', '.kk_aj_detailapproved', function (event) {
             var arrstodalredyexists = $('#faktatypid_1').length;
             var arrstodalredyexistsedit = 0;
             var motiveringbox = $(".motivering");
@@ -320,7 +349,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_detaildenied', function (event) {            
+        $dom_body.on('click', '.kk_aj_detaildenied', function (event) {            
                 var motiveringbox = $(".motivering");
                 var checktext = motiveringbox.val();
                 if (checktext != "") {
@@ -333,7 +362,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_detailkommentar', function (event) {
+        $dom_body.on('click', '.kk_aj_detailkommentar', function (event) {
             var motiveringbox = $(".motivering");
             var checktext = motiveringbox.val();
             if (checktext != "") {
@@ -348,11 +377,11 @@ module.exports = {
         });
 
 
-        $('body').on('keydown', '.motivering', function (event) {
+        $dom_body.on('keydown', '.motivering', function (event) {
             $('.motivering').removeClass('markborderRed');
         });
 
-        $('body').on('click', '.kk_aj_detailPrint', function () {
+        $dom_body.on('click', '.kk_aj_detailPrint', function () {
             window.print();
             return false;
         });
@@ -363,29 +392,29 @@ module.exports = {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         //Detaljvy EDIT event START---------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        $('body').on('click', '.kk_aj_nymediabutton', function (event) {
+        $dom_body.on('click', '.kk_aj_nymediabutton', function (event) {
             $(".kk_aj_nymediabox").toggle(500);
             return false;
         });
-        $('body').on('click', '#kk_aj_mediaBtnAvbryt', function (event) {
+        $dom_body.on('click', '#kk_aj_mediaBtnAvbryt', function (event) {
             $(".kk_aj_nymediabox").hide();
             return false;
         });
-        $('body').on('click', '#kk_aj_mediaBtnNewCancel', function (event) {
+        $dom_body.on('click', '#kk_aj_mediaBtnNewCancel', function (event) {
             $(".kk_aj_nymediabox").hide(500);
             return false;
         });                
 
-        $('body').on('click', '.kk_aj_btnaddfakta', function (event) {
+        $dom_body.on('click', '.kk_aj_btnaddfakta', function (event) {
             $(".kk_aj_addfaktablock").show();
             return false;
         });
-        $('body').on('click', '.kk_aj_btnremovenewfakta', function (event) {
+        $dom_body.on('click', '.kk_aj_btnremovenewfakta', function (event) {
             $(".kk_aj_addfaktablock").hide();
             return false;
         });
         
-        $('body').on('keydown', '#testauto', function (event) {
+        $dom_body.on('keydown', '#testauto', function (event) {
             $(this).autocomplete({                
                 source: function (request, response) {
                     $.ajax({
@@ -419,13 +448,13 @@ module.exports = {
             };         
         });
         
-        $('body').on('click', '.kk_aj_showpressentationsbild', function (event) {
+        $dom_body.on('click', '.kk_aj_showpressentationsbild', function (event) {
             $('.kk_aj_pressentationsbildblock').toggle(500);
             return false;
         });
         
 
-        $('body').on('click', '.kk_aj_SparaDetailEdit', function () {
+        $dom_body.on('click', '.kk_aj_SparaDetailEdit', function () {
             var data = new FormData();
 
             var arrid = $('#kk_aj_arridtxt').val();
@@ -483,7 +512,7 @@ module.exports = {
             return false;
         });
         
-        $('body').on('click', '.stdmottext', function (e) {
+        $dom_body.on('click', '.stdmottext', function (e) {
             let motiveringsinput = $("#Motivering");
             let motiveringstext = motiveringsinput.val() + " " + $(this).text();
                        
@@ -495,7 +524,7 @@ module.exports = {
         // MainCONTENT HANDLERS STOPP---------------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // FAKTA HANDLERS START---------------------------------------------------------------------------
-        $('body').on('click', '.kk_aj_faktaBtnEdit', function () {
+        $dom_body.on('click', '.kk_aj_faktaBtnEdit', function () {
             var arrid = $('#kk_aj_arridtxt').val();
             var faktaid = $(this).attr("data");
             var editval = $('.kk_aj_faktaEditValue[data=' + faktaid + ']').val();
@@ -510,7 +539,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '#kk_aj_faktaBtnAdd', function () {
+        $dom_body.on('click', '#kk_aj_faktaBtnAdd', function () {
             var arrid = $('#kk_aj_arridtxt').val();
             var faktatypid = $('#kk_aj_faktatypid').val();
             var faktavalue = $('#kk_aj_faktaAddValue').val();
@@ -525,7 +554,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '.kk_aj_faktaBtnDel', function () {
+        $dom_body.on('click', '.kk_aj_faktaBtnDel', function () {
             var arrid = $('#kk_aj_arridtxt').val();
             var faktaid = $(this).attr("data");
 
@@ -553,7 +582,7 @@ module.exports = {
         // FAKTA HANDLERS STOPP---------------------------------------------------------------------------
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // MEDIA HANDLERS START---------------------------------------------------------------------------
-        $('body').on('click', '.kk_aj_mediaBtnEdit', function () {
+        $dom_body.on('click', '.kk_aj_mediaBtnEdit', function () {
             var mediaid = $(this).attr("data");
             var _requesteddata = {};            
             _requesteddata.arrid = $('#kk_aj_arridtxt').val();
@@ -589,7 +618,7 @@ module.exports = {
             return urltofix.replace("https://youtu.be/", "");            
         }
 
-        $('body').on('click', '#kk_aj_mediaBtnAdd', function () {
+        $dom_body.on('click', '#kk_aj_mediaBtnAdd', function () {
             var _requesteddata = {};
             _requesteddata.arrid = $('#kk_aj_arridtxt').val();           
             _requesteddata.mediaalt = $('#kk_aj_nymediaAlt').val();
@@ -610,7 +639,7 @@ module.exports = {
 
             return false;
         });
-        $('body').on('click', '.kk_aj_mediaBtnTabort', function () {
+        $dom_body.on('click', '.kk_aj_mediaBtnTabort', function () {
             var arrid = $('#kk_aj_arridtxt').val();
             var mediaid = $(this).attr("data");
 
@@ -688,7 +717,7 @@ module.exports = {
 
         
 
-        $('body').on('click', '.kk_aj_editUtovareDetail', function () {
+        $dom_body.on('click', '.kk_aj_editUtovareDetail', function () {
             var utovareid = $(this).attr("data");
 
             history.pushState('', '', appsettings.basepageUri + '/katalogenUtovare?uid=' + utovareid + '');
@@ -696,19 +725,21 @@ module.exports = {
             appsettings.utovaredetailtemplate.detailid = utovareid;
             loadpageHandler.pageloader("kk_aj_utovareView","",utovareid);            
 
-            $('.kk_aj_utovaredetalj').show();
-            $('.kk_aj_utovarelist').hide();
-           
+            $dom_kk_aj_utovaredetalj.show();
+            $dom_section_kk_aj_utovareDetailArrListTbl.show();
+            $dom_kk_aj_utovarelist.hide();            
             return false;
         });
-        $('body').on('click', '.kk_aj_utovaredetailback', function () {            
+
+        $dom_body.on('click', '.kk_aj_utovaredetailback', function () {            
             history.back();
-            $('.kk_aj_utovaredetalj').hide();
-            $('.kk_aj_utovarelist').show();
+            $dom_kk_aj_utovaredetalj.hide();
+            $dom_section_kk_aj_utovareDetailArrListTbl.hide();
+            $dom_kk_aj_utovarelist.show();
         });
 
 
-        $('body').on('click', '#kk_aj_utovareSave', function () {           
+        $dom_body.on('click', '#kk_aj_utovareSave', function () {           
             var editdata = {
                 "UtovarID": $("#kk_aj_utovareid").val(),
                 "Organisation": $("#kk_aj_utovareOrganisation").val(),
@@ -756,7 +787,7 @@ module.exports = {
         // MainAdminEVENT START ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        $('body').on('click', '#kk_aj_Breakpoint', function () {
+        $dom_body.on('click', '#kk_aj_Breakpoint', function () {
             var period = new Date();
             if (confirm("Är du säker på att du vill köra en brytpunkt?\n Period " + period.getFullYear() + "\n OK or Cancel.")) {
                 detailCrudHandler.adminbreakpoint("breakpoint", "1", getnowdate(), function (data) {
@@ -765,7 +796,7 @@ module.exports = {
             };
             return false;
         });
-        $('body').on('click', '#kk_aj_MainBreakpoint', function () {
+        $dom_body.on('click', '#kk_aj_MainBreakpoint', function () {
             let period = new Date();
             if (confirm("Är du säker på att du vill köra en Huvudbrytpunkt?\n Period " + period.getFullYear() + "\n OK or Cancel.")) {
                 detailCrudHandler.adminbreakpoint("Mainbreakpoint", "1", getnowdate(), function (data) {
@@ -775,7 +806,7 @@ module.exports = {
             return false;
         });
 
-        $('body').on('click', '#kk_aj_Deletearrangemang', function () {
+        $dom_body.on('click', '#kk_aj_Deletearrangemang', function () {
             if (confirm("Är du säker på att du vill tabort ett arrangemang?\n Detta går inte att ångra!\n OK or Cancel.")) {
 
                 var arrid = prompt("Ange arrangemangets id:", "");
@@ -788,6 +819,22 @@ module.exports = {
                 };
             };
             
+            return false;
+        });
+
+        $dom_body.on('click', '#kk_aj_ArkiveraArangemang', function () {
+            if (confirm("Är du säker på att du vill arkivera ett arrangemang?\n OK or Cancel.")) {
+
+                var arrid = prompt("Ange arrangemangets id:", "");
+                if (arrid == null || arrid == "") {
+                    alert("Du har inte anget arrid! \n Inget arrangemang är inte arkiverat!");
+                } else {
+                    detailCrudHandler.adminArrArchive(arrid, appsettings.currentUserid, function (data) {
+                        alert("Nu har arrangemanget med arrid: " + arrid + " arkiverats! ");
+                    });
+                };
+            };
+
             return false;
         });
 

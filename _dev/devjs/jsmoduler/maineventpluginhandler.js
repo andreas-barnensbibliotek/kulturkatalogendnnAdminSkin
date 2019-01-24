@@ -155,7 +155,7 @@ module.exports = {
                 );
                
             });
-        }; 
+            }; 
        
 /// UTÖVARE VY MED DATATABELL STARTAR HÄR ////////////////////////////////////////////////////////////////////////////////////
             if (currpageType == "kk_aj_utovareView") {
@@ -204,7 +204,7 @@ module.exports = {
                                     return data;
                                 },
                                 "width": "7%"
-                            },                           
+                            },
                             {
                                 "data": "Organisation", "render": function (data, type, row, meta) {
                                     if (type === 'display') {
@@ -223,29 +223,31 @@ module.exports = {
                                 },
                                 "width": "15%"
                             },
-                            { "data": "Telefon", "width": "10%" },                            
+                            { "data": "Telefon", "width": "10%" },
                             { "data": "Epost" },
-                            { "data": "Epost", "render": function (data, type, row, meta) {
-                                if (type === 'display') {                                    
-                                    data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '><i class="fa fa-edit"></i> Ändra</a>';
-                                }
+                            {
+                                "data": "Epost", "render": function (data, type, row, meta) {
+                                    if (type === 'display') {
+                                        data = '<a href="#" class="right kk_aj_editUtovareDetail" data=' + row.UtovarID + '><i class="fa fa-edit"></i> Ändra</a>';
+                                    }
                                     return data;
                                 },
                                 "width": "10%"
                             }
-                          ]
-                        
+                        ]
 
-                    }
-                );
-
+                    });                   
+                    // TODO error när man clickar på sort då visar den och sorterar den en gammal lista som visades tidigare.. fel i init
+                    //$('#kk_aj_utovareDetailArrListTbl').DataTable({
+                    //    "retrieve": true,
+                    //    "paging": false,
+                    //    "searching": false,
+                    //    "order": [[1, "desc"]]
+                    //});
                 });
-
+                
             };
            
-          
-
-
         });//ready function end 
       
 

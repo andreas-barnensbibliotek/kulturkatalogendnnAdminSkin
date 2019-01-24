@@ -46,7 +46,7 @@
 					<h3>Kontaktuppgifter </h3>
 					<b>Namn: </b> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktfornamn}} {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktEfternamn}}</br>
 					<b>Telefon: </b> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktTelefon}}</br>
-					<b>E-post: </b> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktEpost}}	
+					<b>E-post: </b><a href="mailto:{{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktEpost}}"> {{kk_aj_admin.ansokningarlista.ansokningar.0.ansokningKontaktEpost}}</a>	
 				</div>
 			
 		</div>

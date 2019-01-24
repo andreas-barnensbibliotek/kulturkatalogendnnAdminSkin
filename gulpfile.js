@@ -4,7 +4,7 @@ install
 2. kÃ¶r bower init. fyll i allt optional
 3. installera foundation: bower install foundation --save -dev
 4. npm init
-5. npm install --save-dev gulp gulp-sass gulp-autoprefixer gulp-rename gulp-clean-css gulp-sourcemaps webpack-stream
+5. npm install --save-dev gulp gulp-sass gulp-autoprefixer gulp-rename gulp-clean-css gulp-sourcemaps webpack-stream gulp-concat gulp-uglify
 6. skapa gulpfile.js nedan med länkar till bower foundation
 */
 

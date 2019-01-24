@@ -1,0 +1,24 @@
+﻿<!-- item loop START -->
+	 {{#each kk_aj_admin.ansokningarlista.ansokningar}}
+	
+	<tr class="kk_aj_ansokning_item" >
+		<td><input type="checkbox" name="kk_aj_chkAnnons" class="kk_aj_chkboxAnnons" ></td>
+		<td class="mailbox-star" rel="{{ansokningid}}">
+			<a href="#" class="kk_aj_flag">
+				{{#getFlag ansokninglast ansokningpublicerad ansokningstatus}}					
+				{{/getFlag}}
+				
+			</a>
+		</td>
+		<td class="mailbox-subject">
+			<a href="/KulturkatalogenAdmin/katalogendetaljvy?id={{ansokningid}}" rel="{{ansokningid}}" class="kk_aj_title">{{ansokningtitle}} <br/><b>{{ansokningsubtitle}}</b></a>
+		</td>
+		<td class="mailbox-name"><a href="/KulturkatalogenAdmin/katalogenUtovare?uid={{ansokningUtovarid}}" rel="{{ansokningid}}" class="kk_aj_utovare">{{ansokningutovare}}</a></td>
+		<td class="mailbox-attachment kk_aj_konstform">
+			{{ansokningkonstform}}
+		</td>        
+		<td class="mailbox-date kk_aj_date">{{ansokningdate}} </td>       
+		
+	</tr>
+	{{/each}}
+	<!-- item loop STOP -->

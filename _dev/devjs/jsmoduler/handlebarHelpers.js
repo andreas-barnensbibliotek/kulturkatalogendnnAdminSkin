@@ -163,6 +163,12 @@ Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
         case "nekad":
             statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
             break;
+        case "approved":
+            statuscolorClass = '<span class="label label-success">Godkänd</span>'; //'text-green';
+            break;
+        case "nekad":
+            statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
+            break;
         case "ny":
             statuscolorClass = '<span class="label label-primary">Ny</span>'; // 'text-primary';
             break;
@@ -179,6 +185,9 @@ Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
             statuscolorClass = '<span class="label label-warning">Granskas</span>'; // 'text-warning';
             break;
         case "arkiverad":
+            statuscolorClass = '<span class="label label-info">Arkiverad</span>';//'text-info';
+            break;
+        case "arkiv":
             statuscolorClass = '<span class="label label-info">Arkiverad</span>';//'text-info';
             break;
         case "event":

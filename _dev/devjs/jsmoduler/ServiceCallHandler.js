@@ -124,21 +124,7 @@ module.exports = {
         servicecall(currurl, function (data) {
             callback(data);
         });
-        //console.log("2. servicen hämtar data");
-        //$.ajax({
-        //    async: true,
-        //    type: "GET",
-        //    url: currurl,
-        //    dataType: "json",
-        //    success: function (data) {
-        //        console.log("LOGG datan är hämta  " + callTyp);
-        //        callback(data);
-        //    },
-        //    error: function (xhr, ajaxOptions, thrownError) {
-        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-        //        alert("Nått blev fel vid uppdatering av parametrarna!");
-        //    }
-        //});
+        
     },
     injectutovaretable: function (callTyp, Utovarid, callback) {
 
@@ -152,6 +138,9 @@ module.exports = {
                 currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_utovarjson.aspx";
                 //currurl = appsettings.localOrServerURL + "/updatearrangemang/arrstat/id/" + arrid + "/uid/" + usrid + "/val/" + val + "/devkey/" + devkeysnippet;
                 break;
+            case "byUtovareArrList":
+                currurl = appsettings.localOrServerURL + "/Api_v2/arrangemang/byutovare/uid/" + usrid + "/typ/0/val/" + val + "/devkey/" + devkeysnippet;
+                break;
             default:
                 //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";
                 currurl = appsettings.ServerApiURL + "/Api_v3/utovare/" + callTyp + "/user/"+ appsettings.currentUserid +"/val/" + Utovarid + "/devkey/" + appsettings.devkeysnippet;
@@ -161,21 +150,7 @@ module.exports = {
         servicecall(currurl, function (data) {
             callback(data);
         });
-        //console.log("2. servicen hämtar data");
-        //$.ajax({
-        //    async: true,
-        //    type: "GET",
-        //    url: currurl,
-        //    dataType: "json",
-        //    success: function (data) {
-        //        console.log("utövare datan är hämta  " + callTyp);
-        //        callback(data);
-        //    },
-        //    error: function (xhr, ajaxOptions, thrownError) {
-        //        //console.log(xhr + ":: " + ajaxOptions + ":: " + thrownError);
-        //        alert("Nått blev fel vid uppdatering av parametrarna!");
-        //    }
-        //});
+        
     },
     injecttemplateDebug: function (callTyp, usrid, val, callback) {
         //console.log("4. servicen hämtar debug data ----->>> " + usrid);
@@ -255,6 +230,11 @@ module.exports = {
                 // /Api_v3/utovare/detail/user/2/val/1/devkey/alf?type=json
                 currurl = appsettings.ServerApiURL + "/Api_v3/utovare/detail/user/" + usrid + "/val/" + val + "/devkey/" + appsettings.devkeysnippet;
                 break;
+            case "kk_aj_utovareDetailArrListjson":
+                // /Api_v3/utovare/detail/user/2/val/1/devkey/alf?type=json
+                currurl = appsettings.localOrServerURL + "/arrangemang/byutovare/uid/" + usrid + "/typ/0/val/" + val + "/devkey/" + appsettings.devkeysnippet;
+                break;
+                
             default:
                 // resultat är en empty json response
                 currurl =""
