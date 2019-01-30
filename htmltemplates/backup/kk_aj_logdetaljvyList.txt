@@ -1,0 +1,124 @@
+﻿{{#ifdetailstatus kk_aj_admin.CurrentArrStatus}}
+<span class="motiveringEditblock" rel="{{kk_aj_admin.Logitemlist.0.Arrid}}" >	
+	<h4>Motivering <span class="text-red">*</span></h4> 
+	<div class="pull-left">
+	<b>standardmotiveringar</b>
+	<ul class="nav nav-tabs">    
+    <li class=" dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Godkänn <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Arrangemanget är godkänt. Motivering finns dokumenterad på denna plats:</li>
+        <li><a href="#">Tidigare godkänt</a></li>                
+      </ul>
+    </li>
+    <li><a href="#" data-toggle="dropdown">Neka</a><ul class="dropdown-menu">
+        <li><a href="#">Arrangemanget är nekat. Motivering finns dokumenterad på denna plats:</li>
+        <li><a href="#">Tidigare nekat</a></li>
+       
+      </ul></li>
+    <li><a href="#" data-toggle="dropdown">Övrigt</a><ul class="dropdown-menu">
+        <li><a href="#">Saknar information!</a></li>                      
+      </ul></li>
+  </ul>
+	</div>
+	<textarea id="Motivering" class="motivering" style="width:100%;"></textarea>	
+	<button type="button" class="btn btn-default kk_aj_detailapproved label-success" title="Godkänn">
+		<i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
+	<button type="button" class="btn btn-default kk_aj_detaildenied label-danger" title="Neka">
+	<i class="fa fa-times" aria-hidden="true"></i> Neka</button>
+	<button type="button" class="btn btn-default pull-right kk_aj_detailkommentar label-warning" title="Kommentar">
+	<i class="fa fa-check" aria-hidden="true"></i> Kommentar</button> 
+<!-- /.box-footer -->
+</span>
+{{/ifdetailstatus}}
+	
+
+
+
+<span class="motiveringListblock"> 
+	<div class="box-header">
+		<h3 class="box-title">Motivering/ logg </h3>
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-default kk_aj_addmotivering" title="Lägg till motivering"><i class="fa fa-check" aria-hidden="true"></i> Godkänn/Neka</button>
+			
+		</div>
+	</div>
+	<!-- /.box-header -->
+	{{#ifdetailstatusList kk_aj_admin.CurrentArrStatus}}
+ 
+ <span class="motiveringEditblock" rel="{{kk_aj_admin.Logitemlist.0.Arrid}}" style="display:none;">
+	
+	<div class="row">		
+		<div class="col-sm-4 kk_aj_arrangorstodblock" >
+			
+				<label for="kk_aj_arrangorstod">Välj typ av arrangörsstöd<span class="text-red">*</span></label>
+				<select id="kk_aj_arrangorstod" name="kk_aj_arrangorstod" class="">
+					<option value=""></option>
+					<option value="Arrangören betalar max 1000 kr av resa">Arrangören betalar max 1000 kr av resa</option>
+					<option value="Arrangören betalar 50%">Arrangören betalar 50%</option>
+					<option value="Arrangören betalar 100%">Arrangören betalar 100%</option>
+					<option value="Arrangören betalar 0% av transport - hyra enligt prislista">Arrangören betalar 0% av transport - hyra enligt prislista</option>
+				</select>
+			
+		</div>
+		<div class="col-sm-8 kk_aj_arrangorstodblockChange" >
+		<label for="kk_aj_stdmotivering">Standardmotivering</label>
+			<ul id="kk_aj_stdmotivering" class="nav nav-tabs kk_aj_stdmotivering">    
+				<li class=" dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">Godkänn <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#" class="stdmottext">Arrangemanget är godkänt. Motivering finns dokumenterad på denna plats:</li>
+						<li><a href="#"class="stdmottext">Tidigare godkänt </a></li>						                  
+					</ul>
+				</li>
+				<li><a href="#" data-toggle="dropdown">Neka <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#"class="stdmottext">Arrangemanget är nekat. Motivering finns dokumenterad på denna plats:</li>
+						<li><a href="#"class="stdmottext">Tidigare nekat </a></li>                       
+					</ul>
+				</li>
+				<li><a href="#" data-toggle="dropdown">Övrigt <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="#"class="stdmottext">Saknar information! </a></li>                       
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12" >
+		<label for="Motivering">Motiveringstext<span class="text-red">*</span></label>
+			<textarea id="Motivering" class="motivering" name="motivering" style="width:100%;" required></textarea>	
+			<button type="submit" class="btn btn-default kk_aj_detailapproved label-success" title="Godkänn">
+			<i class="fa fa-check" aria-hidden="true"></i> Godkänn</button>
+			<button type="submit" class="btn btn-default kk_aj_detaildenied label-danger" title="Neka">
+			<i class="fa fa-times" aria-hidden="true"></i> Neka</button>
+			<button type="button" class="btn btn-default pull-right kk_aj_detailkommentar label-warning" title="Kommentar">
+			<i class="fa fa-check" aria-hidden="true"></i> Kommentar</button> 
+		</div>
+	</div>
+<!-- /.box-footer -->
+
+</span>
+	<div class="box-body table-responsive no-padding">
+		<table class="table table-hover">		 
+			<tr>                                           
+				<th>Datum</th>
+				<th>Status</th>
+				<th>Motivering</th>
+				<th>Ändrat</th>
+			</tr>
+		<!-- item loop START -->	
+		{{#each kk_aj_admin.Logitemlist}}
+			<tr>                                            
+				<td>{{Datum}}</td>
+				<td>{{#fixstatuscolor Statustypid}} {{/fixstatuscolor}}</td>
+				<td>{{Beskrivning}}</td>
+				<td>{{ChangebyUsernamn}}</td>
+			</tr>                                        
+		{{/each}}
+		</table>
+	</div>
+	<!-- /.box-body -->
+</span>
+{{/ifdetailstatusList}}

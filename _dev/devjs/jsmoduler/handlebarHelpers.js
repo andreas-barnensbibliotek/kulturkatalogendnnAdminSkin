@@ -25,6 +25,13 @@ Handlebars.registerHelper('getFlag', function (read, pub, typ) {
                 return '<i class="fa fa-star-o text-yellow ejlast"></i><span class="kk_aj_typ">2</span>';
             }
             break;
+        case "Underbehandling":
+            if (read === "nej") {
+                return '<i class="fa fa-star text-yellow last"></i><span class="kk_aj_typ">1</span>';
+            } else {
+                return '<i class="fa fa-star-o text-yellow ejlast"></i><span class="kk_aj_typ">2</span>';
+            }
+            break;
         case "Nekad":
             if (read === "nej") {
                 return '<i class="fa fa-star text-yellow" ></i><span class="kk_aj_typ">2</span>';
@@ -70,6 +77,10 @@ Handlebars.registerHelper('iftype', function (ansoktyp) {
         case "ny":
             changedtyp = "kk_aj_ansokningarView"
             changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border label-primary">';
+            break;
+        case "underbehandling":
+            changedtyp = "kk_aj_underbehandlingansokningarView"
+            changeclass = '<div class="kk_aj_ansokanboxheader box-header with-border label-warning">';
             break;
         case "approved":
             changedtyp = "kk_aj_approvedansokningarView"

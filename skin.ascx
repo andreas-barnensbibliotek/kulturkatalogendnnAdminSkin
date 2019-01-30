@@ -28,7 +28,7 @@
 <!-- Html Meta header -->
 <fortyfingers:STYLEHELPER ID="headMeta1" AddToHead='<meta http-equiv="X-UA-Compatible" content="IE=edge">' runat="server" />
 <fortyfingers:STYLEHELPER ID="headMeta2" AddToHead='<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">' runat="server" />
-<fortyfingers:STYLEHELPER ID="STYLEHELPER2" AddCssFile="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" runat="server" />
+<fortyfingers:STYLEHELPER ID="STYLEHELPER2" AddCssFile="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" runat="server" />
 <%--<!-- kulturkatalogen.org GOOGLEANALYTICS kör denna när domänen är ändrad
 <fortyfingers:STYLEHELPER ID="GOOGLEANALYTICS1" AddToHead="<script async src='https://www.googletagmanager.com/gtag/js?id=UA-7175122-13'></script><script>window.dataLayer=window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-7175122-13');</script>" runat="server" />
 -->

@@ -40,6 +40,15 @@ module.exports = {
             return false;
         });
 
+        $dom_body.on('click', '.kk_aj_underbehandlingansokningar', function () {
+            resetsearchformdata();
+            //console.log('1-1. .kk_aj_deniedansokningar');
+            loadlistView("kk_aj_underbehandlingansokningarView");
+            history.pushState('1', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_underbehandlingansokningarView');
+
+            return false;
+        });
+
         $dom_body.on('click', '.kk_aj_approvedansokningar', function () {
             //console.log('1-1. .kk_aj_approvedansokningar');   
             resetsearchformdata();
@@ -264,6 +273,11 @@ module.exports = {
                         appsettings.searchansokningartemplate.nya.searchstr = searchtyp;
                         loadlistView("kk_aj_search_nyaansokningarView", sortobj, "");
                         history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_nyaansokningarView&search=' + searchtyp);
+                        break;
+                    case "underbehandling":
+                        appsettings.searchansokningartemplate.underbehandling.searchstr = searchtyp;
+                        loadlistView("kk_aj_search_underbehandlingansokningarView", sortobj, "");
+                        history.pushState('', '', appsettings.basepageUri + _desktopmoduleURL + '?sida=kk_aj_search_underbehandlingansokningarView&search=' + searchtyp);
                         break;
                     case "approved":
                         appsettings.searchansokningartemplate.approved.searchstr = searchtyp;
@@ -869,13 +883,19 @@ var updateansokHeaderjquery = function (currentListView, options) {
             activeclass = ".kk_aj_nyansokanmenu";
             searchtyp = "nya";
             break;
+        case "kk_aj_underbehandlingansokningarView":
+            classname = "label-warning";
+            headertext = "Under behandling";
+            activeclass = ".kk_aj_underbehandlingansokanmenu";
+            searchtyp = "underbehandling";
+            break;
         case "kk_aj_approvedansokningarView":
             classname ="label-success";
             headertext= "Godkända";
             activeclass = ".kk_aj_approvedansokanmenu";
             searchtyp = "approved";
             $('.kk_aj_approveannons').show();
-            break;
+            break;        
         case "kk_aj_deniedansokningarView":
             classname ="label-danger";
             headertext="Nekade";
@@ -893,6 +913,12 @@ var updateansokHeaderjquery = function (currentListView, options) {
             headertext = "Ansökningar - Sökresultat";
             activeclass = ".kk_aj_nyansokanmenu";
             searchtyp = "nya";
+            break;
+        case "kk_aj_search_underbehandlingansokningarView":
+            classname = "label-warning";
+            headertext = "Under behandling - Sökresultat";
+            activeclass = ".kk_aj_underbehandlingdansokanmenu";
+            searchtyp = "underbehandling";
             break;
         case "kk_aj_search_approvedansokningarView":
             classname = "label-success";

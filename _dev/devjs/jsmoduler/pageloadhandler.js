@@ -28,6 +28,14 @@ module.exports = {
                 loadtemplateTypes(appsettings.nyaansokningartemplate, appsettings.currentUserid, sortobj, val);
                 pagetotalblock();
                 break;
+            case "kk_aj_underbehandlingansokningarView": //Under behandling  
+                $('#kk_aj_ansokningMain').jplist({
+                    command: 'empty'
+                });
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+                loadtemplateTypes(appsettings.underbehandlingansokningartemplate, appsettings.currentUserid, sortobj, val);
+                pagetotalblock();
+                break;
             case "kk_aj_approvedansokningarView": //godkända
                 $('#kk_aj_ansokningMain').jplist({
                     command: 'empty'
@@ -90,7 +98,12 @@ module.exports = {
                 //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
                 loadtemplateTypes(appsettings.searchansokningartemplate.nya, appsettings.currentUserid, sortobj, val);
-                break;            
+                break;     
+            case "kk_aj_search_underbehandlingansokningarView": //sök i underbehandling             
+                //console.log("kk_aj_search_underbehandlingaansokningarView: SÖK I kk_aj_search_underbehandlingansokningarView= ");
+                loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
+                loadtemplateTypes(appsettings.searchansokningartemplate.underbehandling, appsettings.currentUserid, sortobj, val);
+                break;  
             case "kk_aj_search_approvedansokningarView": //sök i nya              
                 //console.log("kk_aj_search_nyaansokningarView: SÖK I kk_aj_search_nyaansokningarView= ");
                 loadtemplateTypes(appsettings.topnavtemplate, appsettings.currentUserid);
@@ -211,6 +224,7 @@ var partpageloadertemplates = function (template, currentdata, callback) {
 
 var updatecountmenybox = function (data) {
     let $dom_kk_aj_newcount = $('.kk_aj_newcount');
+    let $dom_kk_aj_underbehandlingcount = $('.kk_aj_underbehandlingcount');    
     let $dom_kk_aj_approvedcount = $('.kk_aj_approvedcount');
     let $dom_kk_aj_deniedcount = $('.kk_aj_deniedcount');
     let $dom_kk_aj_menyNamn = $('.kk_aj_menyNamn');
@@ -222,6 +236,12 @@ var updatecountmenybox = function (data) {
         } else {            
             $dom_kk_aj_newcount.hide();
         }  
+        //if (data.kk_aj_admin.approvedansokningarcount) {
+        //    $dom_kk_aj_approvedcount.show();
+        //    $dom_kk_aj_approvedcount.html(data.kk_aj_admin.approvedansokningarcount);
+        //} else {
+            $dom_kk_aj_underbehandlingcount.hide();
+        //}  
         if (data.kk_aj_admin.approvedansokningarcount) {
             $dom_kk_aj_approvedcount.show();
             $dom_kk_aj_approvedcount.html(data.kk_aj_admin.approvedansokningarcount);

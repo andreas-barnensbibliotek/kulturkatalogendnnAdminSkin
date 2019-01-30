@@ -184,6 +184,9 @@ module.exports = {
                 //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_archiveansokjson.aspx";
                 currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/4/devkey/" + appsettings.devkeysnippet;
                 break;
+            case "kk_aj_underbehandlingansokjson":
+                currurl = appsettings.localOrServerURL + "/arrangemang/bystatus/uid/" + usrid + "/typ/5/devkey/" + appsettings.devkeysnippet;
+                break;                
             case "kk_aj_diariejson":
                 //currurl = "http://kivdev.se/DesktopModules/barnensbiblService/kk_aj_admin_test/kk_aj_diariejson.aspx";    
                 break;
@@ -218,6 +221,10 @@ module.exports = {
                 var search = appsettings.searchansokningartemplate.archive.searchstr;
                 currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/4/val/" + search + "/devkey/" + appsettings.devkeysnippet;
                 break;
+            case "kk_aj_SearchUnderbehandlingansokjson":                             
+                var search = appsettings.searchansokningartemplate.archive.searchstr;
+                currurl = appsettings.localOrServerURL + "/arrangemang/bysearch/uid/" + usrid + "/typ/5/val/" + search + "/devkey/" + appsettings.devkeysnippet;
+                break;                
             case "kk_aj_detailloggListjson":
                 //currurl = "http://localhost:60485/Api_v2/log/byarrid/id/1/devkey/alf?type=json&callback=testar";
                 currurl = appsettings.localOrServerURL + "/log/byarrid/id/" + val + "/devkey/" + appsettings.devkeysnippet;
