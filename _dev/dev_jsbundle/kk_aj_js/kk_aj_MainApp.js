@@ -223,8 +223,8 @@
 	//var _detailediturl = "http://localhost:60485/Api_v3/updatearrangemang";
 
 	//lokalafiler----------------------kommentera ut dessa på servern
-	//var _apiserver = "http://localhost:60485";
-	//var _dnnURL = "http://dnndev.me";
+	var _apiserver = "http://localhost:60485";
+	var _dnnURL = "http://dnndev.me";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
 	//var _apiserver = "https://api.kulturkatalogenvast.org:443";
@@ -235,8 +235,8 @@
 	//var _dnnURL = "http://www2.kulturkatalogenvast.org";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt --- är DEVSITEN PÅ SERVERN!
-	var _apiserver = "http://dev.kulturkatalogenvast.org:8080";
-	var _dnnURL = "http://dev.kulturkatalogenvast.org";
+	//var _apiserver = "http://dev.kulturkatalogenvast.org:8080";
+	//var _dnnURL = "http://dev.kulturkatalogenvast.org";
 
 	//Serverfiler---------------------- kommentera ut dessa lokalt
 	//var _apiserver = "http://kulturkatalog.kivdev.se:8080";
@@ -602,7 +602,7 @@
 	            statuscolor = '<span class="label label-primary">Ny</span>';            
 	            break;
 	        case 2:
-	            statuscolor = '<span class="label label-warning">Granskas</span>';
+	            statuscolor = '<span class="label label-primary">Kommentar</span>';
 	            break;
 	        case 3:
 	            statuscolor = '<span class="label label-success">Godkänd</span>';
@@ -620,13 +620,16 @@
 	            statuscolor = '<span class="label label-warning">Avpublicerad</span>';
 	            break;
 	        case 8:
-	            statuscolor = '<span class="label label">Arkiverad</span>';
+	            statuscolor = '<span class="label label-info">Arkiverad</span>';
 	            break;
 	        case 9:
 	            statuscolor = '<span class="label label-default">Event</span>';
 	            break;
 	        case 10:
 	            statuscolor = '<span class="label label-danger">Borttagen</span>';
+	            break;
+	        case 11:
+	            statuscolor = '<span class="label label-warning">Behandlas</span>';
 	            break;
 	        default:
 	            statuscolor = '<span class="label label-default">Event</span>';
@@ -644,19 +647,19 @@
 	    return imgfile;
 	});
 
-	Handlebars.registerHelper('ifdetailstatus', function (currarrstatus, options) {
-	    var tmpcurrarrstatus = currarrstatus.toLowerCase();
-	    if (tmpcurrarrstatus === "1") {
-	        return options.fn(this);
-	    };
-	});
+	//Handlebars.registerHelper('ifdetailstatus', function (currarrstatus, options) {
+	//    var tmpcurrarrstatus = currarrstatus.toLowerCase();
+	//    if (tmpcurrarrstatus === "1") {
+	//        return options.fn(this);
+	//    };
+	//});
 
-	Handlebars.registerHelper('ifdetailstatusList', function (currarrstatus, options) {
-	    var tmpcurrarrstatus = currarrstatus.toLowerCase();
-	    if (tmpcurrarrstatus != "1") {
-	        return options.fn(this);
-	    };
-	});
+	//Handlebars.registerHelper('ifdetailstatusList', function (currarrstatus, options) {
+	//    var tmpcurrarrstatus = currarrstatus.toLowerCase();
+	//    if (tmpcurrarrstatus != "1") {
+	//        return options.fn(this);
+	//    };
+	//});
 	// kollar om ansökningar har bilaga eller ej
 	Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
 	    var tmpstatus = ansokningstatus.toLowerCase();
@@ -677,8 +680,8 @@
 	        case "ny":
 	            statuscolorClass = '<span class="label label-primary">Ny</span>'; // 'text-primary';
 	            break;
-	        case "granskas":
-	            statuscolorClass = '<span class="label label-warning">Granskas</span>'; // 'text-warning';
+	        case "kommentar":
+	            statuscolorClass = '<span class="label label-primary">Kommentar</span>'; // 'text-warning';
 	            break;
 	        case "ändrad":
 	            statuscolorClass = '<span class="label label-info">Ändrad</span>';// 'text-info';
@@ -699,8 +702,11 @@
 	            statuscolorClass = '<span class="label label-info">Event</span>';//'text-info';
 	            break;
 	        case "borttagen":
-	            statuscolorClass = '<span class="label label-danger">Nekad</span>;'//'text-danger';
+	            statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
 	            break;
+	        case "behandlas":
+	            statuscolorClass = '<span class="label label-warning">Behandlas</span>';//'text-warning';
+	            break;        
 	        default:
 	            statuscolorClass = '<span class="label label-info">Event</span>';//'text-info';
 	            break;
@@ -11627,6 +11633,19 @@
 	            return false;
 	        });
 
+	        $dom_body.on('click', '.kk_aj_detailunderbehandling', function (event) {
+	            var motiveringbox = $(".motivering");
+	            var checktext = motiveringbox.val();
+	            if (checktext != "") {
+	                updateArrangemangMotivering("5", function () { //log Underbehandling är 5, tmpstatusid = 11 läggs till i uppdatarrangemangMotivering()
+	                    $('.motiveringEditblock').toggle();
+	                    loadpageHandler.pageloader("updatelogView", "", "");
+	                });
+	            } else {
+	                motiveringbox.addClass('markborderRed');
+	            };
+	            return false;
+	        });
 
 	        $dom_body.on('keydown', '.motivering', function (event) {
 	            $('.motivering').removeClass('markborderRed');
@@ -12216,8 +12235,15 @@
 	};
 
 	var updateArrangemangMotivering = function (NyArrStatus, callback) {
-	    var tmpstatusid = parseInt(NyArrStatus) + 1;
-	   
+	    let tmpstatusid;
+	    if (NyArrStatus === "5") {
+	        tmpstatusid = 11;
+	        NyArrStatus = 5;
+	    }
+	    else {
+	        tmpstatusid = parseInt(NyArrStatus) + 1;
+	    };
+	          
 	    var postjson = {
 	        CmdTyp:"arrstat",
 	        Userid: appsettings.currentUserid,
@@ -33449,7 +33475,7 @@
 	                                                statuscolor = '<span class="label label-primary">';
 	                                                break;
 	                                            case 2:
-	                                                statuscolor = '<span class="label label-warning">';
+	                                                statuscolor = '<span class="label label-primary">';
 	                                                break;
 	                                            case 3:
 	                                                statuscolor = '<span class="label label-success">';
@@ -33467,13 +33493,16 @@
 	                                                statuscolor = '<span class="label label-warning">';
 	                                                break;
 	                                            case 8:
-	                                                statuscolor = '<span class="label label">';
+	                                                statuscolor = '<span class="label label-info">';
 	                                                break;
 	                                            case 9:
 	                                                statuscolor = '<span class="label label-default">';
 	                                                break;
 	                                            case 10:
 	                                                statuscolor = '<span class="label label-danger">';
+	                                                break;
+	                                            case 11:
+	                                                statuscolor = '<span class="label label-warning">';
 	                                                break;
 	                                            default:
 	                                                statuscolor = '<span class="label label-default">';

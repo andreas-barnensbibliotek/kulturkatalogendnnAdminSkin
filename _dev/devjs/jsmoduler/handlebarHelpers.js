@@ -108,7 +108,7 @@ Handlebars.registerHelper('fixstatuscolor', function (Statustypid) {
             statuscolor = '<span class="label label-primary">Ny</span>';            
             break;
         case 2:
-            statuscolor = '<span class="label label-warning">Granskas</span>';
+            statuscolor = '<span class="label label-primary">Kommentar</span>';
             break;
         case 3:
             statuscolor = '<span class="label label-success">Godkänd</span>';
@@ -126,13 +126,16 @@ Handlebars.registerHelper('fixstatuscolor', function (Statustypid) {
             statuscolor = '<span class="label label-warning">Avpublicerad</span>';
             break;
         case 8:
-            statuscolor = '<span class="label label">Arkiverad</span>';
+            statuscolor = '<span class="label label-info">Arkiverad</span>';
             break;
         case 9:
             statuscolor = '<span class="label label-default">Event</span>';
             break;
         case 10:
             statuscolor = '<span class="label label-danger">Borttagen</span>';
+            break;
+        case 11:
+            statuscolor = '<span class="label label-warning">Behandlas</span>';
             break;
         default:
             statuscolor = '<span class="label label-default">Event</span>';
@@ -150,19 +153,19 @@ Handlebars.registerHelper('imgfix', function (id, imgfile) {
     return imgfile;
 });
 
-Handlebars.registerHelper('ifdetailstatus', function (currarrstatus, options) {
-    var tmpcurrarrstatus = currarrstatus.toLowerCase();
-    if (tmpcurrarrstatus === "1") {
-        return options.fn(this);
-    };
-});
+//Handlebars.registerHelper('ifdetailstatus', function (currarrstatus, options) {
+//    var tmpcurrarrstatus = currarrstatus.toLowerCase();
+//    if (tmpcurrarrstatus === "1") {
+//        return options.fn(this);
+//    };
+//});
 
-Handlebars.registerHelper('ifdetailstatusList', function (currarrstatus, options) {
-    var tmpcurrarrstatus = currarrstatus.toLowerCase();
-    if (tmpcurrarrstatus != "1") {
-        return options.fn(this);
-    };
-});
+//Handlebars.registerHelper('ifdetailstatusList', function (currarrstatus, options) {
+//    var tmpcurrarrstatus = currarrstatus.toLowerCase();
+//    if (tmpcurrarrstatus != "1") {
+//        return options.fn(this);
+//    };
+//});
 // kollar om ansökningar har bilaga eller ej
 Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
     var tmpstatus = ansokningstatus.toLowerCase();
@@ -183,8 +186,8 @@ Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
         case "ny":
             statuscolorClass = '<span class="label label-primary">Ny</span>'; // 'text-primary';
             break;
-        case "granskas":
-            statuscolorClass = '<span class="label label-warning">Granskas</span>'; // 'text-warning';
+        case "kommentar":
+            statuscolorClass = '<span class="label label-primary">Kommentar</span>'; // 'text-warning';
             break;
         case "ändrad":
             statuscolorClass = '<span class="label label-info">Ändrad</span>';// 'text-info';
@@ -205,8 +208,11 @@ Handlebars.registerHelper('fixStatuscolorlabel', function (ansokningstatus) {
             statuscolorClass = '<span class="label label-info">Event</span>';//'text-info';
             break;
         case "borttagen":
-            statuscolorClass = '<span class="label label-danger">Nekad</span>;'//'text-danger';
+            statuscolorClass = '<span class="label label-danger">Nekad</span>';//'text-danger';
             break;
+        case "behandlas":
+            statuscolorClass = '<span class="label label-warning">Behandlas</span>';//'text-warning';
+            break;        
         default:
             statuscolorClass = '<span class="label label-info">Event</span>';//'text-info';
             break;

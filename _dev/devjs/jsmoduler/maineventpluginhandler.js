@@ -101,7 +101,7 @@ module.exports = {
                                                 statuscolor = '<span class="label label-primary">';
                                                 break;
                                             case 2:
-                                                statuscolor = '<span class="label label-warning">';
+                                                statuscolor = '<span class="label label-primary">';
                                                 break;
                                             case 3:
                                                 statuscolor = '<span class="label label-success">';
@@ -119,13 +119,16 @@ module.exports = {
                                                 statuscolor = '<span class="label label-warning">';
                                                 break;
                                             case 8:
-                                                statuscolor = '<span class="label label">';
+                                                statuscolor = '<span class="label label-info">';
                                                 break;
                                             case 9:
                                                 statuscolor = '<span class="label label-default">';
                                                 break;
                                             case 10:
                                                 statuscolor = '<span class="label label-danger">';
+                                                break;
+                                            case 11:
+                                                statuscolor = '<span class="label label-warning">';
                                                 break;
                                             default:
                                                 statuscolor = '<span class="label label-default">';

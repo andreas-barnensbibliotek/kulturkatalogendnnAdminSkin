@@ -390,6 +390,19 @@ module.exports = {
             return false;
         });
 
+        $dom_body.on('click', '.kk_aj_detailunderbehandling', function (event) {
+            var motiveringbox = $(".motivering");
+            var checktext = motiveringbox.val();
+            if (checktext != "") {
+                updateArrangemangMotivering("5", function () { //log Underbehandling är 5, tmpstatusid = 11 läggs till i uppdatarrangemangMotivering()
+                    $('.motiveringEditblock').toggle();
+                    loadpageHandler.pageloader("updatelogView", "", "");
+                });
+            } else {
+                motiveringbox.addClass('markborderRed');
+            };
+            return false;
+        });
 
         $dom_body.on('keydown', '.motivering', function (event) {
             $('.motivering').removeClass('markborderRed');
@@ -979,8 +992,15 @@ var resetsearchformdata = function () {
 };
 
 var updateArrangemangMotivering = function (NyArrStatus, callback) {
-    var tmpstatusid = parseInt(NyArrStatus) + 1;
-   
+    let tmpstatusid;
+    if (NyArrStatus === "5") {
+        tmpstatusid = 11;
+        NyArrStatus = 5;
+    }
+    else {
+        tmpstatusid = parseInt(NyArrStatus) + 1;
+    };
+          
     var postjson = {
         CmdTyp:"arrstat",
         Userid: appsettings.currentUserid,
